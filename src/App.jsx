@@ -5,8 +5,8 @@ import {
   Outlet,
 } from "react-router-dom";
 import Hero from "./components/Hero";
-import {TestType,TestLayout} from "./components/TestType";
-// import TestLayout from "./components/TestLayout";
+import TestType from "./components/TestType";
+import TestLayout from "./components/TestLayout";
 import Navbar from "./components/Navbar";
 import EvaluationPage from "./pages/EvaluationPage";
 

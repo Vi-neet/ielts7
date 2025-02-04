@@ -1,6 +1,7 @@
+// src/components/Test/TestType.jsx
 import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import { initializeApp } from "firebase/app";
-import { useParams, useLocation,Link,Outlet } from "react-router-dom";
 import { getFirestore, collection, getDocs } from "firebase/firestore";
 import {
   Dialog,
@@ -22,78 +23,6 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
-
-
-const TestLayout = () => {
-  const { plan } = useParams();
-  const location = useLocation();
-
-  return (
-    <div className="container mx-auto px-4 py-8">
-      <h2 className="text-2xl font-bold text-center mb-8 font-playfair text-[#cc0d09]">
-        Tests
-      </h2>
-      <div className="flex justify-center gap-4 mb-8">
-        <Link
-          to="/free"
-          className={`px-6 py-2 rounded-full font-inter ${
-            location.pathname.includes("/free")
-              ? "bg-[#cc0d09] text-white"
-              : "bg-gray-200 hover:bg-[#d56e1f] hover:text-white"
-          }`}
-        >
-          Free
-        </Link>
-        <Link
-          to="/paid"
-          className={`px-6 py-2 rounded-full font-inter ${
-            location.pathname.includes("/paid")
-              ? "bg-[#cc0d09] text-white"
-              : "bg-gray-200 hover:bg-[#d56e1f] hover:text-white"
-          }`}
-        >
-          Paid
-        </Link>
-      </div>
-
-        <div className="flex justify-center gap-4 mb-8">
-          <Link
-            to={`/${plan}/general_reading`}
-            className={`px-4 py-2 rounded-md font-inter ${
-              location.pathname.includes("general_reading")
-                ? "bg-[#cc0d09] text-white"
-                : "bg-gray-100 hover:bg-[#d56e1f] hover:text-white"
-            }`}
-          >
-            General Reading
-          </Link>
-          <Link
-            to={`/${plan}/listening`}
-            className={`px-4 py-2 rounded-md font-inter ${
-              location.pathname.includes("listening")
-                ? "bg-[#cc0d09] text-white"
-                : "bg-gray-100 hover:bg-[#d56e1f] hover:text-white"
-            }`}
-          >
-            Listening
-          </Link>
-          <Link
-            to={`/${plan}/academic_reading`}
-            className={`px-4 py-2 rounded-md font-inter ${
-              location.pathname.includes("academic_reading")
-                ? "bg-[#cc0d09] text-white"
-                : "bg-gray-100 hover:bg-[#d56e1f] hover:text-white"
-            }`}
-          >
-            Academic Reading
-          </Link>
-        </div>
-      
-      <Outlet />
-    </div>
-  );
-};
-
 
 const TestType = () => {
   const { type, plan } = useParams();
@@ -136,6 +65,7 @@ const TestType = () => {
       try {
         const years = ["19", "18", "17", "16", "15", "14", "13"];
         const allTests = [];
+        const allowedTests = ["test_1", "test_2", "test_3", "test_4"];
 
         for (const year of years) {
           let collectionName;
@@ -156,18 +86,33 @@ const TestType = () => {
           const querySnapshot = await getDocs(collection(db, collectionName));
           querySnapshot.forEach((doc) => {
             const data = doc.data();
-            Object.entries(data).forEach(([testKey, content]) => {
-              allTests.push({
-                year,
-                testNumber: testKey,
-                content,
-                title: `Cambridge ${year} ${type.replace("_", " ")} - ${testKey}`,
+            // Filter to only include test_1 through test_4
+            Object.entries(data)
+              .filter(([testKey]) => allowedTests.includes(testKey))
+              .forEach(([testKey, content]) => {
+                // Only add if it's a test, not questions or answers
+                if (allowedTests.includes(testKey)) {
+                  allTests.push({
+                    year,
+                    testNumber: testKey,
+                    content,
+                    title: `Cambridge ${year} ${type.replace("_", " ")} - ${testKey.replace("_", " ")}`,
+                  });
+                }
               });
-            });
           });
         }
 
-        setTests(allTests);
+        // Sort tests by year (descending) and test number
+        const sortedTests = allTests.sort((a, b) => {
+          if (a.year !== b.year) {
+            return b.year - a.year; // Sort by year descending
+          }
+          // Sort by test number
+          return a.testNumber.localeCompare(b.testNumber);
+        });
+
+        setTests(sortedTests);
         setLoading(false);
       } catch (err) {
         setError(err.message);
@@ -187,7 +132,7 @@ const TestType = () => {
             Your browser does not support the audio element.
           </audio>
           <div className="mt-4 text-gray-600">
-            Listening Section {test.testNumber}
+            Listening {test.testNumber.replace("_", " ")}
           </div>
         </>
       );
@@ -248,5 +193,4 @@ const TestType = () => {
   );
 };
 
-
-export {TestType, TestLayout};
+export default TestType;
