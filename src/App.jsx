@@ -9,6 +9,7 @@ import TestType from "./components/TestType";
 import TestLayout from "./components/TestLayout";
 import Navbar from "./components/Navbar";
 import EvaluationPage from "./pages/EvaluationPage";
+import TestPage from "./components/TestPage";
 
 const Layout = () => {
   return (
@@ -30,6 +31,7 @@ const App = () => {
             <Route path=":plan" element={<TestLayout />}>
               <Route path=":type" element={<TestType />} />
             </Route>
+            <Route path="/test-page" element={<TestPage />} />
           </Route>
           <Route path="evaluation" element={<EvaluationPage />} />
         </Routes>

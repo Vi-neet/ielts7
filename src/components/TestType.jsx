@@ -1,21 +1,14 @@
 import { useEffect, useState } from "react";
-// import { initializeApp } from "firebase/app";
-import { useParams,  } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { db } from "../firebase";
 import { collection, getDocs } from "firebase/firestore";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
 
 const TestType = () => {
   const { type, plan } = useParams();
+  const navigate = useNavigate();
   const [tests, setTests] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [selectedTest, setSelectedTest] = useState(null);
 
   const getCardStyles = () => {
     switch (type) {
@@ -72,11 +65,9 @@ const TestType = () => {
           const querySnapshot = await getDocs(collection(db, collectionName));
           querySnapshot.forEach((doc) => {
             const data = doc.data();
-            // Filter to only include test_1 through test_4
             Object.entries(data)
               .filter(([testKey]) => allowedTests.includes(testKey))
               .forEach(([testKey, content]) => {
-                // Only add if it's a test, not questions or answers
                 if (allowedTests.includes(testKey)) {
                   allTests.push({
                     year,
@@ -89,12 +80,10 @@ const TestType = () => {
           });
         }
 
-        // Sort tests by year (descending) and test number
         const sortedTests = allTests.sort((a, b) => {
           if (a.year !== b.year) {
-            return b.year - a.year; // Sort by year descending
+            return b.year - a.year;
           }
-          // Sort by test number
           return a.testNumber.localeCompare(b.testNumber);
         });
 
@@ -108,26 +97,6 @@ const TestType = () => {
 
     fetchTests();
   }, [type]);
-
-  const renderContent = (test) => {
-    if (type === "listening") {
-      return (
-        <>
-          <audio controls className="w-full mb-4">
-            <source src={test.content} type="audio/mp3" />
-            Your browser does not support the audio element.
-          </audio>
-          <div className="mt-4 text-gray-600">
-            Listening {test.testNumber.replace("_", " ")}
-          </div>
-        </>
-      );
-    }
-
-    return (
-      <div className="mt-4" dangerouslySetInnerHTML={{ __html: test.content }} />
-    );
-  };
 
   if (loading) return (
     <div className="flex justify-center items-center min-h-screen">
@@ -149,7 +118,7 @@ const TestType = () => {
         {tests.map((test, index) => (
           <div
             key={index}
-            onClick={() => setSelectedTest(test)}
+            onClick={() => navigate('/test-page', { state: { test, type } })}
             className={`
               bg-white p-6 rounded-lg cursor-pointer
               transform transition-all duration-200
@@ -166,15 +135,6 @@ const TestType = () => {
           </div>
         ))}
       </div>
-
-      <Dialog open={!!selectedTest} onOpenChange={() => setSelectedTest(null)}>
-        <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
-          <DialogHeader>
-            <DialogTitle>{selectedTest?.title}</DialogTitle>
-          </DialogHeader>
-          {selectedTest && renderContent(selectedTest)}
-        </DialogContent>
-      </Dialog>
     </div>
   );
 };
