@@ -16,25 +16,25 @@ const TestType = () => {
         return {
           border: "border-red-500",
           hover: "hover:bg-red-50",
-          shadow: "hover:shadow-red-100"
+          shadow: "hover:shadow-red-100",
         };
       case "listening":
         return {
           border: "border-blue-500",
           hover: "hover:bg-blue-50",
-          shadow: "hover:shadow-blue-100"
+          shadow: "hover:shadow-blue-100",
         };
       case "academic_reading":
         return {
           border: "border-amber-800",
           hover: "hover:bg-amber-50",
-          shadow: "hover:shadow-amber-100"
+          shadow: "hover:shadow-amber-100",
         };
       default:
         return {
           border: "border-gray-200",
           hover: "hover:bg-gray-50",
-          shadow: "hover:shadow-gray-100"
+          shadow: "hover:shadow-gray-100",
         };
     }
   };
@@ -44,7 +44,10 @@ const TestType = () => {
       try {
         const years = ["19", "18", "17", "16", "15", "14", "13"];
         const allTests = [];
-        const allowedTests = ["test_1", "test_2", "test_3", "test_4"];
+        const allowedTests = [
+          "test_1", "test_2", "test_3", "test_4",
+          "question_1", "question_2", "question_3", "question_4"
+        ];
 
         for (const year of years) {
           let collectionName;
@@ -65,16 +68,35 @@ const TestType = () => {
           const querySnapshot = await getDocs(collection(db, collectionName));
           querySnapshot.forEach((doc) => {
             const data = doc.data();
+            console.log(data);
             Object.entries(data)
-              .filter(([testKey]) => allowedTests.includes(testKey))
-              .forEach(([testKey, content]) => {
-                if (allowedTests.includes(testKey)) {
-                  allTests.push({
+              .filter(([key]) => allowedTests.includes(key))
+              .forEach(([key, content]) => {
+                const isQuestion = key.startsWith('question_');
+                const testNumber = key.split('_')[1];
+                const correspondingKey = isQuestion ? `test_${testNumber}` : `question_${testNumber}`;
+                
+                // Find existing test/question pair or create new entry
+                let existingEntry = allTests.find(
+                  entry => entry.year === year && entry.testNumber === `test_${testNumber}`
+                );
+
+                if (!existingEntry) {
+                  existingEntry = {
                     year,
-                    testNumber: testKey,
-                    content,
-                    title: `Cambridge ${year} ${type.replace("_", " ")} - ${testKey.replace("_", " ")}`,
-                  });
+                    testNumber: `test_${testNumber}`,
+                    title: `Cambridge ${year} ${type.replace("_", " ")} - Test ${testNumber}`,
+                    test: null,
+                    questions: null,
+                  };
+                  allTests.push(existingEntry);
+                }
+
+                // Update the appropriate field
+                if (isQuestion) {
+                  existingEntry.questions = content;
+                } else {
+                  existingEntry.test = content;
                 }
               });
           });
@@ -98,13 +120,15 @@ const TestType = () => {
     fetchTests();
   }, [type]);
 
-  if (loading) return (
-    <div className="flex justify-center items-center min-h-screen">
-      <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
-    </div>
-  );
+  if (loading)
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+      </div>
+    );
 
-  if (error) return <div className="text-red-500 text-center p-4">Error: {error}</div>;
+  if (error)
+    return <div className="text-red-500 text-center p-4">Error: {error}</div>;
 
   const styles = getCardStyles();
 
@@ -118,7 +142,12 @@ const TestType = () => {
         {tests.map((test, index) => (
           <div
             key={index}
-            onClick={() => navigate('/test-page', { state: { test, type } })}
+            onClick={() => navigate("/test-page", { state: { 
+              test: test.test,
+              questions: test.questions,
+              type,
+              title: test.title
+            }})}
             className={`
               bg-white p-6 rounded-lg cursor-pointer
               transform transition-all duration-200
@@ -130,7 +159,9 @@ const TestType = () => {
           >
             <h2 className="text-lg font-semibold mb-3">{test.title}</h2>
             <p className="text-gray-600">
-              {type === "listening" ? "Click to play audio" : "Click to view content"}
+              {type === "listening"
+                ? "Click to play audio"
+                : "Click to view content"}
             </p>
           </div>
         ))}
