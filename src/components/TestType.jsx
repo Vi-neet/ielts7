@@ -9,7 +9,7 @@ const TestType = () => {
   const [tests, setTests] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
+  console.log(tests)
   const getCardStyles = () => {
     switch (type) {
       case "general_reading":
@@ -44,64 +44,35 @@ const TestType = () => {
       try {
         const years = ["19", "18", "17", "16", "15", "14", "13"];
         const allTests = [];
-        const allowedTests = [
-          "test_1", "test_2", "test_3", "test_4",
-          "question_1", "question_2", "question_3", "question_4"
-        ];
 
         for (const year of years) {
-          let collectionName;
-          switch (type) {
-            case "general_reading":
-              collectionName = `cambridge_${year}_general_reading`;
-              break;
-            case "listening":
-              collectionName = `cambridge_${year}_listening`;
-              break;
-            case "academic_reading":
-              collectionName = `cambridge_${year}_academic_reading`;
-              break;
-            default:
-              throw new Error("Invalid test type");
-          }
-
+          const collectionName = `cambridge_${year}_${type}`;
           const querySnapshot = await getDocs(collection(db, collectionName));
+          
           querySnapshot.forEach((doc) => {
             const data = doc.data();
-            console.log(data);
-            Object.entries(data)
-              .filter(([key]) => allowedTests.includes(key))
-              .forEach(([key, content]) => {
-                const isQuestion = key.startsWith('question_');
-                const testNumber = key.split('_')[1];
-                const correspondingKey = isQuestion ? `test_${testNumber}` : `question_${testNumber}`;
-                
-                // Find existing test/question pair or create new entry
-                let existingEntry = allTests.find(
-                  entry => entry.year === year && entry.testNumber === `test_${testNumber}`
-                );
-
-                if (!existingEntry) {
-                  existingEntry = {
-                    year,
-                    testNumber: `test_${testNumber}`,
-                    title: `Cambridge ${year} ${type.replace("_", " ")} - Test ${testNumber}`,
-                    test: null,
-                    questions: null,
-                  };
-                  allTests.push(existingEntry);
-                }
-
-                // Update the appropriate field
-                if (isQuestion) {
-                  existingEntry.questions = content;
-                } else {
-                  existingEntry.test = content;
-                }
-              });
+            
+            // Process each test and its corresponding question
+            for (let i = 1; i <= 4; i++) {
+              const testKey = `test_${i}`;
+              const questionKey = `question_${i}`;
+              
+              if (data[testKey] && data[questionKey]) {
+                allTests.push({
+                  id: doc.id, // Capture the Firestore document ID
+                  year,
+                  testNumber: testKey,
+                  title: `Cambridge ${year} ${type.replace("_", " ")} - Test ${i}`,
+                  test: data[testKey],
+                  questions: data[questionKey],
+                });
+              }
+            }
+            
           });
         }
 
+        // Sort tests by year (descending) and test number
         const sortedTests = allTests.sort((a, b) => {
           if (a.year !== b.year) {
             return b.year - a.year;
@@ -112,6 +83,7 @@ const TestType = () => {
         setTests(sortedTests);
         setLoading(false);
       } catch (err) {
+        console.error("Error fetching tests:", err);
         setError(err.message);
         setLoading(false);
       }
@@ -119,6 +91,7 @@ const TestType = () => {
 
     fetchTests();
   }, [type]);
+
 
   if (loading)
     return (
@@ -142,12 +115,17 @@ const TestType = () => {
         {tests.map((test, index) => (
           <div
             key={index}
-            onClick={() => navigate("/test-page", { state: { 
-              test: test.test,
-              questions: test.questions,
-              type,
-              title: test.title
-            }})}
+            onClick={() => navigate("/test-page", { 
+              state: { 
+                id: test.id, // Firestore document ID
+                test: test.test,
+                questions: test.questions,
+                type,
+                title: test.title,
+                testNumber: parseInt(test.testNumber.replace("test_", ""), 10) // Extracting the number from testNumber
+              }
+            })}
+            
             className={`
               bg-white p-6 rounded-lg cursor-pointer
               transform transition-all duration-200

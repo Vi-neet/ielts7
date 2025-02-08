@@ -1,56 +1,189 @@
 import { useLocation, useNavigate } from "react-router-dom";
-import  {useState, useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import { db } from "../firebase";
+import { doc, getDoc } from "firebase/firestore";
 
 const TestPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const test = location.state?.test;
   const question = location.state?.questions;
-  const [answers, setAnswers] = useState({});
+  const [userAnswers, setUserAnswers] = useState({});
+  const [correctAnswers, setCorrectAnswers] = useState(null);
+  const [results, setResults] = useState(null);
+  const [loading, setLoading] = useState(true);
   const questionsContainerRef = useRef(null);
-
+  console.log(results);
+  console.log(loading);
+  console.log(location);
+  console.log(userAnswers);
+  console.log(correctAnswers);
+  // Fetch correct answers from Firebase
   useEffect(() => {
-    // Find all input elements after the HTML is rendered
-    if (questionsContainerRef.current) {
-      const inputs = questionsContainerRef.current.querySelectorAll('input');
-      const selects = questionsContainerRef.current.querySelectorAll('select');
-      
-      // Add event listeners to all input elements
-      inputs.forEach(input => {
-        input.addEventListener('change', (e) => {
-          const questionId = e.target.name || e.target.id;
-          setAnswers(prev => ({
-            ...prev,
-            [questionId]: e.target.value
-          }));
-          console.log('Input changed:', {
-            questionId,
-            value: e.target.value,
-            type: e.target.type
-          });
-        });
-      });
+    const fetchAnswers = async () => {
+      try {
+        const { id, type, title, testNumber } = location.state || {};
+        if (!id || !type || !title || testNumber == null) {
+          console.error("Missing required data in location.state");
+          return;
+        }
 
-      // Add event listeners to all select elements
-      selects.forEach(select => {
-        select.addEventListener('change', (e) => {
-          const questionId = e.target.name || e.target.id;
-          setAnswers(prev => ({
-            ...prev,
-            [questionId]: e.target.value
-          }));
-          console.log('Select changed:', {
-            questionId,
-            value: e.target.value
+        const yearMatch = title.match(/\b(1[3-9]|20)\b/);
+        const year = yearMatch ? yearMatch[0] : null;
+        if (!year) {
+          console.error("Could not extract year from title:", title);
+          return;
+        }
+
+        const answerDocRef = doc(db, `cambridge_${year}_${type}`, id);
+        const answerSnap = await getDoc(answerDocRef);
+
+        if (answerSnap.exists()) {
+          const data = answerSnap.data();
+          const answerKey = `answer_${testNumber}`; // Select the correct test's answer object
+          console.log(answerKey);
+          if (data[answerKey]) {
+            console.log(
+              `Fetched correct answer object: ${answerKey}`,
+              data[answerKey]
+            );
+            setCorrectAnswers(data[answerKey]);
+          } else {
+            console.error(`Answers not found for ${answerKey}`);
+          }
+        } else {
+          console.error("No answers document found in Firestore");
+        }
+      } catch (error) {
+        console.error("Error fetching answers:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchAnswers();
+  }, [location.state]);
+
+  // Rest of the event handling code remains the same
+  useEffect(() => {
+    if (questionsContainerRef.current) {
+      const questionSections =
+        questionsContainerRef.current.querySelectorAll(".quiz_section");
+
+      questionSections.forEach((section) => {
+        const questionNumber = getQuestionNumber(section);
+
+        // Handle radio inputs (MCQs, TRUE/FALSE/NG)
+        const radioInputs = section.querySelectorAll('input[type="radio"]');
+        radioInputs.forEach((input) => {
+          if (!input.id.includes("none")) {
+            input.addEventListener("change", (e) => {
+              setUserAnswers((prev) => ({
+                ...prev,
+                [questionNumber]: {
+                  type: "radio",
+                  value: e.target.value.toLowerCase(), // Convert to lowercase for comparison
+                  questionText: section
+                    .querySelector(".mlw_qmn_new_question")
+                    ?.textContent?.trim(),
+                },
+              }));
+            });
+          }
+        });
+
+        // Handle text inputs (fill-in-the-blanks)
+        const textInputs = section.querySelectorAll('input[type="text"]');
+        textInputs.forEach((input, index) => {
+          // Add index for uniqueness
+          input.addEventListener("change", (e) => {
+            setUserAnswers((prev) => ({
+              ...prev,
+              [`${questionNumber}-${index}`]: {
+                // ✅ Store separately using questionNumber-index
+                type: "text",
+                value: e.target.value.trim().toLowerCase(),
+                questionText: section
+                  .querySelector(".mlw_qmn_new_question")
+                  ?.textContent?.trim(),
+              },
+            }));
           });
         });
       });
     }
-  }, [question]); // Re-run when question content changes
+  }, [question]);
+
+  const getQuestionNumber = (section) => {
+    const questionText = section.querySelector(
+      ".mlw_qmn_new_question"
+    )?.textContent;
+
+    if (!questionText) return null;
+
+    // Look for "Questions X-Y" or "Question X" and extract the first number after "Questions"
+    const match = questionText.match(/Questions?\s+(\d+)/i);
+
+    return match ? match[1] : null; // Return the correct question number
+  };
+
+  const validateAnswers = () => {
+    if (!correctAnswers) {
+      console.error("No correct answers available");
+      return null;
+    }
+
+    const results = {
+      totalQuestions: Object.keys(userAnswers).length,
+      correctAnswers: 0,
+      answers: [],
+      timestamp: new Date().toISOString(),
+    };
+
+    Object.entries(userAnswers).forEach(([questionNumber, answer]) => {
+      const correctAnswer = correctAnswers[questionNumber]; // Ensure matching key
+
+      if (correctAnswer === undefined) {
+        console.warn(`No correct answer found for question ${questionNumber}`);
+        return;
+      }
+
+      let isCorrect = false;
+
+      if (answer.type === "radio") {
+        // Convert both values to numbers to ensure proper comparison
+        isCorrect = Number(answer.value) === Number(correctAnswer);
+      } else if (answer.type === "text") {
+        // Normalize text (trim + lowercase) for case-insensitive comparison
+        isCorrect =
+          answer.value.trim().toLowerCase() ===
+          correctAnswer.trim().toLowerCase();
+      }
+
+      results.answers.push({
+        questionNumber,
+        questionText: answer.questionText,
+        userAnswer: answer.value,
+        correctAnswer,
+        isCorrect,
+      });
+
+      if (isCorrect) {
+        results.correctAnswers++;
+      }
+    });
+
+    return results;
+  };
 
   const handleSubmit = () => {
-    console.log('All answers:', answers);
-    // Here you can add your validation logic
+    const validationResults = validateAnswers();
+    if (validationResults) {
+      setResults(validationResults);
+      console.log("Test results:", validationResults);
+    } else {
+      console.error("Validation failed, no results generated.");
+    }
   };
 
   const renderListeningContent = () => {
@@ -65,9 +198,9 @@ const TestPage = () => {
         <div className="space-y-6">
           <h2 className="text-2xl font-bold mb-6">Questions</h2>
           <div className="p-4 bg-gray-50 rounded-lg">
-            <div 
+            <div
               ref={questionsContainerRef}
-              dangerouslySetInnerHTML={{ __html: question }} 
+              dangerouslySetInnerHTML={{ __html: question }}
             />
           </div>
         </div>
@@ -85,7 +218,7 @@ const TestPage = () => {
           <h2 className="text-2xl font-bold mb-6">Questions</h2>
           <div className="space-y-6">
             <div className="p-4 bg-gray-50 rounded-lg">
-              <div 
+              <div
                 ref={questionsContainerRef}
                 dangerouslySetInnerHTML={{ __html: question }}
               />
@@ -109,7 +242,8 @@ const TestPage = () => {
       </div>
     );
   }
-
+  // console.log(loading);
+  // console.log(results);
   return (
     <div className="container mx-auto p-4">
       <button
@@ -123,10 +257,9 @@ const TestPage = () => {
         {location.state.title}
       </h1>
 
-      {location.state.type === "listening" 
+      {location.state.type === "listening"
         ? renderListeningContent()
-        : renderReadingContent()
-      }
+        : renderReadingContent()}
 
       <div className="mt-6 flex justify-center">
         <button
