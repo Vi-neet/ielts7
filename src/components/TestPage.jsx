@@ -67,45 +67,40 @@ const TestPage = () => {
   // Rest of the event handling code remains the same
   useEffect(() => {
     if (questionsContainerRef.current) {
-      const questionSections =
-        questionsContainerRef.current.querySelectorAll(".quiz_section");
-
+      const questionSections = questionsContainerRef.current.querySelectorAll(".quiz_section");
+  
       questionSections.forEach((section) => {
-        const questionNumber = getQuestionNumber(section);
-
-        // Handle radio inputs (MCQs, TRUE/FALSE/NG)
+        /** ✅ Handle Radio Buttons */
+        const radioQuestionNumber = getRadioQuestionNumber(section);
         const radioInputs = section.querySelectorAll('input[type="radio"]');
+  
         radioInputs.forEach((input) => {
           if (!input.id.includes("none")) {
             input.addEventListener("change", (e) => {
               setUserAnswers((prev) => ({
                 ...prev,
-                [questionNumber]: {
+                [radioQuestionNumber]: {
                   type: "radio",
-                  value: e.target.value.toLowerCase(), // Convert to lowercase for comparison
-                  questionText: section
-                    .querySelector(".mlw_qmn_new_question")
-                    ?.textContent?.trim(),
+                  value: e.target.value.toLowerCase(),
+                  questionText: section.querySelector(".mlw_qmn_new_question")?.textContent?.trim(),
                 },
               }));
             });
           }
         });
-
-        // Handle text inputs (fill-in-the-blanks)
+  
+        /** ✅ Handle Input Boxes */
+        const textQuestionNumber = getTextQuestionNumber(section);
         const textInputs = section.querySelectorAll('input[type="text"]');
+  
         textInputs.forEach((input, index) => {
-          // Add index for uniqueness
           input.addEventListener("change", (e) => {
             setUserAnswers((prev) => ({
               ...prev,
-              [`${questionNumber}-${index}`]: {
-                // ✅ Store separately using questionNumber-index
+              [`${textQuestionNumber}-${index}`]: { // Ensure unique indexing
                 type: "text",
                 value: e.target.value.trim().toLowerCase(),
-                questionText: section
-                  .querySelector(".mlw_qmn_new_question")
-                  ?.textContent?.trim(),
+                questionText: section.querySelector(".mlw_qmn_new_question")?.textContent?.trim(),
               },
             }));
           });
@@ -113,8 +108,9 @@ const TestPage = () => {
       });
     }
   }, [question]);
+  
 
-  const getQuestionNumber = (section) => {
+  const getTextQuestionNumber = (section) => {
     const questionText = section.querySelector(
       ".mlw_qmn_new_question"
     )?.textContent;
@@ -126,7 +122,12 @@ const TestPage = () => {
 
     return match ? match[1] : null; // Return the correct question number
   };
-
+  const getRadioQuestionNumber = (section) => {
+    const questionText = section.querySelector(".mlw_qmn_new_question")?.textContent;
+    const match = questionText?.match(/\d+/); // Extract first number
+    return match ? match[0] : null;
+  };
+  
   const validateAnswers = () => {
     if (!correctAnswers) {
       console.error("No correct answers available");
