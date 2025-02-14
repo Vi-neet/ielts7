@@ -2,23 +2,24 @@ import {
   BrowserRouter as Router,
   Routes,
   Route,
-  Outlet,
   Navigate,
+  Outlet,
 } from "react-router-dom";
 import Hero from "./components/Hero";
 import TestType from "./components/TestType";
-import TestLayout from "./components/TestLayout";
 import Navbar from "./components/Navbar";
 import EvaluationPage from "./pages/EvaluationPage";
 import TestPage from "./components/TestPage";
 import AboutUs from "./pages/AboutUs";
 import Footer from "./components/Footer";
 import WatchAndLearn from "./pages/WatchAndLearn";
+
 const Layout = () => {
   return (
-    <div>
-      <Hero />
+    <div className="min-h-screen bg-gray-50">
+      <Navbar />
       <Outlet />
+      <Footer />
     </div>
   );
 };
@@ -26,26 +27,29 @@ const Layout = () => {
 const App = () => {
   return (
     <Router>
-      <Navbar />
-      <div className="min-h-screen bg-gray-50">
-        <Routes>
-          <Route
+      <Routes>
+        <Route element={<Layout />}>
+          {/* Default route redirect */}
+          {/* <Route
             path="/"
             element={<Navigate to="/free/general_reading" replace />}
-          />
-          <Route path="/" element={<Layout />}>
-            <Route index element={<TestLayout />} />
-            <Route path=":plan" element={<TestLayout />}>
-              <Route path=":type" element={<TestType />} />
-            </Route>
-            <Route path="/test-page" element={<TestPage />} />
+          /> */}
+          
+          {/* Test type routes under Hero */}
+          <Route path="/" element={<Hero />}>
+            <Route path=":plan/:type" element={<TestType />} />
           </Route>
-          <Route path="evaluation" element={<EvaluationPage />} />
-          <Route path="about" element={<AboutUs />} />
-          <Route path="watchNlearn" element={<WatchAndLearn />} />
-        </Routes>
-      </div>
-      <Footer />
+          
+          {/* Other routes */}
+          <Route path="/test-page" element={<TestPage />} />
+          <Route path="/evaluation" element={<EvaluationPage />} />
+          <Route path="/about" element={<AboutUs />} />
+          <Route path="/watchNlearn" element={<WatchAndLearn />} />
+          
+          {/* Catch-all redirect */}
+          {/* <Route path="*" element={<Navigate to="/free/general_reading" replace />} /> */}
+        </Route>
+      </Routes>
     </Router>
   );
 };
