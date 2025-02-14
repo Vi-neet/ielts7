@@ -1,9 +1,60 @@
+import { BookOpen, Target, Award } from 'lucide-react';
+
 const Hero = () => {
   return (
-    <div className="bg-gradient-to-r from-[#cc0d09] to-[#d56e1f] text-white py-16">
-      <div className="container mx-auto px-4 text-center">
-        <h1 className="text-4xl font-bold mb-4 font-playfair">Welcome to IELTS Practice</h1>
-        <p className="text-xl font-inter">Master your English language skills with our comprehensive practice tests</p>
+    <div className="relative overflow-hidden">
+      {/* Background with gradient overlay */}
+      <div className="absolute inset-0 bg-gradient-to-r from-[#cc0d09] via-[#d56e1f] to-[#8B4513] opacity-90" />
+      
+      {/* Decorative circles */}
+      <div className="absolute top-0 left-0 w-64 h-64 bg-[#cc0d09] rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob" />
+      <div className="absolute top-0 right-0 w-64 h-64 bg-[#d56e1f] rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000" />
+      <div className="absolute -bottom-8 left-20 w-64 h-64 bg-[#8B4513] rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000" />
+
+      <div className="relative">
+        <div className="max-w-7xl mx-auto px-4 py-20 sm:py-24 sm:px-6 lg:px-8">
+          <div className="text-center">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-8 font-playfair">
+              Your IELTS Journey Starts Here
+            </h1>
+            <p className="max-w-2xl mx-auto text-xl text-orange-50 font-inter mb-12">
+              Join thousands of successful students who achieved their target IELTS scores with our expert-designed practice materials.
+            </p>
+            
+            {/* Feature highlights */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto mt-12">
+              <div className="bg-white bg-opacity-10 backdrop-blur-lg rounded-xl p-6 transform hover:scale-105 transition-transform duration-300 border border-orange-200/20">
+                <BookOpen className="w-12 h-12 text-orange-100 mx-auto mb-4" />
+                <h3 className="text-white text-xl font-semibold mb-2">
+                  Complete Practice Tests
+                </h3>
+                <p className="text-orange-50 text-sm">
+                  Practice with full-length tests that mirror the real IELTS exam
+                </p>
+              </div>
+              
+              <div className="bg-white bg-opacity-10 backdrop-blur-lg rounded-xl p-6 transform hover:scale-105 transition-transform duration-300 border border-orange-200/20">
+                <Target className="w-12 h-12 text-orange-100 mx-auto mb-4" />
+                <h3 className="text-white text-xl font-semibold mb-2">
+                  Section-Wise Practice
+                </h3>
+                <p className="text-orange-50 text-sm">
+                  Focus on Reading, Writing, Listening, or Speaking modules
+                </p>
+              </div>
+              
+              <div className="bg-white bg-opacity-10 backdrop-blur-lg rounded-xl p-6 transform hover:scale-105 transition-transform duration-300 border border-orange-200/20">
+                <Award className="w-12 h-12 text-orange-100 mx-auto mb-4" />
+                <h3 className="text-white text-xl font-semibold mb-2">
+                  Detailed Solutions
+                </h3>
+                <p className="text-orange-50 text-sm">
+                  Get comprehensive explanations and expert tips for improvement
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

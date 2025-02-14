@@ -3,6 +3,7 @@ import {
   Routes,
   Route,
   Outlet,
+  Navigate,
 } from "react-router-dom";
 import Hero from "./components/Hero";
 import TestType from "./components/TestType";
@@ -18,7 +19,6 @@ const Layout = () => {
     <div>
       <Hero />
       <Outlet />
-
     </div>
   );
 };
@@ -29,6 +29,10 @@ const App = () => {
       <Navbar />
       <div className="min-h-screen bg-gray-50">
         <Routes>
+          <Route
+            path="/"
+            element={<Navigate to="/free/general_reading" replace />}
+          />
           <Route path="/" element={<Layout />}>
             <Route index element={<TestLayout />} />
             <Route path=":plan" element={<TestLayout />}>
@@ -38,10 +42,10 @@ const App = () => {
           </Route>
           <Route path="evaluation" element={<EvaluationPage />} />
           <Route path="about" element={<AboutUs />} />
-          <Route path="watchNlearn" element={<WatchAndLearn/>}/>
+          <Route path="watchNlearn" element={<WatchAndLearn />} />
         </Routes>
       </div>
-      <Footer/>
+      <Footer />
     </Router>
   );
 };
