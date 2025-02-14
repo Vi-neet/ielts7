@@ -52,6 +52,16 @@ const Navbar = () => {
             >
               Writing Review
             </Link>
+            <Link
+              to="/watchNlearn"
+              className={`${
+                location.pathname === "/watchNlearn"
+                  ? "text-[#cc0d09] font-bold"
+                  : "text-gray-600 hover:text-[#d56e1f]"
+              } transition-colors`}
+            >
+              Watch and Learn
+            </Link>
           </div>
 
           {/* Mobile Menu Button */}
@@ -108,6 +118,17 @@ const Navbar = () => {
               } transition-colors`}
             >
               Writing Review
+            </Link>
+            <Link
+              to="/watchNlearn"
+              onClick={() => setIsOpen(false)}
+              className={`${
+                location.pathname.includes("/watchNlearn")
+                  ? "text-[#cc0d09]"
+                  : "text-gray-600 hover:text-[#d56e1f]"
+              } transition-colors`}
+            >
+              Watch and Learn
             </Link>
           </div>
         </div>

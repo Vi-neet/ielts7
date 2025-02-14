@@ -12,6 +12,7 @@ import EvaluationPage from "./pages/EvaluationPage";
 import TestPage from "./components/TestPage";
 import AboutUs from "./pages/AboutUs";
 import Footer from "./components/Footer";
+import WatchAndLearn from "./pages/WatchAndLearn";
 const Layout = () => {
   return (
     <div>
@@ -37,6 +38,7 @@ const App = () => {
           </Route>
           <Route path="evaluation" element={<EvaluationPage />} />
           <Route path="about" element={<AboutUs />} />
+          <Route path="watchNlearn" element={<WatchAndLearn/>}/>
         </Routes>
       </div>
       <Footer/>
