@@ -1,4 +1,3 @@
-
 import { useParams, useLocation, Link, Outlet } from "react-router-dom";
 
 const TestLayout = () => {
@@ -7,7 +6,7 @@ const TestLayout = () => {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <h2 className="text-2xl font-bold text-center mb-8 font-playfair text-[#cc0d09]">
+      {/* <h2 className="text-2xl font-bold text-center mb-8 font-playfair text-[#cc0d09]">
         Tests
       </h2>
       <div className="flex justify-center gap-4 mb-8">
@@ -31,41 +30,41 @@ const TestLayout = () => {
         >
           Paid
         </Link>
-      </div>
-
-      <div className="flex justify-center gap-4 mb-8">
-        <Link
-          to={`/${plan}/general_reading`}
-          className={`px-4 py-2 rounded-md font-inter ${
-            location.pathname.includes("general_reading")
-              ? "bg-[#cc0d09] text-white"
-              : "bg-gray-100 hover:bg-[#d56e1f] hover:text-white"
-          }`}
-        >
-          General Reading
-        </Link>
-        <Link
-          to={`/${plan}/listening`}
-          className={`px-4 py-2 rounded-md font-inter ${
-            location.pathname.includes("listening")
-              ? "bg-[#cc0d09] text-white"
-              : "bg-gray-100 hover:bg-[#d56e1f] hover:text-white"
-          }`}
-        >
-          Listening
-        </Link>
-        <Link
-          to={`/${plan}/academic_reading`}
-          className={`px-4 py-2 rounded-md font-inter ${
-            location.pathname.includes("academic_reading")
-              ? "bg-[#cc0d09] text-white"
-              : "bg-gray-100 hover:bg-[#d56e1f] hover:text-white"
-          }`}
-        >
-          Academic Reading
-        </Link>
-      </div>
-
+      </div> */}
+      {plan && (
+        <div className="flex justify-center gap-4 mb-8">
+          <Link
+            to={`/${plan}/general_reading`}
+            className={`px-4 py-2 rounded-md font-inter ${
+              location.pathname.includes("general_reading")
+                ? "bg-[#cc0d09] text-white"
+                : "bg-gray-100 hover:bg-[#d56e1f] hover:text-white"
+            }`}
+          >
+            General Reading
+          </Link>
+          <Link
+            to={`/${plan}/listening`}
+            className={`px-4 py-2 rounded-md font-inter ${
+              location.pathname.includes("listening")
+                ? "bg-[#cc0d09] text-white"
+                : "bg-gray-100 hover:bg-[#d56e1f] hover:text-white"
+            }`}
+          >
+            Listening
+          </Link>
+          <Link
+            to={`/${plan}/academic_reading`}
+            className={`px-4 py-2 rounded-md font-inter ${
+              location.pathname.includes("academic_reading")
+                ? "bg-[#cc0d09] text-white"
+                : "bg-gray-100 hover:bg-[#d56e1f] hover:text-white"
+            }`}
+          >
+            Academic Reading
+          </Link>
+        </div>
+      )}
       <Outlet />
     </div>
   );
