@@ -2,7 +2,6 @@ import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 
-
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
@@ -26,12 +25,22 @@ const Navbar = () => {
             <Link
               to="/"
               className={`${
-                location.pathname === "/" 
+                location.pathname === "/"
                   ? "text-[#cc0d09] font-bold"
                   : "text-gray-600 hover:text-[#d56e1f]"
               } transition-colors`}
             >
               Home
+            </Link>
+            <Link
+              to="/about"
+              className={`${
+                location.pathname.includes("/about")
+                  ? "text-[#cc0d09] font-bold"
+                  : "text-gray-600 hover:text-[#d56e1f]"
+              } transition-colors`}
+            >
+              About Us
             </Link>
             <Link
               to="/evaluation"
@@ -77,6 +86,17 @@ const Navbar = () => {
               } transition-colors`}
             >
               Home
+            </Link>
+            <Link
+              to="/about"
+              onClick={() => setIsOpen(false)}
+              className={`${
+                location.pathname.includes("/about")
+                  ? "text-[#cc0d09]"
+                  : "text-gray-600 hover:text-[#d56e1f]"
+              } transition-colors`}
+            >
+              About Us
             </Link>
             <Link
               to="/evaluation"
