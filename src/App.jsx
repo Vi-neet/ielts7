@@ -8,7 +8,7 @@ import Hero from "./components/Hero";
 import TestType from "./components/TestType";
 import Navbar from "./components/Navbar";
 import EvaluationPage from "./pages/EvaluationPage";
-import TestPage from "./components/TestPage";
+import TestPage from "./pages/TestPage";
 import AboutUs from "./pages/AboutUs";
 import Footer from "./components/Footer";
 import WatchAndLearn from "./pages/WatchAndLearn";
