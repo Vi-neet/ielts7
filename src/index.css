@@ -91,3 +91,135 @@
 .animation-delay-4000 {
   animation-delay: 4s;
 }
+/* Fill in the blank input style */
+.qmn_fill_blank {
+  border: 2px solid #e2e8f0;
+  border-radius: 6px;
+  padding: 8px 12px;
+  font-size: 16px;
+  width: 100%;
+  max-width: 400px;
+  transition: all 0.3s ease;
+  outline: none;
+  background-color: #fff;
+  color: #2d3748;
+}
+
+.qmn_fill_blank:focus {
+  border-color: #4299e1;
+  box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.2);
+}
+
+.qmn_fill_blank::placeholder {
+  color: #a0aec0;
+}
+
+/* Radio button and multiple choice styles */
+.qmn_quiz_radio,
+.qmn-multiple-choice-input {
+  position: relative;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #cbd5e0;
+  border-radius: 50%;
+  margin-right: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  vertical-align: middle;
+}
+
+.qmn_quiz_radio:checked,
+.qmn-multiple-choice-input:checked {
+  border-color: #4299e1;
+  background-color: #4299e1;
+}
+
+.qmn_quiz_radio:checked::after,
+.qmn-multiple-choice-input:checked::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 8px;
+  height: 8px;
+  background-color: white;
+  border-radius: 50%;
+}
+
+.qmn_quiz_radio:hover,
+.qmn-multiple-choice-input:hover {
+  border-color: #4299e1;
+}
+
+.qmn_quiz_radio:focus,
+.qmn-multiple-choice-input:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.2);
+}
+
+/* Label styles for radio and multiple choice */
+.qmn_quiz_radio + label,
+.qmn-multiple-choice-input + label {
+  cursor: pointer;
+  font-size: 16px;
+  color: #4a5568;
+  padding: 4px 0;
+  margin-left: 4px;
+}
+
+/* Disabled state */
+.qmn_fill_blank:disabled {
+  background-color: #f7fafc;
+  cursor: not-allowed;
+  color: #a0aec0;
+}
+
+.qmn_quiz_radio:disabled,
+.qmn-multiple-choice-input:disabled {
+  background-color: #e2e8f0;
+  border-color: #cbd5e0;
+  cursor: not-allowed;
+}
+
+.qmn_quiz_radio:disabled + label,
+.qmn-multiple-choice-input:disabled + label {
+  color: #a0aec0;
+  cursor: not-allowed;
+}
+
+/* Error state */
+.qmn_fill_blank.error {
+  border-color: #f56565;
+}
+
+.qmn_fill_blank.error:focus {
+  box-shadow: 0 0 0 3px rgba(245, 101, 101, 0.2);
+}
+
+/* Container styling for better spacing */
+.qmn-quiz-question {
+  margin-bottom: 20px;
+}
+
+/* Choice group styling */
+.qmn-quiz-choices {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+/* Individual choice container */
+.qmn-quiz-choice {
+  display: flex;
+  align-items: center;
+  padding: 8px 12px;
+  border-radius: 6px;
+  transition: background-color 0.2s ease;
+}
+
+.qmn-quiz-choice:hover {
+  background-color: #f7fafc;
+}
