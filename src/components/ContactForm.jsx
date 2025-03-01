@@ -150,7 +150,7 @@ const ContactForm = () => {
   return (
     <div className="w-full">
       {/* Custom Styles for Animation */}
-      <style jsx>{`
+      <style>{`
         .input-group {
           position: relative;
         }

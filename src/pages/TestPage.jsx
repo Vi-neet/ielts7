@@ -20,7 +20,7 @@ const TestPage = () => {
 
   console.log(userAnswers);
   const { results, validateAnswers } = useAnswerValidation(correctAnswers);
-
+  console.log(results)
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     if (params.get("debug") === "true") {
