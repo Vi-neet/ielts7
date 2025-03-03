@@ -223,3 +223,7 @@
 .qmn-quiz-choice:hover {
   background-color: #f7fafc;
 }
+iframe{
+  width: 100vh !important;
+  height:100vh !important;
+}

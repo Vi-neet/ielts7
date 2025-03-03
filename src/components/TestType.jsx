@@ -48,35 +48,42 @@ const TestType = () => {
         const allTests = [];
 
         for (const year of years) {
-          const collectionName = `cambridge_${year}_${type}`;
-          const querySnapshot = await getDocs(collection(db, collectionName));
-          
-          querySnapshot.forEach((doc) => {
-            const data = doc.data();
+          const collectionId = `cambridge_${year}_${type}`;
+          try {
+            const querySnapshot = await getDocs(collection(db, collectionId));
             
-            for (let i = 1; i <= 4; i++) {
-              const testKey = `test_${i}`;
-              const questionKey = `question_${i}`;
+            if (!querySnapshot.empty) {
+              // We only need one document per collection since all tests are in one document
+              const doc = querySnapshot.docs[0];
+              const data = doc.data();
               
-              if (data[testKey] && data[questionKey]) {
-                allTests.push({
-                  id: doc.id,
-                  year,
-                  testNumber: testKey,
-                  title: `Cambridge ${year} ${type.replace("_", " ")} - Test ${i}`,
-                  test: data[testKey],
-                  questions: data[questionKey],
-                });
+              for (let i = 1; i <= 4; i++) {
+                const testKey = `test_${i}`;
+                const questionKey = `question_${i}`;
+                
+                if (data[testKey] && data[questionKey]) {
+                  allTests.push({
+                    id: doc.id,
+                    year,
+                    testNumber: i,
+                    title: `Cambridge ${year} ${type.replace("_", " ")} - Test ${i}`,
+                    test: data[testKey],
+                    questions: data[questionKey],
+                  });
+                }
               }
             }
-          });
+          } catch (innerErr) {
+            console.error(`Error fetching ${collectionId}:`, innerErr);
+            // Continue with the next year if one fails
+          }
         }
 
         const sortedTests = allTests.sort((a, b) => {
           if (a.year !== b.year) {
             return b.year - a.year;
           }
-          return a.testNumber.localeCompare(b.testNumber);
+          return a.testNumber - b.testNumber;
         });
 
         setTests(sortedTests);
@@ -92,7 +99,7 @@ const TestType = () => {
   }, [type]);
 
   const handleTestClick = (test) => {
-    if (!test || !test.id || !test.test || !test.questions || !type || !test.title) {
+    if (!test || !test.test || !test.questions || !type || !test.title) {
       console.error('Missing required test data');
       return;
     }
@@ -104,7 +111,7 @@ const TestType = () => {
         questions: test.questions,
         type,
         title: test.title,
-        testNumber: parseInt(test.testNumber.replace("test_", ""), 10)
+        testNumber: test.testNumber
       }
     });
   };
@@ -146,8 +153,8 @@ const TestType = () => {
             <h2 className="text-lg font-semibold mb-3">{test.title}</h2>
             <p className="text-gray-600">
               {type === "listening"
-                ? "Click to play audio"
-                : "Click to view content"}
+                ? "Click to play audio and take the test"
+                : "Click to view content and take the test"}
             </p>
           </div>
         ))}
