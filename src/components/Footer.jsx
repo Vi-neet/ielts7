@@ -43,7 +43,7 @@ const Footer = () => {
               </a>
             </li>
             <li>
-              <a href="/courses" className="hover:text-white transition-colors">
+              <a href="/" className="hover:text-white transition-colors">
                 Tests
               </a>
             </li>
@@ -110,7 +110,8 @@ const Footer = () => {
             <ul className="flex space-x-4">
               <li>
                 <a
-                  href="#"
+                  href="https://www.instagram.com/ielts_7plus_house/"
+                  target="_blank"
                   className="hover:text-white transition-colors"
                   aria-label="Instagram"
                 >
