@@ -1,11 +1,4 @@
-import {
-  Instagram,
-  Facebook,
-  Youtube,
-  Mail,
-  Phone,
-  MapPin,
-} from "lucide-react";
+import { Instagram, Facebook, Youtube, Phone, MapPin } from "lucide-react";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -43,21 +36,24 @@ const Footer = () => {
               </a>
             </li>
             <li>
-              <a href="/" className="hover:text-white transition-colors">
+              <a
+                href="/free/general_reading"
+                className="hover:text-white transition-colors"
+              >
                 Tests
               </a>
             </li>
             <li>
               <a
-                href="/success-stories"
+                href="/evaluation"
                 className="hover:text-white transition-colors"
               >
-                Success Stories
+                Get your writings reviewed
               </a>
             </li>
             <li>
               <a
-                href="/resources"
+                href="/watchNlearn"
                 className="hover:text-white transition-colors"
               >
                 Free Resources
@@ -72,9 +68,11 @@ const Footer = () => {
           <address className="not-italic space-y-3">
             <div className="flex items-start space-x-3">
               <MapPin className="w-5 h-5 mt-1 flex-shrink-0" />
-              <p>
-                123 Education Street, Academic District, Learning City, 12345
-              </p>
+              <p>334 King St N, Waterloo, ON N2J 2Z2 </p>
+            </div>
+            <div className="flex items-start space-x-3">
+              <MapPin className="w-5 h-5 mt-1 flex-shrink-0" />
+              <p>252, Block A3, Janakpuri, Delhi, 110058 </p>
             </div>
             <div className="flex items-center space-x-3">
               <Phone className="w-5 h-5 flex-shrink-0" />
@@ -82,16 +80,7 @@ const Footer = () => {
                 href="tel:+1234567890"
                 className="hover:text-white transition-colors"
               >
-                +1 (234) 567-890
-              </a>
-            </div>
-            <div className="flex items-center space-x-3">
-              <Mail className="w-5 h-5 flex-shrink-0" />
-              <a
-                href="mailto:info@ieltsacademy.com"
-                className="hover:text-white transition-colors"
-              >
-                info@ieltsacademy.com
+                +91 081780 55015
               </a>
             </div>
           </address>
@@ -120,7 +109,8 @@ const Footer = () => {
               </li>
               <li>
                 <a
-                  href="#"
+                  href="https://www.facebook.com/people/IELTS-7-house/61561875090567/"
+                  target="_blank"
                   className="hover:text-white transition-colors"
                   aria-label="Facebook"
                 >
@@ -129,7 +119,8 @@ const Footer = () => {
               </li>
               <li>
                 <a
-                  href="#"
+                  href="https://www.youtube.com/@harsharannarula7868"
+                  target="_blank"
                   className="hover:text-white transition-colors"
                   aria-label="YouTube"
                 >

@@ -79,7 +79,9 @@
     transform: translate(0px, 0px) scale(1);
   }
 }
-
+html {
+  scroll-behavior: smooth;
+}
 .animate-blob {
   animation: blob 5s infinite;
 }
@@ -226,4 +228,21 @@
 iframe{
   width: 100vh !important;
   height:100vh !important;
+}
+
+.video-container{
+  width: 500px !important;
+  height: 300px !important;
+}
+.price-tag {
+  position: absolute;
+  top: -15px;
+  right: -15px;
+  background: #cc0d09;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-weight: bold;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+  transform: rotate(5deg);
 }

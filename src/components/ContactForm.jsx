@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import Swal from "sweetalert2";
-import { Send, XCircle } from "lucide-react";
+import { Send, XCircle, CreditCard } from "lucide-react";
 
 const ContactForm = () => {
   const [result, setResult] = useState("");
@@ -9,11 +9,12 @@ const ContactForm = () => {
   const [formState, setFormState] = useState({
     name: "",
     email: "",
-    task_type: "",
     writing_content: "",
     notes: "",
+    paymentId: "",
   });
   const formRef = useRef(null);
+  // const razorpayContainerRef = useRef(null);
 
   // Generate unique animation keyframes for floating elements
   const generateKeyframes = () => {
@@ -61,6 +62,30 @@ const ContactForm = () => {
     };
   }, []);
 
+  // Load Razorpay button after component mounts
+  useEffect(() => {
+  //   if (razorpayContainerRef.current) {
+  //     const script = document.createElement("script");
+  //     script.src = "https://checkout.razorpay.com/v1/payment-button.js";
+  //     script.setAttribute("data-payment_button_id", "pl_Q4EpGUzUpirMWJ");
+  //     script.async = true;
+      
+  //     // Clear container before adding new script
+  //     razorpayContainerRef.current.innerHTML = '';
+  //     razorpayContainerRef.current.appendChild(script);
+  //   }
+  // }, []);
+  const rzpPaymentForm = document.getElementById("rzp_payment_form");
+  if (!rzpPaymentForm.hasChildNodes()) {
+    const script = document.createElement("script");
+    script.src = "https://checkout.razorpay.com/v1/payment-button.js";
+    script.async = true;
+    script.dataset.payment_button_id = "pl_Q4EpGUzUpirMWJ";
+    rzpPaymentForm.appendChild(script);
+
+  }
+
+});
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormState((prev) => ({
@@ -69,13 +94,31 @@ const ContactForm = () => {
     }));
   };
 
+  const validatePaymentId = (paymentId) => {
+    // Check if payment ID starts with 'pay_'
+    return paymentId.trim().startsWith('pay_') && paymentId.trim().length > 10;
+  };
+
   const onSubmit = async (event) => {
     event.preventDefault();
+    
+    // Check if payment ID is provided and valid
+    if (!formState.paymentId.trim()) {
+      setResult("Please complete payment and enter Payment ID");
+      return;
+    }
+    
+    // Validate payment ID format
+    if (!validatePaymentId(formState.paymentId)) {
+      setResult("Invalid Payment ID. Please check and try again.");
+      return;
+    }
+    
     setIsSubmitting(true);
     setResult("");
 
     const formData = new FormData(event.target);
-    formData.append("access_key", "446b0e77-d933-48e0-b9e7-6dc3d1da56f4");
+    formData.append("access_key", "61d09f73-58b6-4762-8542-87325de248f3");
 
     try {
       const response = await fetch("https://api.web3forms.com/submit", {
@@ -108,9 +151,9 @@ const ContactForm = () => {
         setFormState({
           name: "",
           email: "",
-          task_type: "",
           writing_content: "",
           notes: "",
+          paymentId: "",
         });
 
         // Scroll to top of form with smooth animation
@@ -221,13 +264,56 @@ const ContactForm = () => {
             transform: translate(-50%, -50%) rotate(45deg) translateX(100%);
           }
         }
+        
+        /* Razorpay payment button styles - improved visibility */
+        .razorpay-payment-button {
+          padding: 0.5rem !important;
+          background: linear-gradient(to right, #2563eb, #3b82f6) !important;
+          color: white !important;
+          border-radius: 0.5rem !important;
+          font-weight: 600 !important;
+          transition: all 0.3s !important;
+          border: none !important;
+          cursor: pointer !important;
+          margin-bottom: 1rem !important;
+          font-size: 1rem !important;
+          letter-spacing: 0.025em !important;
+        }
+        
+        .razorpay-payment-button:hover {
+          filter: brightness(115%) !important;
+        }
+        
+        /* Make sure Razorpay container is visible */
+        .razorpay-container {
+          width: 100%;
+          min-height: 45px;
+          margin-bottom: 1rem;
+        }
+        
+        /* Payment ID validation styles */
+        .payment-id-valid {
+          border-color: #10b981 !important;
+        }
+        
+        .payment-id-invalid {
+          border-color: #ef4444 !important;
+        }
+        
+        .payment-id-feedback {
+          font-size: 0.75rem;
+          margin-top: 0.25rem;
+          display: flex;
+          align-items: center;
+          gap: 0.25rem;
+        }
       `}</style>
 
-      {/* Hero Section - Full Width */}
+      {/* Hero Section - Full Width (Matching the WatchAndLearn component style) */}
       <section className="relative overflow-hidden bg-gradient-to-r from-[#cc0d09] via-[#d56e1f] to-[#8B4513] min-h-[50vh] w-full">
         <div className="absolute inset-0">
           <div className="absolute inset-0 bg-black/10"></div>
-          {/* Animated geometric patterns */}
+         
           <div className="absolute inset-0">
             {[...Array(12)].map((_, i) => (
               <div
@@ -298,6 +384,10 @@ const ContactForm = () => {
             onSubmit={onSubmit}
             className="relative p-8 bg-white rounded-lg shadow-lg space-y-6"
           >
+            <div className="price-tag flex items-center space-x-1">
+              <CreditCard className="w-4 h-4" />
+              <span>₹49 only</span>
+            </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="input-group">
                 <input
@@ -341,30 +431,6 @@ const ContactForm = () => {
             </div>
 
             <div className="input-group">
-              <select
-                id="task_type"
-                name="task_type"
-                value={formState.task_type}
-                onChange={handleInputChange}
-                onFocus={handleFocus}
-                onBlur={handleBlur}
-                required
-                className="w-full px-4 pt-4 pb-2 border border-gray-300 rounded-lg transition-all appearance-none"
-              >
-                <option value=""></option>
-                <option value="task1">Task 1 (Graph/Chart Description)</option>
-                <option value="task2">Task 2 (Essay)</option>
-                <option value="both">Both Tasks</option>
-              </select>
-              <label
-                htmlFor="task_type"
-                className={formState.task_type ? "floating" : ""}
-              >
-                Writing Task Type
-              </label>
-            </div>
-
-            <div className="input-group">
               <textarea
                 id="writing_content"
                 name="writing_content"
@@ -401,6 +467,53 @@ const ContactForm = () => {
               >
                 Additional Notes (Optional)
               </label>
+            </div>
+            
+            {/* Payment Section */}
+            <div className="p-4 bg-gray-50 rounded-lg border border-gray-200">
+              <h3 className="text-lg font-semibold text-gray-800 mb-4">Complete Payment</h3>
+              <p className="text-sm text-gray-600 mb-4">Please make the payment to proceed with your evaluation.</p>
+              
+              {/* Razorpay Button Container - INSIDE the form */}
+              {/* <div className="razorpay-container" ref={razorpayContainerRef}></div> */}
+              <form id="rzp_payment_form"></form>
+              {/* Payment ID Input with Validation */}
+              <div className="input-group mt-4">
+                <input
+                  type="text"
+                  id="paymentId"
+                  name="paymentId"
+                  value={formState.paymentId}
+                  onChange={handleInputChange}
+                  onFocus={handleFocus}
+                  onBlur={handleBlur}
+                  required
+                  className={`w-full px-4 pt-4 pb-2 border rounded-lg transition-all ${
+                    formState.paymentId
+                      ? validatePaymentId(formState.paymentId)
+                        ? "payment-id-valid"
+                        : "payment-id-invalid"
+                      : "border-gray-300"
+                  }`}
+                />
+                <label
+                  htmlFor="paymentId"
+                  className={formState.paymentId ? "floating" : ""}
+                >
+                  Payment ID (from receipt)
+                </label>
+              </div>
+              
+              {formState.paymentId && !validatePaymentId(formState.paymentId) && (
+                <div className="payment-id-feedback text-red-500">
+                  <XCircle className="w-4 h-4" />
+                  <span>Invalid payment ID</span>
+                </div>
+              )}
+              
+              <p className="text-xs text-gray-500 mt-2">
+                After completing payment, copy the Payment ID from your receipt and paste it here.
+              </p>
             </div>
 
             <div className="submit-button-wrapper rounded-lg overflow-hidden">

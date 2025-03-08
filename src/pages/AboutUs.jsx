@@ -1,12 +1,5 @@
 import { useState, useEffect } from "react";
-import {
-  Users,
-  GraduationCap,
-  Star,
-  Trophy,
-  ChevronLeft,
-  ChevronRight,
-} from "lucide-react";
+import { Users, GraduationCap, Star, Trophy } from "lucide-react";
 
 const AboutUs = () => {
   const [counts, setCounts] = useState({
@@ -17,35 +10,6 @@ const AboutUs = () => {
   });
 
   const [isVisible, setIsVisible] = useState(false);
-  const [activeIndex, setActiveIndex] = useState(0);
-  const [isAnimating, setIsAnimating] = useState(false);
-
-  const testimonials = [
-    {
-      name: "Majot Singh",
-      text: "I had an amazing experience with them, they helped me get Canadian visitor's visa for my family. I literally didn't have to manage all the stuff required for visa procedure, they handled all the things efficiently and got me the visa for my parents. I recommend others to get their visa work done from them.",
-    },
-    {
-      name: "Shreya Gupta",
-      text: "Getting my desired band score in the first attempt seemed like an impossible task but ma'am made it possible for me. I'll always be grateful for her unwavering support and guidance.",
-    },
-    {
-      name: "Jaskaran Singh",
-      text: "I am thrilled to share that I achieved a remarkable score in my IELTS exam, and I owe a significant part of this success to Meenu Ma'am. Her exceptional teaching skills, personalised guidance, and unwavering support played a pivotal role in my achievement.",
-    },
-    {
-      name: "Mandeep Singh",
-      text: "It was a good teaching experience and kind of one on one session with mam. By simply following mam's instructions i have scored overall band score of 7.5 in my first attempt.",
-    },
-    {
-      name: "KRITIKA SAWHNEY",
-      text: "Thank you IELTS 7+ house for your guidance and help throughout the visitor visa process for my sister. It was re application after she got refusal Meenu Ma'ams guidance and confidence during the entire process made it dream come true for me and my family.",
-    },
-    {
-      name: "Harpreet Kaur",
-      text: "Thank you meenu mam for your guidance, support and interactive speaking sessions. With your continuous push towards smart learning helps me alot today in giving my speaking exam.",
-    },
-  ];
 
   useEffect(() => {
     setIsVisible(true);
@@ -80,37 +44,35 @@ const AboutUs = () => {
       }
     }, interval);
 
-    return () => clearInterval(timer);
+    // Load Elfsight script
+    const loadElfsightScript = () => {
+      const script = document.createElement('script');
+      script.src = "https://static.elfsight.com/platform/platform.js";
+      script.defer = true;
+      script.setAttribute('data-use-service-core', '');
+      document.body.appendChild(script);
+      
+      return () => {
+        // Clean up script when component unmounts
+        if (script.parentNode) {
+          script.parentNode.removeChild(script);
+        }
+      };
+    };
+
+    const cleanup = loadElfsightScript();
+    
+    return () => {
+      clearInterval(timer);
+      cleanup();
+    };
   }, []);
 
-  const nextSlide = () => {
-    if (isAnimating) return;
-    setIsAnimating(true);
-    setActiveIndex((prev) => (prev + 1) % testimonials.length);
-    setTimeout(() => setIsAnimating(false), 500);
-  };
-
-  const prevSlide = () => {
-    if (isAnimating) return;
-    setIsAnimating(true);
-    setActiveIndex(
-      (prev) => (prev - 1 + testimonials.length) % testimonials.length
-    );
-    setTimeout(() => setIsAnimating(false), 500);
-  };
-
-  // This function returns the indexes of previous, current, and next slides
-  const getSlideIndexes = () => {
-    return [
-      (activeIndex - 1 + testimonials.length) % testimonials.length,
-      activeIndex,
-      (activeIndex + 1) % testimonials.length,
-    ];
-  };
   return (
     <div className="w-full">
       {/* Hero Section */}
       <section className="relative overflow-hidden bg-gradient-to-r from-[#cc0d09] via-[#d56e1f] to-[#8B4513]">
+        {/* Hero content remains the same */}
         <div className="absolute inset-0">
           <div className="absolute inset-0 bg-black/10"></div>
           <div className="absolute inset-0">
@@ -238,82 +200,13 @@ const AboutUs = () => {
         </div>
       </section>
 
-      {/* Reviews Section */}
-      <section className="py-16 max-w-7xl mx-auto px-4 overflow-hidden">
+      {/* Elfsight Google Reviews Widget Section */}
+      <section id="success-stories" className="py-16 max-w-7xl mx-auto px-4">
         <h2 className="text-4xl font-bold text-center mb-12 bg-gradient-to-r from-[#cc0d09] via-[#d56e1f] to-[#8B4513] bg-clip-text text-transparent">
           Success Stories
         </h2>
-        <div className="relative">
-          <div className="flex justify-center items-stretch gap-8 min-h-[300px]">
-            {getSlideIndexes().map((index, position) => (
-              <div
-                key={`${index}-${position}`}
-                className={`w-full md:w-1/3 transition-all duration-500 ease-out absolute left-1/2 ${
-                  position === 0
-                    ? "-translate-x-[150%] scale-95 opacity-50 blur-sm"
-                    : position === 1
-                    ? "-translate-x-1/2 scale-100 opacity-100 z-20"
-                    : "translate-x-[50%] scale-95 opacity-50 blur-sm"
-                }`}
-              >
-                <div className="relative group h-full">
-                  <div className="absolute -inset-1 bg-gradient-to-r from-[#cc0d09] via-[#d56e1f] to-[#8B4513] rounded-lg blur opacity-25 group-hover:opacity-75 transition duration-1000"></div>
-                  <div className="relative p-6 bg-white rounded-lg shadow-lg h-full flex flex-col">
-                    <div className="flex items-center mb-4">
-                      <div className="flex text-[#d56e1f]">
-                        {[...Array(5)].map((_, i) => (
-                          <Star key={i} className="w-4 h-4 fill-current" />
-                        ))}
-                      </div>
-                    </div>
-                    <p className="text-gray-600 mb-4 flex-grow">
-                      {testimonials[index].text}
-                    </p>
-                    <div className="font-medium text-[#8B4513]">
-                      {testimonials[index].name}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <button
-            onClick={prevSlide}
-            disabled={isAnimating}
-            className="absolute left-0 top-1/2 -translate-y-1/2 bg-white/80 p-2 rounded-full shadow-lg hover:bg-white transition-colors disabled:opacity-50 z-30"
-          >
-            <ChevronLeft className="w-6 h-6 text-[#d56e1f]" />
-          </button>
-          <button
-            onClick={nextSlide}
-            disabled={isAnimating}
-            className="absolute right-0 top-1/2 -translate-y-1/2 bg-white/80 p-2 rounded-full shadow-lg hover:bg-white transition-colors disabled:opacity-50 z-30"
-          >
-            <ChevronRight className="w-6 h-6 text-[#d56e1f]" />
-          </button>
-
-          {/* Navigation Dots */}
-          <div className="flex justify-center gap-2 mt-8">
-            {testimonials.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => {
-                  if (!isAnimating) {
-                    setIsAnimating(true);
-                    setActiveIndex(index);
-                    setTimeout(() => setIsAnimating(false), 500);
-                  }
-                }}
-                className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                  index === activeIndex
-                    ? "bg-[#d56e1f] w-4"
-                    : "bg-gray-300 hover:bg-gray-400"
-                }`}
-              />
-            ))}
-          </div>
-        </div>
+        {/* Elfsight Widget Container */}
+        <div className="elfsight-app-d1308ecc-ede2-4180-a34d-7a3b82f32886"></div>
       </section>
     </div>
   );

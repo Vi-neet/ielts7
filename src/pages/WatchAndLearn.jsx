@@ -15,9 +15,15 @@ const WatchAndLearn = () => {
 
       styles += `
         @keyframes float-${i} {
-          0% { transform: translate(calc(-50% + ${x1}px), calc(-50% + ${y1}px)) rotate(${Math.random() * 360}deg); }
-          50% { transform: translate(calc(-50% + ${x2}px), calc(-50% + ${y2}px)) rotate(${Math.random() * 360}deg); }
-          100% { transform: translate(calc(-50% + ${x1}px), calc(-50% + ${y1}px)) rotate(${Math.random() * 360}deg); }
+          0% { transform: translate(calc(-50% + ${x1}px), calc(-50% + ${y1}px)) rotate(${
+        Math.random() * 360
+      }deg); }
+          50% { transform: translate(calc(-50% + ${x2}px), calc(-50% + ${y2}px)) rotate(${
+        Math.random() * 360
+      }deg); }
+          100% { transform: translate(calc(-50% + ${x1}px), calc(-50% + ${y1}px)) rotate(${
+        Math.random() * 360
+      }deg); }
         }
         
         @keyframes pulse-${i} {
@@ -31,7 +37,7 @@ const WatchAndLearn = () => {
 
   useEffect(() => {
     setIsVisible(true);
-    
+
     // Add keyframes to document
     const style = document.createElement("style");
     style.textContent = generateKeyframes();
@@ -45,21 +51,22 @@ const WatchAndLearn = () => {
   const videos = [
     {
       id: 1,
-      title: "Understanding Essay Structure",
-      description: "Learn the fundamentals of structuring your academic essays effectively",
+      title: "IELTS || Essential Tips for Success!",
+      description: "Learn the fundamentals of scoring high in the IELTS exam",
       videoId: "XZkDb4rLSp0",
     },
     {
       id: 2,
-      title: "Mastering Academic Writing",
-      description: "Essential tips and techniques for academic writing excellence",
-      videoId: "XZkDb4rLSp0",
+      title: "Mastering Speaking Skills",
+      description:
+        "Essential tips and techniques for Ielts Speaking excellence",
+      videoId: "3aBQYrkKZUE",
     },
     {
       id: 3,
-      title: "Research Paper Guidelines",
-      description: "Step-by-step guide to writing outstanding research papers",
-      videoId: "XZkDb4rLSp0",
+      title: "Mastering Ielts Writing",
+      description: "Learn the essentials of Ielts Writing and score high",
+      videoId: "UAVsXoCnZMc",
     },
     {
       id: 4,
@@ -73,23 +80,26 @@ const WatchAndLearn = () => {
     {
       id: 1,
       title: "The Impact of Technology on Modern Education",
-      content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+      content:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
     },
     {
       id: 2,
       title: "Environmental Sustainability in the 21st Century",
-      content: "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+      content:
+        "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
     },
     {
       id: 3,
       title: "The Role of Artificial Intelligence in Healthcare",
-      content: "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.",
+      content:
+        "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.",
     },
   ];
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <style jsx>{`
+      <style>{`
         @keyframes gradientBorder {
           0% { background-position: 0% 50%; }
           50% { background-position: 100% 50%; }
@@ -155,18 +165,25 @@ const WatchAndLearn = () => {
                   height: Math.random() * 200 + 100 + "px",
                   left: Math.random() * 100 + "%",
                   top: Math.random() * 100 + "%",
-                  transform: `translate(-50%, -50%) rotate(${Math.random() * 360}deg)`,
+                  transform: `translate(-50%, -50%) rotate(${
+                    Math.random() * 360
+                  }deg)`,
                   border: "2px solid rgba(255, 255, 255, 0.1)",
                   borderRadius: Math.random() > 0.5 ? "50%" : "0%",
-                  animation: `float-${i} ${Math.random() * 20 + 10}s infinite ease-in-out`,
+                  animation: `float-${i} ${
+                    Math.random() * 20 + 10
+                  }s infinite ease-in-out`,
                 }}
               >
                 <div
                   className="absolute inset-0"
                   style={{
-                    background: "linear-gradient(45deg, rgba(255,255,255,0.1), rgba(255,255,255,0))",
+                    background:
+                      "linear-gradient(45deg, rgba(255,255,255,0.1), rgba(255,255,255,0))",
                     transform: `rotate(${Math.random() * 360}deg)`,
-                    animation: `pulse-${i} ${Math.random() * 4 + 2}s infinite ease-in-out alternate`,
+                    animation: `pulse-${i} ${
+                      Math.random() * 4 + 2
+                    }s infinite ease-in-out alternate`,
                   }}
                 ></div>
               </div>
@@ -175,7 +192,13 @@ const WatchAndLearn = () => {
         </div>
 
         <div className="container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-          <div className={`py-20 text-center transition-all duration-1000 ${isVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"}`}>
+          <div
+            className={`py-20 text-center transition-all duration-1000 ${
+              isVisible
+                ? "translate-y-0 opacity-100"
+                : "translate-y-10 opacity-0"
+            }`}
+          >
             <div className="relative inline-block">
               <h1 className="text-6xl font-bold text-white mb-6">
                 Free Learning
@@ -187,7 +210,8 @@ const WatchAndLearn = () => {
               <div className="absolute -right-4 -bottom-4 w-20 h-20 border-2 border-white/20 rounded-lg transform -rotate-12"></div>
             </div>
             <p className="text-white/90 text-xl max-w-2xl mx-auto mt-6">
-              Access our comprehensive collection of educational videos and sample essays to enhance your academic writing skills.
+              Access our comprehensive collection of educational videos and
+              sample essays to enhance your academic writing skills.
             </p>
           </div>
         </div>
@@ -225,7 +249,7 @@ const WatchAndLearn = () => {
 
         {/* Content */}
         {activeTab === "videos" ? (
-          <div className="space-y-24">
+          <div className="space-y-2">
             {videos.map((video, index) => (
               <div
                 key={video.id}
@@ -238,14 +262,16 @@ const WatchAndLearn = () => {
                     <iframe
                       src={`https://www.youtube.com/embed/${video.videoId}`}
                       title={video.title}
-                      className="w-full h-full rounded-lg shadow-lg"
+                      className="w-full h-full rounded-lg shadow-lg video-container"
                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                       allowFullScreen
                     />
                   </div>
                 </div>
                 <div className="w-full md:w-1/2 text-center md:text-left">
-                  <h2 className="text-3xl font-bold text-gray-800 mb-4">{video.title}</h2>
+                  <h2 className="text-3xl font-bold text-gray-800 mb-4">
+                    {video.title}
+                  </h2>
                   <p className="text-gray-600 mb-6">{video.description}</p>
                 </div>
               </div>
@@ -254,8 +280,13 @@ const WatchAndLearn = () => {
         ) : (
           <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
             {essays.map((essay) => (
-              <div key={essay.id} className="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow">
-                <h3 className="text-xl font-bold text-gray-800 mb-4">{essay.title}</h3>
+              <div
+                key={essay.id}
+                className="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow"
+              >
+                <h3 className="text-xl font-bold text-gray-800 mb-4">
+                  {essay.title}
+                </h3>
                 <p className="text-gray-600 mb-6">{essay.content}</p>
                 <button className="text-[#d56e1f] font-medium hover:text-[#cc0d09] transition-colors">
                   Read More →

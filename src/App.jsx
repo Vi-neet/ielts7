@@ -36,7 +36,7 @@ const App = () => {
           
           {/* Test type routes under Hero */}
           <Route path="/" element={<Hero />}>
-            <Route path=":plan/:type" element={<TestType />} />
+            <Route path="/:type" element={<TestType />} />
           </Route>
           
           {/* Other routes */}

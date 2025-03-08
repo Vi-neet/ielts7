@@ -1,61 +1,21 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable react/prop-types */
-import { BookOpen, Target, Award, ChevronDown } from "lucide-react";
-import { Link, Outlet, useParams, useLocation } from "react-router-dom";
-import { useState, useRef, useEffect } from "react";
+import { BookOpen, Target, Award } from "lucide-react";
+import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 const Hero = () => {
-  const [freeDropdownOpen, setFreeDropdownOpen] = useState(false);
-  const [paidDropdownOpen, setPaidDropdownOpen] = useState(false);
-  const freeDropdownRef = useRef(null);
-  const paidDropdownRef = useRef(null);
-  const { plan, type } = useParams();
   const location = useLocation();
+  const navigate = useNavigate();
 
+  // Redirect to /general_reading by default if at root
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (
-        freeDropdownRef.current &&
-        !freeDropdownRef.current.contains(event.target)
-      ) {
-        setFreeDropdownOpen(false);
-      }
-      if (
-        paidDropdownRef.current &&
-        !paidDropdownRef.current.contains(event.target)
-      ) {
-        setPaidDropdownOpen(false);
-      }
-    };
+    if (location.pathname === "/") {
+      navigate("/general_reading");
+    }
+  }, [location.pathname, navigate]);
 
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
-
-  const DropdownMenu = ({ planType, isOpen }) => (
-    <div className="absolute top-full left-0 mt-2 w-48 bg-white rounded-lg shadow-xl z-50 transform origin-top transition-all duration-200 ease-out">
-      <div className="py-1">
-        <Link
-          to={`/${planType}/general_reading`}
-          className="block px-4 py-2 text-gray-700 hover:bg-[#d56e1f] hover:text-white transition-colors duration-200"
-        >
-          General Reading
-        </Link>
-        <Link
-          to={`/${planType}/academic_reading`}
-          className="block px-4 py-2 text-gray-700 hover:bg-[#d56e1f] hover:text-white transition-colors duration-200"
-        >
-          Academic Reading
-        </Link>
-        <Link
-          to={`/${planType}/listening`}
-          className="block px-4 py-2 text-gray-700 hover:bg-[#d56e1f] hover:text-white transition-colors duration-200"
-        >
-          Listening
-        </Link>
-      </div>
-    </div>
-  );
+  const isActive = (path) => {
+    return location.pathname === path;
+  };
 
   return (
     <>
@@ -113,50 +73,45 @@ const Hero = () => {
                 </div>
               </div>
 
-              {/* Navigation section */}
+              {/* Navigation section with heading and links */}
               <div className="max-w-2xl mx-auto">
-                <h2 className="text-3xl font-bold text-white mb-4 font-playfair">
-                  Practice Here
+                <h2 className="text-3xl font-bold text-white mb-6 font-playfair">
+                  Free Practice Tests
                 </h2>
-                <div className="flex justify-center gap-6">
-                  <div className="relative" ref={freeDropdownRef}>
-                    <button
-                      onClick={() => {
-                        setFreeDropdownOpen(!freeDropdownOpen);
-                        setPaidDropdownOpen(false);
-                      }}
-                      className="px-8 py-3 bg-white text-[#cc0d09] rounded-full font-semibold hover:bg-orange-50 transition-colors duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 flex items-center gap-2"
+                
+                {/* Navigation links now inside the hero section */}
+                <div className="flex justify-center items-center mb-8">
+                  <div className="inline-flex bg-white rounded-lg p-1 shadow-md">
+                    <Link
+                      to="/general_reading"
+                      className={`px-6 py-3 rounded-md font-medium transition-colors duration-200 ${
+                        isActive("/general_reading")
+                          ? "bg-[#d56e1f] text-white shadow-sm"
+                          : "text-gray-700 hover:bg-gray-100"
+                      }`}
                     >
-                      Free Tests
-                      <ChevronDown
-                        className={`w-5 h-5 transition-transform duration-200 ${
-                          freeDropdownOpen ? "rotate-180" : ""
-                        }`}
-                      />
-                    </button>
-                    {freeDropdownOpen && (
-                      <DropdownMenu planType="free" isOpen={freeDropdownOpen} />
-                    )}
-                  </div>
-
-                  <div className="relative" ref={paidDropdownRef}>
-                    <button
-                      onClick={() => {
-                        setPaidDropdownOpen(!paidDropdownOpen);
-                        setFreeDropdownOpen(false);
-                      }}
-                      className="px-8 py-3 bg-[#cc0d09] text-white rounded-full font-semibold hover:bg-[#d56e1f] transition-colors duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 flex items-center gap-2"
+                      General Reading
+                    </Link>
+                    <Link
+                      to="/academic_reading"
+                      className={`px-6 py-3 rounded-md font-medium transition-colors duration-200 ${
+                        isActive("/academic_reading")
+                          ? "bg-[#d56e1f] text-white shadow-sm"
+                          : "text-gray-700 hover:bg-gray-100"
+                      }`}
                     >
-                      Premium Tests
-                      <ChevronDown
-                        className={`w-5 h-5 transition-transform duration-200 ${
-                          paidDropdownOpen ? "rotate-180" : ""
-                        }`}
-                      />
-                    </button>
-                    {paidDropdownOpen && (
-                      <DropdownMenu planType="paid" isOpen={paidDropdownOpen} />
-                    )}
+                      Academic Reading
+                    </Link>
+                    <Link
+                      to="/listening"
+                      className={`px-6 py-3 rounded-md font-medium transition-colors duration-200 ${
+                        isActive("/listening")
+                          ? "bg-[#d56e1f] text-white shadow-sm"
+                          : "text-gray-700 hover:bg-gray-100"
+                      }`}
+                    >
+                      Listening
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -166,7 +121,6 @@ const Hero = () => {
       </div>
 
       {/* Outlet for nested routes */}
-
       <Outlet />
     </>
   );

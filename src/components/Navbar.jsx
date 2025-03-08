@@ -20,14 +20,14 @@ const Navbar = () => {
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-10 font-inter">
+          <div className="hidden md:flex items-center space-x-4 lg:space-x-10 font-inter">
             <Link
               to="/"
               className={`${
                 location.pathname === "/"
                   ? "text-[#cc0d09] font-bold after:block after:w-full after:h-0.5 after:bg-[#cc0d09] after:transform after:scale-x-100"
                   : "text-gray-600 hover:text-[#d56e1f] after:block after:w-full after:h-0.5 after:bg-[#d56e1f] after:transform after:scale-x-0 hover:after:scale-x-100"
-              } transition-all duration-300`}
+              } transition-all duration-300 md:text-sm lg:text-base`}
             >
               Home
             </Link>
@@ -37,7 +37,7 @@ const Navbar = () => {
                 location.pathname.includes("/about")
                   ? "text-[#cc0d09] font-bold after:block after:w-full after:h-0.5 after:bg-[#cc0d09] after:transform after:scale-x-100"
                   : "text-gray-600 hover:text-[#d56e1f] after:block after:w-full after:h-0.5 after:bg-[#d56e1f] after:transform after:scale-x-0 hover:after:scale-x-100"
-              } transition-all duration-300`}
+              } transition-all duration-300 md:text-sm lg:text-base`}
             >
               About Us
             </Link>
@@ -47,7 +47,7 @@ const Navbar = () => {
                 location.pathname.includes("/evaluation")
                   ? "text-[#cc0d09] font-bold after:block after:w-full after:h-0.5 after:bg-[#cc0d09] after:transform after:scale-x-100"
                   : "text-gray-600 hover:text-[#d56e1f] after:block after:w-full after:h-0.5 after:bg-[#d56e1f] after:transform after:scale-x-0 hover:after:scale-x-100"
-              } transition-all duration-300`}
+              } transition-all duration-300 md:text-sm lg:text-base`}
             >
               Writing Review
             </Link>
@@ -57,7 +57,7 @@ const Navbar = () => {
                 location.pathname === "/watchNlearn"
                   ? "bg-[#cc0d09] text-white"
                   : "bg-[#d56e1f] text-white hover:bg-[#cc0d09]"
-              } px-6 py-2 rounded-full font-medium transition-colors duration-300 transform hover:scale-105`}
+              } px-4 lg:px-6 py-2 rounded-full font-medium transition-colors duration-300 transform hover:scale-105 md:text-sm lg:text-base`}
             >
               Free Resources
             </Link>
