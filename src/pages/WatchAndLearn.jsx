@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 const WatchAndLearn = () => {
   const [activeTab, setActiveTab] = useState("videos");
   const [isVisible, setIsVisible] = useState(false);
+  const [selectedEssay, setSelectedEssay] = useState(null);
 
   // Generate unique animation keyframes for floating elements
   const generateKeyframes = () => {
@@ -79,23 +80,51 @@ const WatchAndLearn = () => {
   const essays = [
     {
       id: 1,
-      title: "The Impact of Technology on Modern Education",
+      title: "IELTS Bar Chart Sample Answer",
       content:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+        "he chart illustrates the amount of money spent on five consumer goods (cars, computers, books, perfume and cameras) in France and the UK in 2010. Units are measured in pounds sterling.Overall, the UK spent more money on consumer goods than France in the period gi...",
+      fullContent: `The chart illustrates the amount of money spent on five consumer goods (cars, computers, books, perfume and cameras) in France and the UK in 2010. Units are measured in pounds sterling.<br/><br/>
+
+Overall, the UK spent more money on consumer goods than France in the period given. Both the British and the French spent most of their money on cars whereas the least amount of money was spent on perfume in the UK compared to cameras in France. Furthermore, the most significant difference in expenditure between the two countries was on cameras.<br/><br/>
+
+In terms of cars, people in the UK spent about £450,000 on this as opposed to the French at £400,000. Similarly, the British expenditure was higher on books than the French (around £400,000 and £300,000 respectively). In the UK, expenditure on cameras (just over £350,000) was over double that of France, which was only £150,000.<br/>
+
+<br/>On the other hand, the amount of money paid out on the remaining goods was higher in France. Above £350,000 was spent by the French on computers which was slightly more than the British who spent exactly £350,000. Neither of the countries spent much on perfume which accounted for £200,000 of expenditure in France but under £150,000 in the UK.`,
+      image: "/essay-1.png",
     },
     {
       id: 2,
-      title: "Environmental Sustainability in the 21st Century",
+      title: "IELTS Table Model Answer 2",
       content:
-        "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+        "The table illustrates the proportion of consumer expenditure in Ireland, Italy, Spain, Sweden and Turkey on three types of consumer goods in 200...",
+      fullContent: `The table illustrates the proportion of consumer expenditure in Ireland, Italy, Spain, Sweden and Turkey on three types of consumer goods in 2002.<br/><br/>
+
+Overall, the category of consumer goods that all countries spent most on was food, drinks and tobacco, which was three times higher than on the other types of goods. The lowest spending could be seen in the category of leisure and education in all five countries. The outlay of Turkey was generally higher than the other four countries.<br/><br/>
+
+In terms of food, drinks and tobacco, Turkey spent the most at 32.14%. The expenditure of Ireland was also high (28.91%) compared to Sweden which spent the least (15.77%). Spain and Italy spent 18.80% and 16.36% respectively. On the other hand, the lowest expenditure was on leisure and education which accounted for under 5% in all countries. Turkey spent most on these items at just 4.35% of their national expenditure which is around double that of Spain (1.98%).<br/><br/>
+
+Clothing and footwear was the third category of consumer goods and outlays for those items were between 9% in Italy and 5.40% in Sweden.  The national spending in this area for the remaining countries averaged around 6.5%.`,
+      image: "/essay-2.png",
     },
     {
       id: 3,
-      title: "The Role of Artificial Intelligence in Healthcare",
+      title: "Pie Chart Sample Answer",
       content:
-        "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.",
+        "The two pie charts illustrate the proportion of five sources of energy production (co...",
+      fullContent: `The two pie charts illustrate the proportion of five sources of energy production (coal, gas, nuclear, petrol and other sources) in France in two years (1995 and 2005). <br/><br/>
+
+Overall, in both years coal and gas accounted for over half of all energy production, while the least was other energy sources. There was only a very minimal increase in production from gas and coal, whereas nuclear and other sources almost doubled. Petrol was the only energy source to decrease over the period.<br/><br/>
+
+Energy produced by coal comprised of 29.80% in 1995 and by 2005, it increased by about 1% to 30.9%. Likewise, the amount of energy generated by gas went up by approximately 1% from 29.63% in the first year to 30.1% by the final year. The use of nuclear power rose significantly from 6.40% in 1995 to 10.10% in 2005. Other sources of energy production accounted for 4.90% but then climbed to 9.10%.<br/><br/>
+
+Petrol, on the other hand, produced 29.27% of all energy in 1995 but 10 years later only 19.55% of energy came from this source. `,
+      image: "/essay-3.png",
     },
   ];
+
+  const handleBackToEssays = () => {
+    setSelectedEssay(null);
+  };
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -218,81 +247,119 @@ const WatchAndLearn = () => {
       </section>
 
       <div className="container mx-auto px-4 py-12">
-        {/* Navigation Tabs */}
-        <div className="flex justify-center mb-12">
-          <div className="relative group p-1 rounded-full">
-            <div className="absolute -inset-1 bg-gradient-to-r from-[#cc0d09] via-[#d56e1f] to-[#8B4513] rounded-full blur opacity-25 group-hover:opacity-75 transition duration-1000"></div>
-            <div className="relative flex space-x-4 bg-white rounded-full shadow-md p-1">
-              <button
-                onClick={() => setActiveTab("videos")}
-                className={`nav-button px-8 py-3 rounded-full transition-all ${
-                  activeTab === "videos"
-                    ? "bg-gradient-to-r from-[#cc0d09] via-[#d56e1f] to-[#8B4513] text-white active"
-                    : "text-gray-600 hover:text-[#d56e1f]"
-                }`}
-              >
-                Videos
-              </button>
-              <button
-                onClick={() => setActiveTab("essays")}
-                className={`nav-button px-8 py-3 rounded-full transition-all ${
-                  activeTab === "essays"
-                    ? "bg-gradient-to-r from-[#cc0d09] via-[#d56e1f] to-[#8B4513] text-white active"
-                    : "text-gray-600 hover:text-[#d56e1f]"
-                }`}
-              >
-                Essays
-              </button>
-            </div>
-          </div>
-        </div>
-
-        {/* Content */}
-        {activeTab === "videos" ? (
-          <div className="space-y-2">
-            {videos.map((video, index) => (
-              <div
-                key={video.id}
-                className={`flex flex-col ${
-                  index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
-                } items-center gap-8 md:gap-16`}
-              >
-                <div className="w-full md:w-1/2 relative">
-                  <div className="aspect-video w-full">
-                    <iframe
-                      src={`https://www.youtube.com/embed/${video.videoId}`}
-                      title={video.title}
-                      className="w-full h-full rounded-lg shadow-lg video-container"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                      allowFullScreen
-                    />
-                  </div>
-                </div>
-                <div className="w-full md:w-1/2 text-center md:text-left">
-                  <h2 className="text-3xl font-bold text-gray-800 mb-4">
-                    {video.title}
-                  </h2>
-                  <p className="text-gray-600 mb-6">{video.description}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        ) : (
-          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-            {essays.map((essay) => (
-              <div
-                key={essay.id}
-                className="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow"
-              >
-                <h3 className="text-xl font-bold text-gray-800 mb-4">
-                  {essay.title}
-                </h3>
-                <p className="text-gray-600 mb-6">{essay.content}</p>
-                <button className="text-[#d56e1f] font-medium hover:text-[#cc0d09] transition-colors">
-                  Read More →
+        {/* Navigation Tabs - Only show when no essay is selected */}
+        {!selectedEssay && (
+          <div className="flex justify-center mb-12">
+            <div className="relative group p-1 rounded-full">
+              <div className="absolute -inset-1 bg-gradient-to-r from-[#cc0d09] via-[#d56e1f] to-[#8B4513] rounded-full blur opacity-25 group-hover:opacity-75 transition duration-1000"></div>
+              <div className="relative flex space-x-4 bg-white rounded-full shadow-md p-1">
+                <button
+                  onClick={() => setActiveTab("videos")}
+                  className={`nav-button px-8 py-3 rounded-full transition-all ${
+                    activeTab === "videos"
+                      ? "bg-gradient-to-r from-[#cc0d09] via-[#d56e1f] to-[#8B4513] text-white active"
+                      : "text-gray-600 hover:text-[#d56e1f]"
+                  }`}
+                >
+                  Videos
+                </button>
+                <button
+                  onClick={() => setActiveTab("essays")}
+                  className={`nav-button px-8 py-3 rounded-full transition-all ${
+                    activeTab === "essays"
+                      ? "bg-gradient-to-r from-[#cc0d09] via-[#d56e1f] to-[#8B4513] text-white active"
+                      : "text-gray-600 hover:text-[#d56e1f]"
+                  }`}
+                >
+                  Essays
                 </button>
               </div>
-            ))}
+            </div>
+          </div>
+        )}
+
+        {/* Content */}
+        {!selectedEssay ? (
+          <>
+            {activeTab === "videos" ? (
+              <div className="space-y-16">
+                {videos.map((video, index) => (
+                  <div
+                    key={video.id}
+                    className={`flex flex-col ${
+                      index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
+                    } items-center gap-8 md:gap-16`}
+                  >
+                    <div className="w-full md:w-1/2 relative">
+                      <div className="aspect-video w-full">
+                        <iframe
+                          src={`https://www.youtube.com/embed/${video.videoId}`}
+                          title={video.title}
+                          className="w-full h-full rounded-lg shadow-lg video-container"
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                          allowFullScreen
+                        />
+                      </div>
+                    </div>
+                    <div className="w-full md:w-1/2 text-center md:text-left">
+                      <h2 className="text-3xl font-bold text-gray-800 mb-4">
+                        {video.title}
+                      </h2>
+                      <p className="text-gray-600 mb-6">{video.description}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+                {essays.map((essay) => (
+                  <div
+                    key={essay.id}
+                    className="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow"
+                  >
+                    <h3 className="text-xl font-bold text-gray-800 mb-4">
+                      {essay.title}
+                    </h3>
+                    <p className="text-gray-600 mb-6">{essay.content}</p>
+                    <button
+                      onClick={() => setSelectedEssay(essay)}
+                      className="text-[#d56e1f] font-medium hover:text-[#cc0d09] transition-colors"
+                    >
+                      Read More →
+                    </button>
+                  </div>
+                ))}
+              </div>
+            )}
+          </>
+        ) : (
+          // Full Essay View
+          <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-lg p-8">
+            <button
+              onClick={handleBackToEssays}
+              className="text-blue-500 hover:underline mb-6 flex items-center"
+            >
+              ← Back to Essays
+            </button>
+
+            <h1 className="text-3xl font-bold text-gray-800 mb-6">
+              {selectedEssay.title}
+            </h1>
+
+            <div className="mb-8">
+              <img
+                src={selectedEssay.image}
+                alt={selectedEssay.title}
+                className="w-full rounded-lg shadow-md"
+              />
+            </div>
+
+            <div
+              className="prose max-w-none"
+              dangerouslySetInnerHTML={{ __html: selectedEssay.fullContent }}
+            >
+              {/* <p>{selectedEssay.fullContent}</p> */}
+            </div>
           </div>
         )}
       </div>

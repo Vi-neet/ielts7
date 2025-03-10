@@ -64,28 +64,26 @@ const ContactForm = () => {
 
   // Load Razorpay button after component mounts
   useEffect(() => {
-  //   if (razorpayContainerRef.current) {
-  //     const script = document.createElement("script");
-  //     script.src = "https://checkout.razorpay.com/v1/payment-button.js";
-  //     script.setAttribute("data-payment_button_id", "pl_Q4EpGUzUpirMWJ");
-  //     script.async = true;
-      
-  //     // Clear container before adding new script
-  //     razorpayContainerRef.current.innerHTML = '';
-  //     razorpayContainerRef.current.appendChild(script);
-  //   }
-  // }, []);
-  const rzpPaymentForm = document.getElementById("rzp_payment_form");
-  if (!rzpPaymentForm.hasChildNodes()) {
-    const script = document.createElement("script");
-    script.src = "https://checkout.razorpay.com/v1/payment-button.js";
-    script.async = true;
-    script.dataset.payment_button_id = "pl_Q4EpGUzUpirMWJ";
-    rzpPaymentForm.appendChild(script);
+    //   if (razorpayContainerRef.current) {
+    //     const script = document.createElement("script");
+    //     script.src = "https://checkout.razorpay.com/v1/payment-button.js";
+    //     script.setAttribute("data-payment_button_id", "pl_Q4EpGUzUpirMWJ");
+    //     script.async = true;
 
-  }
-
-});
+    //     // Clear container before adding new script
+    //     razorpayContainerRef.current.innerHTML = '';
+    //     razorpayContainerRef.current.appendChild(script);
+    //   }
+    // }, []);
+    const rzpPaymentForm = document.getElementById("rzp_payment_form");
+    if (!rzpPaymentForm.hasChildNodes()) {
+      const script = document.createElement("script");
+      script.src = "https://checkout.razorpay.com/v1/payment-button.js";
+      script.async = true;
+      script.dataset.payment_button_id = "pl_Q4EpGUzUpirMWJ";
+      rzpPaymentForm.appendChild(script);
+    }
+  });
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormState((prev) => ({
@@ -96,24 +94,24 @@ const ContactForm = () => {
 
   const validatePaymentId = (paymentId) => {
     // Check if payment ID starts with 'pay_'
-    return paymentId.trim().startsWith('pay_') && paymentId.trim().length > 10;
+    return paymentId.trim().startsWith("pay_") && paymentId.trim().length > 10;
   };
 
   const onSubmit = async (event) => {
     event.preventDefault();
-    
+
     // Check if payment ID is provided and valid
     if (!formState.paymentId.trim()) {
       setResult("Please complete payment and enter Payment ID");
       return;
     }
-    
+
     // Validate payment ID format
     if (!validatePaymentId(formState.paymentId)) {
       setResult("Invalid Payment ID. Please check and try again.");
       return;
     }
-    
+
     setIsSubmitting(true);
     setResult("");
 
@@ -313,7 +311,7 @@ const ContactForm = () => {
       <section className="relative overflow-hidden bg-gradient-to-r from-[#cc0d09] via-[#d56e1f] to-[#8B4513] min-h-[50vh] w-full">
         <div className="absolute inset-0">
           <div className="absolute inset-0 bg-black/10"></div>
-         
+
           <div className="absolute inset-0">
             {[...Array(12)].map((_, i) => (
               <div
@@ -468,12 +466,16 @@ const ContactForm = () => {
                 Additional Notes (Optional)
               </label>
             </div>
-            
+
             {/* Payment Section */}
             <div className="p-4 bg-gray-50 rounded-lg border border-gray-200">
-              <h3 className="text-lg font-semibold text-gray-800 mb-4">Complete Payment</h3>
-              <p className="text-sm text-gray-600 mb-4">Please make the payment to proceed with your evaluation.</p>
-              
+              <h3 className="text-lg font-semibold text-gray-800 mb-4">
+                Complete Payment
+              </h3>
+              <p className="text-sm text-gray-600 mb-4">
+                Please make the payment to proceed with your evaluation.
+              </p>
+
               {/* Razorpay Button Container - INSIDE the form */}
               {/* <div className="razorpay-container" ref={razorpayContainerRef}></div> */}
               <form id="rzp_payment_form"></form>
@@ -503,16 +505,18 @@ const ContactForm = () => {
                   Payment ID (from receipt)
                 </label>
               </div>
-              
-              {formState.paymentId && !validatePaymentId(formState.paymentId) && (
-                <div className="payment-id-feedback text-red-500">
-                  <XCircle className="w-4 h-4" />
-                  <span>Invalid payment ID</span>
-                </div>
-              )}
-              
+
+              {formState.paymentId &&
+                !validatePaymentId(formState.paymentId) && (
+                  <div className="payment-id-feedback text-red-500">
+                    <XCircle className="w-4 h-4" />
+                    <span>Invalid payment ID</span>
+                  </div>
+                )}
+
               <p className="text-xs text-gray-500 mt-2">
-                After completing payment, copy the Payment ID from your receipt and paste it here.
+                After completing payment, copy the Payment ID from your receipt
+                and paste it here.
               </p>
             </div>
 
