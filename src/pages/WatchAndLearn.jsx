@@ -363,6 +363,7 @@ By 1985, Meadowside had expanded and the small road had become a main road. A fu
 Currently, Meadowside is known as Meadowside Suburbs after joining with Fonton.
 <br/><br/>
 Between both places, a hotel, station and business park have been built on either side of the railway line`,
+image: "/map_comp.jpg",
     },
   ];
 
