@@ -1,11 +1,28 @@
 import { useLocation, useNavigate } from "react-router-dom";
-
+import { useEffect } from "react";
 import QuestionSection from "@/components/QuestionSection";
 
 const TestPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { test, questions, type, title } = location.state || {};
+  useEffect(() => {
+    if (type === "listening") {
+      // Add a style tag to hide the specific submit button
+      const style = document.createElement("style");
+      style.textContent = `
+        .qsm-btn.qsm-submit-btn.qmn_btn {
+          display: none !important;
+        }
+      `;
+      document.head.appendChild(style);
+
+      // Clean up when component unmounts
+      return () => {
+        document.head.removeChild(style);
+      };
+    }
+  }, [type]);
 
   if (!test || !questions) {
     return (
