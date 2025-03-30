@@ -1,4 +1,5 @@
 import { useLocation, useNavigate } from "react-router-dom";
+import '../tests.css';
 // import { useState, useEffect } from "react";
 import QuestionSection from "@/components/QuestionSection";
 const TestPage = () => {
