@@ -246,3 +246,7 @@ iframe{
   box-shadow: 0 2px 10px rgba(0,0,0,0.2);
   transform: rotate(5deg);
 }
+.footer-el{
+  margin-top: 0px !important;
+  margin-bottom: 0px !important;
+}

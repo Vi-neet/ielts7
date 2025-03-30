@@ -1,6 +1,6 @@
 import { useLocation, useNavigate } from "react-router-dom";
-import '../tests.css';
 // import { useState, useEffect } from "react";
+
 import QuestionSection from "@/components/QuestionSection";
 const TestPage = () => {
   const location = useLocation();
@@ -73,10 +73,10 @@ const TestPage = () => {
         </div>
 
         {/* Right side - Form section */}
-        <div >
+        <div>
           <div className="w:2/3  p-4 relative">
             {/* <div className="rounded-xl bg-white shadow-lg p-2"> */}
-              <QuestionSection formIframeHtml={questions} />
+            <QuestionSection formIframeHtml={questions} />
             {/* </div> */}
           </div>
         </div>

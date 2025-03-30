@@ -68,17 +68,17 @@ const Footer = () => {
           <address className="not-italic space-y-3">
             <div className="flex items-start space-x-3">
               <MapPin className="w-5 h-5 mt-1 flex-shrink-0" />
-              <p>334 King St N, Waterloo, ON N2J 2Z2 </p>
+              <p className="footer-el">334 King St N, Waterloo, ON N2J 2Z2 </p>
             </div>
             <div className="flex items-start space-x-3">
               <MapPin className="w-5 h-5 mt-1 flex-shrink-0" />
-              <p>252, Block A3, Janakpuri, Delhi, 110058 </p>
+              <p className="footer-el">252, Block A3, Janakpuri, Delhi, 110058 </p>
             </div>
             <div className="flex items-center space-x-3">
               <Phone className="w-5 h-5 flex-shrink-0" />
               <a
                 href="tel:+1234567890"
-                className="hover:text-white transition-colors"
+                className="hover:text-white transition-colors footer-el"
               >
                 +91 081780 55015
               </a>

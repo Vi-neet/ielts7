@@ -7,7 +7,26 @@ const QuestionSection = ({ formIframeHtml }) => {
 
   useEffect(() => {
     if (containerRef.current && formIframeHtml) {
-      containerRef.current.innerHTML = formIframeHtml;
+      // Create styles for specific elements
+      const styleTag = `
+        <style>
+          p {
+            margin-top: 15px;
+            margin-bottom: 15px;
+          }
+          span {
+            margin-top: 10px;
+            margin-bottom: 10px;
+          }
+          strong {
+            margin-top: 10px;
+            margin-bottom: 10px;
+          }
+        </style>
+      `;
+      
+      // Inject both the style tag and the form HTML
+      containerRef.current.innerHTML = styleTag + formIframeHtml;
     }
   }, [formIframeHtml]);
 
@@ -19,7 +38,7 @@ const QuestionSection = ({ formIframeHtml }) => {
     );
   }
 
-  return <div ref={containerRef} className="w-full h-screen" />;
+  return <div ref={containerRef} className="w-full h-screen " />;
 };
 
 export default QuestionSection;
