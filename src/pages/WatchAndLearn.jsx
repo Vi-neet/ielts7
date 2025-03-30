@@ -253,30 +253,31 @@ You were hurt in a small accident in a store last week. Write a letter to the st
 * introduce yourself<br/>
 * describe what happened<br/>
 * say what action you would like the manager to take<br/>
+<br/>
+Write at least 150 words.<br/><br/>
 
-Write at least 150 words.<br/>
 You do NOT need to write any addresses.
 
-Begin your letter as follows<br/>
+Begin your letter as follows<br/><br/>
 
-Dear Sir or Madam,<br/>
 
-SAMPLE ANSWER<br/>
 
-Dear Sir or Madam,<br/>
+SAMPLE ANSWER<br/><br/>
 
-I am writing to bring to your attention an incident that occurred in your supermarket last weekend. I would also like to make some suggestions so that such a thing does not happen again.
+Dear Sir or Madam,<br/><br/>
 
-My name is Harry  and I have been a loyal customer at your Walmart  on Grange Road ever since I moved into the area eight years ago. Although your store is slightly further from my home than the IGA, I have always made the trip because of your quality fresh produce and excellent customer service.
+I am writing to bring to your attention an incident that occurred in your supermarket last weekend. I would also like to make some suggestions so that such a thing does not happen again.<br/><br/>
 
-On this occasion, however, I suffered an unfortunate accident due, I believe, to the negligence of the shop floor staff. As I was walking to the checkout with my groceries, I slipped on some spilled water and fell over, spraining my wrist in the process.
+My name is Harry  and I have been a loyal customer at your Walmart  on Grange Road ever since I moved into the area eight years ago. Although your store is slightly further from my home than the IGA, I have always made the trip because of your quality fresh produce and excellent customer service.<br/><br/>
 
-Though I understand the store gets very busy, I feel that this fall could have been avoided if the staff had been quicker to act. I would therefore like to suggest that you review your policies around spillages, and, in particular, ensure that staff members stand guard next to any spilled liquids until they have been cleaned up.
+On this occasion, however, I suffered an unfortunate accident due, I believe, to the negligence of the shop floor staff. As I was walking to the checkout with my groceries, I slipped on some spilled water and fell over, spraining my wrist in the process.<br/><br/>
 
-I hope you will take this into account in order to avoid further mishaps.
+Though I understand the store gets very busy, I feel that this fall could have been avoided if the staff had been quicker to act. I would therefore like to suggest that you review your policies around spillages, and, in particular, ensure that staff members stand guard next to any spilled liquids until they have been cleaned up.<br/><br/>
 
-Yours faithfully ,
-Harry Singh`,
+I hope you will take this into account in order to avoid further mishaps.<br/><br/>
+
+Yours faithfully ,<br/>
+Harry Singh <br/>`,
     },
     {
       id: 10,
@@ -285,30 +286,30 @@ Harry Singh`,
         "You should spend about 20 minutes on this task.You made plans to have dinner with a friend, but you were unable to go as promised. Write an apology letter to your friend and say",
       fullContent: `
 
-You should spend about 20 minutes on this task.<br/>
+You should spend about 20 minutes on this task.<br/><br/>
 
-You made plans to have dinner with a friend, but you were unable to go as promised. Write an apology letter to your friend and say<br/>
+You made plans to have dinner with a friend, but you were unable to go as promised. Write an apology letter to your friend and say<br/><br/>
 
 • why couldn't you make it<br/>
 • how you tried to reach him/her<br/>
 • how you will make up for it another time.<br/>
-
+<br/>
 Write at least 150 words.<br/>
 You do NOT need to write any addresses.
+<br/><br/>
+Hi Jill,<br/><br/>
 
-Hi Jill,<br/>
+Hope you're well. I'm just writing to apologise again for standing you up last week!<br/><br/>
 
-Hope you're well. I'm just writing to apologise again for standing you up last week!<br/>
+As I mentioned in my text, I got called into an urgent meeting at work that I couldn't get out of. I was watching the clock as it got closer and closer to our dinner reservation time, and I should've just popped out to give you a call. I wish I had now.The boss was having a big rant though, so I felt like I couldn't leave without creating a scene.<br/><br/>
 
-As I mentioned in my text, I got called into an urgent meeting at work that I couldn't get out of. I was watching the clock as it got closer and closer to our dinner reservation time, and I should've just popped out to give you a call. I wish I had now.The boss was having a big rant though, so I felt like I couldn't leave without creating a scene.
+I sent you that text quickly from inside the meeting, which is why it was so short and probably sounded a bit rude. I should've called you, I know, but I hope you can understand the sticky spot I was in, especially as l'm so new in the company. I feel awful!<br/><br/>
 
-I sent you that text quickly from inside the meeting, which is why it was so short and probably sounded a bit rude. I should've called you, I know, but I hope you can understand the sticky spot I was in, especially as l'm so new in the company. I feel awful!
+Anyway, l'd love to make it up to you if you're not too mad still. How about we go out for dinner and see that new Bond movie next Thursday? I've got the whole day off, so there's no chance of getting stuck in a meeting!<br/><br/>
 
-Anyway, l'd love to make it up to you if you're not too mad still. How about we go out for dinner and see that new Bond movie next Thursday? I've got the whole day off, so there's no chance of getting stuck in a meeting!
+So sorry again and hope we can catch up next week. Let me know if that suits you.<br/><br/>
 
-So sorry again and hope we can catch up next week. Let me know if that suits you.
-
-Warm wishes,
+Warm wishes,<br/>
 Harry`,
     },
     {
@@ -319,28 +320,28 @@ Harry`,
 •Explain what happened. 
 •Say what you will do to compensate. 
 `,
-      fullContent: `WRITING TASK 1 (Semiformal latter)
+      fullContent: `
 
 Write a letter to your boss apologising for the recent meeting you missed at work.<br/>
 •Apologise for missing the meeting.<br/>
 •Explain what happened.<br/>
 •Say what you will do to compensate.<br/>
+<br/>
+Model Answer for an IELTS <br/><br/>
 
-Model Answer for an IELTS <br/>
+Dear Mr Patel,<br/><br/>
 
-Dear Mr Patel,<br/>
+I am writing to apologise for the meeting I missed on October 20th about development plans for the company.<br/><br/>
 
-I am writing to apologise for the meeting I missed on October 20th about development plans for the company.
+I am sincerely sorry for not being able to attend this meeting. I am aware of the importance of the meeting but, unfortunately, my absence was unavoidable.<br/><br/>
 
-I am sincerely sorry for not being able to attend this meeting. I am aware of the importance of the meeting but, unfortunately, my absence was unavoidable.
+The reason for not attending this meeting was that I had a car accident on the way to work that day. Although the accident was not serious, I was taken to hospital for a check up and not alloyed to leave until I had been given the all clear from a doctor.<br/><br/>
 
-The reason for not attending this meeting was that I had a car accident on the way to work that day. Although the accident was not serious, I was taken to hospital for a check up and not alloyed to leave until I had been given the all clear from a doctor.
+I understand how crucial this meeting was and, therefore, I have asked one of my colleagues, Sandra Brown, to review the meeting with me after work today. We will go over all development plans and also people's roles and responsibilities. By the end of today, I will be up to speed with all plans.<br/><br/>
 
-I understand how crucial this meeting was and, therefore, I have asked one of my colleagues, Sandra Brown, to review the meeting with me after work today. We will go over all development plans and also people's roles and responsibilities. By the end of today, I will be up to speed with all plans.
+I hope you will forgive my absence and be assured of my commitment to this company and its future .<br/><br/>
 
-I hope you will forgive my absence and be assured of my commitment to this company and its future .
-
-Yours sincerely,
+Yours sincerely,<br/>
 Rich Broth
 
 `,
@@ -363,7 +364,7 @@ By 1985, Meadowside had expanded and the small road had become a main road. A fu
 Currently, Meadowside is known as Meadowside Suburbs after joining with Fonton.
 <br/><br/>
 Between both places, a hotel, station and business park have been built on either side of the railway line`,
-image: "/map_comp.jpg",
+      image: "/map_comp.jpg",
     },
   ];
 
