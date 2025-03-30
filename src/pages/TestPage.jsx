@@ -1,7 +1,7 @@
 import { useLocation, useNavigate } from "react-router-dom";
-// import { useState, useEffect } from "react";
 
 import QuestionSection from "@/components/QuestionSection";
+
 const TestPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -21,7 +21,7 @@ const TestPage = () => {
     );
   }
 
-  // Listening test layout
+  // Listening test layout - use direct HTML display
   if (type === "listening") {
     return (
       <div className="container mx-auto p-4 bg-gradient-to-r from-gray-50 to-gray-100 min-h-screen">
@@ -41,8 +41,9 @@ const TestPage = () => {
             </audio>
           </div>
           <div className="w-full p-4 relative">
-            <div className="h-full rounded-xl bg-white shadow-lg p-2">
-              <QuestionSection formIframeHtml={questions} />
+            <div className="h-full rounded-xl bg-white shadow-lg p-6 overflow-auto max-h-[600px]">
+              {/* Direct HTML display for listening section */}
+              <div dangerouslySetInnerHTML={{ __html: questions }} />
             </div>
           </div>
         </div>
@@ -50,7 +51,7 @@ const TestPage = () => {
     );
   }
 
-  // Reading test layout - using split screen approach
+  // Reading test layout - using split screen approach with iframe
   return (
     <div className="min-h-screen bg-gradient-to-r from-gray-50 to-gray-100">
       <div className="container mx-auto p-4">
@@ -73,11 +74,9 @@ const TestPage = () => {
         </div>
 
         {/* Right side - Form section */}
-        <div>
-          <div className="w:2/3  p-4 relative">
-            {/* <div className="rounded-xl bg-white shadow-lg p-2"> */}
+        <div className="lg:w-1/2 p-4 relative">
+          <div className="rounded-xl bg-white shadow-lg p-2">
             <QuestionSection formIframeHtml={questions} />
-            {/* </div> */}
           </div>
         </div>
       </div>
