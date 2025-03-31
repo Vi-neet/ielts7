@@ -276,9 +276,9 @@ const AboutUs = () => {
         <h2 className="text-4xl font-bold text-center mb-12 bg-gradient-to-r from-[#cc0d09] via-[#d56e1f] to-[#8B4513] bg-clip-text text-transparent">
           Success Stories
         </h2>
-        {/* Elfsight Widget Container */}
         <div className="elfsight-app-d1308ecc-ede2-4180-a34d-7a3b82f32886"></div>
       </section>
+        {/* Elfsight Widget Container */}
     </div>
   );
 };

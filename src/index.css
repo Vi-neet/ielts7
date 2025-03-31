@@ -27,7 +27,8 @@
     --chart-3: 197 37% 24%;
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
-    --radius: 0.5rem}
+    --radius: 0.5rem;
+  }
   .dark {
     --background: 222.2 84% 4.9%;
     --foreground: 210 40% 98%;
@@ -52,7 +53,8 @@
     --chart-2: 160 60% 45%;
     --chart-3: 30 80% 55%;
     --chart-4: 280 65% 60%;
-    --chart-5: 340 75% 55%}
+    --chart-5: 340 75% 55%;
+  }
 }
 @layer base {
   * {
@@ -62,7 +64,7 @@
     @apply bg-background text-foreground;
   }
 }
-*{
+* {
   font-family: playfair, serif;
 }
 @keyframes blob {
@@ -139,7 +141,7 @@ html {
 
 .qmn_quiz_radio:checked::after,
 .qmn-multiple-choice-input:checked::after {
-  content: '';
+  content: "";
   position: absolute;
   top: 50%;
   left: 50%;
@@ -225,12 +227,12 @@ html {
 .qmn-quiz-choice:hover {
   background-color: #f7fafc;
 }
-iframe{
+iframe {
   width: 100vh !important;
-  height:100vh !important;
+  height: 100vh !important;
 }
 
-.video-container{
+.video-container {
   width: 500px !important;
   height: 300px !important;
 }
@@ -243,10 +245,10 @@ iframe{
   padding: 5px 10px;
   border-radius: 20px;
   font-weight: bold;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
   transform: rotate(5deg);
 }
-.footer-el{
+.footer-el {
   margin-top: 0px !important;
   margin-bottom: 0px !important;
 }
@@ -259,6 +261,7 @@ form {
   background-color: #f9f9f9;
   border-radius: 8px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+
 }
 
 /* Section Styling - using fieldset instead of classes */
@@ -310,17 +313,19 @@ table {
   margin: 15px 0;
 }
 
-table, th, td {
+table,
+th,
+td {
   border: 1px solid #ddd;
 }
 /* td{
   display: flex;
   flex-direction:column-reverse;
 } */
- td{
+td {
   text-align: center;
   padding: 10px;
- }
+}
 th {
   padding: 10px;
   text-align: left;
@@ -336,7 +341,7 @@ tr:nth-child(even) {
 
 /* Submit Button */
 input[type="submit"] {
-  background-color: #4CAF50;
+  background-color: #4caf50;
   color: white;
   padding: 12px 20px;
   margin: 10px 0;
@@ -351,8 +356,8 @@ input[type="submit"]:hover {
 }
 
 /* Focus States */
-input:focus, 
-select:focus, 
+input:focus,
+select:focus,
 textarea:focus {
   outline: none;
   border-color: #66afe9;
@@ -360,14 +365,14 @@ textarea:focus {
 }
 
 /* Group of radio buttons or checkboxes */
-div {
+/* div {
   margin: 10px 0;
-}
+} */
 input[name="question2893[]"] {
   display: block; /* This makes each input appear on its own line */
-  width: 100%;    /* Takes full width of container */
+  width: 100%; /* Takes full width of container */
   margin: 10px 0; /* Adds space above and below each input */
-  padding: 8px;   /* Internal padding */
+  padding: 8px; /* Internal padding */
   border: 1px solid #ccc;
   border-radius: 4px;
   box-sizing: border-box;

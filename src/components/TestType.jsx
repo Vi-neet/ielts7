@@ -60,6 +60,7 @@ const TestType = () => {
               for (let i = 1; i <= 4; i++) {
                 const testKey = `test_${i}`;
                 const questionKey = `question_${i}`;
+                const answerKey = `answer_${i}`;
                 
                 if (data[testKey] && data[questionKey]) {
                   allTests.push({
@@ -69,6 +70,7 @@ const TestType = () => {
                     title: `Cambridge ${year} ${type.replace("_", " ")} - Test ${i}`,
                     test: data[testKey],
                     questions: data[questionKey],
+                    answers: data[answerKey] || null, // Include answers, default to null if not present
                   });
                 }
               }
@@ -109,6 +111,7 @@ const TestType = () => {
         id: test.id,
         test: test.test,
         questions: test.questions,
+        answers: test.answers, // Pass answers to the test page
         type,
         title: test.title,
         testNumber: test.testNumber
