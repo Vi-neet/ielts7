@@ -201,8 +201,8 @@ const TestPage = () => {
       </div>
       
       {/* Show answer button and modal */}
-      <AnswerButton />
-      <AnswerModal />
+      {/* <AnswerButton />
+      <AnswerModal /> */}
     </div>
   );
 };
