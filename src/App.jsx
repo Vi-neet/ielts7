@@ -12,6 +12,7 @@ import TestPage from "./pages/TestPage";
 import AboutUs from "./pages/AboutUs";
 import Footer from "./components/Footer";
 import WatchAndLearn from "./pages/WatchAndLearn";
+import { Analytics } from "@vercel/analytics/react";
 
 const Layout = () => {
   return (
@@ -25,31 +26,34 @@ const Layout = () => {
 
 const App = () => {
   return (
-    <Router>
-      <Routes>
-        <Route element={<Layout />}>
-          {/* Default route redirect */}
-          {/* <Route
+    <>
+      <Router>
+        <Routes>
+          <Route element={<Layout />}>
+            {/* Default route redirect */}
+            {/* <Route
             path="/"
             element={<Navigate to="/free/general_reading" replace />}
-          /> */}
-          
-          {/* Test type routes under Hero */}
-          <Route path="/" element={<Hero />}>
-            <Route path="/:type" element={<TestType />} />
+            /> */}
+
+            {/* Test type routes under Hero */}
+            <Route path="/" element={<Hero />}>
+              <Route path="/:type" element={<TestType />} />
+            </Route>
+
+            {/* Other routes */}
+            <Route path="/test-page" element={<TestPage />} />
+            <Route path="/evaluation" element={<EvaluationPage />} />
+            <Route path="/about" element={<AboutUs />} />
+            <Route path="/watchNlearn" element={<WatchAndLearn />} />
+
+            {/* Catch-all redirect */}
+            {/* <Route path="*" element={<Navigate to="/free/general_reading" replace />} /> */}
           </Route>
-          
-          {/* Other routes */}
-          <Route path="/test-page" element={<TestPage />} />
-          <Route path="/evaluation" element={<EvaluationPage />} />
-          <Route path="/about" element={<AboutUs />} />
-          <Route path="/watchNlearn" element={<WatchAndLearn />} />
-          
-          {/* Catch-all redirect */}
-          {/* <Route path="*" element={<Navigate to="/free/general_reading" replace />} /> */}
-        </Route>
-      </Routes>
-    </Router>
+        </Routes>
+      </Router>
+      <Analytics />
+    </>
   );
 };
 
