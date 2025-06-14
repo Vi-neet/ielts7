@@ -11,11 +11,9 @@ export const Cambridge17GRTest1Passages: React.FC = () => {
         <p className="mb-4">
           <strong>Read the text below and answer Questions 1-5.</strong>
         </p>
-
         <h3 className="text-lg font-bold mb-2">
           Arriving in Singapore by plane
         </h3>
-
         <h4 className="font-bold mt-4 mb-2">Baggage claim</h4>
         <p className="mb-4 text-justify">
           You can refer to the flight information television screens on Level
@@ -26,7 +24,6 @@ export const Cambridge17GRTest1Passages: React.FC = () => {
           to the Lost and Found Counter for advice if you cannot find your
           baggage or would like to report damaged baggage.
         </p>
-
         <h4 className="font-bold mt-4 mb-2">Customs clearance</h4>
         <p className="mb-4 text-justify">
           Please use the Green Channel for your baggage clearance if you do not
@@ -34,7 +31,6 @@ export const Cambridge17GRTest1Passages: React.FC = () => {
           your Duty-Free Concession. Please use the Red Channel if you have
           items to declare or are in doubt.
         </p>
-
         <h4 className="font-bold mt-4 mb-2">Hotel reservations</h4>
         <p className="mb-4 text-justify">
           You can make these at the Hotel Reservation Counter with a S$10.00 per
@@ -42,13 +38,10 @@ export const Cambridge17GRTest1Passages: React.FC = () => {
           your stay. These counters do not handle the transit hotels. For these,
           go to the Reception Desk on Level Three.
         </p>
-
         <p className="mt-6 mb-4">
           <strong>Read the text below and answer Questions 6-10.</strong>
         </p>
-
         <h3 className="text-lg font-bold mb-2">Singapore Airport</h3>
-
         <h4 className="font-bold mt-4 mb-2">
           Goods and Services Tax (GST) relief
         </h4>
@@ -58,8 +51,7 @@ export const Cambridge17GRTest1Passages: React.FC = () => {
           permanent resident of Singapore, you may be granted GST relief under
           certain conditions.
         </p>
-
-        <h4 className="font-bold mt-4 mb-2">Tax-free shopping</h4>
+        <h4 className="font-bold mt-4 mb-2">Tax-free shopping</h4>{" "}
         <p className="mb-4 text-justify">
           As a tourist or visitor, you can apply for a refund at Customs of the
           3% GST on goods purchased during your stay in Singapore, provided you:
@@ -81,15 +73,12 @@ export const Cambridge17GRTest1Passages: React.FC = () => {
           Please note that a handling fee will be deducted from the GST amount
           for the refund service.
         </p>
-
         <p className="mt-6 mb-4">
           <strong>Read the text below and answer Questions 11-14.</strong>
-        </p>
-
+        </p>{" "}
         <h3 className="text-lg font-bold mb-2">
           Singapore Guide: A walk around the Orchard Road district
         </h3>
-
         <p className="mb-4 text-justify">
           The route begins just opposite the Orchard MRT station at the
           Singapore Marriott Hotel. This eye-catching landmark has a distinctive
@@ -133,11 +122,9 @@ export const Cambridge17GRTest1Passages: React.FC = () => {
         <p className="mb-4">
           <strong>Read the text below and answer Questions 15-20.</strong>
         </p>
-
         <h3 className="text-lg font-bold mb-2">
           Writing a personal CV that will attract employers
         </h3>
-
         <p className="mb-4 text-justify">
           You are unique. No-one has the same behavioural make-up that you have.
           Likewise, everyone's career history is also unique. Why is it then
@@ -166,7 +153,7 @@ export const Cambridge17GRTest1Passages: React.FC = () => {
           present your character positively within a CV. Asking a colleague that
           you trust is also a good way to find out how others see your
           strengths.
-        </p>
+        </p>{" "}
         <p className="mb-4 text-justify">
           Try not to use classic recruitment clichés. Everyone says they have
           great 'communication' or 'organisational' skills. This gets ignored by
@@ -175,22 +162,18 @@ export const Cambridge17GRTest1Passages: React.FC = () => {
           recruiters something original to engage with, something that grabs
           their attention.
         </p>
-
         <p className="mt-6 mb-4">
           <strong>Read the text below and answer Questions 21-27.</strong>
         </p>
-
         <h3 className="text-lg font-bold mb-2">
           The value of being organised at work
-        </h3>
-
+        </h3>{" "}
         <p className="mb-4 text-justify">
           Being organised is one of the most effective skills a businessperson
           can acquire because when we're organised, we think more clearly. We're
           in tune with our targets and know how to reach them. Here are my top
           tips to bring order to your business life:
         </p>
-
         <h4 className="font-bold mt-4 mb-2">Organise your workspace</h4>
         <p className="mb-4 text-justify">
           Don't underestimate time lost or stress caused from an inefficient
@@ -217,7 +200,7 @@ export const Cambridge17GRTest1Passages: React.FC = () => {
             trays, magazine files, or whatever you fancy and add clear labels
             such as 'In', 'Out', 'For Action', 'Current Projects' or other
             relevant categories.
-          </li>
+          </li>{" "}
           <li>
             Be brutally honest about what you must keep. Studies suggest that
             80% of what we file is never accessed again. Ask: do I know of a tax
@@ -226,7 +209,6 @@ export const Cambridge17GRTest1Passages: React.FC = () => {
             remember what's in there.
           </li>
         </ul>
-
         <h4 className="font-bold mt-4 mb-2">Effective planning</h4>
         <p className="mb-4 text-justify">
           Plan your work; work your plan. Time spent planning saves untold hours
@@ -247,11 +229,9 @@ export const Cambridge17GRTest1Passages: React.FC = () => {
         <p className="mb-4">
           <strong>Read the text below and answer Questions 28-40.</strong>
         </p>
-
         <h3 className="text-lg font-bold mb-2">
           A significant development in mining safety
         </h3>
-
         <h4 className="font-bold mt-4 mb-2">A</h4>
         <p className="mb-4 text-justify">
           Coal has been used as a source of fuel for over 5,000 years, but for
@@ -272,7 +252,6 @@ export const Cambridge17GRTest1Passages: React.FC = () => {
           99 people, took place in Belgium in 1514 and as new technology was
           used to mine at increasingly deep levels, the problem got worse.
         </p>
-
         <h4 className="font-bold mt-4 mb-2">B</h4>
         <p className="mb-4 text-justify">
           The simplest solution was to improve the ventilation of the mine. Many
@@ -288,20 +267,19 @@ export const Cambridge17GRTest1Passages: React.FC = () => {
           the fact that skins removed from decaying fish contain the element
           phosphorus, which emits light in the form of phosphorescence.
           Unfortunately, this phosphorus is highly toxic, flammable and can
-          self-ignite-hardly desirable properties in a safety light.
+          self-ignite—hardly desirable properties in a safety light.
         </p>
         <p className="mb-4 text-justify">
           An alternative was a device invented in about 1750, consisting of a
           flint which struck against a piece of iron when a handle was turned,
           creating a shower of sparks which lit up the surrounding area. These
           were believed to be too cool to ignite firedamp. This device had major
-          drawbacks – extra manpower had to be used to operate it continuously,
+          drawbacks — extra manpower had to be used to operate it continuously,
           and it also required regular maintenance and replacement. But worst of
           all, it was not in fact safe, and numerous accidents were caused when
           the sparks ignited firedamp. Nonetheless, it was considered to be the
           least dangerous form of lighting at the time.
         </p>
-
         <h4 className="font-bold mt-4 mb-2">C</h4>
         <p className="mb-4 text-justify">
           By about 1810 the problem was becoming acute, and in some cases there
@@ -311,9 +289,9 @@ export const Cambridge17GRTest1Passages: React.FC = () => {
           to keep going and reluctantly accept the inevitable deaths from
           ignition of firedamp as a regrettable, but not especially remarkable,
           consequence of coal mining.
-        </p>
+        </p>{" "}
         <p className="mb-4 text-justify">
-          The miners themselves could do little - they were largely illiterate,
+          The miners themselves could do little — they were largely illiterate,
           and depended on the mine owners for a livelihood. However, the
           clerical, medical and legal professions were beginning to take notice.
           After 92 men and boys were killed in 1812 by an explosion at Felling
@@ -323,7 +301,6 @@ export const Cambridge17GRTest1Passages: React.FC = () => {
           society stated, 'It is to scientific men only that we must look up for
           assistance in providing a cheap and effectual remedy.'
         </p>
-
         <h4 className="font-bold mt-4 mb-2">D</h4>
         <p className="mb-4 text-justify">
           As the leading chemist of the day, and an expert on gases, Sir
@@ -346,7 +323,6 @@ export const Cambridge17GRTest1Passages: React.FC = () => {
           meant that the miners' safety lamp had already been called the 'Davy
           lamp', and it is still called that today.
         </p>
-
         <h4 className="font-bold mt-4 mb-2">E</h4>
         <p className="mb-4 text-justify">
           But in fact, the real inventor of the safety lamp was a man called Dr

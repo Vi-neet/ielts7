@@ -786,28 +786,25 @@ export const Cambridge15GRTest2Questions: React.FC = () => {
               <div className="flex items-center">
                 <RadioGroupItem id="q37-a" value="A" />
                 <Label htmlFor="q37-a" className="ml-2">
-                  A researchers don't know which nests will be targeted by
-                  poachers.
+                  A some of the fake eggs may be missed by the poachers.
                 </Label>
               </div>
               <div className="flex items-center">
                 <RadioGroupItem id="q37-b" value="B" />
                 <Label htmlFor="q37-b" className="ml-2">
-                  B poachers will probably become aware of the scheme quite
-                  quickly.
+                  B it may not be possible to continue the project indefinitely.
                 </Label>
               </div>
               <div className="flex items-center">
                 <RadioGroupItem id="q37-c" value="C" />
                 <Label htmlFor="q37-c" className="ml-2">
-                  C conservationists still need to perfect the design of the
-                  fake eggs.
+                  C some eggs may be hidden in the sand.
                 </Label>
               </div>
               <div className="flex items-center">
                 <RadioGroupItem id="q37-d" value="D" />
                 <Label htmlFor="q37-d" className="ml-2">
-                  D customers won't be able to tell which eggs are fake.
+                  D it may not be feasible to fund long-term research.
                 </Label>
               </div>
             </RadioGroup>

@@ -14,7 +14,6 @@ export const Cambridge19ARTest1Questions: React.FC = () => {
         <h2 className="text-lg font-bold mb-4">
           READING PASSAGE 1: Questions 1-13
         </h2>
-
         <div className="question-set mb-8">
           <h3 className="font-bold mb-2">Questions 1-7</h3>
           <p className="mb-2">
@@ -55,12 +54,11 @@ export const Cambridge19ARTest1Questions: React.FC = () => {
                   <Label htmlFor="q1-ng">NOT GIVEN</Label>
                 </div>
               </RadioGroup>
-            </div>
-
+            </div>{" "}
             <div className="question-item">
               <p className="mb-2">
-                <strong>2</strong> Murray's decision to change his racket
-                strings was widely discussed at the time.
+                <strong>2</strong> The change that Andy Murray made to his
+                rackets attracted a lot of attention.
               </p>
               <RadioGroup className="flex flex-col space-y-1">
                 <div className="flex items-center space-x-2">
@@ -76,12 +74,11 @@ export const Cambridge19ARTest1Questions: React.FC = () => {
                   <Label htmlFor="q2-ng">NOT GIVEN</Label>
                 </div>
               </RadioGroup>
-            </div>
-
+            </div>{" "}
             <div className="question-item">
               <p className="mb-2">
-                <strong>3</strong> Colin Triplow has made a racket for Andy
-                Murray.
+                <strong>3</strong> Most of the world's top players take a
+                professional racket stringer on tour with them.
               </p>
               <RadioGroup className="flex flex-col space-y-1">
                 <div className="flex items-center space-x-2">
@@ -97,12 +94,11 @@ export const Cambridge19ARTest1Questions: React.FC = () => {
                   <Label htmlFor="q3-ng">NOT GIVEN</Label>
                 </div>
               </RadioGroup>
-            </div>
-
+            </div>{" "}
             <div className="question-item">
               <p className="mb-2">
-                <strong>4</strong> The Bryans' rackets differ from standard
-                rackets in several ways.
+                <strong>4</strong> Mike and Bob Bryan use rackets that are light
+                in comparison to the majority of rackets.
               </p>
               <RadioGroup className="flex flex-col space-y-1">
                 <div className="flex items-center space-x-2">
@@ -118,12 +114,11 @@ export const Cambridge19ARTest1Questions: React.FC = () => {
                   <Label htmlFor="q4-ng">NOT GIVEN</Label>
                 </div>
               </RadioGroup>
-            </div>
-
+            </div>{" "}
             <div className="question-item">
               <p className="mb-2">
-                <strong>5</strong> Players today are prepared to spend more time
-                modifying their rackets than players in the past.
+                <strong>5</strong> Werner Fischer played with a spaghetti-strung
+                racket that he designed himself.
               </p>
               <RadioGroup className="flex flex-col space-y-1">
                 <div className="flex items-center space-x-2">
@@ -139,13 +134,11 @@ export const Cambridge19ARTest1Questions: React.FC = () => {
                   <Label htmlFor="q5-ng">NOT GIVEN</Label>
                 </div>
               </RadioGroup>
-            </div>
-
+            </div>{" "}
             <div className="question-item">
               <p className="mb-2">
-                <strong>6</strong> The International Tennis Federation banned
-                Werner Fischer's racket because it offered an unfair competitive
-                advantage.
+                <strong>6</strong> The weather can affect how professional
+                players adjust the strings on their rackets.
               </p>
               <RadioGroup className="flex flex-col space-y-1">
                 <div className="flex items-center space-x-2">
@@ -161,12 +154,11 @@ export const Cambridge19ARTest1Questions: React.FC = () => {
                   <Label htmlFor="q6-ng">NOT GIVEN</Label>
                 </div>
               </RadioGroup>
-            </div>
-
+            </div>{" "}
             <div className="question-item">
               <p className="mb-2">
-                <strong>7</strong> Professional players change their racket
-                set-up according to a variety of factors.
+                <strong>7</strong> It was believed that the change Pete Sampras
+                made to his rackets contributed to his strong serve.
               </p>
               <RadioGroup className="flex flex-col space-y-1">
                 <div className="flex items-center space-x-2">
@@ -184,11 +176,10 @@ export const Cambridge19ARTest1Questions: React.FC = () => {
               </RadioGroup>
             </div>
           </div>
-        </div>
-
+        </div>{" "}
         <div className="question-set mb-8">
           <h3 className="font-bold mb-2">Questions 8-13</h3>
-          <p className="mb-2">Complete the sentences below.</p>
+          <p className="mb-2">Complete the notes below.</p>
           <p className="mb-2">
             Choose <strong>ONE WORD ONLY</strong> from the passage for each
             answer.
@@ -197,56 +188,46 @@ export const Cambridge19ARTest1Questions: React.FC = () => {
             Write your answers in boxes 8-13 on your answer sheet.
           </p>
 
-          <div className="space-y-4">
-            <div className="question-item">
-              <p className="mb-2">
-                <strong>8</strong> The Bryan brothers have tried out various
-                types of{" "}
-                <Input type="text" className="w-32 mx-1 inline-block" /> on
-                their rackets.
-              </p>
-            </div>
-
-            <div className="question-item">
-              <p className="mb-2">
-                <strong>9</strong> Fischer's spaghetti-strung racket was banned
-                because it produced too much{" "}
-                <Input type="text" className="w-32 mx-1 inline-block" />.
-              </p>
-            </div>
-
-            <div className="question-item">
-              <p className="mb-2">
-                <strong>10</strong> Nowadays, racket modification is as
-                important to a player as{" "}
-                <Input type="text" className="w-32 mx-1 inline-block" /> or
-                nutrition.
-              </p>
-            </div>
-
-            <div className="question-item">
-              <p className="mb-2">
-                <strong>11</strong> Traditional tennis rackets used natural
-                string made from sheep or cow{" "}
-                <Input type="text" className="w-32 mx-1 inline-block" />.
-              </p>
-            </div>
-
-            <div className="question-item">
-              <p className="mb-2">
-                <strong>12</strong> Pete Sampras added lead{" "}
-                <Input type="text" className="w-32 mx-1 inline-block" /> to his
-                rackets to increase his serving power.
-              </p>
-            </div>
-
-            <div className="question-item">
-              <p className="mb-2">
-                <strong>13</strong> Gonçalo Oliveira replaced the original{" "}
-                <Input type="text" className="w-32 mx-1 inline-block" /> on his
-                rackets because they felt uncomfortable.
-              </p>
-            </div>
+          <div className="border p-4 mb-6">
+            <h4 className="font-bold mb-4">
+              The tennis racket and how it has changed
+            </h4>
+            <ul className="list-disc ml-8 space-y-3">
+              <li>
+                Mike and Bob Bryan made changes to the types of{" "}
+                <strong>8</strong>{" "}
+                <Input type="text" className="w-24 inline-block mx-1" /> used on
+                their racket frames.
+              </li>
+              <li>
+                Players were not allowed to use the spaghetti-strung racket
+                because of the amount of <strong>9</strong>{" "}
+                <Input type="text" className="w-24 inline-block mx-1" /> it
+                created.
+              </li>
+              <li>
+                Changes to rackets can be regarded as being as important as
+                players' diets or the <strong>10</strong>{" "}
+                <Input type="text" className="w-24 inline-block mx-1" /> they
+                do.
+              </li>
+              <li>
+                All rackets used to have natural strings made from the{" "}
+                <strong>11</strong>{" "}
+                <Input type="text" className="w-24 inline-block mx-1" /> of
+                animals.
+              </li>
+              <li>
+                Pete Sampras had metal <strong>12</strong>{" "}
+                <Input type="text" className="w-24 inline-block mx-1" /> put
+                into the frames of his rackets.
+              </li>
+              <li>
+                Gonçalo Oliveira changed the <strong>13</strong>{" "}
+                <Input type="text" className="w-24 inline-block mx-1" /> on his
+                racket handles.
+              </li>
+            </ul>
           </div>
         </div>
       </div>
@@ -254,189 +235,197 @@ export const Cambridge19ARTest1Questions: React.FC = () => {
       <div className="reading-questions p-4 bg-white">
         <h2 className="text-lg font-bold mb-4">
           READING PASSAGE 2: Questions 14-26
-        </h2>
-
+        </h2>{" "}
         <div className="question-set mb-8">
           <h3 className="font-bold mb-2">Questions 14-19</h3>
           <p className="mb-2">Reading Passage 2 has seven paragraphs, A-G.</p>
           <p className="mb-2">
             Which paragraph contains the following information?
           </p>
-          <p className="mb-4">
+          <p className="mb-2">
             Write the correct letter, A-G, in boxes 14-19 on your answer sheet.
+          </p>
+          <p className="mb-4">
+            <strong>NB</strong> You may use any letter more than once.
           </p>
 
           <div className="space-y-4">
             <div className="question-item">
               <p className="mb-2">
-                <strong>14</strong> a mention of attempts to deal with piracy by
-                dividing a sea area into parts
+                <strong>14</strong> a reference to a denial of involvement in
+                piracy
               </p>
               <Input type="text" className="w-16" placeholder="A-G" />
             </div>
 
             <div className="question-item">
               <p className="mb-2">
-                <strong>15</strong> a reference to how pirates were given a new
-                role after their defeat
+                <strong>15</strong> details of how a campaign to eradicate
+                piracy was carried out
               </p>
               <Input type="text" className="w-16" placeholder="A-G" />
             </div>
 
             <div className="question-item">
               <p className="mb-2">
-                <strong>16</strong> a reference to governments collaborating
-                with pirates for military purposes
+                <strong>16</strong> a mention of the circumstances in which
+                states in the ancient world would make use of pirates
               </p>
               <Input type="text" className="w-16" placeholder="A-G" />
             </div>
 
             <div className="question-item">
               <p className="mb-2">
-                <strong>17</strong> an explanation of the first known specific
-                groups of Mediterranean pirates
+                <strong>17</strong> a reference to how people today commonly
+                view pirates
               </p>
               <Input type="text" className="w-16" placeholder="A-G" />
             </div>
 
             <div className="question-item">
               <p className="mb-2">
-                <strong>18</strong> a reference to Rome finally taking action
-                against pirates
+                <strong>18</strong> an explanation of how some people were
+                encouraged not to return to piracy
               </p>
               <Input type="text" className="w-16" placeholder="A-G" />
             </div>
 
             <div className="question-item">
               <p className="mb-2">
-                <strong>19</strong> a description of how geographic features of
-                the Mediterranean affected the development of piracy
+                <strong>19</strong> a mention of the need for many sailing
+                vessels to stay relatively close to land
               </p>
               <Input type="text" className="w-16" placeholder="A-G" />
             </div>
           </div>
-        </div>
-
+        </div>{" "}
         <div className="question-set mb-8">
-          <h3 className="font-bold mb-2">Questions 20-21</h3>
+          <h3 className="font-bold mb-2">Questions 20 and 21</h3>
           <p className="mb-2">
             Choose <strong>TWO</strong> letters, <strong>A-E</strong>.
           </p>
           <p className="mb-4">
-            Write the correct letters in boxes 20-21 on your answer sheet.
+            Write the correct letters in boxes 20 and 21 on your answer sheet.
           </p>
           <p className="mb-4">
-            Which <strong>TWO</strong> factors initially helped pirates to avoid
-            being caught?
+            Which <strong>TWO</strong> of the following statements does the
+            writer make about inhabitants of the Mediterranean region in the
+            ancient world?
           </p>
 
           <div className="space-y-3">
             <div className="flex items-start space-x-2">
               <Checkbox id="q20-21-a" />
               <Label htmlFor="q20-21-a" className="flex-1">
-                A using very fast ships
+                A They often used stolen vessels to carry out pirate attacks.
               </Label>
             </div>
             <div className="flex items-start space-x-2">
               <Checkbox id="q20-21-b" />
               <Label htmlFor="q20-21-b" className="flex-1">
-                B knowing the waters well
+                B They managed to escape capture by the authorities because they
+                knew the area so well.
               </Label>
             </div>
             <div className="flex items-start space-x-2">
               <Checkbox id="q20-21-c" />
               <Label htmlFor="q20-21-c" className="flex-1">
-                C using unexpected weapons
+                C They paid for information about the routes merchant ships
+                would take.
               </Label>
             </div>
             <div className="flex items-start space-x-2">
               <Checkbox id="q20-21-d" />
               <Label htmlFor="q20-21-d" className="flex-1">
-                D sailing to distant destinations
+                D They depended more on the sea for their livelihood than on
+                farming.
               </Label>
             </div>
             <div className="flex items-start space-x-2">
               <Checkbox id="q20-21-e" />
               <Label htmlFor="q20-21-e" className="flex-1">
-                E travelling at night
+                E They stored many of the goods taken in pirate attacks in coves
+                along the coastline.
               </Label>
             </div>
           </div>
-        </div>
-
+        </div>{" "}
         <div className="question-set mb-8">
-          <h3 className="font-bold mb-2">Questions 22-23</h3>
+          <h3 className="font-bold mb-2">Questions 22 and 23</h3>
           <p className="mb-2">
-            Choose <strong>TWO</strong> letters, <strong>A-E</strong>.
+            Choose <strong>TWO</strong> letters, <strong>A–E</strong>.
           </p>
           <p className="mb-4">
-            Write the correct letters in boxes 22-23 on your answer sheet.
+            Write the correct letters in boxes 22 and 23 on your answer sheet.
           </p>
           <p className="mb-4">
-            Which <strong>TWO</strong> statements describe the ancient Greek
-            attitude towards piracy?
+            Which <strong>TWO</strong> of the following statements does the
+            writer make about piracy and ancient Greece?
           </p>
 
           <div className="space-y-3">
             <div className="flex items-start space-x-2">
               <Checkbox id="q22-23-a" />
               <Label htmlFor="q22-23-a" className="flex-1">
-                A It was seen as harmful to Greek economic interests.
+                A The state estimated that very few people were involved in
+                piracy.
               </Label>
             </div>
             <div className="flex items-start space-x-2">
               <Checkbox id="q22-23-b" />
               <Label htmlFor="q22-23-b" className="flex-1">
-                B It was difficult to control due to the number of pirates.
+                B Attitudes towards piracy changed shortly after the Iliad and
+                the Odyssey were written.
               </Label>
             </div>
             <div className="flex items-start space-x-2">
               <Checkbox id="q22-23-c" />
               <Label htmlFor="q22-23-c" className="flex-1">
-                C It was seen as a natural part of life.
+                C Important officials were known to occasionally take part in
+                piracy.
               </Label>
             </div>
             <div className="flex items-start space-x-2">
               <Checkbox id="q22-23-d" />
               <Label htmlFor="q22-23-d" className="flex-1">
-                D It was restricted to those from poor backgrounds.
+                D Every citizen regarded pirate attacks on cities as
+                unacceptable.
               </Label>
             </div>
             <div className="flex items-start space-x-2">
               <Checkbox id="q22-23-e" />
               <Label htmlFor="q22-23-e" className="flex-1">
-                E It was admired and portrayed in a positive light.
+                E A favourable view of piracy is evident in certain ancient
+                Greek texts.
               </Label>
             </div>
           </div>
-        </div>
-
+        </div>{" "}
         <div className="question-set mb-8">
-          <h3 className="font-bold mb-2">Questions 24-26</h3>
+          <h3 className="font-bold mb-2">Questions 24–26</h3>
           <p className="mb-2">Complete the summary below.</p>
           <p className="mb-2">
-            Choose <strong>NO MORE THAN ONE WORD</strong> from the passage for
-            each answer.
+            Choose <strong>ONE WORD ONLY</strong> from the passage for each
+            answer.
           </p>
           <p className="mb-4">
-            Write your answers in boxes 24-26 on your answer sheet.
+            Write your answers in boxes 24–26 on your answer sheet.
           </p>
 
           <div className="border p-4 mb-6">
-            <h4 className="font-bold mb-2">Rome and piracy</h4>
+            <h4 className="font-bold mb-2">Ancient Rome and piracy</h4>
             <p className="mb-4">
-              At first, the Romans tolerated pirates because they brought slaves
-              that were needed for agriculture and mining. However, the Romans
-              began to object when their supply of <strong>24</strong>{" "}
-              <Input type="text" className="w-32 mx-1 inline-block" /> was
-              affected by pirate attacks. Members of the Roman Senate called for{" "}
-              <strong>25</strong>{" "}
-              <Input type="text" className="w-32 mx-1 inline-block" /> of the
-              pirates, but their demands were not acted upon. By the 1st century
-              BCE, however, pirates had started to kidnap important Romans, even
-              Julius Caesar, and demand a <strong>26</strong>{" "}
-              <Input type="text" className="w-32 mx-1 inline-block" />. At this
-              point, Rome initiated a successful campaign against the pirates.
+              Piracy was an issue ancient Rome had to deal with, but it also
+              brought some benefits for Rome. For example, pirates supplied
+              slaves that were important for Rome's industries. However, attacks
+              on vessels transporting <strong>24</strong>{" "}
+              <Input type="text" className="w-32 mx-1 inline-block" /> to Rome
+              resulted in calls for <strong>25</strong>{" "}
+              <Input type="text" className="w-32 mx-1 inline-block" /> for the
+              pirates responsible. Nevertheless, piracy continued, with some
+              pirates demanding a <strong>26</strong>{" "}
+              <Input type="text" className="w-32 mx-1 inline-block" /> for the
+              return of the Roman officials they captured.
             </p>
           </div>
         </div>
@@ -445,204 +434,266 @@ export const Cambridge19ARTest1Questions: React.FC = () => {
       <div className="reading-questions p-4 bg-white">
         <h2 className="text-lg font-bold mb-4">
           READING PASSAGE 3: Questions 27-40
-        </h2>
-
+        </h2>{" "}
         <div className="question-set mb-8">
-          <h3 className="font-bold mb-2">Questions 27-31</h3>
+          <h3 className="font-bold mb-2">Questions 27–30</h3>
           <p className="mb-2">Choose the correct letter, A, B, C or D.</p>
           <p className="mb-4">
-            Write the correct letter in boxes 27-31 on your answer sheet.
+            Write the correct letter in boxes 27–30 on your answer sheet.
           </p>
 
           <div className="space-y-6">
+            {" "}
             <div className="question-item">
               <p className="mb-2">
-                <strong>27</strong> According to the writer, which of the
-                following makes misinformation a bigger problem today than in
-                the past?
+                <strong>27</strong> What point does the writer make about
+                misinformation in the first paragraph?
               </p>
               <RadioGroup className="flex flex-col space-y-2">
                 <div className="flex items-start space-x-2">
                   <RadioGroupItem value="A" id="q27-a" className="mt-1" />
                   <Label htmlFor="q27-a" className="flex-1">
-                    A People are more likely to tell lies on purpose than they
-                    were before.
+                    A Misinformation is a relatively recent phenomenon.
                   </Label>
                 </div>
                 <div className="flex items-start space-x-2">
                   <RadioGroupItem value="B" id="q27-b" className="mt-1" />
                   <Label htmlFor="q27-b" className="flex-1">
-                    B It is harder than ever to know when a statement is
-                    correct.
+                    B Some people find it easy to identify misinformation.
                   </Label>
                 </div>
                 <div className="flex items-start space-x-2">
                   <RadioGroupItem value="C" id="q27-c" className="mt-1" />
                   <Label htmlFor="q27-c" className="flex-1">
-                    C There are more reasons for deceiving others than ever
-                    before.
+                    C Misinformation changes as it is passed from one person to
+                    another.
                   </Label>
                 </div>
                 <div className="flex items-start space-x-2">
                   <RadioGroupItem value="D" id="q27-d" className="mt-1" />
                   <Label htmlFor="q27-d" className="flex-1">
-                    D Information can be shared with huge numbers of people
-                    simultaneously.
+                    D There may be a number of reasons for the spread of
+                    misinformation.
                   </Label>
                 </div>
               </RadioGroup>
-            </div>
-
+            </div>{" "}
             <div className="question-item">
               <p className="mb-2">
-                <strong>28</strong> What does the writer suggest about
-                misinformation in paragraph 3?
+                <strong>28</strong> What does the writer say about the role of
+                technology?
               </p>
               <RadioGroup className="flex flex-col space-y-2">
                 <div className="flex items-start space-x-2">
                   <RadioGroupItem value="A" id="q28-a" className="mt-1" />
                   <Label htmlFor="q28-a" className="flex-1">
-                    A It can lead people to make decisions they wouldn't
-                    normally make.
+                    A It may at some point provide us with a solution to
+                    misinformation.
                   </Label>
                 </div>
                 <div className="flex items-start space-x-2">
                   <RadioGroupItem value="B" id="q28-b" className="mt-1" />
                   <Label htmlFor="q28-b" className="flex-1">
-                    B Its impact on politics is more damaging than on other
-                    aspects of society.
+                    B It could fundamentally alter the way in which people
+                    regard information.
                   </Label>
                 </div>
                 <div className="flex items-start space-x-2">
                   <RadioGroupItem value="C" id="q28-c" className="mt-1" />
                   <Label htmlFor="q28-c" className="flex-1">
-                    C Few attempts have been made to study its impact on
-                    people's thinking.
+                    C It has changed the way in which organisations use
+                    misinformation.
                   </Label>
                 </div>
                 <div className="flex items-start space-x-2">
                   <RadioGroupItem value="D" id="q28-d" className="mt-1" />
                   <Label htmlFor="q28-d" className="flex-1">
-                    D Most research has been done on the beliefs of large groups
-                    rather than individuals.
+                    D It has made it easier for people to check whether
+                    information is accurate.
                   </Label>
                 </div>
               </RadioGroup>
-            </div>
-
+            </div>{" "}
             <div className="question-item">
               <p className="mb-2">
-                <strong>29</strong> What does the writer say about Descartes'
-                and Spinoza's views?
+                <strong>29</strong> What is the writer doing in the fourth
+                paragraph?
               </p>
               <RadioGroup className="flex flex-col space-y-2">
                 <div className="flex items-start space-x-2">
                   <RadioGroupItem value="A" id="q29-a" className="mt-1" />
                   <Label htmlFor="q29-a" className="flex-1">
-                    A They were influenced by people's actual reactions to
-                    events.
+                    A comparing the different opinions people have of
+                    misinformation
                   </Label>
                 </div>
                 <div className="flex items-start space-x-2">
                   <RadioGroupItem value="B" id="q29-b" className="mt-1" />
                   <Label htmlFor="q29-b" className="flex-1">
-                    B They have failed to stand the test of time.
+                    B explaining how the effects of misinformation have changed
+                    over time
                   </Label>
                 </div>
                 <div className="flex items-start space-x-2">
                   <RadioGroupItem value="C" id="q29-c" className="mt-1" />
                   <Label htmlFor="q29-c" className="flex-1">
-                    C Scientific research has only recently examined them
-                    carefully.
+                    C outlining which issues connected with misinformation are
+                    significant today
                   </Label>
                 </div>
                 <div className="flex items-start space-x-2">
                   <RadioGroupItem value="D" id="q29-d" className="mt-1" />
                   <Label htmlFor="q29-d" className="flex-1">
-                    D They agreed that reason was a key aspect of human mental
-                    activity.
+                    D describing the attitude of policy makers towards
+                    misinformation in the media
                   </Label>
                 </div>
               </RadioGroup>
-            </div>
-
+            </div>{" "}
             <div className="question-item">
               <p className="mb-2">
-                <strong>30</strong> What is the writer's point about regulatory
-                bodies in paragraph 6?
+                <strong>30</strong> What point does the writer make about
+                regulation in the USA?
               </p>
               <RadioGroup className="flex flex-col space-y-2">
                 <div className="flex items-start space-x-2">
                   <RadioGroupItem value="A" id="q30-a" className="mt-1" />
                   <Label htmlFor="q30-a" className="flex-1">
-                    A Their attempts to check information are time-consuming.
+                    A The guidelines issued by the FDA need to be simplified.
                   </Label>
                 </div>
                 <div className="flex items-start space-x-2">
                   <RadioGroupItem value="B" id="q30-b" className="mt-1" />
                   <Label htmlFor="q30-b" className="flex-1">
-                    B They are reluctant to take action against media
-                    organizations.
+                    B Regulation does not affect people's opinions of new
+                    prescription drugs.
                   </Label>
                 </div>
                 <div className="flex items-start space-x-2">
                   <RadioGroupItem value="C" id="q30-c" className="mt-1" />
                   <Label htmlFor="q30-c" className="flex-1">
-                    C Their focus is on responding to complaints by the public.
+                    C The USA has more regulatory bodies than most other
+                    countries.
                   </Label>
                 </div>
                 <div className="flex items-start space-x-2">
                   <RadioGroupItem value="D" id="q30-d" className="mt-1" />
                   <Label htmlFor="q30-d" className="flex-1">
-                    D They primarily act after misinformation has been
-                    published.
-                  </Label>
-                </div>
-              </RadioGroup>
-            </div>
-
-            <div className="question-item">
-              <p className="mb-2">
-                <strong>31</strong> What is the purpose of paragraph 7?
-              </p>
-              <RadioGroup className="flex flex-col space-y-2">
-                <div className="flex items-start space-x-2">
-                  <RadioGroupItem value="A" id="q31-a" className="mt-1" />
-                  <Label htmlFor="q31-a" className="flex-1">
-                    A to illustrate the type of work done by the FDA
-                  </Label>
-                </div>
-                <div className="flex items-start space-x-2">
-                  <RadioGroupItem value="B" id="q31-b" className="mt-1" />
-                  <Label htmlFor="q31-b" className="flex-1">
-                    B to describe how successful campaigns deal with
-                    misinformation
-                  </Label>
-                </div>
-                <div className="flex items-start space-x-2">
-                  <RadioGroupItem value="C" id="q31-c" className="mt-1" />
-                  <Label htmlFor="q31-c" className="flex-1">
-                    C to emphasize the importance of educating young children
-                  </Label>
-                </div>
-                <div className="flex items-start space-x-2">
-                  <RadioGroupItem value="D" id="q31-d" className="mt-1" />
-                  <Label htmlFor="q31-d" className="flex-1">
-                    D to present another challenge relating to misinformation
+                    D Regulation fails to prevent misinformation from appearing
+                    in the media.
                   </Label>
                 </div>
               </RadioGroup>
             </div>
           </div>
-        </div>
-
+        </div>{" "}
         <div className="question-set mb-8">
-          <h3 className="font-bold mb-2">Questions 32-35</h3>
+          <h3 className="font-bold mb-2">Questions 31–36</h3>
+          <p className="mb-2">
+            Complete the summary using the list of phrases, A–J, below.
+          </p>
+          <p className="mb-4">
+            Write the correct letter, A–J, in boxes 31–36 on your answer sheet.
+          </p>
+
+          <div className="border p-4 mb-6">
+            <h4 className="font-bold mb-2">
+              What happens when people encounter misinformation?
+            </h4>
+            <p className="mb-4">
+              Although people have <strong>31</strong>{" "}
+              <Input
+                type="text"
+                className="w-16 mx-1 inline-block"
+                placeholder="A-J"
+              />{" "}
+              to misinformation, there is debate about precisely how and when we
+              label something as true or untrue. The philosophers Descartes and
+              Spinoza had <strong>32</strong>{" "}
+              <Input
+                type="text"
+                className="w-16 mx-1 inline-block"
+                placeholder="A-J"
+              />{" "}
+              about how people engage with information. While Descartes believed
+              that people accept or reject information after considering whether
+              it is true or not, Spinoza argued that people accepted all
+              information they encountered (and by default misinformation) and
+              did not verify or reject it until afterwards. Moreover, Spinoza
+              believed that a distinct <strong>33</strong>{" "}
+              <Input
+                type="text"
+                className="w-16 mx-1 inline-block"
+                placeholder="A-J"
+              />{" "}
+              is involved in these stages. Recent research has provided{" "}
+              <strong>34</strong>{" "}
+              <Input
+                type="text"
+                className="w-16 mx-1 inline-block"
+                placeholder="A-J"
+              />{" "}
+              for Spinoza's theory and it would appear that people accept all
+              encountered information as if it were true, even if this is for an
+              extremely <strong>35</strong>{" "}
+              <Input
+                type="text"
+                className="w-16 mx-1 inline-block"
+                placeholder="A-J"
+              />
+              , and do not label the information as true or false until later.
+              This is consistent with the fact that the resources for scepticism
+              and the resources for perceiving and encoding are in{" "}
+              <strong>36</strong>{" "}
+              <Input
+                type="text"
+                className="w-16 mx-1 inline-block"
+                placeholder="A-J"
+              />{" "}
+              in the brain.
+            </p>
+
+            <div className="grid grid-cols-2 gap-2">
+              <div>
+                <strong>A</strong> constant conflict
+              </div>
+              <div>
+                <strong>B</strong> additional evidence
+              </div>
+              <div>
+                <strong>C</strong> different locations
+              </div>
+              <div>
+                <strong>D</strong> experimental subjects
+              </div>
+              <div>
+                <strong>E</strong> short period
+              </div>
+              <div>
+                <strong>F</strong> extreme distrust
+              </div>
+              <div>
+                <strong>G</strong> frequent exposure
+              </div>
+              <div>
+                <strong>H</strong> mental operation
+              </div>
+              <div>
+                <strong>I</strong> dubious reason
+              </div>
+              <div>
+                <strong>J</strong> different ideas
+              </div>
+            </div>
+          </div>
+        </div>{" "}
+        <div className="question-set mb-8">
+          <h3 className="font-bold mb-2">Questions 37–40</h3>
           <p className="mb-2">
             Do the following statements agree with the views of the writer in
             Reading Passage 3?
           </p>
-          <p className="mb-2">In boxes 32-35 on your answer sheet, write</p>
+          <p className="mb-2">In boxes 37–40 on your answer sheet, write</p>
           <div className="mb-4">
             <p className="mb-1">
               <strong>YES</strong> if the statement agrees with the views of the
@@ -661,173 +712,87 @@ export const Cambridge19ARTest1Questions: React.FC = () => {
           <div className="space-y-4">
             <div className="question-item">
               <p className="mb-2">
-                <strong>32</strong> The same technology that allows
-                misinformation to spread may also help to address the problem.
+                <strong>37</strong> Campaigns designed to correct misinformation
+                will fail to achieve their purpose if people are unable to
+                understand them.
               </p>
               <RadioGroup className="flex flex-col space-y-1">
                 <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="YES" id="q32-yes" />
-                  <Label htmlFor="q32-yes">YES</Label>
+                  <RadioGroupItem value="YES" id="q37-yes" />
+                  <Label htmlFor="q37-yes">YES</Label>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="NO" id="q32-no" />
-                  <Label htmlFor="q32-no">NO</Label>
+                  <RadioGroupItem value="NO" id="q37-no" />
+                  <Label htmlFor="q37-no">NO</Label>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="NOT GIVEN" id="q32-ng" />
-                  <Label htmlFor="q32-ng">NOT GIVEN</Label>
+                  <RadioGroupItem value="NOT GIVEN" id="q37-ng" />
+                  <Label htmlFor="q37-ng">NOT GIVEN</Label>
                 </div>
               </RadioGroup>
             </div>
 
             <div className="question-item">
               <p className="mb-2">
-                <strong>33</strong> Media organizations should correct
-                misinformation immediately after it occurs.
+                <strong>38</strong> Attempts to teach elementary school students
+                about misinformation have been opposed.
               </p>
               <RadioGroup className="flex flex-col space-y-1">
                 <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="YES" id="q33-yes" />
-                  <Label htmlFor="q33-yes">YES</Label>
+                  <RadioGroupItem value="YES" id="q38-yes" />
+                  <Label htmlFor="q38-yes">YES</Label>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="NO" id="q33-no" />
-                  <Label htmlFor="q33-no">NO</Label>
+                  <RadioGroupItem value="NO" id="q38-no" />
+                  <Label htmlFor="q38-no">NO</Label>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="NOT GIVEN" id="q33-ng" />
-                  <Label htmlFor="q33-ng">NOT GIVEN</Label>
+                  <RadioGroupItem value="NOT GIVEN" id="q38-ng" />
+                  <Label htmlFor="q38-ng">NOT GIVEN</Label>
                 </div>
               </RadioGroup>
             </div>
 
             <div className="question-item">
               <p className="mb-2">
-                <strong>34</strong> Recent research supports Descartes'
-                explanation of how the brain responds to new information.
+                <strong>39</strong> It may be possible to overcome the problem
+                of misinformation in a relatively short period.
               </p>
               <RadioGroup className="flex flex-col space-y-1">
                 <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="YES" id="q34-yes" />
-                  <Label htmlFor="q34-yes">YES</Label>
+                  <RadioGroupItem value="YES" id="q39-yes" />
+                  <Label htmlFor="q39-yes">YES</Label>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="NO" id="q34-no" />
-                  <Label htmlFor="q34-no">NO</Label>
+                  <RadioGroupItem value="NO" id="q39-no" />
+                  <Label htmlFor="q39-no">NO</Label>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="NOT GIVEN" id="q34-ng" />
-                  <Label htmlFor="q34-ng">NOT GIVEN</Label>
+                  <RadioGroupItem value="NOT GIVEN" id="q39-ng" />
+                  <Label htmlFor="q39-ng">NOT GIVEN</Label>
                 </div>
               </RadioGroup>
             </div>
 
             <div className="question-item">
               <p className="mb-2">
-                <strong>35</strong> More successful campaigns against
-                misinformation would make most regulatory bodies unnecessary.
+                <strong>40</strong> The need to keep up with new information is
+                hugely exaggerated in today's world.
               </p>
               <RadioGroup className="flex flex-col space-y-1">
                 <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="YES" id="q35-yes" />
-                  <Label htmlFor="q35-yes">YES</Label>
+                  <RadioGroupItem value="YES" id="q40-yes" />
+                  <Label htmlFor="q40-yes">YES</Label>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="NO" id="q35-no" />
-                  <Label htmlFor="q35-no">NO</Label>
+                  <RadioGroupItem value="NO" id="q40-no" />
+                  <Label htmlFor="q40-no">NO</Label>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="NOT GIVEN" id="q35-ng" />
-                  <Label htmlFor="q35-ng">NOT GIVEN</Label>
+                  <RadioGroupItem value="NOT GIVEN" id="q40-ng" />
+                  <Label htmlFor="q40-ng">NOT GIVEN</Label>
                 </div>
               </RadioGroup>
-            </div>
-          </div>
-        </div>
-
-        <div className="question-set mb-8">
-          <h3 className="font-bold mb-2">Questions 36-40</h3>
-          <p className="mb-2">
-            Complete the summary using the list of phrases, A-J, below.
-          </p>
-          <p className="mb-4">
-            Write the correct letter, A-J, in boxes 36-40 on your answer sheet.
-          </p>
-
-          <div className="border p-4 mb-6">
-            <h4 className="font-bold mb-2">Dealing with misinformation</h4>
-            <p className="mb-4">
-              According to Southwell, the problem of misinformation in the
-              modern world requires a <strong>36</strong>{" "}
-              <Input
-                type="text"
-                className="w-16 mx-1 inline-block"
-                placeholder="A-J"
-              />{" "}
-              approach rather than hoping for a rapid fix. While some work has
-              already been done to tackle the issue, more thought needs to be
-              given to finding <strong>37</strong>{" "}
-              <Input
-                type="text"
-                className="w-16 mx-1 inline-block"
-                placeholder="A-J"
-              />
-              . Southwell emphasizes the importance of having reliable processes
-              for <strong>38</strong>{" "}
-              <Input
-                type="text"
-                className="w-16 mx-1 inline-block"
-                placeholder="A-J"
-              />
-              , given the speed that misinformation can spread. In future, the{" "}
-              <strong>39</strong>{" "}
-              <Input
-                type="text"
-                className="w-16 mx-1 inline-block"
-                placeholder="A-J"
-              />{" "}
-              may play an important role in efforts to counter misinformation.
-              Success will also depend on raising awareness of the extent to
-              which harmful misinformation is the result of <strong>40</strong>{" "}
-              <Input
-                type="text"
-                className="w-16 mx-1 inline-block"
-                placeholder="A-J"
-              />
-              .
-            </p>
-
-            <div className="grid grid-cols-2 gap-2">
-              <div>
-                <strong>A</strong> long-term
-              </div>
-              <div>
-                <strong>B</strong> tracking false information
-              </div>
-              <div>
-                <strong>C</strong> traditional methods
-              </div>
-              <div>
-                <strong>D</strong> repeated testing
-              </div>
-              <div>
-                <strong>E</strong> scientific community
-              </div>
-              <div>
-                <strong>F</strong> theoretical solutions
-              </div>
-              <div>
-                <strong>G</strong> mass media
-              </div>
-              <div>
-                <strong>H</strong> human error
-              </div>
-              <div>
-                <strong>I</strong> general public
-              </div>
-              <div>
-                <strong>J</strong> deliberate deception
-              </div>
             </div>
           </div>
         </div>

@@ -12,14 +12,12 @@ export const Cambridge16GRTest4Passages: React.FC = () => {
         <p className="mb-2">
           You should spend about 20 minutes on <strong>Questions 1-14</strong>,
           which are based on Reading Passage 1 below.
-        </p>
-
+        </p>{" "}
         <h4 className="font-bold mb-2">The Best Hiking Boots</h4>
         <p className="mb-4">
           Whether you're climbing a mountain or walking in the country, be sure
           to buy the right boots, writes Sian Lewis
         </p>
-
         <p className="mb-4">
           <strong>A. Hanwag Tatra Boots</strong>
           <br />
@@ -28,109 +26,96 @@ export const Cambridge16GRTest4Passages: React.FC = () => {
           waterproof test when worn on long, rainy walks, although they are a
           bit heavy.
         </p>
-
         <p className="mb-4">
           <strong>B. Scarpa Peak Gore-tex Boots</strong>
           <br />
           These are good all-round boots that have kept our feet dry in heavy
-          rain, snow and mud. They are comfortable from the moment you put them
-          on, with no rubbing. They come up higher than some other boots,
-          offering good ankle support, and fit both narrow and wide feet well.
+          rain, snow and mud. They are warm and comfortable to wear straight out
+          of the box and continue to be so even after many kilometres. A great
+          choice for all seasons.
         </p>
-
         <p className="mb-4">
-          <strong>C. Berghaus Explorer Trek Boots</strong>
+          <strong>C. Keen Terradora Ethos</strong>
           <br />
-          Our tester took these boots straight out of the box, put them on and
-          did a 20-kilometre walk with no problems at all. They're nice and
-          light, but still supportive and completely waterproof. The grip was
-          good on both wet and dry surfaces. We only tested them in spring and
-          summer, though, so we can't say how warm they'd be in winter.
+          These are meant for spring and summer walks and for putting in your
+          backpack for treks in hot climates. They will never weigh you down.
+          Their soles grip well and despite not being waterproof, they are
+          quick-drying when they get wet.
         </p>
-
         <p className="mb-4">
-          <strong>D. Salomon X Ultra Mid GTX Boots</strong>
+          <strong>D. Danner Jag</strong>
           <br />
-          These boots feel like comfortable trainers that hold your feet well.
-          With good grip and made of material that allows air in, they're great
-          when the weather is warm. But when we walked through a stream, a tiny
-          amount of water did get in. This wasn't a big problem, though, and
-          they dried out quickly afterwards.
+          Danner's retro boots are one of the heavier ones we reviewed. They
+          take a week or two for your feet to get used to them, but we found
+          them waterproof even in heavy rain. These are boots for the style
+          conscious, but still suitable for demanding walks.
         </p>
-
         <p className="mb-4">
-          <strong>E. The North Face Hedgehog Trek GTX Boots</strong>
+          <strong>E. Merrell Siren Sport Q2 Mid Boots</strong>
           <br />
-          Our tester has had difficulty getting boots that fit her narrow feet
-          but found these comfortable and supportive. They kept her feet dry in
-          wet conditions, but they don't come up as high as some other boots,
-          and so they might be best suited for summer walking.
+          We've worn these boots in freezing cold conditions and our feet felt
+          comfortable. Remember to pull the laces firmly when you put these
+          boots on as they are rather wide around the ankles.
         </p>
-
         <p className="mb-4">
-          <strong>F. Merrell Moab FST Ice+ Thermo Boots</strong>
+          <strong>F. Teva Arrowood Mid WP</strong>
           <br />
-          These boots were especially designed for winter and they certainly
-          kept our feet warm and dry. They were good on frozen ground and snow,
-          though on steep, slippery surfaces they were not quite as effective.
-          Our tester, who walks a lot, felt they would probably not last as long
-          as she would like.
+          The soft leather might not be tough enough for extreme environments,
+          but these boots get top marks for comfort. They're waterproof, but we
+          found this wore off after about 20 wet walks. You can, however, get
+          round this problem by using a protective spray on them.
         </p>
-
         <p className="mb-4">
-          <strong>G. Aku Tribute II GTX Boots</strong>
+          <strong>G. Regatta Clydebank Mid Boots</strong>
           <br />
-          Our tester found these boots really comfortable and fully waterproof
-          in all weathers, with very good ankle support. They also coped well
-          with steep, rough ground. But although they claim to be suitable for
-          people with wider feet, he felt they were average width at best, and
-          they took a while to soften up and become more flexible.
+          These boots are reasonably priced and they performed well in heavy
+          rain. They don't grip the ground as well as some other boots and
+          aren't very warm in cold winter weather so we'd say they're best for
+          country walks in spring and summer.
         </p>
-
-        <h4 className="font-bold my-4">How to choose hiking boots</h4>
-
+        <h4 className="font-bold my-4">Beekeeping workshop at Elm Farm</h4>
         <p className="mb-4">
-          When buying boots, comfort is the top priority. If they don't feel
-          good in the shop, don't buy them. Your toes need room to move, but
-          your feet shouldn't slide around. Choose a bad weather day to go
-          shopping and wear the socks you'd usually wear when hiking. Ask to try
-          the boots on a slope to check whether your feet slide forwards.
+          If you've ever wanted to keep bees and have your own delicious honey,
+          there's no better time to begin!
         </p>
-
         <p className="mb-4">
-          Most boots need breaking in, which you should do by wearing them round
-          the house for a couple of days, or on short walks to begin with. Over
-          time, they will become more flexible.
+          Whether you're keen to learn everything you need to know to get you
+          started, or simply extremely interested in the idea of keeping bees,
+          this one-day interactive workshop will teach you the fascinating
+          secrets of the honeybee and how to care for and keep bees.
         </p>
-
         <p className="mb-4">
-          Consider the surfaces you'll be walking on. For hikes on
-          well-maintained paths and in warm weather, fabric boots will probably
-          do, but in more challenging conditions, including steep, wet or snowy
-          slopes, you'll want sturdier boots, with soles that provide excellent
-          grip.
+          Our day begins here on the farm, getting to know about the honeybee,
+          specifically the kind we keep here, and their fascinating history. You
+          will find out about and try for yourself the equipment beekeepers use
+          to care for their bees and discover the many different types of hives
+          bee colonies live in and their different uses. You'll learn about the
+          life cycle of a colony, disease prevention and caring for bees and of
+          course how to harvest honey for your personal use or for sale.
         </p>
-
         <p className="mb-4">
-          Good ankle support is important for rocky terrain, as there's a risk
-          of twisting an ankle, especially on descents. Also essential in wet
-          areas is waterproofing. Gore-Tex boots are popular because they keep
-          out rain but allow air to pass through, which helps keep feet cool in
-          summer.
+          Then it's time to try on your bee suit and meet our bees. We'll teach
+          you how to open the hive, recognise the different bees in it
+          (including how to spot the queen!) and explain what they're doing in
+          different parts of the hive.
         </p>
-
+        <h4 className="font-bold my-4">What's included in the price?</h4>
         <p className="mb-4">
-          Leather boots are good for winter, and although they're more
-          expensive, they'll last longer than some of the cheaper fabric boots
-          if you look after them. After a wet walk, take out the inner soles to
-          dry to help prevent bad smells, and consider buying a special cleaner
-          to remove mud. Also, you might need to apply waterproofing cream from
-          time to time.
+          We'll provide everything you need, including unlimited organic tea or
+          coffee, lunch cooked in our outdoor, wood-fired oven and beekeeping
+          suits for the day. Just bring a pair of thick boots with you. You'll
+          leave with plenty of notes and resources, including a packet of
+          bee-friendly wildflower seeds and, courtesy of BJ Sherriff, the
+          leading supplier of beekeeping clothing, an exclusive 25% discount for
+          anything in their online store.
         </p>
-
         <p className="mb-4">
-          But whichever boots you choose, they'll become like good friends:
-          comfortable and dependable.
+          We like to run our workshops fairly and honestly. Your booking secures
+          a very limited place, so is non-refundable – if you can't make it, you
+          can send a friend or colleague instead though. If at the end of any of
+          our workshops, you don't believe that it has helped you to achieve
+          what it set out to, we will gladly provide a full refund. Places are
+          strictly limited so please do book early to avoid disappointment.
         </p>
       </div>
 
@@ -140,134 +125,96 @@ export const Cambridge16GRTest4Passages: React.FC = () => {
         <p className="mb-2">
           You should spend about 20 minutes on <strong>Questions 15-27</strong>,
           which are based on Reading Passage 2 below.
-        </p>
-
-        <h4 className="font-bold mb-2">The History of Laundering</h4>
-
+        </p>{" "}
+        <h4 className="font-bold mb-2">
+          Should you pay someone to write your CV?
+        </h4>
         <p className="mb-4">
-          Throughout history, people have gone to great lengths to ensure they
-          have clean clothes. It wouldn't be an exaggeration to say that an
-          understanding of the materials used to make fabrics and the methods
-          used to wash them is to track the progress of scientific thinking and
-          social development.
+          In my view, the belief that the individual is the best person to write
+          their own CV is not always true. Although many people can write their
+          own CVs, and do it well, others struggle with a variety of problems
+          initially, such as not knowing how to structure a CV or how to
+          highlight their most relevant strengths.
         </p>
-
         <p className="mb-4">
-          <strong>A)</strong> The earliest washing 'technology' would have
-          involved nothing more than people pounding clothes on rocks by rivers
-          or streams. Right up to the late 19th century, laundering was for many
-          people still a matter of taking clothes to rivers and pounding them on
-          rocks, although perhaps with the help of boards for scrubbing.
+          Through in-depth consultation, a professional CV writer can help
+          identify exactly what is necessary for a particular role, cut out
+          unnecessary or irrelevant details, and pinpoint what makes the
+          individual stand out. This level of objectivity is one of the major
+          benefits of working with a professional writer. It's often difficult
+          to stand back from your own career history to assess what's relevant
+          or not, or to choose the most appropriate qualities.
         </p>
-
         <p className="mb-4">
-          <strong>B)</strong> The earliest synthetic soaps are thought to have
-          originated in ancient Babylon around 4,000 years ago. Archaeologists
-          once found a kind of soap in clay cylinders, the remains of which
-          suggested they contained a form of soap-like material. Inscriptions on
-          the cylinders mentioned they were used for the washing of clothes.
-          Soap manufacture was established in most countries in the western
-          world by the 7th century CE. Companies often used vegetable oils and
-          animal fats as ingredients. Soap-making was a relatively simple
-          process – at its most basic, it involved mixing fats with an alkaline
-          substance such as wood ash, which contains potassium carbonate.
+          If you do choose to work with a professional CV writer, here are some
+          tips:
         </p>
-
         <p className="mb-4">
-          <strong>C)</strong> The Industrial Revolution of the 18th and 19th
-          centuries brought changes to soap production, including the
-          development of continuous processing methods. This helped to increase
-          the range of soap products available. In Britain, Andrew Pears created
-          and patented the first transparent soap in 1789. It was considered a
-          luxury item and Pears remained the brand of choice for many British
-          households into the 20th century.
+          Ask for a CV writer who has experience in your sector. HR
+          professionals and recruiters with relevant experience can also have
+          valuable insights into what companies are looking for.
         </p>
-
         <p className="mb-4">
-          <strong>D)</strong> In Britain, washing clothes was traditionally a
-          woman's job, and it involved hard labour. She would be up at 5am to
-          lay the fire, put water in the copper vessel for the hot water and get
-          the dollies and line ready. 'Dollies' were wooden items that were used
-          to push the clothes against the sides of the copper vessel. A big wash
-          could take all day. Part of the job was to pass the wet items through
-          a mangle, a machine formed by two rotating rollers that pressed the
-          water from the clothes. This was one of the most dangerous jobs, since
-          women did occasionally get their fingers and hair caught in the
-          mechanism.
+          Look for someone who's prepared to take the time to find out your core
+          qualities, who can choose exactly the right words for maximum impact
+          and who understands what and where to edit. Ask to see samples of
+          their work or use personal recommendations before you choose a CV
+          writing service.
         </p>
-
         <p className="mb-4">
-          <strong>E)</strong> The box mangle of the 18th and 19th centuries was
-          a very different mechanism. It was more like a press than a roller.
-          Wet clothes would be laid on a cloth that was wrapped around a
-          cylinder under a rectangular box that contained heavy stones – often
-          weighing between 15 and 30 kilos. The cylinder would be moved back and
-          forth to press the moisture out of the clothes. The box mangle was a
-          common sight in many middle-class houses as it helped to create a
-          smoother appearance after the drying process was complete.
+          You'll probably need to answer an in-depth email questionnaire or be
+          interviewed before any writing actually starts. The more you can give
+          your CV writer to work with, the better, so the promise of a quick
+          turnaround time isn't always going to result in the best possible CV.
+          Take the time to think about and jot down your career aims, your past
+          successes, and the value you bring, before you start the whole
+          process. Your CV will probably be used as a springboard for questions
+          at interview, so you need to make sure you feel happy with the way
+          it's being written and with the choice of words. Being involved in the
+          writing process means your CV sounds authentic.
         </p>
-
+        <h4 className="font-bold my-4">Starting a new job</h4>
         <p className="mb-4">
-          <strong>F)</strong> Currently, researchers are attempting to design
-          energy-efficient washing machines that optimise detergent performance
-          to bring about effective wash cleaning at low wash temperatures. At
-          the forefront of this research in the UK is the Institute of
-          Mechanical Engineers at Leeds University, which has been engaged in
-          work on laundry cleaning for over 40 years. Their current research is
-          aimed at helping to make washing machines more sustainable. Within the
-          laboratory, engineers test the performance of detergents as well as
-          undertaking mechanical and electronic testing.
+          First impressions really do last, so it's important you perform well
+          on your first day in the new job. Here are our top tips that will help
+          you sail through your first day with ease. A new job is a great
+          opportunity to hit the reset button. If you got into the habit of
+          skipping breakfast at your last job, fit it in now or experiment with
+          getting a workout in before going to the office. Having a routine you
+          like and sticking to it definitely impacts on your overall happiness.
         </p>
-
         <p className="mb-4">
-          <strong>G)</strong> Although thermometers were available for measuring
-          wash bath temperature from the 17th century, there was no means of
-          accurately controlling the temperature. It remained under manual
-          control in most commercial laundries until the 1950s. The advent of
-          electronic controls has brought about many improvements. Today,
-          washing machines have features like load-detection, whereby
-          information from sensors is used to determine the best wash cycle.
-          This optimises the amount of water used and the wash program, thus
-          adjusting the wash time according to the fabric and the load. You can
-          now also buy a washing machine that uses fuzzy logic, which is a
-          mathematical system where, instead of simply being on or off (binary),
-          something can be partially on. So where a normal machine may have
-          simply detected that the load is 5 kilos and so performed a preset 5
-          kilo cycle, the fuzzy logic machine will determine the load to some
-          level of precision and create what could be called a unique cycle,
-          just for that load. This gives a better wash and uses less water and
-          less electricity.
+          You've probably already been into the office for an interview, so
+          you'll have some idea of what the dress code is. While you definitely
+          want to feel comfortable, it's best to play it safe, leaning towards a
+          smarter and more polished look on your first day.
         </p>
-
         <p className="mb-4">
-          <strong>H)</strong> In 2000, a government report was produced,
-          highlighting how laundering could contribute to climate change. It
-          suggested that to minimise damage to our environment we should wash
-          our clothes at lower temperatures.
+          You don't want to be late, but getting to the office way too early can
+          also potentially upset not only your schedule but other people's too.
+          A good rule of thumb is to try and arrive 15 minutes ahead of the
+          agreed start time. Accepting an invite to lunch with your boss and
+          co-workers will allow you to get to know the people you'll be working
+          with on a more personal level. It will also help you get a handle on
+          personalities and work styles. To ensure the lunch goes well, have a
+          few conversation starters in mind. That way, if the talk dries up, you
+          can get it going again.
         </p>
-
         <p className="mb-4">
-          <strong>I)</strong> Despite all the advantages of improved clothing
-          care, there is considerable concern today that modern washing machines
-          could be having a detrimental impact on our natural environment. Most
-          clothing contains some plastic; for example, polyester, nylon and
-          acrylic, making up 60% of our garments. Every time we put them in a
-          washing machine, microfibers of plastic break off. Microfibers are so
-          small that they drain out of our washing machines and can easily pass
-          through sewage treatment plants. They flow directly into our rivers,
-          lakes and oceans, and have even reached the North and South Poles.
+          One of the big outcomes of going through a job search is you learn
+          loads about yourself. In particular, you learn what you want and don't
+          want, and what skills you bring to the table. With this new-found
+          understanding, take some time over the initial period to think about
+          what goals you have for your new role. In identifying these early on,
+          you'll be one step closer to positioning yourself for success.
         </p>
-
         <p className="mb-4">
-          <strong>J)</strong> Microfibers are tiny but they can cause huge
-          damage. Studies have indicated that these fibers are found in food and
-          air, too. Scientists are studying them but still haven't found a way
-          to completely stop them. In the meantime, a group of teachers and
-          students from a London school has invented the Microfibre Catcher.
-          It's a small device that fits inside a washing machine and catches
-          over a third of the microfibers that would otherwise enter the water
-          system. Alternatively, you can use a special bag that has been shown
-          to catch up to 90-99% of the microfibers released during washing.
+          It's important that you approach your new job with an open mind, and
+          that you're ready to soak it all in. Be patient with yourself as you
+          figure out how you fit in, and make sure you understand the way things
+          are done before rushing into giving suggestions on improvements.
+          Remember they hired you for a reason, so smile, relax a little and
+          enjoy the first day of your next big thing.
         </p>
       </div>
 
@@ -277,129 +224,107 @@ export const Cambridge16GRTest4Passages: React.FC = () => {
         <p className="mb-2">
           You should spend about 20 minutes on <strong>Questions 28-40</strong>,
           which are based on Reading Passage 3 below.
-        </p>
-
-        <h4 className="font-bold mb-2">Trade across the Sahara Desert</h4>
-
+        </p>{" "}
+        <h4 className="font-bold mb-2">
+          History of women's football in Britain
+        </h4>
         <p className="mb-4">
-          For almost 1,000 years, trade caravans regularly crossed the Sahara
-          Desert. African gold, salt, textiles, leather goods, and enslaved
-          people went north, while in the opposite direction flowed the
-          textiles, ceramics, glassware, and manufactured luxuries of North
-          Africa, Europe, and Asia. Throughout this period, the gold of West
-          Africa was especially significant in this trade. Although the Sahara
-          is often regarded as a barrier, trade routes across this desert
-          connected sub-Saharan Africa to the rest of the Mediterranean and
-          Middle Eastern worlds in a complex commercial network.
+          Women's football in Britain has deeper roots than might be expected.
+          In one town in 18th-century Scotland, single women played an annual
+          match against their married counterparts, though the motives behind
+          the contest were not purely sporting. Some accounts say that the games
+          were watched by a crowd of single men, who hoped to pick out a
+          potential bride based on her footballing ability.
         </p>
-
         <p className="mb-4">
-          It is important to understand that there were several factors that
-          made trans-Saharan travel difficult. For example, the sheer scale of
-          the Sahara was a major problem. For travellers on foot or horseback,
-          distances were almost impossible to navigate. The heat during the day
-          could be intolerable, and at night temperatures could drop below
-          freezing. The sandstorms of this region are legendary. In such storms,
-          the winds can reach hurricane force and sand is stirred up so
-          violently that people can become completely disoriented and visibility
-          is severely reduced. Furthermore, much of the Sahara is not covered
-          with sand but has a surface of gravel, and a rocky terrain that
-          creates further obstacles. Another significant issue is that the
-          Sahara is mostly a waterless region. What little water is available is
-          to be found in oases - settlements built around isolated sources of
-          water from underground rivers or springs.
+          By the late 19th century, with the men's game spreading across Britain
+          like wildfire, women also began to take up association football. Early
+          pioneers included Nettie J Honeyball, who founded the British Ladies'
+          Football Club (BLFC) in 1895. Honeyball was an alias: like many of the
+          middle- and upper-class women who played in the late 19th century, she
+          was not keen to publicise her involvement with a contact sport played
+          on muddy fields. We know more about Lady Florence Dixie, who was
+          appointed president of the BLFC in 1895 and who was an ardent believer
+          in equality between the sexes.
         </p>
-
         <p className="mb-4">
-          So how was trade carried out across the hostile environment of the
-          Sahara? A major factor was the introduction of the camel as a beast of
-          burden. Camels had always been present in parts of the Sahara, but
-          were not used as domestic animals until around 300 CE, following the
-          collapse of the Roman Empire. By the 8th century CE, however, they had
-          acquired an important role in the growing trade across the desert. The
-          domesticated camel can carry 150-200 kilograms and go for up to ten
-          days without water. Its padded feet are well suited for walking on
-          sand and its size allows it to cope with sandstorms better than
-          horses. In addition, camels can be milked and, when they are too old
-          to carry loads, they can be killed and their meat used for food. Two
-          varieties of camel were used by caravans: one heavier beast was used
-          on flatter terrain, and a lighter, more nimble variety was used on
-          rockier ground.
+          The BLFC arranged games between teams representing the north and the
+          south of England, where money would be raised for those in need. These
+          initially attracted healthy numbers of supporters although early
+          newspaper reports were not particularly generous, with one reporter
+          suggesting 'when the novelty has worn off, I do not think women's
+          football will attract the crowds'. And crowds did drop off as the
+          growing popularity of the men's game came to dominate public interest.
+          In a country where women were not yet allowed to vote, it would take
+          extraordinary circumstances for their efforts on the football pitch to
+          attract widespread attention.
         </p>
-
         <p className="mb-4">
-          Caravans were made up of a number of camels - occasionally over a
-          thousand - and were often put together by several merchants who then
-          appointed a leader for the whole party. Although there were a number
-          of trans-Saharan routes, the typical caravan did not travel directly
-          across the middle of the desert. Instead it followed a route from
-          oasis to oasis, often determinedly keeping to valleys and depressions
-          in the landscape. The leader, or caravaneer, needed a detailed
-          knowledge of the route, including water sources. If the caravan had a
-          military escort, the commander would often act on the caravaneer's
-          advice about routes and about how to behave if they encountered local
-          tribesmen. The typical Saharan caravan moved slowly, covering about
-          three kilometers in an hour. Such caravans usually travelled for about
-          ten hours daily, making the day's journey around 30 kilometers, after
-          which the merchants, their trade goods and the camels stopped for the
-          night.
+          Those circumstances arose in 1914 with the outbreak of the First World
+          War. With many men leaving their jobs to join the army, women started
+          to work in factories and just as men had done before them, they began
+          to play informal games of football during their lunch breaks. After
+          some initial uncertainty, their superiors came to see these games as a
+          means to boost morale and thus increase productivity. Teams soon
+          formed and friendly matches were arranged.
         </p>
-
         <p className="mb-4">
-          There were a number of trading centres along the trans-Saharan route.
-          On the northern fringes of the Sahara, Sijilmasa and Tunis were
-          crucial for the routes heading north. These cities were important
-          because merchants from the Middle East would meet with European
-          commercial agents there as well as those bringing goods from south of
-          the Sahara. In the south, Timbuktu in modern Mali became a critical
-          point for trade from the sub-Saharan region. Located on the Niger
-          River and founded in around 1100 CE, Timbuktu was a major trading
-          center for salt, gold and other goods until well into the 19th
-          century, and was also a great center of Islamic learning.
+          In the town of Preston in the north of England, the female workers at
+          a manufacturing company called Dick, Kerr & Co showed a particular
+          aptitude for the game. Watching from a window above the yard where
+          they played, office worker Alfred Frankland spotted their talent and
+          he set about forming a team. Under Frankland's management, they soon
+          drew significant crowds to see their games. Known as Dick, Kerr's
+          Ladies, they beat rival factory Arundel Coulthard 4-0 on Christmas Day
+          1917, with 10,000 watching at Preston stadium.
         </p>
-
         <p className="mb-4">
-          A major commodity that was traded northwards was gold. Gold mined in
-          West Africa was an important trading item and was also used as a
-          convenient way of storing wealth. It was crucially important as a
-          medium of exchange in the financial systems of North Africa and the
-          Middle East, which were integrated into the economies of Europe and
-          Asia. Salt, which was very valuable in the sub-Saharan economies, was
-          shipped in large quantities to the south. The salt mines near the
-          oasis of Taghaza produced more than 5,000 tons of salt every year in
-          the 16th century. Animal skins and crafted leather were also important
-          items in the caravans, while manufactured goods, such as ceramics,
-          glassware and beads, were carried southwards.
+          After the war ended in 1918 the Dick, Kerr's side and other women's
+          teams continued to draw large crowds. In 1920 there were around 150
+          women's sides in England and Dick, Kerr's Ladies packed 53,000 into
+          Everton's Goodison Park stadium. The same year, the team found their
+          one true genius: Lily Parr. Parr grew up playing football with her
+          brothers, and began her career with her town's ladies' team at the age
+          of 14. When they played against the Dick, Kerr's side, she caught
+          Frankland's eye and was offered a job at the factory – as well as a
+          spot on the team. Close to six-feet tall and with jet-black hair, she
+          had a ferocious appetite and a fierce left foot. She is credited with
+          43 goals during her first season playing for Dick, Kerr's Ladies and
+          around 1,000 in total.
         </p>
-
         <p className="mb-4">
-          Enslaved Africans were also brought north from the sub-Saharan region.
-          Indeed, the word 'slave' derives from the medieval Latin word for
-          'Slav' because in the early Middle Ages, many enslaved people were
-          ethnic Slavs from Eastern and Central Europe. As the supply of
-          European slaves declined in the 10th century, people from sub-Saharan
-          Africa were enslaved to meet the labour needs in Europe as well as in
-          the Middle East.
+          By 1921 Dick, Kerr's Ladies were regularly attracting crowds in the
+          tens of thousands. But the year ended in catastrophe for the women's
+          game. The Football Association (FA) – officially the governing body
+          for the sport as a whole, but really only concerned with men's
+          competitions — had always taken a poor view of female participation.
+          Women's football was tolerated during the war, but in the years that
+          followed, driven by the fear that the women's game could affect
+          Football League attendances, the FA sought to assert itself.
         </p>
-
         <p className="mb-4">
-          The trans-Saharan trade showed signs of change from the 15th century.
-          The decline was related to several factors. First, European
-          entrepreneurs were developing an oceanic route from Europe to West
-          Africa. The Portuguese led the way in the second half of the 15th
-          century and trading posts were established along the coast of West
-          Africa in the 16th and 17th centuries. These provided European
-          merchants with direct access to the gold of West Africa and other
-          goods. Second, the political stability of the trans-Saharan routes was
-          also changing. The Songhai Empire dominated the area between the Niger
-          River and the Sahara for much of the 15th and 16th centuries, and was
-          a major force in ensuring the safety of trade routes. In 1591, an
-          invading army from Morocco defeated the Songhai, and this had a
-          negative impact on long-distance trade. However, reports of the
-          trans-Saharan trade's decline shouldn't be exaggerated. In the 19th
-          century, long-distance caravans still headed from the southern Sahara
-          regions northwards to places like Cairo, and trans-Saharan trade still
-          exists today, albeit in a much reduced form.
+          Its solution was decisive and brutal. On 5 December 1921, the FA
+          banned its members from allowing women's football to be played at its
+          grounds, saying that football was 'quite unsuitable for females'. The
+          FA also forbade its members from acting as referees at women's games.
+          To all intents and purposes, women's football in England was outlawed.
+        </p>
+        <p className="mb-4">
+          The FA also suggested that an excessive proportion of the gate
+          receipts were absorbed in expenses and an inadequate percentage
+          devoted to charity. No such obligation to donate profits existed for
+          men's clubs and no proof of financial mismanagement was presented, but
+          there was little the women's clubs could do in response. There was
+          outrage from players, with the captain of Plymouth Ladies remarking
+          that the FA was 'a hundred years behind the times' and calling its
+          decision 'purely sex prejudice'.
+        </p>
+        <p className="mb-4">
+          It was not until 1966 that serious efforts to revive the women's game
+          began, but progress remained painfully slow. It took pressure from the
+          Union of European Football Associations (UEFA), to finally force the
+          FA to end restrictions on women's football in 1971. By this time, half
+          a century of progress had been lost.
         </p>
       </div>
     </div>

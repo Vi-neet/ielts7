@@ -7,269 +7,242 @@ import React from "react";
 export const Cambridge16ARTest2Passages: React.FC = () => {
   return (
     <div className="reading-passage p-4 bg-white">
+      {" "}
       {/* READING PASSAGE 1 */}
       <div className="mb-8">
-        <h3 className="text-lg font-bold mb-4">READING PASSAGE 1</h3>
+        <h3 className="text-lg font-bold mb-4">
+          READING PASSAGE 1 : Questions 1-13
+        </h3>
         <p className="mb-2">
-          You should spend about 20 minutes on <strong>Questions 1-13</strong>,
-          which are based on Reading Passage 1 below.
+          You should spend about 20 minutes on Questions 1-13 which are based on
+          Reading Passage 1 below.
         </p>
-
-        <h4 className="font-bold mb-2">The White Horse of Uffington</h4>
-
+        <h4 className="font-bold mb-2">The White Horse of Uffington</h4>{" "}
         <p className="mb-4">
-          The cutting of huge figures or geoglyphs into the earth of English
-          hillsides has been going on for more than 3,000 years. There are 56
-          hill figures scattered around England, with the vast majority on the
-          chalk downlands of the southwest. The Uffington White Horse in
-          Oxfordshire is the most famous example. It lies on the Berkshire
-          Downs, a part of the North Wessex Downs, just below the Iron Age
-          hill-fort known as Uffington Castle and above a deep valley called the
-          Manger. The figure is formed from deep trenches filled with crushed
-          white chalk, and is presumed to represent a horse shown in profile,
-          although it has also been called a dragon.
+          The cutting of huge figures or 'geoglyphs' into the earth of English
+          hillsides has taken place for more than 3,000 years. There are 56 hill
+          figures scattered around England, with the vast majority on the chalk
+          downlands of the country's southern counties. The figures include
+          giants, horses, crosses and regimental badges. Although the majority
+          of these geoglyphs date within the last 300 years or so, there are one
+          or two that are much older.
+        </p>{" "}
+        <p className="mb-4">
+          The most famous of these figures is perhaps also the most mysterious –
+          the Uffington White Horse in Oxfordshire. The White Horse has recently
+          been re-dated and shown to be even older than its previously assigned
+          ancient pre-Roman Iron Age* date. More controversial is the date of
+          the enigmatic Long Man of Wilmington in Sussex. While many historians
+          are convinced the figure is prehistoric, others believe that it was
+          the work of an artistic monk from a nearby priory and was created
+          between the 11th and 15th centuries.
+        </p>{" "}
+        <p className="mb-4">
+          The method of cutting these huge figures was simply to remove the
+          overlying grass to reveal the gleaming white chalk below. However, the
+          grass would soon grow over the geoglyph again unless it was regularly
+          cleaned or scoured by a fairly large team of people. One reason that
+          the vast majority of hill figures have disappeared is that when the
+          traditions associated with the figures faded, people no longer
+          bothered or remembered to clear away the grass to expose the chalk
+          outline. Furthermore, over hundreds of years the outlines would
+          sometimes change due to people not always cutting in exactly the same
+          place, thus creating a different shape to the original geoglyph. That
+          fact that any ancient hill figures survive at all in England today is
+          testament to the strength and continuity of local customs and beliefs
+          which, in one case at least, must stretch back over millennia.
         </p>
-
         <p className="mb-4">
-          It was first documented in the 12th century and was previously thought
-          to have been constructed during the Iron Age (800 BCE-100 CE) or in
-          the early Anglo-Saxon period, but in 1995, the figure was dated by the
-          Oxford Archaeological Unit using a technique called optical stimulated
-          luminescence (OSL). OSL can be used to identify when the quartz
-          sediments were last exposed to sunlight. The results produced a date
-          range between 1400 and 600 BCE, putting it in the Late Bronze Age.
+          The Uffington White Horse is a unique, stylised representation of a
+          horse consisting of a long, sleek back, thin disjointed legs, a
+          streaming tail, and a bird-like beaked head. The elegant creature
+          almost melts into the landscape. The horse is situated 2.5 km from
+          Uffington village on a steep slope close to the Late Bronze Age* (c.
+          7th century BCE) hillfort of Uffington Castle and below the Ridgeway,
+          a long-distance Neolithic** track.
         </p>
-
         <p className="mb-4">
-          The figure has been maintained throughout its long history by periodic
-          scouring of the turf and chalk infill. This is known as the 'Scouring
-          of the White Horse', and was carried out at intervals of between 7 and
-          20 years. The cleaning process has always been a major local event
-          with a fair and various entertainments. Local records from 1763 refer
-          to a tradition of regular work on the figure, and a 'Pastime' festival
-          that accompanied it. The importance of cleaning the Horse was
-          emphasised when a thin layer of turf was allowed to grow over the
-          figure during World War II so that the location of the Horse could not
-          be used for navigation by enemy bombers. After the war, the withered
-          remains of the turf were cleared away and the Horse was resurfaced.
+          The Uffington Horse is also surrounded by Bronze Age burial mounds. It
+          is not far from the Bronze Age cemetery of Lambourn Seven Barrows,
+          which consists of more than 30 well-preserved burial mounds. The
+          carving has been placed in such a way as to make it extremely
+          difficult to see from close quarters, and like many geoglyphs is best
+          appreciated from the air. Nevertheless, there are certain areas of the
+          Vale of the White Horse, the valley containing and named after the
+          enigmatic creature, from which an adequate impression may be gained.
+          Indeed on a clear day the carving can be seen from up to 30 km away.
         </p>
-
         <p className="mb-4">
-          There have been several well-documented scourings over the centuries.
-          For example, Francis Wise wrote in 1736: 'The ceremony of scouring the
-          Horse, from time immemorial, has been solemnized by a numerous
-          concourse of people from all the villages roundabout.' In 1780, a
-          newspaper reported details of the scouring and the traditional
-          festivities that accompanied it, including cheese rolling and
-          wrestling for a cake. In 2000, English Heritage took the unusual step
-          of commissioning a complete cleaning of the figure. The cleaning
-          process took several days. Specialist teams cleaned off all the
-          discolouration, slightly enlarged the figure to match more closely the
-          archaeological findings of the survey, and then re-chalked it using
-          160 tonnes of new chalk from a nearby mine. The reason for the
-          cleaning by English Heritage, apart from the historic tradition, is to
-          keep the chalk surface exposed, making it harder for plants to gain a
-          foothold, and therefore ensuring that the Horse remains clearly
-          visible from afar.
+          The earliest evidence of a horse at Uffington is from the 1070s CE
+          when 'White Horse Hill' is mentioned in documents from the nearby
+          Abbey of Abingdon, and the first reference to the horse itself is soon
+          after, in 1190 CE. However, the carving is believed to date back much
+          further than that. Due to the similarity of the Uffington White Horse
+          to the stylised depictions of horses on 1st century BCE coins, it had
+          been thought that the creature must also date to that period.
         </p>
-
         <p className="mb-4">
-          Many geoglyphs have been made in the last 300 years as memorials,
-          advertisements, or simply follies or jokes. The earliest were copies
-          of the Uffington White Horse and occurred within Berkshire itself, but
-          by the 1860s, new ones were being cut in Yorkshire and the southwest,
-          as well as in Berkshire. Most of the new geoglyphs are in the form of
-          horses. One of these is the Westbury White Horse, which has been
-          changed over the years. In the 1950s, the horse was painted over with
-          white concrete with the intention of reducing the need for future
-          maintenance. But the disadvantage of this kind of solid outline is
-          that weeds find it easier to grow in the cracks, and the edges become
-          blurred with the passage of time.
+          However, in 1995 Optically Stimulated Luminescence (OSL) testing was
+          carried out by the Oxford Archaeological Unit on soil from two of the
+          lower layers of the horse's body, and from another cut near the base.
+          The result was a date for the horse's construction somewhere between
+          1400 and 600 BCE – in other words, it had a Late Bronze Age or Early
+          Iron Age origin.
         </p>
-
         <p className="mb-4">
-          Other notable geoglyphs include the Cerne Abbas Giant in Dorset, and
-          the Long Man of Wilmington, Sussex. Experts are still debating whether
-          some of them are genuinely ancient, or were originally created in the
-          last 300-400 years. The majority of white horses date from the 18th
-          and 19th centuries. There was a fascination with the Uffington Horse,
-          and many villages wanted their own version. At least 24 of these white
-          horses are known to have existed. Wiltshire has the highest density of
-          white horses, with at least 13.
+          The latter end of this date range would tie the carving of the horse
+          in with occupation of the nearby Uffington hillfort, indicating that
+          it may represent a tribal emblem making the land of the inhabitants of
+          the hillfort. Alternatively, the carving may have been carried out
+          during a Bronze or Iron Age ritual. Some researchers see the horse as
+          representing the Celtic*** horse goddess Epona, who was worshipped as
+          a protector of horses, and for her associations with fertility.
+          However, the cult of Epona was not imported from Gaul (France) until
+          around the first century CE. This date is at least six centuries after
+          the Uffington Horse was probably carved. Nevertheless, the horse had
+          great ritual and economic significance during the Bronze and Iron
+          Ages, as attested by its depictions on jewellery and other metal
+          objects. It is possible that the carving represents a goddess in
+          native mythology, such as Rhiannon, described in later Welsh mythology
+          as a beautiful woman dressed in gold and riding a white horse.
         </p>
-
         <p className="mb-4">
-          Not everyone approves of these 'modern' works, but the authorities
-          which control building and development works have been uneven in their
-          willingness to approve or to remove them. In Kent, for example, an
-          image of a horse cut by volunteers to mark the millennium was
-          criticised by conservation officers as a 'scar' on the countryside.
-          But early in 1999, the Army created one of the most interesting modern
-          geoglyphs, a kiwi, the emblem of New Zealand. A group of soldiers from
-          New Zealand, stationed in England, carved the image of the kiwi on
-          Beacon Hill above the military town of Bulford on the edge of
-          Salisbury Plain. Although it was not approved in advance, the Army has
-          decided to keep the kiwi and has even built steps to allow visitors to
-          view it.
+          The fact that geoglyphs can disappear easily, along with their
+          associated rituals and meaning, indicates that they were never
+          intended to be anything more than temporary gestures. But this does
+          not lessen their importance. These giant carving are a fascinating
+          glimpse into the minds of their creators and how they viewed the
+          landscape in which they lived.
         </p>
-
-        <p className="mb-4">
-          Even though there is plenty of historical evidence for the ancient
-          origin of the Uffington Horse, many theories have been proposed to
-          explain the origin of the carving. Before the dating of the Uffington
-          Horse, it was generally believed that it was first created in the
-          Anglo-Saxon period (410-1066), but this is now known to be incorrect.
-          Among the range of ideas put forward, one writer even suggested that
-          the figure was not a horse or dragon, but a dog. However, almost all
-          researchers now accept that it is a horse – a horse seen from above.
+        <p className="mb-4 text-sm">
+          *Iron Age: a period (in Britain 800 BCE – 43 CE) that is characterised
+          by the use of iron tools
         </p>
-
-        <p className="mb-4">
-          All the horse figures are somewhat stylised, and not proportioned like
-          real-life horses, but the Uffington carving is particularly abstract
-          and distant from literal representation. It is likely that it was
-          originally even more impressive than it appears today. First, when
-          freshly cut, it would have been visible from a much greater distance.
-          Its position on the steep slope would have emphasised the figure when
-          seen from below. This visual impact is especially important given that
-          the Horse is best viewed from directly opposite, rather than from
-          above. Secondly, the original carvers of the Horse would not have to
-          be concerned about making it anatomically correct; all they would have
-          needed to do was to produce a convincing impression, and they
-          certainly managed to do that.
+        <p className="mb-4 text-sm">
+          *Bronze Age: a period (in Britain c. 2,500 BCE – 800 BCE) that is
+          characterised by the development of bronze tools
+        </p>
+        <p className="mb-4 text-sm">
+          **Neolithic: a period (in Britain c. 4,000 BCE – c. 2,500 BCE) that is
+          significant for the spread of agricultural practices, and the use of
+          stone tools
+        </p>{" "}
+        <p className="mb-4 text-sm">
+          ***Celtic: an ancient people who migrated from Europe to Britain
+          before the Romans
         </p>
       </div>
-
       {/* READING PASSAGE 2 */}
       <div className="mb-8">
         <h3 className="text-lg font-bold mb-4">READING PASSAGE 2</h3>
         <p className="mb-2">
           You should spend about 20 minutes on <strong>Questions 14-26</strong>,
           which are based on Reading Passage 2 below.
-        </p>
-
-        <h4 className="font-bold mb-2">
-          Silbo Gomero – the whistle 'language' of the Canary Islands
-        </h4>
-
+        </p>{" "}
+        <h4 className="font-bold mb-2">I contain multitudes</h4>
         <p className="mb-4">
-          La Gomera, one of the Canary Islands situated off the northwest coast
-          of Africa, is home to a remarkable cultural phenomenon: a whistled
-          'language' known as Silbo Gomero which is now enjoying a renewal of
-          interest. For centuries, the inhabitants of this small island have
-          communicated across the deep valleys and ravines that radiate out from
-          the island's central mountains by whistling to each other. This
-          whistling sound can travel up to 8 miles, much further than shouting,
-          and was used to pass messages and news between widely-separated
-          villages.
-        </p>
-
+          <em>Wendy Moore reviews Ed Yong's book about microbes</em>
+        </p>{" "}
         <p className="mb-4">
-          The origins of this whistled language are obscure. There is general
-          agreement that it existed before the arrival of the Spanish, who
-          conquered the Canary Islands in the 15th century. The original
-          inhabitants of the islands were the Guanches, a group of white-skinned
-          people related to the North African Berbers. Some researchers have
-          claimed that the whistle language was also used in other parts of
-          Berber North Africa, supporting the theory of its ancient origins.
+          Microbes, most of them bacteria, have populated this planet since long
+          before animal life developed and they will outlive us. Invisible to
+          the naked eye, they are ubiquitous. They inhabit the soil, air, rocks
+          and water and are present within every form of life, from seaweed and
+          coral to dogs and humans. And, as Yong explains in his utterly
+          absorbing and hugely important book we mess with them at our peril.
         </p>
-
         <p className="mb-4">
-          The Spanish conquerors took only 80 years to wipe out the original
-          Guanche language and enforce the use of Spanish. Remarkably, though,
-          the Guanches' whistle language survived, by being adapted to Spanish.
-          It was widely used throughout the island until the 1950s, when a range
-          of economic and social factors began to endanger its survival. Many
-          Gomerans were forced by drought and economic hardship to emigrate to
-          Venezuela and other Latin American countries. Others moved to nearby
-          Tenerife, or shifted to the island's main town, San Sebastian, in
-          search of work. Road building, the spread of telephone networks, and
-          transistor radios all contributed to its decline. Once a feature of
-          daily life, increasingly it was only in remote areas and among the
-          elderly that silbadores (whistlers) could be found.
+          Every species has its own colony of microbes, called a 'microbiome',
+          and these microbes vary not only between species but also between
+          individuals and within different parts of each individual. What is
+          amazing is that while the number of human cells in the average person
+          is about 30 trillion, the number of microbial ones is higher – about
+          39 trillion. At best, Yong informs us, we are only 50 per cent human.
+          Indeed, some scientists even suggest we should think of each species
+          and its microbes as a single unit, dubbed a 'holobiont'.
         </p>
-
         <p className="mb-4">
-          The language of Silbo Gomero has survived in the form in which we find
-          it today largely because of the creation of schools for Silbo in the
-          1990s. In 1997, Silbo Gomero came to the attention of Dr Ramon
-          Trujillo of the University of La Laguna in Tenerife. His subsequent
-          studies emphasised that Silbo was a complex whistled language that
-          could convey any message, not simply a set of signals with a limited
-          range of meanings, like military bugle calls, for example. A language
-          which enables a vocabulary of more than 500 words to be whistled
-          clearly and understood is a remarkable achievement. Following this
-          research, the island government, El Cabildo Insular de la Gomera,
-          launched a campaign to save Silbo Gomero from extinction and preserve
-          this unique cultural treasure.
+          In each human there are microbes that live only in the stomach, the
+          mouth or the armpit and by and large they do so peacefully. So 'bad'
+          microbes are just microbes out of context. Microbes that sit
+          contentedly in the human gut (where there are more microbes than there
+          are stars in the galaxy) can become deadly if they find their way into
+          the bloodstream. These communities are constantly changing too. The
+          right hand shares just one sixth of its microbes with the left hand.
+          And, of course, we are surrounded by microbes. Every time we eat, we
+          swallow a million microbes in each gram of food; we are continually
+          swapping microbes with other humans, pets and the world at large.
+        </p>{" "}
+        <p className="mb-4">
+          It's a fascinating topic and Yong, a young British science journalist,
+          is an extraordinarily adept guide. Writing with lightness and panache,
+          he has a knack of explaining complex science in terms that are both
+          easy to understand and totally enthralling. Yong is on a mission.
+          Leading us gently by the hand, he takes us into the world of microbes
+          – a bizarre, alien planet – in a bid to persuade us to love them as
+          much as he does. By the end, we do.
         </p>
-
         <p className="mb-4">
-          In 1999, Silbo Gomero was introduced as a compulsory subject in
-          primary schools throughout the island. Since then, it has been taught
-          to over 3,000 children, although it is not clear how many have
-          persevered and become proficient whistlers; research has shown that it
-          takes about two years to speak Silbo well. This revival, together with
-          the development of tourism in the Canary Islands, means that most
-          Gomerans now regard Silbo as a matter of pride, not shame. A whistling
-          demonstration is a regular part of the floor show in restaurants, and
-          competitions and championships are held each year. In 2009, the
-          language was placed on the UNESCO Representative List of the
-          Intangible Cultural Heritage of Humanity.
+          For most of human history we had no idea that microbes existed. The
+          first man to see these extraordinarily potent creatures was a Dutch
+          lens-maker called Antony van Leeuwenhoek in the 1670s. Using
+          microscopes of his own design that could magnify up to 270 times, he
+          examined a drop of water from a nearby lake and found it teeming with
+          tiny creatures he called 'animalcules'. It wasn't until nearly two
+          hundred years later that the research of French biologist Louis
+          Pasteur indicated that some microbes caused disease. It was Pasteur's
+          'germ theory' that gave bacteria the poor image that endures today.
         </p>
-
         <p className="mb-4">
-          How does 'speaking' by whistling work? Normal human speech uses a
-          combination of vowel sounds, created by the vocal cords and modified
-          by the tongue and soft palate, and consonants made by restricting
-          airflow with the tongue or lips etc. In order to cover adequate ranges
-          of these very different types of sound, whistling uses a simple but
-          effective substitution. The four vowels of Spanish become just two
-          whistled vowels, and the range of consonants is correspondingly
-          reduced, although not quite so drastically. A crucial feature of
-          Silbo's effectiveness is that, when whistled, very different Spanish
-          words sound identical. The word for 'house' (casa) sounds the same as
-          the word for 'hunting' (caza), for example. In practice, however, this
-          is not a problem as the context of the conversation usually makes it
-          quite clear which meaning is intended.
+          Yong's book is in many ways a plea for microbial tolerance, pointing
+          out that while fewer than one hundred species of bacteria bring
+          disease, many thousands more play a vital role in maintaining our
+          health. The book also acknowledges that our attitude towards bacteria
+          is not a simple one. We tend to see the dangers posed by bacteria, yet
+          at the same time we are sold yoghurts and drinks that supposedly
+          nurture 'friendly' bacteria. In reality, says Yong, bacteria should
+          not be viewed as either friends or foes, villains or heroes. Instead
+          we should realise we have a symbiotic relationship, that can be
+          mutually beneficial or mutually destructive.
+        </p>{" "}
+        <p className="mb-4">
+          What then do these millions of organisms do? The answer is pretty much
+          everything. New research is now unravelling the ways in which bacteria
+          aid digestion, regulate our immune systems, eliminate toxins, produce
+          vitamins, affect our behaviour and even combat obesity. 'They actually
+          help us become who we are,' says Yong. But we are facing a growing
+          problem. Our obsession with hygiene, our overuse of antibiotics and
+          our unhealthy, low-fibre diets are disrupting the bacterial balance
+          and may be responsible for soaring rates of allergies and immune
+          problems, such as inflammatory bowel disease (IBD).
         </p>
-
         <p className="mb-4">
-          Dr Michelle Cuskley, a researcher, wanted to see just how well
-          first-time listeners with no previous experience of Silbo could
-          understand it. She presented 39 Spaniards from Madrid with recordings
-          of silbadores whistling 215 Spanish sentences. Results were variable,
-          with some subjects guessing the meaning correctly quite often, while
-          others struggled. A score of 38.6% accuracy for those subjects hearing
-          Silbo for the first time is quite impressive, suggests Dr. Cuskley.
-          Intelligibility to the uninitiated is a key difference between Silbo
-          Gomero and the many other non-spoken forms of language that exist
-          today. For example, when subjects were tested on their ability to
-          understand American Sign Language (ASL), they only scored 25% for
-          intelligibility. Even after some basic training in ASL, this only rose
-          to 33.6%, comparable to a complete novice's understanding of Silbo.
-          Yet with some guidance and practice, they can learn to recognize words
-          even on a first encounter.
-        </p>
-
+          The most recent research actually turns accepted norms upside down.
+          For example, there are studies indicating that the excessive use of
+          household detergents and antibacterial products actually destroys the
+          microbes that normally keep the more dangerous germs at bay. Other
+          studies show that keeping a dog as a pet gives children early exposure
+          to a diverse range of bacteria, which may help protect them against
+          allergies later.
+        </p>{" "}
         <p className="mb-4">
-          There are more than 70 other whistled languages still in use in remote
-          and mountainous areas throughout the world, including Turkey, Mexico,
-          Greece and China. None of these have the size or status of Silbo
-          Gomero, and none have achieved the recognition it now enjoys. But in
-          most of the places where these languages survive, their long-term
-          future is uncertain. In Kuskoy, Turkey, the next most famous whistled
-          language community, many young people are not learning to whistle.
-          There is now a similar risk for Silbo Gomero. Although children are
-          learning it at school, they then have few opportunities to practice it
-          or use it in context, and as a result, not many of them continue to do
-          so. This, coupled with its declining everyday use for communication,
-          inevitably means that the skill level is gradually deteriorating.
-          Nevertheless, the rapid progress in revival and protection provides
-          some hope for the long-term future of whistling languages.
+          The readers of Yong's book must be prepared for a decidedly
+          unglamorous world. Among the less appealing case studies is one about
+          a fungus that is wiping out entire populations of frogs and that can
+          be halted by a rare microbial bacterium. Another is about squid that
+          carry luminescent bacteria that protect them against predators.
+          However, if you can overcome your distaste for some of the
+          investigations, the reasons for Yong's enthusiasm become clear. The
+          microbial world is a place of wonder. Already, in an attempt to stop
+          mosquitoes spreading dengue fever – a disease that infects 400 million
+          people a year – mosquitoes are being loaded with a bacterium to block
+          the disease. In the future, our ability to manipulate microbes means
+          we could construct buildings with useful microbes built into their
+          walls to fight off infections. Just imagine a neonatal hospital ward
+          coated in a specially mixed cocktail of microbes so that babies get
+          the best start in life.
         </p>
       </div>
-
       {/* READING PASSAGE 3 */}
       <div className="mb-8">
         <h3 className="text-lg font-bold mb-4">READING PASSAGE 3</h3>
@@ -278,138 +251,111 @@ export const Cambridge16ARTest2Passages: React.FC = () => {
           which are based on Reading Passage 3 below.
         </p>
 
-        <h4 className="font-bold mb-2">The importance of children's play</h4>
-
+        <h4 className="font-bold mb-2">How to make wise decisions</h4>
         <p className="mb-4">
-          Brick by brick, six-year-old Alice is building a magical kingdom.
-          Imagining fairy-tale turrets and fire-breathing dragons, wicked
-          witches and gallant heroes, she's creating an enchanting world.
-          Although she isn't aware of it, this fantasy is helping her take her
-          first steps towards her capacity for creativity and so it will have
-          important repercussions in her adult life.
+          Across cultures, wisdom has been considered one of the most revered
+          human qualities. Although the truly wise may seem few and far between,
+          empirical research examining wisdom suggests that it isn't an
+          exceptional trait possessed by a small handful of bearded philosophers
+          after all – in fact, the latest studies suggest that most of us have
+          the ability to make wise decisions, given the right context.
         </p>
 
         <p className="mb-4">
-          Minutes later, Alice has abandoned the kingdom in favour of playing
-          schools with her younger brother. When she bosses him around as his
-          'teacher', she's practicing how to regulate her emotions through
-          pretence. Later on, when they tire of this and settle down with a
-          board game, she's learning about the need to follow rules and take
-          turns with a partner.
+          'It appears that experiential, situational, and cultural factors are
+          even more powerful in shaping wisdom than previously imagined,' says
+          Associate Professor Igor Grossmann of the University of Waterloo in
+          Ontario, Canada. 'Recent empirical findings from cognitive,
+          developmental, social, and personality psychology cumulatively suggest
+          that people's ability to reason wisely varies dramatically across
+          experiential and situational contexts. Understanding the role of such
+          contextual factors offers unique insights into understanding wisdom in
+          daily life, as well as how it can be enhanced and taught.'
         </p>
 
         <p className="mb-4">
-          'Play in all its rich variety is one of the highest achievements of
-          the human species,' says Dr. David Whitebread from the Faculty of
-          Education at the University of Cambridge, UK. 'It underpins how we
-          develop as intellectual, problem-solving adults and is crucial to our
-          success as a highly adaptable species.'
+          It seems that it's not so much that some people simply possess wisdom
+          and others lack it, but that our ability to reason wisely depends on a
+          variety of external factors. 'It is impossible to characterize thought
+          processes attributed to wisdom without considering the role of
+          contextual factors,' explains Grossmann. 'In other words, wisdom is
+          not solely an "inner quality" but rather unfolds as a function of
+          situations people happen to be in. Some situations are more likely to
+          promote wisdom than others.'
         </p>
 
         <p className="mb-4">
-          Recognising the importance of play is not new: over two millennia ago,
-          the Greek philosopher Plato extolled its virtues as a means of
-          developing skills for adult life, and ideas about play-based learning
-          have been developing since the 19th century.
+          Coming up with a definition of wisdom is challenging, but Grossmann
+          and his colleagues have identified four key characteristics as part of
+          a framework of wise reasoning. One is intellectual humility or
+          recognition of the limits of our own knowledge, and another is
+          appreciation of perspectives wider than the issue at hand. Sensitivity
+          to the possibility of change in social relations is also key, along
+          with compromise or integration of different attitudes and beliefs.
         </p>
 
         <p className="mb-4">
-          But we live in changing times, and Whitebread is mindful of a
-          worldwide decline in play, pointing out that over half the people in
-          the world now live in cities. 'The opportunities for free play, which
-          I experienced almost every day of my childhood, are becoming
-          increasingly scarce,' he says. Outdoor play is curtailed by
-          perceptions of risk to do with traffic, as well as parents' increased
-          wish to protect their children from being the victims of crime, and by
-          the emphasis on 'earlier is better' which is leading to greater
-          competition in academic learning and schools being judged by test
-          results. International bodies like the United Nations and the European
-          Union have begun to develop policies concerned with children's right
-          to play, and to consider implications for leisure facilities and
-          educational programmes.
+          Grossmann and his colleagues have also found that one of the most
+          reliable ways to support wisdom in our own day-to-day decisions is to
+          look at scenarios from a third-party perspective, as though giving
+          advice to a friend. Research suggests that when adopting a
+          first-person viewpoint we focus on 'the focal features of the
+          environment' and when we adopt a third-person, 'observer' viewpoint we
+          reason more broadly and focus more on interpersonal and moral ideals
+          such as justice and impartiality. Looking at problems from this more
+          expansive viewpoint appears to foster cognitive processes related to
+          wise decisions.
         </p>
 
         <p className="mb-4">
-          But what they don't always understand is the potential of play in
-          schools. 'For many children, playing and learning are not separate
-          activities at all,' says Whitebread. In a study carried out by his
-          colleague, researcher Marisol Basilio, over 800 primary-school
-          teachers were asked what they thought children learned through play:
-          many mentioned social skills, but 'strikingly, many did not appreciate
-          the contribution that play makes to children's cognitive development
-          in particular'.
+          What are we to do, then, when confronted with situations like a
+          disagreement with a spouse or negotiating a contract at work, that
+          require us to take a personal stake? Grossmann argues that even when
+          we aren't able to change the situation, we can still evaluate these
+          experiences from different perspectives.
         </p>
 
         <p className="mb-4">
-          Whitebread's research team at the PEDAL Centre, which he directs, have
-          been providing evidence to fill in the gaps in our understanding of
-          the importance of play in the development of qualities such as
-          independence and creativity. 'A strong possibility is that play
-          supports the early development of children's self control,' explains
-          Dr. Emily Farran, also of the Faculty of Education. 'This is our
-          ability to develop awareness of our own thinking processes – it
-          influences how effectively we go about undertaking challenging
-          activities.'
+          For example, in one experiment that took place during the peak of a
+          recent economic recession, graduating college seniors were asked to
+          reflect on their job prospects. The students were instructed to
+          imagine their career either 'as if you were a distant observer' or
+          'before your own eyes as if you were right there'. Participants in the
+          group assigned to the 'distant observer' role displayed more
+          wisdom-related reasoning (intellectual humility and recognition of
+          change) than did participants in the control group.
         </p>
 
         <p className="mb-4">
-          In a study carried out by Whitebread's colleague, researcher Marisol
-          Basilio, children were given puzzles to complete under two conditions:
-          they could ask for help, or they had to play with a puzzle first. The
-          results revealed that children who were encouraged to play with the
-          puzzle first did better on the puzzles, performed better on subsequent
-          assessments taken on their own, and were less reliant on asking for
-          help from adults. In other words, children developed better cognitive
-          skills when they had played.
+          In another study, couples in long-term romantic relationships were
+          instructed to visualize an unresolved relationship conflict either
+          through the eyes of an outsider or from their own perspective.
+          Participants then discussed the incident with their partner for 10
+          minutes, after which they wrote down their thoughts about it. Couples
+          in the 'other's eyes' condition were significantly more likely to rely
+          on wise reasoning – recognizing others' perspectives and searching for
+          a compromise – compared to the couples in the egocentric condition.
         </p>
 
         <p className="mb-4">
-          Children are more likely to be aware of their own thought processes,
-          and become more effective, independent learners, if teachers engage
-          with their children in playful ways, rather than direct teaching. The
-          traditional role is to teach, but researchers at the PEDAL Centre
-          disagree. 'It may be that we need to consider other roles: partner,
-          guide, mentor,' says Whitebread. 'Understanding that play is a way
-          children learn – without being "taught" – is a research challenge for
-          the 21st century.'
+          'Ego-decentering promotes greater focus on others and enables a bigger
+          picture, conceptual view of the experience, affording recognition of
+          intellectual humility and change,' says Grossmann.
         </p>
 
         <p className="mb-4">
-          Beyond the immediate question of how best to help children learn,
-          there's the related question of how the quality of childhood affects
-          physical and mental health later on. Professor Alison Gopnik, author
-          of The Gardener and the Carpenter, told the audience at the PEDAL
-          Centre's launch that children's play is evolution's answer to the
-          uncertainty of the future, an adaptive strategy enabling flexible
-          responses to the environment, not based on genes alone.
-        </p>
-
-        <p className="mb-4">
-          The PEDAL Centre is also advancing research work on the role of play
-          in preparing for uncertainty and coping with stress. Extending the
-          ways children learn through play to include the classroom brings a new
-          set of challenges. Parents and policy makers tend to favour
-          traditional approaches, especially when national and international
-          benchmarking systems for measuring achievements in literacy, maths and
-          science are so visible.
-        </p>
-
-        <p className="mb-4">
-          The research being done at the PEDAL Centre takes on the challenge of
-          playing the long game: proving the importance of play in strengthening
-          mental and physical health, in developing resilience in a constantly
-          evolving world, and in transforming the quality of childhood.
-          Whitebread's team hope that their work will improve the intellectual
-          architecture of the minds of future generations, and that the study of
-          play will earn its own place on the timetable of life.
-        </p>
-
-        <p className="mb-4">
-          'Rather than seeing play as something trivial, we should recognise it
-          as highly evolved and deeply important. Early human life is set up for
-          maximum play, exploration and learning. Starting school doesn't mean
-          that children should all of a sudden stop playing: quite the
-          opposite,' says Gopnik.
+          We might associate wisdom with intelligence or particular personality
+          traits, but research shows only a small positive relationship between
+          wise thinking and crystallized intelligence and the personality traits
+          of openness and agreeableness. 'It is remarkable how much people can
+          vary in their wisdom from one situation to the next, and how much
+          stronger such contextual effects are for understanding the
+          relationship between wise judgment and its social and affective
+          outcomes as compared to the generalized "traits",' Grossmann explains.
+          'That is, knowing how wisely a person behaves in a given situation is
+          more informative for understanding their emotions or likelihood to
+          forgive [or] retaliate as compared to knowing whether the person may
+          be wise "in general".'
         </p>
       </div>
     </div>

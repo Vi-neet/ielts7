@@ -6,15 +6,13 @@ import { Input } from "@/components/ui/input";
 
 export const Cambridge18GRTest1Questions: React.FC = () => {
   return (
-    <>
-      <div className="reading-questions p-4 bg-white">
+    <>      <div className="reading-questions p-4 bg-white">
         <h2 className="text-lg font-bold mb-4">SECTION 1</h2>
 
         <div className="question-set mb-8">
           <h3 className="font-bold mb-2">Questions 1–7</h3>
           <p className="mb-2">
-            Do the following statements agree with the information given in the
-            text?
+            Do the following statements agree with the information given in the text?
           </p>
           <p className="mb-2">In boxes 1–7 on your answer sheet, write</p>
           <div className="mb-4 space-y-1">
@@ -22,8 +20,7 @@ export const Cambridge18GRTest1Questions: React.FC = () => {
               <strong>TRUE</strong> if the statement agrees with the information
             </p>
             <p>
-              <strong>FALSE</strong> if the statement contradicts the
-              information
+              <strong>FALSE</strong> if the statement contradicts the information
             </p>
             <p>
               <strong>NOT GIVEN</strong> if there is no information on this
@@ -33,8 +30,7 @@ export const Cambridge18GRTest1Questions: React.FC = () => {
           <div className="space-y-6">
             <div className="question-item">
               <p className="mb-3">
-                <strong>1</strong> The garden design course is suitable for
-                gardens in rainy climates.
+                <strong>1</strong> Dry cleaners are generally responsible for items left with them, even if there's a sign saying the opposite.
               </p>
               <RadioGroup name="question1" className="flex gap-8">
                 <div className="flex items-center">
@@ -60,7 +56,7 @@ export const Cambridge18GRTest1Questions: React.FC = () => {
 
             <div className="question-item">
               <p className="mb-3">
-                <strong>2</strong> The course is taught in a garden setting.
+                <strong>2</strong> If the dry cleaner loses an item belonging to you, they should give you enough money to buy a completely new one.
               </p>
               <RadioGroup name="question2" className="flex gap-8">
                 <div className="flex items-center">
@@ -86,7 +82,7 @@ export const Cambridge18GRTest1Questions: React.FC = () => {
 
             <div className="question-item">
               <p className="mb-3">
-                <strong>3</strong> The course price includes food and drink.
+                <strong>3</strong> If you have the receipt for a damaged item, the company should refund the amount you originally paid for it.
               </p>
               <RadioGroup name="question3" className="flex gap-8">
                 <div className="flex items-center">
@@ -112,8 +108,7 @@ export const Cambridge18GRTest1Questions: React.FC = () => {
 
             <div className="question-item">
               <p className="mb-3">
-                <strong>4</strong> Course participants need to have some
-                previous gardening knowledge.
+                <strong>4</strong> It may be possible to get support for your complaint from a dry cleaners' trade association.
               </p>
               <RadioGroup name="question4" className="flex gap-8">
                 <div className="flex items-center">
@@ -139,8 +134,7 @@ export const Cambridge18GRTest1Questions: React.FC = () => {
 
             <div className="question-item">
               <p className="mb-3">
-                <strong>5</strong> All equipment needed for gardening is
-                provided.
+                <strong>5</strong> If you're offered too little compensation, you can request a free report from an independent organisation.
               </p>
               <RadioGroup name="question5" className="flex gap-8">
                 <div className="flex items-center">
@@ -166,7 +160,7 @@ export const Cambridge18GRTest1Questions: React.FC = () => {
 
             <div className="question-item">
               <p className="mb-3">
-                <strong>6</strong> The course is suitable for wheelchair users.
+                <strong>6</strong> Most people who take a case about a dry-cleaning company to court are satisfied with the outcome.
               </p>
               <RadioGroup name="question6" className="flex gap-8">
                 <div className="flex items-center">
@@ -192,7 +186,7 @@ export const Cambridge18GRTest1Questions: React.FC = () => {
 
             <div className="question-item">
               <p className="mb-3">
-                <strong>7</strong> People can take their pet dogs to the garden.
+                <strong>7</strong> If an item was lost or damaged nine months ago, you can still take the dry cleaner to court.
               </p>
               <RadioGroup name="question7" className="flex gap-8">
                 <div className="flex items-center">
@@ -216,50 +210,26 @@ export const Cambridge18GRTest1Questions: React.FC = () => {
               </RadioGroup>
             </div>
           </div>
-        </div>
-
-        <div className="question-set mb-8">
+        </div>        <div className="question-set mb-8">
           <h3 className="font-bold mb-2">Questions 8–14</h3>
           <p className="mb-2">
-            Look at the following statements and the list of people below.
+            The text has six paragraphs, A–F.
           </p>
           <p className="mb-2">
-            Match each statement with the correct person, A–E.
+            Which paragraph mentions the following?
           </p>
           <p className="mb-4">
-            Write the correct letter, A–E, in boxes 8–14 on your answer sheet.
+            Write the correct letter, A–F, in boxes 8–14 on your answer sheet.
           </p>
           <p className="mb-4">
             <strong>NB</strong> You may use any letter more than once.
-          </p>
-
-          <div className="mb-6">
-            <h4 className="font-bold mb-2">People</h4>
-            <p>
-              <strong>A</strong> Andy Parker
-            </p>
-            <p>
-              <strong>B</strong> Martha Kelly
-            </p>
-            <p>
-              <strong>C</strong> Karl Jones
-            </p>
-            <p>
-              <strong>D</strong> Jana White
-            </p>
-            <p>
-              <strong>E</strong> Simon Dale
-            </p>
-          </div>
-
-          <div className="space-y-4">
+          </p>          <div className="space-y-4">
             <div className="question-item">
               <p className="mb-2">
-                <strong>8</strong> says that industry experience can begin with
-                unpaid work.
+                <strong>8</strong> Members of this group share ideas for the books they would like to read.
               </p>
               <RadioGroup name="question8" className="flex flex-wrap gap-4">
-                {["A", "B", "C", "D", "E"].map((letter) => (
+                {["A", "B", "C", "D", "E", "F"].map((letter) => (
                   <div
                     className="flex items-center"
                     key={`q8-${letter.toLowerCase()}`}
@@ -277,15 +247,12 @@ export const Cambridge18GRTest1Questions: React.FC = () => {
                   </div>
                 ))}
               </RadioGroup>
-            </div>
-
-            <div className="question-item">
+            </div>            <div className="question-item">
               <p className="mb-2">
-                <strong>9</strong> emphasizes the importance of adapting to
-                different styles of performance.
+                <strong>9</strong> It isn't possible for any new members to join this group at present.
               </p>
               <RadioGroup name="question9" className="flex flex-wrap gap-4">
-                {["A", "B", "C", "D", "E"].map((letter) => (
+                {["A", "B", "C", "D", "E", "F"].map((letter) => (
                   <div
                     className="flex items-center"
                     key={`q9-${letter.toLowerCase()}`}
@@ -307,11 +274,10 @@ export const Cambridge18GRTest1Questions: React.FC = () => {
 
             <div className="question-item">
               <p className="mb-2">
-                <strong>10</strong> warns of the need to be able to cope with
-                bad working conditions.
+                <strong>10</strong> You can get feedback on your own work from other members of this group.
               </p>
               <RadioGroup name="question10" className="flex flex-wrap gap-4">
-                {["A", "B", "C", "D", "E"].map((letter) => (
+                {["A", "B", "C", "D", "E", "F"].map((letter) => (
                   <div
                     className="flex items-center"
                     key={`q10-${letter.toLowerCase()}`}
@@ -333,11 +299,10 @@ export const Cambridge18GRTest1Questions: React.FC = () => {
 
             <div className="question-item">
               <p className="mb-2">
-                <strong>11</strong> thinks it's helpful to maintain
-                relationships with people from one's student days.
+                <strong>11</strong> This group focuses on stories belonging to just one genre.
               </p>
               <RadioGroup name="question11" className="flex flex-wrap gap-4">
-                {["A", "B", "C", "D", "E"].map((letter) => (
+                {["A", "B", "C", "D", "E", "F"].map((letter) => (
                   <div
                     className="flex items-center"
                     key={`q11-${letter.toLowerCase()}`}
@@ -359,11 +324,10 @@ export const Cambridge18GRTest1Questions: React.FC = () => {
 
             <div className="question-item">
               <p className="mb-2">
-                <strong>12</strong> acknowledges that some branches of the
-                industry may have gender inequality.
+                <strong>12</strong> Work produced by members of this group will be available to the public.
               </p>
               <RadioGroup name="question12" className="flex flex-wrap gap-4">
-                {["A", "B", "C", "D", "E"].map((letter) => (
+                {["A", "B", "C", "D", "E", "F"].map((letter) => (
                   <div
                     className="flex items-center"
                     key={`q12-${letter.toLowerCase()}`}
@@ -385,11 +349,10 @@ export const Cambridge18GRTest1Questions: React.FC = () => {
 
             <div className="question-item">
               <p className="mb-2">
-                <strong>13</strong> shows how employment can come about through
-                social connections.
+                <strong>13</strong> This group doesn't read or write either poetry or fiction.
               </p>
               <RadioGroup name="question13" className="flex flex-wrap gap-4">
-                {["A", "B", "C", "D", "E"].map((letter) => (
+                {["A", "B", "C", "D", "E", "F"].map((letter) => (
                   <div
                     className="flex items-center"
                     key={`q13-${letter.toLowerCase()}`}
@@ -411,11 +374,10 @@ export const Cambridge18GRTest1Questions: React.FC = () => {
 
             <div className="question-item">
               <p className="mb-2">
-                <strong>14</strong> recommends trying to find employment in a
-                less well-known part of the industry.
+                <strong>14</strong> This group would suit someone who thinks they could write a book.
               </p>
               <RadioGroup name="question14" className="flex flex-wrap gap-4">
-                {["A", "B", "C", "D", "E"].map((letter) => (
+                {["A", "B", "C", "D", "E", "F"].map((letter) => (
                   <div
                     className="flex items-center"
                     key={`q14-${letter.toLowerCase()}`}
@@ -437,187 +399,148 @@ export const Cambridge18GRTest1Questions: React.FC = () => {
           </div>
         </div>
 
-        <h2 className="text-lg font-bold mb-4">SECTION 2</h2>
-
-        <div className="question-set mb-8">
-          <h3 className="font-bold mb-2">Questions 15–20</h3>
-          <p className="mb-2">Complete the sentences below.</p>
+        <h2 className="text-lg font-bold mb-4">SECTION 2</h2>        <div className="question-set mb-8">
+          <h3 className="font-bold mb-2">Questions 15–22</h3>
+          <p className="mb-2">Complete the notes below.</p>
           <p className="mb-2">
-            Choose <strong>NO MORE THAN TWO WORDS AND/OR A NUMBER</strong> from
+            Choose <strong>NO MORE THAN TWO WORDS</strong> from
             the text for each answer.
           </p>
           <p className="mb-4">
-            Write your answers in boxes 15–20 on your answer sheet.
+            Write your answers in boxes 15–22 on your answer sheet.
           </p>
 
-          <div className="space-y-4">
-            <div className="question-item">
-              <p className="mb-2">
-                <strong>15</strong> The outdoor cinema has been in operation for{" "}
-                <Input type="text" className="w-32 mx-1 inline-block" /> summer
-                seasons.
-              </p>
-            </div>
+          <div className="bg-gray-50 p-4 rounded-lg border mb-6">
+            <h3 className="font-bold mb-2">Lifting equipment</h3>
+            <ul className="list-disc ml-6 space-y-2 mb-4">
+              <li>must be manufactured well, e.g., have a <strong>15</strong> <Input type="text" className="w-32 mx-1 inline-block" /> on it</li>
+              <li>may need to undergo <strong>16</strong> <Input type="text" className="w-32 mx-1 inline-block" /> before use</li>
+              <li>may need a regular check by an <strong>17</strong> <Input type="text" className="w-32 mx-1 inline-block" /></li>
+            </ul>
 
-            <div className="question-item">
-              <p className="mb-2">
-                <strong>16</strong> Gold Class tickets include unlimited{" "}
-                <Input type="text" className="w-32 mx-1 inline-block" /> and
-                other items.
-              </p>
-            </div>
+            <h3 className="font-bold mb-2">Lift plans</h3>
+            <ul className="list-disc ml-6 space-y-2 mb-4">
+              <li>relevant to cranes</li>
+              <li>used to establish and carry out <strong>18</strong> <Input type="text" className="w-32 mx-1 inline-block" /> for any risks</li>
+              <li>a <strong>19</strong> <Input type="text" className="w-32 mx-1 inline-block" /> can be consulted during a 'Tool Box Talk'</li>
+            </ul>
 
-            <div className="question-item">
-              <p className="mb-2">
-                <strong>17</strong> Standard ticket holders must avoid bringing{" "}
-                <Input type="text" className="w-32 mx-1 inline-block" /> because
-                it is dangerous.
-              </p>
-            </div>
+            <h3 className="font-bold mb-2">Preventing accidents with heavy loads</h3>
+            <ul className="list-disc ml-6 space-y-2 mb-4">
+              <li>use objects such as <strong>20</strong> <Input type="text" className="w-32 mx-1 inline-block" /> to make sure the load doesn't pass over anyone's head</li>
+              <li>appoint a <strong>21</strong> <Input type="text" className="w-32 mx-1 inline-block" /> to give verbal directions to the crane driver</li>
+            </ul>
 
-            <div className="question-item">
-              <p className="mb-2">
-                <strong>18</strong> Headphones are provided, and viewers must
-                leave <Input type="text" className="w-32 mx-1 inline-block" />{" "}
-                as security.
-              </p>
-            </div>
-
-            <div className="question-item">
-              <p className="mb-2">
-                <strong>19</strong> In{" "}
-                <Input type="text" className="w-32 mx-1 inline-block" />, all
-                film screenings were able to go ahead as planned.
-              </p>
-            </div>
-
-            <div className="question-item">
-              <p className="mb-2">
-                <strong>20</strong> The management encourages cinema-goers to
-                use <Input type="text" className="w-32 mx-1 inline-block" />{" "}
-                when coming by car.
-              </p>
-            </div>
+            <h3 className="font-bold mb-2">Secondary lifting equipment (chains, slings, etc.)</h3>
+            <ul className="list-disc ml-6 space-y-2">
+              <li>more likely to cause <strong>22</strong> <Input type="text" className="w-32 mx-1 inline-block" /></li>
+            </ul>
           </div>
-        </div>
-
-        <div className="question-set mb-8">
-          <h3 className="font-bold mb-2">Questions 21–27</h3>
-          <p className="mb-2">Complete the notes below.</p>
+        </div>        <div className="question-set mb-8">
+          <h3 className="font-bold mb-2">Questions 23–27</h3>
+          <p className="mb-2">Complete the table below.</p>
           <p className="mb-2">
             Choose <strong>ONE WORD ONLY</strong> from the text for each answer.
           </p>
           <p className="mb-4">
-            Write your answers in boxes 21–27 on your answer sheet.
+            Write your answers in boxes 23–27 on your answer sheet.
           </p>
 
           <div className="bg-gray-50 p-4 rounded-lg border mb-6">
-            <h3 className="font-bold mb-2">MANAGEMENT DEGREES</h3>
-            <p className="mb-2">
-              <strong>Bachelor of Business Administration (BBA)</strong>
-            </p>
-            <ul className="list-disc ml-6 space-y-1 mb-4">
-              <li>Gives wide knowledge of business practices</li>
-              <li>
-                In second and third years, students <strong>21</strong>{" "}
-                <Input type="text" className="w-32 mx-1 inline-block" /> to
-                study a particular area
-              </li>
-              <li>
-                May include opportunity for <strong>22</strong>{" "}
-                <Input type="text" className="w-32 mx-1 inline-block" /> to get
-                practical experience
-              </li>
-              <li>
-                Teaches skills like creative problem-solving and{" "}
-                <strong>23</strong>{" "}
-                <Input type="text" className="w-32 mx-1 inline-block" />
-              </li>
-              <li>
-                Six months after graduation, about 25% of graduates are working
-                in <strong>24</strong>{" "}
-                <Input type="text" className="w-32 mx-1 inline-block" /> or
-                related areas
-              </li>
-            </ul>
-
-            <p className="mb-2">
-              <strong>Business Studies with Languages</strong>
-            </p>
-            <ul className="list-disc ml-6 space-y-1 mb-4">
-              <li>Good preparation for international roles</li>
-              <li>
-                May include a year in a relevant country with{" "}
-                <strong>25</strong>{" "}
-                <Input type="text" className="w-32 mx-1 inline-block" /> in
-                international companies
-              </li>
-            </ul>
-
-            <p className="mb-2">
-              <strong>Business Studies with Computer Science</strong>
-            </p>
-            <ul className="list-disc ml-6 space-y-1 mb-4">
-              <li>
-                Business graduates learn about areas like human resources or{" "}
-                <strong>26</strong>{" "}
-                <Input type="text" className="w-32 mx-1 inline-block" />
-              </li>
-              <li>
-                Leads to careers like business analyst or social media manager
-              </li>
-            </ul>
-
-            <p className="mb-2">
-              <strong>MBA</strong>
-            </p>
-            <ul className="list-disc ml-6 space-y-1 mb-4">
-              <li>
-                For graduates with management <strong>27</strong>{" "}
-                <Input type="text" className="w-32 mx-1 inline-block" />
-              </li>
-              <li>Can lead to more than doubling of salary</li>
-            </ul>
+            <h3 className="font-bold mb-2 text-center">Strategies for dealing with customer complaints</h3>
+            <table className="w-full border-collapse border border-gray-300">
+              <thead>
+                <tr>
+                  <th className="border border-gray-300 p-2 bg-gray-100">Strategy</th>
+                  <th className="border border-gray-300 p-2 bg-gray-100">Your approach</th>
+                  <th className="border border-gray-300 p-2 bg-gray-100">The customer...</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td className="border border-gray-300 p-2">Stay calm</td>
+                  <td className="border border-gray-300 p-2">
+                    Remember it is not a direct attack on you.<br/>
+                    Do not try to <Input type="text" className="w-20 inline-block mx-1" /> <strong>(23)</strong> the argument.
+                  </td>
+                  <td className="border border-gray-300 p-2">
+                    usually had <Input type="text" className="w-20 inline-block mx-1" /> <strong>(24)</strong> that were not fulfilled.
+                  </td>
+                </tr>
+                <tr>
+                  <td className="border border-gray-300 p-2">Listen well</td>
+                  <td className="border border-gray-300 p-2">Use short phrases in reply.</td>
+                  <td className="border border-gray-300 p-2">
+                    cannot recognise a <Input type="text" className="w-20 inline-block mx-1" /> <strong>(25)</strong> until calm
+                  </td>
+                </tr>
+                <tr>
+                  <td className="border border-gray-300 p-2">Get the facts</td>
+                  <td className="border border-gray-300 p-2">Ask questions and begin a proper conversation.</td>
+                  <td className="border border-gray-300 p-2">will start to trust you.</td>
+                </tr>
+                <tr>
+                  <td className="border border-gray-300 p-2">Suggest action</td>
+                  <td className="border border-gray-300 p-2">
+                    Be sure of your company's <Input type="text" className="w-20 inline-block mx-1" /> <strong>(26)</strong> on complaints.
+                  </td>
+                  <td className="border border-gray-300 p-2">
+                    may well make a verbal <Input type="text" className="w-20 inline-block mx-1" /> <strong>(27)</strong> in future.
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
 
-        <h2 className="text-lg font-bold mb-4">SECTION 3</h2>
-
-        <div className="question-set mb-8">
-          <h3 className="font-bold mb-2">Questions 28–34</h3>
+        <h2 className="text-lg font-bold mb-4">SECTION 3</h2>        <div className="question-set mb-8">
+          <h3 className="font-bold mb-2">Questions 28–33</h3>
           <p className="mb-2">
-            The text has ten paragraphs, <strong>A–J</strong>.
+            The text has six sections, <strong>A–F</strong>.
           </p>
           <p className="mb-2">
-            Which paragraph contains the following information?
+            Choose the correct heading for each section from the list of headings below.
           </p>
           <p className="mb-4">
-            Write the correct letter, <strong>A–J</strong>, in boxes{" "}
-            <strong>28–34</strong> on your answer sheet.
+            Write the correct number, <strong>i–viii</strong>, in boxes{" "}
+            <strong>28–33</strong> on your answer sheet.
           </p>
+
+          <div className="mb-6">
+            <h4 className="font-bold mb-2">List of Headings</h4>
+            <div className="grid grid-cols-1 gap-1">
+              <p><strong>i</strong> An enterprise arising from success in other countries</p>
+              <p><strong>ii</strong> The hope that storks will inspire a range of emotions and actions</p>
+              <p><strong>iii</strong> Support from some organisations but not from others</p>
+              <p><strong>iv</strong> Finding new types of habitat</p>
+              <p><strong>v</strong> Opposition from the general public</p>
+              <p><strong>vi</strong> A sign of hope in difficult times</p>
+              <p><strong>vii</strong> Creatures which represent both joy and opposition</p>
+              <p><strong>viii</strong> Storks causing delight and the revival of public events</p>
+            </div>
+          </div>
 
           <div className="space-y-4">
             <div className="question-item">
               <p className="mb-2">
-                <strong>28</strong> a description of how lighthouse authorities
-                were established to improve safety at sea
+                <strong>28</strong> Section A
               </p>
               <RadioGroup name="question28" className="flex flex-wrap gap-4">
-                {["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"].map(
-                  (letter) => (
+                {["i", "ii", "iii", "iv", "v", "vi", "vii", "viii"].map(
+                  (number) => (
                     <div
                       className="flex items-center"
-                      key={`q28-${letter.toLowerCase()}`}
+                      key={`q28-${number}`}
                     >
                       <RadioGroupItem
-                        id={`q28-${letter.toLowerCase()}`}
-                        value={letter}
+                        id={`q28-${number}`}
+                        value={number}
                       />
                       <Label
-                        htmlFor={`q28-${letter.toLowerCase()}`}
+                        htmlFor={`q28-${number}`}
                         className="ml-2"
                       >
-                        {letter}
+                        {number}
                       </Label>
                     </div>
                   )
@@ -627,25 +550,24 @@ export const Cambridge18GRTest1Questions: React.FC = () => {
 
             <div className="question-item">
               <p className="mb-2">
-                <strong>29</strong> reference to different sources of fuel
-                historically used in lighthouses
+                <strong>29</strong> Section B
               </p>
               <RadioGroup name="question29" className="flex flex-wrap gap-4">
-                {["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"].map(
-                  (letter) => (
+                {["i", "ii", "iii", "iv", "v", "vi", "vii", "viii"].map(
+                  (number) => (
                     <div
                       className="flex items-center"
-                      key={`q29-${letter.toLowerCase()}`}
+                      key={`q29-${number}`}
                     >
                       <RadioGroupItem
-                        id={`q29-${letter.toLowerCase()}`}
-                        value={letter}
+                        id={`q29-${number}`}
+                        value={number}
                       />
                       <Label
-                        htmlFor={`q29-${letter.toLowerCase()}`}
+                        htmlFor={`q29-${number}`}
                         className="ml-2"
                       >
-                        {letter}
+                        {number}
                       </Label>
                     </div>
                   )
@@ -655,25 +577,24 @@ export const Cambridge18GRTest1Questions: React.FC = () => {
 
             <div className="question-item">
               <p className="mb-2">
-                <strong>30</strong> the reason for the need to provide audio
-                warnings to ships
+                <strong>30</strong> Section C
               </p>
               <RadioGroup name="question30" className="flex flex-wrap gap-4">
-                {["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"].map(
-                  (letter) => (
+                {["i", "ii", "iii", "iv", "v", "vi", "vii", "viii"].map(
+                  (number) => (
                     <div
                       className="flex items-center"
-                      key={`q30-${letter.toLowerCase()}`}
+                      key={`q30-${number}`}
                     >
                       <RadioGroupItem
-                        id={`q30-${letter.toLowerCase()}`}
-                        value={letter}
+                        id={`q30-${number}`}
+                        value={number}
                       />
                       <Label
-                        htmlFor={`q30-${letter.toLowerCase()}`}
+                        htmlFor={`q30-${number}`}
                         className="ml-2"
                       >
-                        {letter}
+                        {number}
                       </Label>
                     </div>
                   )
@@ -683,25 +604,24 @@ export const Cambridge18GRTest1Questions: React.FC = () => {
 
             <div className="question-item">
               <p className="mb-2">
-                <strong>31</strong> a reference to a structure that might have
-                served as a lighthouse but cannot be confirmed
+                <strong>31</strong> Section D
               </p>
               <RadioGroup name="question31" className="flex flex-wrap gap-4">
-                {["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"].map(
-                  (letter) => (
+                {["i", "ii", "iii", "iv", "v", "vi", "vii", "viii"].map(
+                  (number) => (
                     <div
                       className="flex items-center"
-                      key={`q31-${letter.toLowerCase()}`}
+                      key={`q31-${number}`}
                     >
                       <RadioGroupItem
-                        id={`q31-${letter.toLowerCase()}`}
-                        value={letter}
+                        id={`q31-${number}`}
+                        value={number}
                       />
                       <Label
-                        htmlFor={`q31-${letter.toLowerCase()}`}
+                        htmlFor={`q31-${number}`}
                         className="ml-2"
                       >
-                        {letter}
+                        {number}
                       </Label>
                     </div>
                   )
@@ -711,25 +631,24 @@ export const Cambridge18GRTest1Questions: React.FC = () => {
 
             <div className="question-item">
               <p className="mb-2">
-                <strong>32</strong> a description of how a lighthouse was
-                constructed in challenging physical conditions
+                <strong>32</strong> Section E
               </p>
               <RadioGroup name="question32" className="flex flex-wrap gap-4">
-                {["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"].map(
-                  (letter) => (
+                {["i", "ii", "iii", "iv", "v", "vi", "vii", "viii"].map(
+                  (number) => (
                     <div
                       className="flex items-center"
-                      key={`q32-${letter.toLowerCase()}`}
+                      key={`q32-${number}`}
                     >
                       <RadioGroupItem
-                        id={`q32-${letter.toLowerCase()}`}
-                        value={letter}
+                        id={`q32-${number}`}
+                        value={number}
                       />
                       <Label
-                        htmlFor={`q32-${letter.toLowerCase()}`}
+                        htmlFor={`q32-${number}`}
                         className="ml-2"
                       >
-                        {letter}
+                        {number}
                       </Label>
                     </div>
                   )
@@ -739,53 +658,24 @@ export const Cambridge18GRTest1Questions: React.FC = () => {
 
             <div className="question-item">
               <p className="mb-2">
-                <strong>33</strong> the continuous requirement for human
-                involvement in modern lighthouses
+                <strong>33</strong> Section F
               </p>
               <RadioGroup name="question33" className="flex flex-wrap gap-4">
-                {["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"].map(
-                  (letter) => (
+                {["i", "ii", "iii", "iv", "v", "vi", "vii", "viii"].map(
+                  (number) => (
                     <div
                       className="flex items-center"
-                      key={`q33-${letter.toLowerCase()}`}
+                      key={`q33-${number}`}
                     >
                       <RadioGroupItem
-                        id={`q33-${letter.toLowerCase()}`}
-                        value={letter}
+                        id={`q33-${number}`}
+                        value={number}
                       />
                       <Label
-                        htmlFor={`q33-${letter.toLowerCase()}`}
+                        htmlFor={`q33-${number}`}
                         className="ml-2"
                       >
-                        {letter}
-                      </Label>
-                    </div>
-                  )
-                )}
-              </RadioGroup>
-            </div>
-
-            <div className="question-item">
-              <p className="mb-2">
-                <strong>34</strong> an explanation of how a technological
-                invention helped to identify a lighthouse from a distance
-              </p>
-              <RadioGroup name="question34" className="flex flex-wrap gap-4">
-                {["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"].map(
-                  (letter) => (
-                    <div
-                      className="flex items-center"
-                      key={`q34-${letter.toLowerCase()}`}
-                    >
-                      <RadioGroupItem
-                        id={`q34-${letter.toLowerCase()}`}
-                        value={letter}
-                      />
-                      <Label
-                        htmlFor={`q34-${letter.toLowerCase()}`}
-                        className="ml-2"
-                      >
-                        {letter}
+                        {number}
                       </Label>
                     </div>
                   )
@@ -793,51 +683,137 @@ export const Cambridge18GRTest1Questions: React.FC = () => {
               </RadioGroup>
             </div>
           </div>
-        </div>
-
-        <div className="question-set mb-8">
-          <h3 className="font-bold mb-2">Questions 35–40</h3>
+        </div>        <div className="question-set mb-8">
+          <h3 className="font-bold mb-2">Questions 34–37</h3>
           <p className="mb-2">Complete the summary below.</p>
           <p className="mb-2">
-            Choose <strong>NO MORE THAN TWO WORDS</strong> from the text for
-            each answer.
+            Choose <strong>ONE WORD ONLY</strong> from the text for each answer.
           </p>
           <p className="mb-4">
-            Write your answers in boxes <strong>35–40</strong> on your answer
+            Write your answers in boxes <strong>34–37</strong> on your answer
             sheet.
           </p>
 
           <div className="bg-gray-50 p-4 rounded-lg border mb-6">
             <h3 className="font-bold mb-2">
-              The Evolution of Lighthouse Design
+              Project to reintroduce white storks at Knepp Estate
             </h3>
             <p className="mb-4">
-              In early times, lighthouses were simply <strong>35</strong>{" "}
-              <Input type="text" className="w-32 mx-1 inline-block" /> or lamps
-              on platforms. Later, they evolved into stone towers that were
-              positioned at strategic points such as the entrances to ports or
-              on sections of <strong>36</strong>{" "}
-              <Input type="text" className="w-32 mx-1 inline-block" />{" "}
-              coastline.
+              Last spring, two white storks were observed nesting at Knepp Estate, putting 
+              <strong>34</strong> <Input type="text" className="w-32 mx-1 inline-block" /> together high up in a large oak tree. 
+              The female laid three eggs, which unfortunately proved to be <strong>35</strong> <Input type="text" className="w-32 mx-1 inline-block" />. 
+              However, this was not surprising for such young storks. Naturalists believe they are likely to breed successfully in the future.
             </p>
             <p className="mb-4">
-              Lighthouses needed to be built with <strong>37</strong>{" "}
-              <Input type="text" className="w-32 mx-1 inline-block" /> walls to
-              withstand severe weather. Until the nineteenth century, they were
-              usually painted with <strong>38</strong>{" "}
-              <Input type="text" className="w-32 mx-1 inline-block" /> of color
-              to make them more visible during daylight hours.
+              These two storks were bred in <strong>36</strong> <Input type="text" className="w-32 mx-1 inline-block" /> and, after arriving in the UK, 
+              were kept for several years together with a few fully mature storks and some fellow juveniles before being released at Knepp. 
+              It appears that other storks are developing a sense of <strong>37</strong> <Input type="text" className="w-32 mx-1 inline-block" /> to their new home. 
+              One left Knepp for a year, only to fly back to be with the group again.
             </p>
-            <p className="mb-4">
-              In the nineteenth century, August Fresnell invented a special type
-              of <strong>39</strong>{" "}
-              <Input type="text" className="w-32 mx-1 inline-block" /> for
-              lighthouses. Its design allowed the light to be projected as a
-              horizontal <strong>40</strong>{" "}
-              <Input type="text" className="w-32 mx-1 inline-block" />. Rotating
-              the lens created a pattern which helped ships determine their
-              position at sea.
-            </p>
+          </div>
+        </div>        <div className="question-set mb-8">
+          <h3 className="font-bold mb-2">Questions 38–40</h3>
+          <p className="mb-2">Choose the correct letter, <strong>A</strong>, <strong>B</strong>, <strong>C</strong> or <strong>D</strong>.</p>
+          <p className="mb-4">
+            Write the correct letter in boxes <strong>38–40</strong> on your answer sheet.
+          </p>
+
+          <div className="space-y-6">
+            <div className="question-item">
+              <p className="mb-3">
+                <strong>38</strong> In Section A, we learn that in the past people thought white storks
+              </p>
+              <RadioGroup name="question38" className="space-y-3">
+                <div className="flex items-center">
+                  <RadioGroupItem id="q38-a" value="A" />
+                  <Label htmlFor="q38-a" className="ml-2">
+                    A  represented the deep snow and cold days of winter.
+                  </Label>
+                </div>
+                <div className="flex items-center">
+                  <RadioGroupItem id="q38-b" value="B" />
+                  <Label htmlFor="q38-b" className="ml-2">
+                    B  had the power to ensure that babies were born safely.
+                  </Label>
+                </div>
+                <div className="flex items-center">
+                  <RadioGroupItem id="q38-c" value="C" />
+                  <Label htmlFor="q38-c" className="ml-2">
+                    C  were a speciality that only the very rich were allowed to eat.
+                  </Label>
+                </div>
+                <div className="flex items-center">
+                  <RadioGroupItem id="q38-d" value="D" />
+                  <Label htmlFor="q38-d" className="ml-2">
+                    D  might be used to encourage people to get rid of the monarchy.
+                  </Label>
+                </div>
+              </RadioGroup>
+            </div>
+
+            <div className="question-item">
+              <p className="mb-3">
+                <strong>39</strong> The Sussex Wildlife Trust committee was unwilling to support the storks because
+              </p>
+              <RadioGroup name="question39" className="space-y-3">
+                <div className="flex items-center">
+                  <RadioGroupItem id="q39-a" value="A" />
+                  <Label htmlFor="q39-a" className="ml-2">
+                    A  it thought there might not be any safe breeding places locally.
+                  </Label>
+                </div>
+                <div className="flex items-center">
+                  <RadioGroupItem id="q39-b" value="B" />
+                  <Label htmlFor="q39-b" className="ml-2">
+                    B  it worried whether they would survive in Britain long enough.
+                  </Label>
+                </div>
+                <div className="flex items-center">
+                  <RadioGroupItem id="q39-c" value="C" />
+                  <Label htmlFor="q39-c" className="ml-2">
+                    C  it was unsure that they were actually a native species.
+                  </Label>
+                </div>
+                <div className="flex items-center">
+                  <RadioGroupItem id="q39-d" value="D" />
+                  <Label htmlFor="q39-d" className="ml-2">
+                    D  it had too many other worthy projects to support.
+                  </Label>
+                </div>
+              </RadioGroup>
+            </div>
+
+            <div className="question-item">
+              <p className="mb-3">
+                <strong>40</strong> What has been one effect of stork reintroductions in Europe?
+              </p>
+              <RadioGroup name="question40" className="space-y-3">
+                <div className="flex items-center">
+                  <RadioGroupItem id="q40-a" value="A" />
+                  <Label htmlFor="q40-a" className="ml-2">
+                    A  A variety of measures have been taken to create nesting sites.
+                  </Label>
+                </div>
+                <div className="flex items-center">
+                  <RadioGroupItem id="q40-b" value="B" />
+                  <Label htmlFor="q40-b" className="ml-2">
+                    B  Changes have been made to the routes of some major roads.
+                  </Label>
+                </div>
+                <div className="flex items-center">
+                  <RadioGroupItem id="q40-c" value="C" />
+                  <Label htmlFor="q40-c" className="ml-2">
+                    C  Special shelters have been made to protect the birds in bad weather.
+                  </Label>
+                </div>
+                <div className="flex items-center">
+                  <RadioGroupItem id="q40-d" value="D" />
+                  <Label htmlFor="q40-d" className="ml-2">
+                    D  Some people have strengthened their roofs to support the birds' weight.
+                  </Label>
+                </div>
+              </RadioGroup>
+            </div>
           </div>
         </div>
       </div>

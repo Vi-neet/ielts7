@@ -150,10 +150,11 @@ export const Cambridge18ARTest1Questions: React.FC = () => {
           </div>
 
           <div className="space-y-4">
+            {" "}
             <div className="question-item">
               <p className="mb-2">
-                <strong>8</strong> Aeroponic urban farming requires less space
-                than conventional farming.
+                <strong>8</strong> Urban farming can take place above or below
+                ground.
               </p>
               <RadioGroup className="flex flex-col space-y-1">
                 <div className="flex items-center space-x-2">
@@ -170,11 +171,10 @@ export const Cambridge18ARTest1Questions: React.FC = () => {
                 </div>
               </RadioGroup>
             </div>
-
             <div className="question-item">
               <p className="mb-2">
-                <strong>9</strong> Hardy's initial experimental work was on a
-                much smaller scale than his current project.
+                <strong>9</strong> Some of the equipment used in aeroponic
+                farming can be made by hand.
               </p>
               <RadioGroup className="flex flex-col space-y-1">
                 <div className="flex items-center space-x-2">
@@ -191,12 +191,10 @@ export const Cambridge18ARTest1Questions: React.FC = () => {
                 </div>
               </RadioGroup>
             </div>
-
             <div className="question-item">
               <p className="mb-2">
-                <strong>10</strong> Most of the farms that consult Agripolis
-                intend to grow their crops on the ground rather than on
-                rooftops.
+                <strong>10</strong> Urban farming relies more on electricity
+                than some other types of farming.
               </p>
               <RadioGroup className="flex flex-col space-y-1">
                 <div className="flex items-center space-x-2">
@@ -213,11 +211,10 @@ export const Cambridge18ARTest1Questions: React.FC = () => {
                 </div>
               </RadioGroup>
             </div>
-
             <div className="question-item">
               <p className="mb-2">
-                <strong>11</strong> In Hardy's view, aeroponic techniques use
-                significantly less water than traditional farming methods.
+                <strong>11</strong> Fruit and vegetables grown on an aeroponic
+                urban farm are cheaper than traditionally grown organic produce.
               </p>
               <RadioGroup className="flex flex-col space-y-1">
                 <div className="flex items-center space-x-2">
@@ -234,11 +231,10 @@ export const Cambridge18ARTest1Questions: React.FC = () => {
                 </div>
               </RadioGroup>
             </div>
-
             <div className="question-item">
               <p className="mb-2">
-                <strong>12</strong> Hardy's aeroponic farm uses more energy than
-                some other urban farming methods.
+                <strong>12</strong> Most produce can be grown on an aeroponic
+                urban farm at any time of the year.
               </p>
               <RadioGroup className="flex flex-col space-y-1">
                 <div className="flex items-center space-x-2">
@@ -255,11 +251,10 @@ export const Cambridge18ARTest1Questions: React.FC = () => {
                 </div>
               </RadioGroup>
             </div>
-
             <div className="question-item">
               <p className="mb-2">
-                <strong>13</strong> Hardy has plans to extend the range of
-                fruits and vegetables that can be grown using aeroponic methods.
+                <strong>13</strong> Beans take longer to grow on an urban farm
+                than other vegetables.
               </p>
               <RadioGroup className="flex flex-col space-y-1">
                 <div className="flex items-center space-x-2">
@@ -283,202 +278,349 @@ export const Cambridge18ARTest1Questions: React.FC = () => {
       <div className="reading-questions p-4 bg-white">
         <h2 className="text-lg font-bold mb-4">
           READING PASSAGE 2: Questions 14-26
-        </h2>
-
+        </h2>{" "}
         <div className="question-set mb-8">
-          <h3 className="font-bold mb-2">Questions 14-20</h3>
+          <h3 className="font-bold mb-2">Questions 14-18</h3>
           <p className="mb-2">Reading Passage 2 has seven paragraphs, A-G.</p>
           <p className="mb-2">
             Which paragraph contains the following information?
+          </p>{" "}
+          <p className="mb-4">
+            Write the correct letter, A-G, in boxes 14-18 on your answer sheet.
           </p>
           <p className="mb-4">
-            Write the correct letter, A-G, in boxes 14-20 on your answer sheet.
+            <strong>NB</strong> You may use any letter more than once.
+          </p>
+          <div className="space-y-4">
+            <div className="question-item">
+              <p className="mb-2">
+                <strong>14</strong> bad outcomes for a forest when people focus
+                only on its financial reward
+              </p>
+              <RadioGroup className="flex flex-row space-x-2">
+                <div className="flex items-center space-x-1">
+                  <RadioGroupItem value="A" id="q14-a" />
+                  <Label htmlFor="q14-a">A</Label>
+                </div>
+                <div className="flex items-center space-x-1">
+                  <RadioGroupItem value="B" id="q14-b" />
+                  <Label htmlFor="q14-b">B</Label>
+                </div>
+                <div className="flex items-center space-x-1">
+                  <RadioGroupItem value="C" id="q14-c" />
+                  <Label htmlFor="q14-c">C</Label>
+                </div>
+                <div className="flex items-center space-x-1">
+                  <RadioGroupItem value="D" id="q14-d" />
+                  <Label htmlFor="q14-d">D</Label>
+                </div>
+                <div className="flex items-center space-x-1">
+                  <RadioGroupItem value="E" id="q14-e" />
+                  <Label htmlFor="q14-e">E</Label>
+                </div>
+                <div className="flex items-center space-x-1">
+                  <RadioGroupItem value="F" id="q14-f" />
+                  <Label htmlFor="q14-f">F</Label>
+                </div>
+                <div className="flex items-center space-x-1">
+                  <RadioGroupItem value="G" id="q14-g" />
+                  <Label htmlFor="q14-g">G</Label>
+                </div>
+              </RadioGroup>
+            </div>
+
+            <div className="question-item">
+              <p className="mb-2">
+                <strong>15</strong> reference to the aspects of any tree that
+                contribute to its worth
+              </p>
+              <RadioGroup className="flex flex-row space-x-2">
+                <div className="flex items-center space-x-1">
+                  <RadioGroupItem value="A" id="q15-a" />
+                  <Label htmlFor="q15-a">A</Label>
+                </div>
+                <div className="flex items-center space-x-1">
+                  <RadioGroupItem value="B" id="q15-b" />
+                  <Label htmlFor="q15-b">B</Label>
+                </div>
+                <div className="flex items-center space-x-1">
+                  <RadioGroupItem value="C" id="q15-c" />
+                  <Label htmlFor="q15-c">C</Label>
+                </div>
+                <div className="flex items-center space-x-1">
+                  <RadioGroupItem value="D" id="q15-d" />
+                  <Label htmlFor="q15-d">D</Label>
+                </div>
+                <div className="flex items-center space-x-1">
+                  <RadioGroupItem value="E" id="q15-e" />
+                  <Label htmlFor="q15-e">E</Label>
+                </div>
+                <div className="flex items-center space-x-1">
+                  <RadioGroupItem value="F" id="q15-f" />
+                  <Label htmlFor="q15-f">F</Label>
+                </div>
+                <div className="flex items-center space-x-1">
+                  <RadioGroupItem value="G" id="q15-g" />
+                  <Label htmlFor="q15-g">G</Label>
+                </div>
+              </RadioGroup>
+            </div>
+
+            <div className="question-item">
+              <p className="mb-2">
+                <strong>16</strong> mention of the potential use of wood to help
+                run vehicles
+              </p>
+              <RadioGroup className="flex flex-row space-x-2">
+                <div className="flex items-center space-x-1">
+                  <RadioGroupItem value="A" id="q16-a" />
+                  <Label htmlFor="q16-a">A</Label>
+                </div>
+                <div className="flex items-center space-x-1">
+                  <RadioGroupItem value="B" id="q16-b" />
+                  <Label htmlFor="q16-b">B</Label>
+                </div>
+                <div className="flex items-center space-x-1">
+                  <RadioGroupItem value="C" id="q16-c" />
+                  <Label htmlFor="q16-c">C</Label>
+                </div>
+                <div className="flex items-center space-x-1">
+                  <RadioGroupItem value="D" id="q16-d" />
+                  <Label htmlFor="q16-d">D</Label>
+                </div>
+                <div className="flex items-center space-x-1">
+                  <RadioGroupItem value="E" id="q16-e" />
+                  <Label htmlFor="q16-e">E</Label>
+                </div>
+                <div className="flex items-center space-x-1">
+                  <RadioGroupItem value="F" id="q16-f" />
+                  <Label htmlFor="q16-f">F</Label>
+                </div>
+                <div className="flex items-center space-x-1">
+                  <RadioGroupItem value="G" id="q16-g" />
+                  <Label htmlFor="q16-g">G</Label>
+                </div>
+              </RadioGroup>
+            </div>
+
+            <div className="question-item">
+              <p className="mb-2">
+                <strong>17</strong> examples of insects that attack trees
+              </p>
+              <RadioGroup className="flex flex-row space-x-2">
+                <div className="flex items-center space-x-1">
+                  <RadioGroupItem value="A" id="q17-a" />
+                  <Label htmlFor="q17-a">A</Label>
+                </div>
+                <div className="flex items-center space-x-1">
+                  <RadioGroupItem value="B" id="q17-b" />
+                  <Label htmlFor="q17-b">B</Label>
+                </div>
+                <div className="flex items-center space-x-1">
+                  <RadioGroupItem value="C" id="q17-c" />
+                  <Label htmlFor="q17-c">C</Label>
+                </div>
+                <div className="flex items-center space-x-1">
+                  <RadioGroupItem value="D" id="q17-d" />
+                  <Label htmlFor="q17-d">D</Label>
+                </div>
+                <div className="flex items-center space-x-1">
+                  <RadioGroupItem value="E" id="q17-e" />
+                  <Label htmlFor="q17-e">E</Label>
+                </div>
+                <div className="flex items-center space-x-1">
+                  <RadioGroupItem value="F" id="q17-f" />
+                  <Label htmlFor="q17-f">F</Label>
+                </div>
+                <div className="flex items-center space-x-1">
+                  <RadioGroupItem value="G" id="q17-g" />
+                  <Label htmlFor="q17-g">G</Label>
+                </div>
+              </RadioGroup>
+            </div>
+
+            <div className="question-item">
+              <p className="mb-2">
+                <strong>18</strong> an alternative name for trees that produce
+                low-use wood
+              </p>
+              <RadioGroup className="flex flex-row space-x-2">
+                <div className="flex items-center space-x-1">
+                  <RadioGroupItem value="A" id="q18-a" />
+                  <Label htmlFor="q18-a">A</Label>
+                </div>
+                <div className="flex items-center space-x-1">
+                  <RadioGroupItem value="B" id="q18-b" />
+                  <Label htmlFor="q18-b">B</Label>
+                </div>
+                <div className="flex items-center space-x-1">
+                  <RadioGroupItem value="C" id="q18-c" />
+                  <Label htmlFor="q18-c">C</Label>
+                </div>
+                <div className="flex items-center space-x-1">
+                  <RadioGroupItem value="D" id="q18-d" />
+                  <Label htmlFor="q18-d">D</Label>
+                </div>
+                <div className="flex items-center space-x-1">
+                  <RadioGroupItem value="E" id="q18-e" />
+                  <Label htmlFor="q18-e">E</Label>
+                </div>
+                <div className="flex items-center space-x-1">
+                  <RadioGroupItem value="F" id="q18-f" />
+                  <Label htmlFor="q18-f">F</Label>
+                </div>
+                <div className="flex items-center space-x-1">
+                  <RadioGroupItem value="G" id="q18-g" />
+                  <Label htmlFor="q18-g">G</Label>
+                </div>
+              </RadioGroup>
+            </div>
+          </div>
+        </div>{" "}
+        <div className="question-set mb-8">
+          <h3 className="font-bold mb-2">Questions 19-21</h3>
+          <p className="mb-2">
+            Look at the following purposes (Questions 19-21) and the list of
+            timber cuts below.
+          </p>
+          <p className="mb-2">
+            Match each purpose with the correct timber cut, A, B or C.
+          </p>
+          <p className="mb-2">
+            Write the correct letter, A, B or C, in boxes 19-21 on your answer
+            sheet.
+          </p>
+          <p className="mb-4">
+            <strong>NB</strong> You may use any letter more than once.
+          </p>
+
+          <div className="mb-4 border p-3">
+            <h4 className="font-bold mb-2">List of Timber Cuts</h4>
+            <p className="mb-1">
+              <strong>A</strong> a TSI Cut
+            </p>
+            <p className="mb-1">
+              <strong>B</strong> a Salvage Cut
+            </p>
+            <p className="mb-1">
+              <strong>C</strong> a Shelterwood Cut
+            </p>
+          </div>
+
+          <div className="space-y-4">
+            <div className="question-item">
+              <p className="mb-2">
+                <strong>19</strong> to remove trees that are diseased
+              </p>
+              <RadioGroup className="flex flex-row space-x-4">
+                <div className="flex items-center space-x-1">
+                  <RadioGroupItem value="A" id="q19-a" />
+                  <Label htmlFor="q19-a">A</Label>
+                </div>
+                <div className="flex items-center space-x-1">
+                  <RadioGroupItem value="B" id="q19-b" />
+                  <Label htmlFor="q19-b">B</Label>
+                </div>
+                <div className="flex items-center space-x-1">
+                  <RadioGroupItem value="C" id="q19-c" />
+                  <Label htmlFor="q19-c">C</Label>
+                </div>
+              </RadioGroup>
+            </div>
+
+            <div className="question-item">
+              <p className="mb-2">
+                <strong>20</strong> to generate income across a number of years
+              </p>
+              <RadioGroup className="flex flex-row space-x-4">
+                <div className="flex items-center space-x-1">
+                  <RadioGroupItem value="A" id="q20-a" />
+                  <Label htmlFor="q20-a">A</Label>
+                </div>
+                <div className="flex items-center space-x-1">
+                  <RadioGroupItem value="B" id="q20-b" />
+                  <Label htmlFor="q20-b">B</Label>
+                </div>
+                <div className="flex items-center space-x-1">
+                  <RadioGroupItem value="C" id="q20-c" />
+                  <Label htmlFor="q20-c">C</Label>
+                </div>
+              </RadioGroup>
+            </div>
+
+            <div className="question-item">
+              <p className="mb-2">
+                <strong>21</strong> to create a forest whose trees are close in
+                age
+              </p>
+              <RadioGroup className="flex flex-row space-x-4">
+                <div className="flex items-center space-x-1">
+                  <RadioGroupItem value="A" id="q21-a" />
+                  <Label htmlFor="q21-a">A</Label>
+                </div>
+                <div className="flex items-center space-x-1">
+                  <RadioGroupItem value="B" id="q21-b" />
+                  <Label htmlFor="q21-b">B</Label>
+                </div>
+                <div className="flex items-center space-x-1">
+                  <RadioGroupItem value="C" id="q21-c" />
+                  <Label htmlFor="q21-c">C</Label>
+                </div>
+              </RadioGroup>
+            </div>
+          </div>
+        </div>{" "}
+        <div className="question-set mb-8">
+          <h3 className="font-bold mb-2">Questions 22-26</h3>
+          <p className="mb-2">Complete the sentences below.</p>
+          <p className="mb-2">
+            Choose <strong>ONE WORD ONLY</strong> from the passage for each
+            answer.
+          </p>
+          <p className="mb-4">
+            Write your answers in boxes 22-26 on your answer sheet.
           </p>
 
           <div className="space-y-4">
             <div className="question-item">
               <p className="mb-2">
-                <strong>14</strong> examples of a range of potential
-                environmental advantages of low-use wood
+                <strong>22</strong> Some dead wood is removed to avoid the
+                possibility of{" "}
+                <Input type="text" className="w-32 inline-block mx-1" />.
               </p>
-              <Input type="text" className="w-16" placeholder="A-G" />
             </div>
 
             <div className="question-item">
               <p className="mb-2">
-                <strong>15</strong> an explanation of what determines a tree's
-                usefulness for different people
+                <strong>23</strong> The{" "}
+                <Input type="text" className="w-32 inline-block mx-1" /> from
+                the tops of cut trees can help improve soil quality.
               </p>
-              <Input type="text" className="w-16" placeholder="A-G" />
             </div>
 
             <div className="question-item">
               <p className="mb-2">
-                <strong>16</strong> examples of the widespread uses of wood for
-                energy generation
+                <strong>24</strong> Some damaged trees should be left, as their{" "}
+                <Input type="text" className="w-32 inline-block mx-1" /> provide
+                habitats for a range of creatures.
               </p>
-              <Input type="text" className="w-16" placeholder="A-G" />
             </div>
 
             <div className="question-item">
               <p className="mb-2">
-                <strong>17</strong> reference to cuttings performed to protect
-                forests against disease
+                <strong>25</strong> Some trees that are small, such as{" "}
+                <Input type="text" className="w-32 inline-block mx-1" />, are a
+                source of food for animals and insects.
               </p>
-              <Input type="text" className="w-16" placeholder="A-G" />
             </div>
 
             <div className="question-item">
               <p className="mb-2">
-                <strong>18</strong> some negative results of traditional
-                forestry management in the region
+                <strong>26</strong> Any trees that are{" "}
+                <Input type="text" className="w-32 inline-block mx-1" /> should
+                be left to grow, as they add to the variety of species in the
+                forest.
               </p>
-              <Input type="text" className="w-16" placeholder="A-G" />
-            </div>
-
-            <div className="question-item">
-              <p className="mb-2">
-                <strong>19</strong> a description of how one cutting technique
-                can offer financial benefits over time
-              </p>
-              <Input type="text" className="w-16" placeholder="A-G" />
-            </div>
-
-            <div className="question-item">
-              <p className="mb-2">
-                <strong>20</strong> examples of cutting methods that can be used
-                to help forests recover
-              </p>
-              <Input type="text" className="w-16" placeholder="A-G" />
-            </div>
-          </div>
-        </div>
-
-        <div className="question-set mb-8">
-          <h3 className="font-bold mb-2">Questions 21-22</h3>
-          <p className="mb-2">
-            Choose <strong>TWO</strong> letters, A-E.
-          </p>
-          <p className="mb-4">
-            Write the correct letters in boxes 21 and 22 on your answer sheet.
-          </p>
-          <p className="mb-4">
-            Which <strong>TWO</strong> of the following statements are true of a
-            TSI Cut?
-          </p>
-
-          <div className="space-y-3">
-            <div className="flex items-start space-x-2">
-              <Checkbox id="q21-22-a" />
-              <Label htmlFor="q21-22-a" className="flex-1">
-                A It helps only the highest quality trees to thrive.
-              </Label>
-            </div>
-            <div className="flex items-start space-x-2">
-              <Checkbox id="q21-22-b" />
-              <Label htmlFor="q21-22-b" className="flex-1">
-                B It can be adjusted according to the landowner's wishes.
-              </Label>
-            </div>
-            <div className="flex items-start space-x-2">
-              <Checkbox id="q21-22-c" />
-              <Label htmlFor="q21-22-c" className="flex-1">
-                C It removes trees to prevent the spread of disease.
-              </Label>
-            </div>
-            <div className="flex items-start space-x-2">
-              <Checkbox id="q21-22-d" />
-              <Label htmlFor="q21-22-d" className="flex-1">
-                D It results in a forest where all trees are at a similar stage
-                of growth.
-              </Label>
-            </div>
-            <div className="flex items-start space-x-2">
-              <Checkbox id="q21-22-e" />
-              <Label htmlFor="q21-22-e" className="flex-1">
-                E It ensures that rare species of trees are protected.
-              </Label>
-            </div>
-          </div>
-        </div>
-
-        <div className="question-set mb-8">
-          <h3 className="font-bold mb-2">Questions 23-26</h3>
-          <p className="mb-2">
-            Complete the summary using the list of words, A-I, below.
-          </p>
-          <p className="mb-4">
-            Write the correct letter, A-I, in boxes 23-26 on your answer sheet.
-          </p>
-
-          <div className="border p-4 mb-6">
-            <h4 className="font-bold mb-2">
-              Retention of low-use wood in forests
-            </h4>
-
-            <p className="mb-4">
-              Although low-use wood can be cut down for energy generation, it is
-              important that some types remain in the forest. The tops of trees
-              that are cut down should be allowed to rot, as they provide
-              valuable <strong>23</strong>{" "}
-              <Input
-                type="text"
-                className="w-16 mx-1 inline-block"
-                placeholder="A-I"
-              />{" "}
-              for the soil. Trees that contain <strong>24</strong>{" "}
-              <Input
-                type="text"
-                className="w-16 mx-1 inline-block"
-                placeholder="A-I"
-              />{" "}
-              shelter a variety of birds and small mammals that feed on harmful
-              insects. Some small trees have value because, like{" "}
-              <strong>25</strong>{" "}
-              <Input
-                type="text"
-                className="w-16 mx-1 inline-block"
-                placeholder="A-I"
-              />
-              , they are a source of food for forest animals. In addition,{" "}
-              <strong>26</strong>{" "}
-              <Input
-                type="text"
-                className="w-16 mx-1 inline-block"
-                placeholder="A-I"
-              />{" "}
-              species should be preserved to maintain the diversity of the
-              forest.
-            </p>
-
-            <div className="grid grid-cols-3 gap-2">
-              <div>
-                <strong>A</strong> fire
-              </div>
-              <div>
-                <strong>B</strong> nutrients
-              </div>
-              <div>
-                <strong>C</strong> grass
-              </div>
-              <div>
-                <strong>D</strong> rare
-              </div>
-              <div>
-                <strong>E</strong> cavities
-              </div>
-              <div>
-                <strong>F</strong> strong
-              </div>
-              <div>
-                <strong>G</strong> diseased
-              </div>
-              <div>
-                <strong>H</strong> hawthorn
-              </div>
-              <div>
-                <strong>I</strong> types
-              </div>
             </div>
           </div>
         </div>
@@ -487,336 +629,374 @@ export const Cambridge18ARTest1Questions: React.FC = () => {
       <div className="reading-questions p-4 bg-white">
         <h2 className="text-lg font-bold mb-4">
           READING PASSAGE 3: Questions 27-40
-        </h2>
-
+        </h2>{" "}
         <div className="question-set mb-8">
           <h3 className="font-bold mb-2">Questions 27-31</h3>
-          <p className="mb-2">Choose the correct letter, A, B, C or D.</p>
-          <p className="mb-4">
-            Write the correct letter in boxes 27-31 on your answer sheet.
+          <p className="mb-2">Reading Passage 3 has six sections, A-F.</p>
+          <p className="mb-2">
+            Which section contains the following information?
           </p>
-
-          <div className="space-y-6">
+          <p className="mb-4">
+            Write the correct letter, A-F, in boxes 27-31 on your answer sheet.
+          </p>{" "}
+          <div className="space-y-4">
             <div className="question-item">
               <p className="mb-2">
-                <strong>27</strong> What point does the writer make in the first
-                paragraph?
+                <strong>27</strong> a reference to the cooperation that takes
+                place to try and minimise risk
               </p>
-              <RadioGroup className="flex flex-col space-y-2">
-                <div className="flex items-start space-x-2">
-                  <RadioGroupItem value="A" id="q27-a" className="mt-1" />
-                  <Label htmlFor="q27-a" className="flex-1">
-                    A There has been a decline in the number of commercial
-                    satellites launched recently.
-                  </Label>
+              <RadioGroup className="flex flex-row space-x-2">
+                <div className="flex items-center space-x-1">
+                  <RadioGroupItem value="A" id="q27-a" />
+                  <Label htmlFor="q27-a">A</Label>
                 </div>
-                <div className="flex items-start space-x-2">
-                  <RadioGroupItem value="B" id="q27-b" className="mt-1" />
-                  <Label htmlFor="q27-b" className="flex-1">
-                    B The launch of satellites has diversified in terms of those
-                    responsible.
-                  </Label>
+                <div className="flex items-center space-x-1">
+                  <RadioGroupItem value="B" id="q27-b" />
+                  <Label htmlFor="q27-b">B</Label>
                 </div>
-                <div className="flex items-start space-x-2">
-                  <RadioGroupItem value="C" id="q27-c" className="mt-1" />
-                  <Label htmlFor="q27-c" className="flex-1">
-                    C The number of satellites in space is increasing rapidly.
-                  </Label>
+                <div className="flex items-center space-x-1">
+                  <RadioGroupItem value="C" id="q27-c" />
+                  <Label htmlFor="q27-c">C</Label>
                 </div>
-                <div className="flex items-start space-x-2">
-                  <RadioGroupItem value="D" id="q27-d" className="mt-1" />
-                  <Label htmlFor="q27-d" className="flex-1">
-                    D The plans for satellite deployment may not be practical.
-                  </Label>
+                <div className="flex items-center space-x-1">
+                  <RadioGroupItem value="D" id="q27-d" />
+                  <Label htmlFor="q27-d">D</Label>
+                </div>
+                <div className="flex items-center space-x-1">
+                  <RadioGroupItem value="E" id="q27-e" />
+                  <Label htmlFor="q27-e">E</Label>
+                </div>
+                <div className="flex items-center space-x-1">
+                  <RadioGroupItem value="F" id="q27-f" />
+                  <Label htmlFor="q27-f">F</Label>
                 </div>
               </RadioGroup>
             </div>
 
             <div className="question-item">
               <p className="mb-2">
-                <strong>28</strong> Why is it difficult for satellite operators
-                to avoid all potential collisions?
+                <strong>28</strong> an explanation of a person's aims
               </p>
-              <RadioGroup className="flex flex-col space-y-2">
-                <div className="flex items-start space-x-2">
-                  <RadioGroupItem value="A" id="q28-a" className="mt-1" />
-                  <Label htmlFor="q28-a" className="flex-1">
-                    A Most of the satellites they operate are too small.
-                  </Label>
+              <RadioGroup className="flex flex-row space-x-2">
+                <div className="flex items-center space-x-1">
+                  <RadioGroupItem value="A" id="q28-a" />
+                  <Label htmlFor="q28-a">A</Label>
                 </div>
-                <div className="flex items-start space-x-2">
-                  <RadioGroupItem value="B" id="q28-b" className="mt-1" />
-                  <Label htmlFor="q28-b" className="flex-1">
-                    B Their satellites are not designed to change direction.
-                  </Label>
+                <div className="flex items-center space-x-1">
+                  <RadioGroupItem value="B" id="q28-b" />
+                  <Label htmlFor="q28-b">B</Label>
                 </div>
-                <div className="flex items-start space-x-2">
-                  <RadioGroupItem value="C" id="q28-c" className="mt-1" />
-                  <Label htmlFor="q28-c" className="flex-1">
-                    C They cannot predict when a collision might occur.
-                  </Label>
+                <div className="flex items-center space-x-1">
+                  <RadioGroupItem value="C" id="q28-c" />
+                  <Label htmlFor="q28-c">C</Label>
                 </div>
-                <div className="flex items-start space-x-2">
-                  <RadioGroupItem value="D" id="q28-d" className="mt-1" />
-                  <Label htmlFor="q28-d" className="flex-1">
-                    D They need to prioritise the satellites' intended purpose.
-                  </Label>
+                <div className="flex items-center space-x-1">
+                  <RadioGroupItem value="D" id="q28-d" />
+                  <Label htmlFor="q28-d">D</Label>
+                </div>
+                <div className="flex items-center space-x-1">
+                  <RadioGroupItem value="E" id="q28-e" />
+                  <Label htmlFor="q28-e">E</Label>
+                </div>
+                <div className="flex items-center space-x-1">
+                  <RadioGroupItem value="F" id="q28-f" />
+                  <Label htmlFor="q28-f">F</Label>
                 </div>
               </RadioGroup>
             </div>
 
             <div className="question-item">
               <p className="mb-2">
-                <strong>29</strong> According to the second paragraph, what is
-                happening in space research?
+                <strong>29</strong> a description of a major collision that
+                occurred in space
               </p>
-              <RadioGroup className="flex flex-col space-y-2">
-                <div className="flex items-start space-x-2">
-                  <RadioGroupItem value="A" id="q29-a" className="mt-1" />
-                  <Label htmlFor="q29-a" className="flex-1">
-                    A Various ways of tackling space junk are being
-                    investigated.
-                  </Label>
+              <RadioGroup className="flex flex-row space-x-2">
+                <div className="flex items-center space-x-1">
+                  <RadioGroupItem value="A" id="q29-a" />
+                  <Label htmlFor="q29-a">A</Label>
                 </div>
-                <div className="flex items-start space-x-2">
-                  <RadioGroupItem value="B" id="q29-b" className="mt-1" />
-                  <Label htmlFor="q29-b" className="flex-1">
-                    B Research is focusing on how to repair damaged satellites.
-                  </Label>
+                <div className="flex items-center space-x-1">
+                  <RadioGroupItem value="B" id="q29-b" />
+                  <Label htmlFor="q29-b">B</Label>
                 </div>
-                <div className="flex items-start space-x-2">
-                  <RadioGroupItem value="C" id="q29-c" className="mt-1" />
-                  <Label htmlFor="q29-c" className="flex-1">
-                    C Detailed studies are being carried out into how satellites
-                    behave.
-                  </Label>
+                <div className="flex items-center space-x-1">
+                  <RadioGroupItem value="C" id="q29-c" />
+                  <Label htmlFor="q29-c">C</Label>
                 </div>
-                <div className="flex items-start space-x-2">
-                  <RadioGroupItem value="D" id="q29-d" className="mt-1" />
-                  <Label htmlFor="q29-d" className="flex-1">
-                    D Scientists are trying to find ways of preventing
-                    satellites from colliding.
-                  </Label>
+                <div className="flex items-center space-x-1">
+                  <RadioGroupItem value="D" id="q29-d" />
+                  <Label htmlFor="q29-d">D</Label>
+                </div>
+                <div className="flex items-center space-x-1">
+                  <RadioGroupItem value="E" id="q29-e" />
+                  <Label htmlFor="q29-e">E</Label>
+                </div>
+                <div className="flex items-center space-x-1">
+                  <RadioGroupItem value="F" id="q29-f" />
+                  <Label htmlFor="q29-f">F</Label>
                 </div>
               </RadioGroup>
             </div>
 
             <div className="question-item">
               <p className="mb-2">
-                <strong>30</strong> What does Holger Krag say about the 25-year
-                goal?
+                <strong>30</strong> a comparison between tracking objects in
+                space and the efficiency of a transportation system
               </p>
-              <RadioGroup className="flex flex-col space-y-2">
-                <div className="flex items-start space-x-2">
-                  <RadioGroupItem value="A" id="q30-a" className="mt-1" />
-                  <Label htmlFor="q30-a" className="flex-1">
-                    A The time period chosen is too long.
-                  </Label>
+              <RadioGroup className="flex flex-row space-x-2">
+                <div className="flex items-center space-x-1">
+                  <RadioGroupItem value="A" id="q30-a" />
+                  <Label htmlFor="q30-a">A</Label>
                 </div>
-                <div className="flex items-start space-x-2">
-                  <RadioGroupItem value="B" id="q30-b" className="mt-1" />
-                  <Label htmlFor="q30-b" className="flex-1">
-                    B It is sometimes seen as unreasonable.
-                  </Label>
+                <div className="flex items-center space-x-1">
+                  <RadioGroupItem value="B" id="q30-b" />
+                  <Label htmlFor="q30-b">B</Label>
                 </div>
-                <div className="flex items-start space-x-2">
-                  <RadioGroupItem value="C" id="q30-c" className="mt-1" />
-                  <Label htmlFor="q30-c" className="flex-1">
-                    C It will soon be reinforced by law.
-                  </Label>
+                <div className="flex items-center space-x-1">
+                  <RadioGroupItem value="C" id="q30-c" />
+                  <Label htmlFor="q30-c">C</Label>
                 </div>
-                <div className="flex items-start space-x-2">
-                  <RadioGroupItem value="D" id="q30-d" className="mt-1" />
-                  <Label htmlFor="q30-d" className="flex-1">
-                    D Not everyone is making sufficient effort to achieve it.
-                  </Label>
+                <div className="flex items-center space-x-1">
+                  <RadioGroupItem value="D" id="q30-d" />
+                  <Label htmlFor="q30-d">D</Label>
+                </div>
+                <div className="flex items-center space-x-1">
+                  <RadioGroupItem value="E" id="q30-e" />
+                  <Label htmlFor="q30-e">E</Label>
+                </div>
+                <div className="flex items-center space-x-1">
+                  <RadioGroupItem value="F" id="q30-f" />
+                  <Label htmlFor="q30-f">F</Label>
                 </div>
               </RadioGroup>
             </div>
 
             <div className="question-item">
               <p className="mb-2">
-                <strong>31</strong> What is Moriba Jah's opinion about the
-                current situation?
+                <strong>31</strong> a reference to efforts to classify space
+                junk
               </p>
-              <RadioGroup className="flex flex-col space-y-2">
-                <div className="flex items-start space-x-2">
-                  <RadioGroupItem value="A" id="q31-a" className="mt-1" />
-                  <Label htmlFor="q31-a" className="flex-1">
-                    A Satellite operators have been given excessive freedom.
-                  </Label>
+              <RadioGroup className="flex flex-row space-x-2">
+                <div className="flex items-center space-x-1">
+                  <RadioGroupItem value="A" id="q31-a" />
+                  <Label htmlFor="q31-a">A</Label>
                 </div>
-                <div className="flex items-start space-x-2">
-                  <RadioGroupItem value="B" id="q31-b" className="mt-1" />
-                  <Label htmlFor="q31-b" className="flex-1">
-                    B Not enough is being done to avoid damage to the space
-                    environment.
-                  </Label>
+                <div className="flex items-center space-x-1">
+                  <RadioGroupItem value="B" id="q31-b" />
+                  <Label htmlFor="q31-b">B</Label>
                 </div>
-                <div className="flex items-start space-x-2">
-                  <RadioGroupItem value="C" id="q31-c" className="mt-1" />
-                  <Label htmlFor="q31-c" className="flex-1">
-                    C Space companies need to develop more detailed guidelines.
-                  </Label>
+                <div className="flex items-center space-x-1">
+                  <RadioGroupItem value="C" id="q31-c" />
+                  <Label htmlFor="q31-c">C</Label>
                 </div>
-                <div className="flex items-start space-x-2">
-                  <RadioGroupItem value="D" id="q31-d" className="mt-1" />
-                  <Label htmlFor="q31-d" className="flex-1">
-                    D Competitive interests are making the space environment
-                    dangerous.
-                  </Label>
+                <div className="flex items-center space-x-1">
+                  <RadioGroupItem value="D" id="q31-d" />
+                  <Label htmlFor="q31-d">D</Label>
+                </div>
+                <div className="flex items-center space-x-1">
+                  <RadioGroupItem value="E" id="q31-e" />
+                  <Label htmlFor="q31-e">E</Label>
+                </div>
+                <div className="flex items-center space-x-1">
+                  <RadioGroupItem value="F" id="q31-f" />
+                  <Label htmlFor="q31-f">F</Label>
                 </div>
               </RadioGroup>
             </div>
           </div>
-        </div>
-
+        </div>{" "}
         <div className="question-set mb-8">
           <h3 className="font-bold mb-2">Questions 32-35</h3>
+          <p className="mb-2">Complete the summary below.</p>
           <p className="mb-2">
-            Complete each sentence with the correct ending, A-G, below.
+            Choose <strong>ONE WORD ONLY</strong> from the passage for each
+            answer.
           </p>
           <p className="mb-4">
-            Write the correct letter, A-G, in boxes 32-35 on your answer sheet.
+            Write your answers in boxes 32-35 on your answer sheet.
           </p>
+
+          <div className="border p-4 mb-6">
+            <h4 className="font-bold mb-2">
+              The Inter-Agency Space Debris Coordination Committee
+            </h4>
+
+            <p className="mb-4">
+              The committee gives advice on how the <strong>32</strong>{" "}
+              <Input type="text" className="w-32 mx-1 inline-block" /> of space
+              can be achieved. The committee advises that when satellites are no
+              longer active, any unused <strong>33</strong>{" "}
+              <Input type="text" className="w-32 mx-1 inline-block" /> or
+              pressurised material that could cause <strong>34</strong>{" "}
+              <Input type="text" className="w-32 mx-1 inline-block" /> should be
+              removed.
+            </p>
+            <p className="mb-4">
+              Although operators of large satellite constellations accept that
+              they have obligations as stewards of space, Holger Krag points out
+              that the operators that become <strong>35</strong>{" "}
+              <Input type="text" className="w-32 mx-1 inline-block" /> are
+              unlikely to prioritise removing their satellites from space.
+            </p>
+          </div>
+        </div>{" "}
+        <div className="question-set mb-8">
+          <h3 className="font-bold mb-2">Questions 36-40</h3>
+          <p className="mb-2">
+            Look at the following statements (Questions 36-40) and the list of
+            people below.
+          </p>
+          <p className="mb-2">
+            Match each statement with the correct person, A, B, C or D.
+          </p>
+          <p className="mb-2">
+            Write the correct letter, A, B, C or D, in boxes 36-40 on your
+            answer sheet.
+          </p>
+          <p className="mb-4">
+            <strong>NB</strong> You may use any letter more than once.
+          </p>
+
+          <div className="mb-4 border p-3">
+            <h4 className="font-bold mb-2">List of People</h4>
+            <p className="mb-1">
+              <strong>A</strong> Carolin Frueh
+            </p>
+            <p className="mb-1">
+              <strong>B</strong> Holger Krag
+            </p>
+            <p className="mb-1">
+              <strong>C</strong> Marlon Sorge
+            </p>
+            <p className="mb-1">
+              <strong>D</strong> Moriba Jah
+            </p>
+          </div>
 
           <div className="space-y-4">
             <div className="question-item">
               <p className="mb-2">
-                <strong>32</strong> According to Carolin Frueh, if current
-                trends continue, space
+                <strong>36</strong> Knowing the exact location of space junk
+                would help prevent any possible danger.
               </p>
-              <Input type="text" className="w-16" placeholder="A-G" />
+              <RadioGroup className="flex flex-row space-x-4">
+                <div className="flex items-center space-x-1">
+                  <RadioGroupItem value="A" id="q36-a" />
+                  <Label htmlFor="q36-a">A</Label>
+                </div>
+                <div className="flex items-center space-x-1">
+                  <RadioGroupItem value="B" id="q36-b" />
+                  <Label htmlFor="q36-b">B</Label>
+                </div>
+                <div className="flex items-center space-x-1">
+                  <RadioGroupItem value="C" id="q36-c" />
+                  <Label htmlFor="q36-c">C</Label>
+                </div>
+                <div className="flex items-center space-x-1">
+                  <RadioGroupItem value="D" id="q36-d" />
+                  <Label htmlFor="q36-d">D</Label>
+                </div>
+              </RadioGroup>
             </div>
 
             <div className="question-item">
               <p className="mb-2">
-                <strong>33</strong> According to the Inter-Agency Space Debris
-                Coordination Committee, satellites may explode if
+                <strong>37</strong> Space should be available to everyone and
+                should be preserved for the future.
               </p>
-              <Input type="text" className="w-16" placeholder="A-G" />
+              <RadioGroup className="flex flex-row space-x-4">
+                <div className="flex items-center space-x-1">
+                  <RadioGroupItem value="A" id="q37-a" />
+                  <Label htmlFor="q37-a">A</Label>
+                </div>
+                <div className="flex items-center space-x-1">
+                  <RadioGroupItem value="B" id="q37-b" />
+                  <Label htmlFor="q37-b">B</Label>
+                </div>
+                <div className="flex items-center space-x-1">
+                  <RadioGroupItem value="C" id="q37-c" />
+                  <Label htmlFor="q37-c">C</Label>
+                </div>
+                <div className="flex items-center space-x-1">
+                  <RadioGroupItem value="D" id="q37-d" />
+                  <Label htmlFor="q37-d">D</Label>
+                </div>
+              </RadioGroup>
             </div>
 
             <div className="question-item">
               <p className="mb-2">
-                <strong>34</strong> According to Holger Krag, defunct satellites
-                may remain in orbit if
+                <strong>38</strong> A recommendation regarding satellites is
+                widely ignored.
               </p>
-              <Input type="text" className="w-16" placeholder="A-G" />
+              <RadioGroup className="flex flex-row space-x-4">
+                <div className="flex items-center space-x-1">
+                  <RadioGroupItem value="A" id="q38-a" />
+                  <Label htmlFor="q38-a">A</Label>
+                </div>
+                <div className="flex items-center space-x-1">
+                  <RadioGroupItem value="B" id="q38-b" />
+                  <Label htmlFor="q38-b">B</Label>
+                </div>
+                <div className="flex items-center space-x-1">
+                  <RadioGroupItem value="C" id="q38-c" />
+                  <Label htmlFor="q38-c">C</Label>
+                </div>
+                <div className="flex items-center space-x-1">
+                  <RadioGroupItem value="D" id="q38-d" />
+                  <Label htmlFor="q38-d">D</Label>
+                </div>
+              </RadioGroup>
             </div>
 
             <div className="question-item">
               <p className="mb-2">
-                <strong>35</strong> According to Marlon Sorge, satellites could
-                move around safely if
+                <strong>39</strong> There is conflicting information about where
+                some satellites are in space.
               </p>
-              <Input type="text" className="w-16" placeholder="A-G" />
+              <RadioGroup className="flex flex-row space-x-4">
+                <div className="flex items-center space-x-1">
+                  <RadioGroupItem value="A" id="q39-a" />
+                  <Label htmlFor="q39-a">A</Label>
+                </div>
+                <div className="flex items-center space-x-1">
+                  <RadioGroupItem value="B" id="q39-b" />
+                  <Label htmlFor="q39-b">B</Label>
+                </div>
+                <div className="flex items-center space-x-1">
+                  <RadioGroupItem value="C" id="q39-c" />
+                  <Label htmlFor="q39-c">C</Label>
+                </div>
+                <div className="flex items-center space-x-1">
+                  <RadioGroupItem value="D" id="q39-d" />
+                  <Label htmlFor="q39-d">D</Label>
+                </div>
+              </RadioGroup>
             </div>
-          </div>
 
-          <div className="mt-4 grid grid-cols-1 gap-2">
-            <div>
-              <strong>A</strong> their operators run out of money.
-            </div>
-            <div>
-              <strong>B</strong> their location could be determined with
-              accuracy.
-            </div>
-            <div>
-              <strong>C</strong> will become permanently inaccessible.
-            </div>
-            <div>
-              <strong>D</strong> they remain there for a long time.
-            </div>
-            <div>
-              <strong>E</strong> other operators were unaware of their purpose.
-            </div>
-            <div>
-              <strong>F</strong> they contain materials still under pressure.
-            </div>
-            <div>
-              <strong>G</strong> they fail to update their orbital details.
-            </div>
-          </div>
-        </div>
-
-        <div className="question-set mb-8">
-          <h3 className="font-bold mb-2">Questions 36-40</h3>
-          <p className="mb-2">
-            Complete the summary using the list of words, A-I, below.
-          </p>
-          <p className="mb-4">
-            Write the correct letter, A-I, in boxes 36-40 on your answer sheet.
-          </p>
-
-          <div className="border p-4 mb-6">
-            <h4 className="font-bold mb-2">Space Traffic Management</h4>
-
-            <p className="mb-4">
-              Space traffic management is similar to the management of{" "}
-              <strong>36</strong>{" "}
-              <Input
-                type="text"
-                className="w-16 mx-1 inline-block"
-                placeholder="A-I"
-              />{" "}
-              on Earth. However, there is a problem with the <strong>37</strong>{" "}
-              <Input
-                type="text"
-                className="w-16 mx-1 inline-block"
-                placeholder="A-I"
-              />{" "}
-              of space objects. This is shown by the online <strong>38</strong>{" "}
-              <Input
-                type="text"
-                className="w-16 mx-1 inline-block"
-                placeholder="A-I"
-              />{" "}
-              of Moriba Jah. Different <strong>39</strong>{" "}
-              <Input
-                type="text"
-                className="w-16 mx-1 inline-block"
-                placeholder="A-I"
-              />{" "}
-              of information may give conflicting details for an object. Without
-              a third source of information, it is not possible to make a{" "}
-              <strong>40</strong>{" "}
-              <Input
-                type="text"
-                className="w-16 mx-1 inline-block"
-                placeholder="A-I"
-              />
-              .
-            </p>
-
-            <div className="grid grid-cols-3 gap-2">
-              <div>
-                <strong>A</strong> comparison
-              </div>
-              <div>
-                <strong>B</strong> aircraft
-              </div>
-              <div>
-                <strong>C</strong> database
-              </div>
-              <div>
-                <strong>D</strong> tracking
-              </div>
-              <div>
-                <strong>E</strong> estimate
-              </div>
-              <div>
-                <strong>F</strong> statistics
-              </div>
-              <div>
-                <strong>G</strong> catalogue
-              </div>
-              <div>
-                <strong>H</strong> sources
-              </div>
-              <div>
-                <strong>I</strong> confirmation
-              </div>
+            <div className="question-item">
+              <p className="mb-2">
+                <strong>40</strong> There is a risk we will not be able to undo
+                the damage that occurs in space.
+              </p>
+              <RadioGroup className="flex flex-row space-x-4">
+                <div className="flex items-center space-x-1">
+                  <RadioGroupItem value="A" id="q40-a" />
+                  <Label htmlFor="q40-a">A</Label>
+                </div>
+                <div className="flex items-center space-x-1">
+                  <RadioGroupItem value="B" id="q40-b" />
+                  <Label htmlFor="q40-b">B</Label>
+                </div>
+                <div className="flex items-center space-x-1">
+                  <RadioGroupItem value="C" id="q40-c" />
+                  <Label htmlFor="q40-c">C</Label>
+                </div>
+                <div className="flex items-center space-x-1">
+                  <RadioGroupItem value="D" id="q40-d" />
+                  <Label htmlFor="q40-d">D</Label>
+                </div>
+              </RadioGroup>
             </div>
           </div>
         </div>

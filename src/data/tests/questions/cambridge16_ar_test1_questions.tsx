@@ -11,571 +11,367 @@ export const Cambridge16ARTest1Questions: React.FC = () => {
   return (
     <div className="reading-questions p-4 bg-white">
       <h2 className="text-lg font-bold mb-4">
-        READING PASSAGE 1: Questions 1-13
+        READING PASSAGE 1 : Questions 1-13
       </h2>
 
-      {/* Questions 1-8 */}
+      {/* Questions 1-7 */}
       <div className="question-set mb-8">
-        <h3 className="font-bold mb-2">Questions 1-8</h3>
-        <p className="mb-2">Complete the notes below.</p>
-        <p className="mb-2">
-          Choose <strong>ONE WORD ONLY</strong> from the passage for each
-          answer.
+        <p className="mb-4">
+          Do the following statements agree with the information given in Reading Passage 1?
+        </p>
+        <p className="mb-2">In boxes 1-7 on your answer sheet, write</p>
+        <p className="mb-1">
+          <strong>TRUE</strong> if the statement agrees with the information
+        </p>
+        <p className="mb-1">
+          <strong>FALSE</strong> if the statement contradicts the information
         </p>
         <p className="mb-4">
-          Write your answers in boxes 1-8 on your answer sheet.
+          <strong>NOT GIVEN</strong> if there is no information on this
         </p>
-
-        <div className="mb-6 p-4 bg-gray-50 rounded-md">
-          <h4 className="font-bold mb-3">Stepwells</h4>
-          <p className="mb-2">
-            • Wells designed with steps to reach down to the water
-          </p>
-          <p className="mb-2">
-            • Built with Persian architectural style that included{" "}
-            <strong>1</strong>{" "}
-            <Input type="text" className="w-32 mx-1 inline-block" /> features
-          </p>
-          <p className="mb-2">
-            • Used for many purposes like <strong>2</strong>{" "}
-            <Input type="text" className="w-32 mx-1 inline-block" />, washing
-            and bathing
-          </p>
-          <p className="mb-2">
-            • Earliest known stepwell dates from the <strong>3</strong>{" "}
-            <Input type="text" className="w-32 mx-1 inline-block" /> century
-          </p>
-          <p className="mb-2">
-            • Made of <strong>4</strong>{" "}
-            <Input type="text" className="w-32 mx-1 inline-block" /> and
-            designed to last for centuries
-          </p>
-          <p className="mb-2">
-            • Victoria Lautman has collected <strong>5</strong>{" "}
-            <Input type="text" className="w-32 mx-1 inline-block" /> of
-            stepwells in India
-          </p>
-          <p className="mb-2">
-            • Also served as places to escape from extreme <strong>6</strong>{" "}
-            <Input type="text" className="w-32 mx-1 inline-block" /> in summer
-          </p>
-          <p className="mb-2">
-            • Were often financed by <strong>7</strong>{" "}
-            <Input type="text" className="w-32 mx-1 inline-block" /> women
-          </p>
-          <p className="mb-2">
-            • British saw them as unhygienic and sources of <strong>8</strong>{" "}
-            <Input type="text" className="w-32 mx-1 inline-block" />
-          </p>
-        </div>
-      </div>
-
-      {/* Questions 9-13 */}
-      <div className="question-set mb-8">
-        <h3 className="font-bold mb-2">Questions 9-13</h3>
-        <p className="mb-2">
-          Complete each sentence with the correct ending, <strong>A-F</strong>,
-          below.
-        </p>
-        <p className="mb-4">
-          Write the correct letter, <strong>A-F</strong>, in boxes 9-13 on your
-          answer sheet.
-        </p>
-
-        <div className="mb-4 pl-5">
-          <p className="mb-1">
-            <strong>List of Endings</strong>
-          </p>
-          <p className="mb-1">
-            <strong>A</strong> are less knowledgeable about stepwells than
-            foreigners.
-          </p>
-          <p className="mb-1">
-            <strong>B</strong> have contributed to the destruction of stepwells.
-          </p>
-          <p className="mb-1">
-            <strong>C</strong> can still visit functioning stepwells.
-          </p>
-          <p className="mb-1">
-            <strong>D</strong> allowed women to meet socially outside the home.
-          </p>
-          <p className="mb-1">
-            <strong>E</strong> have been given different names in different
-            regions.
-          </p>
-          <p className="mb-1">
-            <strong>F</strong> have been honoured by the United Nations.
-          </p>
-        </div>
 
         <div className="space-y-4">
           <div className="question-item">
             <p className="mb-2">
-              <strong>9.</strong> According to Lautman, stepwells
+              <strong>1.</strong> Polar bears suffer from various health problems due to the build-up of fat under their skin.
             </p>
-            <RadioGroup name="question9" className="flex flex-wrap gap-4">
-              {["A", "B", "C", "D", "E", "F"].map((letter) => (
-                <div
-                  className="flex items-center"
-                  key={`q9-${letter.toLowerCase()}`}
-                >
-                  <RadioGroupItem
-                    id={`q9-${letter.toLowerCase()}`}
-                    value={letter}
-                  />
-                  <Label
-                    htmlFor={`q9-${letter.toLowerCase()}`}
-                    className="ml-2"
-                  >
-                    {letter}
-                  </Label>
-                </div>
-              ))}
+            <RadioGroup name="question1" className="flex gap-6">
+              <div className="flex items-center">
+                <RadioGroupItem id="q1-true" value="TRUE" />
+                <Label htmlFor="q1-true" className="ml-2">TRUE</Label>
+              </div>
+              <div className="flex items-center">
+                <RadioGroupItem id="q1-false" value="FALSE" />
+                <Label htmlFor="q1-false" className="ml-2">FALSE</Label>
+              </div>
+              <div className="flex items-center">
+                <RadioGroupItem id="q1-ng" value="NOT GIVEN" />
+                <Label htmlFor="q1-ng" className="ml-2">NG</Label>
+              </div>
             </RadioGroup>
           </div>
 
           <div className="question-item">
             <p className="mb-2">
-              <strong>10.</strong> Many local people
+              <strong>2.</strong> The study done by Liu and his colleagues compared different groups of polar bears.
             </p>
-            <RadioGroup name="question10" className="flex flex-wrap gap-4">
-              {["A", "B", "C", "D", "E", "F"].map((letter) => (
-                <div
-                  className="flex items-center"
-                  key={`q10-${letter.toLowerCase()}`}
-                >
-                  <RadioGroupItem
-                    id={`q10-${letter.toLowerCase()}`}
-                    value={letter}
-                  />
-                  <Label
-                    htmlFor={`q10-${letter.toLowerCase()}`}
-                    className="ml-2"
-                  >
-                    {letter}
-                  </Label>
-                </div>
-              ))}
+            <RadioGroup name="question2" className="flex gap-6">
+              <div className="flex items-center">
+                <RadioGroupItem id="q2-true" value="TRUE" />
+                <Label htmlFor="q2-true" className="ml-2">TRUE</Label>
+              </div>
+              <div className="flex items-center">
+                <RadioGroupItem id="q2-false" value="FALSE" />
+                <Label htmlFor="q2-false" className="ml-2">FALSE</Label>
+              </div>
+              <div className="flex items-center">
+                <RadioGroupItem id="q2-ng" value="NOT GIVEN" />
+                <Label htmlFor="q2-ng" className="ml-2">NG</Label>
+              </div>
             </RadioGroup>
           </div>
 
           <div className="question-item">
             <p className="mb-2">
-              <strong>11.</strong> Stepwells
+              <strong>3.</strong> Liu and colleagues were the first researchers to compare polar bears and brown bears genetically.
             </p>
-            <RadioGroup name="question11" className="flex flex-wrap gap-4">
-              {["A", "B", "C", "D", "E", "F"].map((letter) => (
-                <div
-                  className="flex items-center"
-                  key={`q11-${letter.toLowerCase()}`}
-                >
-                  <RadioGroupItem
-                    id={`q11-${letter.toLowerCase()}`}
-                    value={letter}
-                  />
-                  <Label
-                    htmlFor={`q11-${letter.toLowerCase()}`}
-                    className="ml-2"
-                  >
-                    {letter}
-                  </Label>
-                </div>
-              ))}
+            <RadioGroup name="question3" className="flex gap-6">
+              <div className="flex items-center">
+                <RadioGroupItem id="q3-true" value="TRUE" />
+                <Label htmlFor="q3-true" className="ml-2">TRUE</Label>
+              </div>
+              <div className="flex items-center">
+                <RadioGroupItem id="q3-false" value="FALSE" />
+                <Label htmlFor="q3-false" className="ml-2">FALSE</Label>
+              </div>
+              <div className="flex items-center">
+                <RadioGroupItem id="q3-ng" value="NOT GIVEN" />
+                <Label htmlFor="q3-ng" className="ml-2">NG</Label>
+              </div>
             </RadioGroup>
           </div>
 
           <div className="question-item">
             <p className="mb-2">
-              <strong>12.</strong> Some of the most impressive stepwells
+              <strong>4.</strong> Polar bears are able to control their levels of 'bad' cholesterol by genetic means.
             </p>
-            <RadioGroup name="question12" className="flex flex-wrap gap-4">
-              {["A", "B", "C", "D", "E", "F"].map((letter) => (
-                <div
-                  className="flex items-center"
-                  key={`q12-${letter.toLowerCase()}`}
-                >
-                  <RadioGroupItem
-                    id={`q12-${letter.toLowerCase()}`}
-                    value={letter}
-                  />
-                  <Label
-                    htmlFor={`q12-${letter.toLowerCase()}`}
-                    className="ml-2"
-                  >
-                    {letter}
-                  </Label>
-                </div>
-              ))}
+            <RadioGroup name="question4" className="flex gap-6">
+              <div className="flex items-center">
+                <RadioGroupItem id="q4-true" value="TRUE" />
+                <Label htmlFor="q4-true" className="ml-2">TRUE</Label>
+              </div>
+              <div className="flex items-center">
+                <RadioGroupItem id="q4-false" value="FALSE" />
+                <Label htmlFor="q4-false" className="ml-2">FALSE</Label>
+              </div>
+              <div className="flex items-center">
+                <RadioGroupItem id="q4-ng" value="NOT GIVEN" />
+                <Label htmlFor="q4-ng" className="ml-2">NG</Label>
+              </div>
             </RadioGroup>
           </div>
 
           <div className="question-item">
             <p className="mb-2">
-              <strong>13.</strong> Years of neglect
+              <strong>5.</strong> Female polar bears are able to survive for about six months without food.
             </p>
-            <RadioGroup name="question13" className="flex flex-wrap gap-4">
-              {["A", "B", "C", "D", "E", "F"].map((letter) => (
-                <div
-                  className="flex items-center"
-                  key={`q13-${letter.toLowerCase()}`}
-                >
-                  <RadioGroupItem
-                    id={`q13-${letter.toLowerCase()}`}
-                    value={letter}
-                  />
-                  <Label
-                    htmlFor={`q13-${letter.toLowerCase()}`}
-                    className="ml-2"
-                  >
-                    {letter}
-                  </Label>
-                </div>
-              ))}
+            <RadioGroup name="question5" className="flex gap-6">
+              <div className="flex items-center">
+                <RadioGroupItem id="q5-true" value="TRUE" />
+                <Label htmlFor="q5-true" className="ml-2">TRUE</Label>
+              </div>
+              <div className="flex items-center">
+                <RadioGroupItem id="q5-false" value="FALSE" />
+                <Label htmlFor="q5-false" className="ml-2">FALSE</Label>
+              </div>
+              <div className="flex items-center">
+                <RadioGroupItem id="q5-ng" value="NOT GIVEN" />
+                <Label htmlFor="q5-ng" className="ml-2">NG</Label>
+              </div>
+            </RadioGroup>
+          </div>
+
+          <div className="question-item">
+            <p className="mb-2">
+              <strong>6.</strong> It was found that the bones of female polar bears were very weak when they came out of their dens in spring.
+            </p>
+            <RadioGroup name="question6" className="flex gap-6">
+              <div className="flex items-center">
+                <RadioGroupItem id="q6-true" value="TRUE" />
+                <Label htmlFor="q6-true" className="ml-2">TRUE</Label>
+              </div>
+              <div className="flex items-center">
+                <RadioGroupItem id="q6-false" value="FALSE" />
+                <Label htmlFor="q6-false" className="ml-2">FALSE</Label>
+              </div>
+              <div className="flex items-center">
+                <RadioGroupItem id="q6-ng" value="NOT GIVEN" />
+                <Label htmlFor="q6-ng" className="ml-2">NG</Label>
+              </div>
+            </RadioGroup>
+          </div>
+
+          <div className="question-item">
+            <p className="mb-2">
+              <strong>7.</strong> The polar bear's mechanism for increasing bone density could also be used by people one day.
+            </p>
+            <RadioGroup name="question7" className="flex gap-6">
+              <div className="flex items-center">
+                <RadioGroupItem id="q7-true" value="TRUE" />
+                <Label htmlFor="q7-true" className="ml-2">TRUE</Label>
+              </div>
+              <div className="flex items-center">
+                <RadioGroupItem id="q7-false" value="FALSE" />
+                <Label htmlFor="q7-false" className="ml-2">FALSE</Label>
+              </div>
+              <div className="flex items-center">
+                <RadioGroupItem id="q7-ng" value="NOT GIVEN" />
+                <Label htmlFor="q7-ng" className="ml-2">NG</Label>
+              </div>
             </RadioGroup>
           </div>
         </div>
       </div>
 
+      {/* Questions 8-13 */}
+      <div className="question-set mb-8">
+        <h3 className="font-bold mb-2">Questions 8-13</h3>
+        <p className="mb-2">Complete the table below.</p>
+        <p className="mb-2">
+          Choose <strong>ONE WORD ONLY</strong> from the passage for each answer.
+        </p>
+        <p className="mb-4">
+          Write your answers in boxes 8-13 on your answer sheet.
+        </p>
+
+        <div className="mb-6 p-4 bg-gray-50 rounded-md">
+          <h4 className="font-bold mb-3">Reasons why polar bears should be protected</h4>
+          <p className="mb-2">
+            – People think of bears as unintelligent and <strong>8</strong>{" "}
+            <Input type="text" className="w-32 mx-1 inline-block" />
+          </p>
+          <p className="mb-3">However, this may not be correct. For example:</p>
+          <p className="mb-2">
+            – In Tennoji Zoo, a bear has been seen using a branch as a <strong>9</strong>{" "}
+            <Input type="text" className="w-32 mx-1 inline-block" />
+          </p>
+          <p className="mb-2 ml-4">
+            This allowed him to knock down some <strong>10</strong>{" "}
+            <Input type="text" className="w-32 mx-1 inline-block" />
+          </p>
+          <p className="mb-2">
+            – A wild polar bear worked out a method of reaching a platform where a <strong>11</strong>{" "}
+            <Input type="text" className="w-32 mx-1 inline-block" /> was located.
+          </p>
+          <p className="mb-2">
+            – Polar bears have displayed behaviour such as conscious manipulation of objects and activity similar to a <strong>12</strong>{" "}
+            <Input type="text" className="w-32 mx-1 inline-block" />
+          </p>
+          <p className="mb-3">Bears may also display emotions. For example:</p>
+          <p className="mb-2">
+            – They may make movements suggesting <strong>13</strong>{" "}
+            <Input type="text" className="w-32 mx-1 inline-block" /> if disappointed when hunting.
+          </p>
+          <p className="mb-2">– They may form relationships with other species.</p>
+        </div>
+      </div>
+
       <h2 className="text-lg font-bold mb-4">
-        READING PASSAGE 2: Questions 14-26
+        READING PASSAGE 2 : Questions 14-26
       </h2>
 
       {/* Questions 14-20 */}
       <div className="question-set mb-8">
-        <h3 className="font-bold mb-2">Questions 14-20</h3>
-        <p className="mb-2">
-          Do the following statements agree with the information given in the
-          passage?
+        <p className="mb-4">
+          Reading Passage 2 has seven paragraphs, A-G.
         </p>
-        <p className="mb-2">In boxes 14-20 on your answer sheet, write</p>
-        <div className="mb-4">
-          <p className="mb-1">
-            <strong>TRUE</strong> if the statement agrees with the information
-          </p>
-          <p className="mb-1">
-            <strong>FALSE</strong> if the statement contradicts the information
-          </p>
-          <p className="mb-1">
-            <strong>NOT GIVEN</strong> if there is no information on this
-          </p>
-        </div>
-
-        <div className="space-y-6">
-          <div className="question-item">
-            <p className="mb-3">
-              <strong>14.</strong> People generally understand what is meant by
-              the term "intelligence".
-            </p>
-            <RadioGroup name="question14" className="flex gap-8">
-              <div className="flex items-center">
-                <RadioGroupItem id="q14-true" value="TRUE" />
-                <Label htmlFor="q14-true" className="ml-2">
-                  TRUE
-                </Label>
-              </div>
-              <div className="flex items-center">
-                <RadioGroupItem id="q14-false" value="FALSE" />
-                <Label htmlFor="q14-false" className="ml-2">
-                  FALSE
-                </Label>
-              </div>
-              <div className="flex items-center">
-                <RadioGroupItem id="q14-ng" value="NOT GIVEN" />
-                <Label htmlFor="q14-ng" className="ml-2">
-                  NOT GIVEN
-                </Label>
-              </div>
-            </RadioGroup>
-          </div>
-
-          <div className="question-item">
-            <p className="mb-3">
-              <strong>15.</strong> People who believe that knowledge
-              demonstrates intelligence are likely to value the memorization of
-              facts.
-            </p>
-            <RadioGroup name="question15" className="flex gap-8">
-              <div className="flex items-center">
-                <RadioGroupItem id="q15-true" value="TRUE" />
-                <Label htmlFor="q15-true" className="ml-2">
-                  TRUE
-                </Label>
-              </div>
-              <div className="flex items-center">
-                <RadioGroupItem id="q15-false" value="FALSE" />
-                <Label htmlFor="q15-false" className="ml-2">
-                  FALSE
-                </Label>
-              </div>
-              <div className="flex items-center">
-                <RadioGroupItem id="q15-ng" value="NOT GIVEN" />
-                <Label htmlFor="q15-ng" className="ml-2">
-                  NOT GIVEN
-                </Label>
-              </div>
-            </RadioGroup>
-          </div>
-
-          <div className="question-item">
-            <p className="mb-3">
-              <strong>16.</strong> Intelligence tests are becoming more similar
-              across different cultures.
-            </p>
-            <RadioGroup name="question16" className="flex gap-8">
-              <div className="flex items-center">
-                <RadioGroupItem id="q16-true" value="TRUE" />
-                <Label htmlFor="q16-true" className="ml-2">
-                  TRUE
-                </Label>
-              </div>
-              <div className="flex items-center">
-                <RadioGroupItem id="q16-false" value="FALSE" />
-                <Label htmlFor="q16-false" className="ml-2">
-                  FALSE
-                </Label>
-              </div>
-              <div className="flex items-center">
-                <RadioGroupItem id="q16-ng" value="NOT GIVEN" />
-                <Label htmlFor="q16-ng" className="ml-2">
-                  NOT GIVEN
-                </Label>
-              </div>
-            </RadioGroup>
-          </div>
-
-          <div className="question-item">
-            <p className="mb-3">
-              <strong>17.</strong> What ordinary people believe about
-              intelligence can provide valuable insights for scientific
-              researchers.
-            </p>
-            <RadioGroup name="question17" className="flex gap-8">
-              <div className="flex items-center">
-                <RadioGroupItem id="q17-true" value="TRUE" />
-                <Label htmlFor="q17-true" className="ml-2">
-                  TRUE
-                </Label>
-              </div>
-              <div className="flex items-center">
-                <RadioGroupItem id="q17-false" value="FALSE" />
-                <Label htmlFor="q17-false" className="ml-2">
-                  FALSE
-                </Label>
-              </div>
-              <div className="flex items-center">
-                <RadioGroupItem id="q17-ng" value="NOT GIVEN" />
-                <Label htmlFor="q17-ng" className="ml-2">
-                  NOT GIVEN
-                </Label>
-              </div>
-            </RadioGroup>
-          </div>
-
-          <div className="question-item">
-            <p className="mb-3">
-              <strong>18.</strong> Intelligence depends more on the context and
-              environment in Western cultures than in some Eastern cultures.
-            </p>
-            <RadioGroup name="question18" className="flex gap-8">
-              <div className="flex items-center">
-                <RadioGroupItem id="q18-true" value="TRUE" />
-                <Label htmlFor="q18-true" className="ml-2">
-                  TRUE
-                </Label>
-              </div>
-              <div className="flex items-center">
-                <RadioGroupItem id="q18-false" value="FALSE" />
-                <Label htmlFor="q18-false" className="ml-2">
-                  FALSE
-                </Label>
-              </div>
-              <div className="flex items-center">
-                <RadioGroupItem id="q18-ng" value="NOT GIVEN" />
-                <Label htmlFor="q18-ng" className="ml-2">
-                  NOT GIVEN
-                </Label>
-              </div>
-            </RadioGroup>
-          </div>
-
-          <div className="question-item">
-            <p className="mb-3">
-              <strong>19.</strong> Children who believe that intelligence is
-              fixed are more likely to give up when they fail at something.
-            </p>
-            <RadioGroup name="question19" className="flex gap-8">
-              <div className="flex items-center">
-                <RadioGroupItem id="q19-true" value="TRUE" />
-                <Label htmlFor="q19-true" className="ml-2">
-                  TRUE
-                </Label>
-              </div>
-              <div className="flex items-center">
-                <RadioGroupItem id="q19-false" value="FALSE" />
-                <Label htmlFor="q19-false" className="ml-2">
-                  FALSE
-                </Label>
-              </div>
-              <div className="flex items-center">
-                <RadioGroupItem id="q19-ng" value="NOT GIVEN" />
-                <Label htmlFor="q19-ng" className="ml-2">
-                  NOT GIVEN
-                </Label>
-              </div>
-            </RadioGroup>
-          </div>
-
-          <div className="question-item">
-            <p className="mb-3">
-              <strong>20.</strong> Parents who adopt a 'growth mindset' are more
-              likely to focus on their child's potential ability than on the
-              effort they make.
-            </p>
-            <RadioGroup name="question20" className="flex gap-8">
-              <div className="flex items-center">
-                <RadioGroupItem id="q20-true" value="TRUE" />
-                <Label htmlFor="q20-true" className="ml-2">
-                  TRUE
-                </Label>
-              </div>
-              <div className="flex items-center">
-                <RadioGroupItem id="q20-false" value="FALSE" />
-                <Label htmlFor="q20-false" className="ml-2">
-                  FALSE
-                </Label>
-              </div>
-              <div className="flex items-center">
-                <RadioGroupItem id="q20-ng" value="NOT GIVEN" />
-                <Label htmlFor="q20-ng" className="ml-2">
-                  NOT GIVEN
-                </Label>
-              </div>
-            </RadioGroup>
-          </div>
-        </div>
-      </div>
-
-      {/* Questions 21-26 */}
-      <div className="question-set mb-8">
-        <h3 className="font-bold mb-2">Questions 21-26</h3>
         <p className="mb-2">
-          Complete the summary using the list of words, A-J, below.
+          Choose the correct heading for each paragraph from the list of headings below.
         </p>
         <p className="mb-4">
-          Write the correct letter, <strong>A-J</strong>, in boxes 21-26 on your
-          answer sheet.
+          Write the correct number, i-ix, in boxes 14-20 on your answer sheet.
         </p>
 
         <div className="mb-6 p-4 bg-gray-50 rounded-md">
-          <h4 className="font-bold mb-3">
-            Differences in how intelligence is viewed
-          </h4>
-          <p className="mb-4">
-            There is more <strong>21</strong>{" "}
-            <Input type="text" className="w-32 mx-1 inline-block" /> in implicit
-            theories of intelligence than in scientific theories. For example,
-            some people think intelligence is about book learning, while others
-            believe it has more to do with <strong>22</strong>{" "}
-            <Input type="text" className="w-32 mx-1 inline-block" />. Research
-            shows that Westerners tend to see intelligence as a tool for putting
-            things into <strong>23</strong>{" "}
-            <Input type="text" className="w-32 mx-1 inline-block" /> and
-            engaging in logical discussion, whereas some Eastern cultures see it
-            as a way to recognize <strong>24</strong>{" "}
-            <Input type="text" className="w-32 mx-1 inline-block" /> and
-            understand social roles. The difference is that in Western cultures,
-            intelligence is seen as <strong>25</strong>{" "}
-            <Input type="text" className="w-32 mx-1 inline-block" /> to the
-            person, while in some Eastern cultures, it is viewed as arising from
-            the relationship between people and their <strong>26</strong>{" "}
-            <Input type="text" className="w-32 mx-1 inline-block" />.
-          </p>
+          <h4 className="font-bold mb-3">List of Headings</h4>
+          <p className="mb-1"><strong>i</strong> The areas and artefacts within the pyramid itself</p>
+          <p className="mb-1"><strong>ii</strong> A difficult task for those involved</p>
+          <p className="mb-1"><strong>iii</strong> A king who saved his people</p>
+          <p className="mb-1"><strong>iv</strong> A single certainty among other less definite facts</p>
+          <p className="mb-1"><strong>v</strong> An overview of the external buildings and areas</p>
+          <p className="mb-1"><strong>vi</strong> A pyramid design that others copied</p>
+          <p className="mb-1"><strong>vii</strong> An idea for changing the design of burial structures</p>
+          <p className="mb-1"><strong>viii</strong> An incredible experience despite the few remains</p>
+          <p className="mb-1"><strong>ix</strong> The answers to some unexpected questions</p>
+        </div>
 
-          <div className="grid grid-cols-2 gap-2">
-            <div>
-              <p className="mb-1">
-                <strong>A</strong> behaviour
+        <div className="space-y-4">
+          {[14, 15, 16, 17, 18, 19, 20].map((num, index) => (
+            <div className="question-item" key={num}>
+              <p className="mb-2">
+                <strong>{num}.</strong> Paragraph {String.fromCharCode(65 + index)}
               </p>
-              <p className="mb-1">
-                <strong>B</strong> categories
-              </p>
-              <p className="mb-1">
-                <strong>C</strong> collaboration
-              </p>
-              <p className="mb-1">
-                <strong>D</strong> comparison
-              </p>
-              <p className="mb-1">
-                <strong>E</strong> contradiction
-              </p>
+              <RadioGroup name={`question${num}`} className="flex flex-wrap gap-4">
+                {["i", "ii", "iii", "iv", "v", "vi", "vii", "viii", "ix"].map((roman) => (
+                  <div className="flex items-center" key={`q${num}-${roman}`}>
+                    <RadioGroupItem id={`q${num}-${roman}`} value={roman} />
+                    <Label htmlFor={`q${num}-${roman}`} className="ml-2">{roman}</Label>
+                  </div>
+                ))}
+              </RadioGroup>
             </div>
-            <div>
-              <p className="mb-1">
-                <strong>F</strong> context
-              </p>
-              <p className="mb-1">
-                <strong>G</strong> creativity
-              </p>
-              <p className="mb-1">
-                <strong>H</strong> inherent
-              </p>
-              <p className="mb-1">
-                <strong>I</strong> street smarts
-              </p>
-              <p className="mb-1">
-                <strong>J</strong> variation
-              </p>
-            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Questions 21-24 */}
+      <div className="question-set mb-8">
+        <h3 className="font-bold mb-2">Questions 21-24</h3>
+        <p className="mb-2">Complete the notes below.</p>
+        <p className="mb-2">
+          Choose <strong>ONE WORD ONLY</strong> from the passage for each answer.
+        </p>
+        <p className="mb-4">
+          Write your answers in boxes 21-24 on your answer sheet.
+        </p>
+
+        <div className="mb-6 p-4 bg-gray-50 rounded-md">
+          <h4 className="font-bold mb-3">The Step Pyramid of Djoser</h4>
+          <p className="mb-2">
+            The complex that includes the Step Pyramid and its surroundings is considered to be as big as an Egyptian <strong>21</strong>{" "}
+            <Input type="text" className="w-32 mx-1 inline-block" /> of the past. The area outside the pyramid included accommodation that was occupied by <strong>22</strong>{" "}
+            <Input type="text" className="w-32 mx-1 inline-block" />, along with many other buildings and features. A wall ran around the outside of the complex and a number of false entrances were built into this. In addition, a long <strong>23</strong>{" "}
+            <Input type="text" className="w-32 mx-1 inline-block" /> encircled the wall. As a result, any visitors who had not been invited were cleverly prevented from entering the pyramid grounds unless they knew the <strong>24</strong>{" "}
+            <Input type="text" className="w-32 mx-1 inline-block" /> of the real entrance.
+          </p>
+        </div>
+      </div>
+
+      {/* Questions 25-26 */}
+      <div className="question-set mb-8">
+        <h3 className="font-bold mb-2">Questions 25-26</h3>
+        <p className="mb-2">Choose <strong>TWO</strong> letters, A-E.</p>
+        <p className="mb-4">
+          Write the correct letters in boxes 25 and 26 on your answer sheet.
+        </p>
+        
+        <p className="mb-4">
+          Which <strong>TWO</strong> of the following points does the writer make about King Djoser?
+        </p>
+
+        <div className="space-y-2">
+          <div className="flex items-start">
+            <input type="checkbox" id="q25-26-a" className="mt-1 mr-2" />
+            <label htmlFor="q25-26-a" className="text-sm">
+              <strong>A.</strong> Initially he had to be persuaded to build in stone rather than clay.
+            </label>
+          </div>
+          <div className="flex items-start">
+            <input type="checkbox" id="q25-26-b" className="mt-1 mr-2" />
+            <label htmlFor="q25-26-b" className="text-sm">
+              <strong>B.</strong> There is disagreement concerning the length of his reign.
+            </label>
+          </div>
+          <div className="flex items-start">
+            <input type="checkbox" id="q25-26-c" className="mt-1 mr-2" />
+            <label htmlFor="q25-26-c" className="text-sm">
+              <strong>C.</strong> He failed to appreciate Imhotep's part in the design of the Step Pyramid.
+            </label>
+          </div>
+          <div className="flex items-start">
+            <input type="checkbox" id="q25-26-d" className="mt-1 mr-2" />
+            <label htmlFor="q25-26-d" className="text-sm">
+              <strong>D.</strong> A few of his possessions were still in his tomb when archaeologists found it.
+            </label>
+          </div>
+          <div className="flex items-start">
+            <input type="checkbox" id="q25-26-e" className="mt-1 mr-2" />
+            <label htmlFor="q25-26-e" className="text-sm">
+              <strong>E.</strong> He criticised the design and construction of other pyramids in Egypt.
+            </label>
           </div>
         </div>
       </div>
 
       <h2 className="text-lg font-bold mb-4">
-        READING PASSAGE 3: Questions 27-40
+        READING PASSAGE 3 : Questions 27-40
       </h2>
 
-      {/* Questions 27-32 */}
+      {/* Questions 27-30 */}
       <div className="question-set mb-8">
-        <h3 className="font-bold mb-2">Questions 27-32</h3>
-        <p className="mb-2">
-          Choose the correct letter, <strong>A</strong>, <strong>B</strong>,{" "}
-          <strong>C</strong> or <strong>D</strong>.
-        </p>
+        <p className="mb-2">Choose the correct letter, A, B, C or D.</p>
         <p className="mb-4">
-          Write the correct letter in boxes 27-32 on your answer sheet.
+          Write the correct letter in boxes 27-30 on your answer sheet.
         </p>
 
-        <div className="space-y-8">
+        <div className="space-y-6">
           <div className="question-item">
             <p className="mb-3">
-              <strong>27.</strong> What is the significance of the mother-baby
-              experiment described by the Brafmans?
+              <strong>27.</strong> The first paragraph tells us about
             </p>
             <RadioGroup name="question27" className="space-y-2">
-              <div className="flex items-center">
-                <RadioGroupItem id="q27-a" value="A" />
-                <Label htmlFor="q27-a" className="ml-2">
-                  A It shows how attachments develop between parent and child.
+              <div className="flex items-start">
+                <RadioGroupItem id="q27-a" value="A" className="mt-1" />
+                <Label htmlFor="q27-a" className="ml-2 text-sm">
+                  <strong>A.</strong> the kinds of jobs that will be most affected by the growth of AI.
                 </Label>
               </div>
-              <div className="flex items-center">
-                <RadioGroupItem id="q27-b" value="B" />
-                <Label htmlFor="q27-b" className="ml-2">
-                  B It illustrates how mothers can confuse their own child with
-                  another.
+              <div className="flex items-start">
+                <RadioGroupItem id="q27-b" value="B" className="mt-1" />
+                <Label htmlFor="q27-b" className="ml-2 text-sm">
+                  <strong>B.</strong> the extent to which AI will alter the nature of the work that people do.
                 </Label>
               </div>
-              <div className="flex items-center">
-                <RadioGroupItem id="q27-c" value="C" />
-                <Label htmlFor="q27-c" className="ml-2">
-                  C It demonstrates that infants understand the concept of
-                  ownership.
+              <div className="flex items-start">
+                <RadioGroupItem id="q27-c" value="C" className="mt-1" />
+                <Label htmlFor="q27-c" className="ml-2 text-sm">
+                  <strong>C.</strong> the proportion of the world's labour force who will have jobs in AI in the future.
                 </Label>
               </div>
-              <div className="flex items-center">
-                <RadioGroupItem id="q27-d" value="D" />
-                <Label htmlFor="q27-d" className="ml-2">
-                  D It reveals the strong feelings generated by possession.
+              <div className="flex items-start">
+                <RadioGroupItem id="q27-d" value="D" className="mt-1" />
+                <Label htmlFor="q27-d" className="ml-2 text-sm">
+                  <strong>D.</strong> the difference between ways that embodied and disembodied AI with impact on workers.
                 </Label>
               </div>
             </RadioGroup>
@@ -583,32 +379,31 @@ export const Cambridge16ARTest1Questions: React.FC = () => {
 
           <div className="question-item">
             <p className="mb-3">
-              <strong>28.</strong> In Bruce Hood's copying machine experiment,
-              what did most children do?
+              <strong>28.</strong> According to the second paragraph, what is Stella Pachidi's view of the 'knowledge economy'?
             </p>
             <RadioGroup name="question28" className="space-y-2">
-              <div className="flex items-center">
-                <RadioGroupItem id="q28-a" value="A" />
-                <Label htmlFor="q28-a" className="ml-2">
-                  A They wanted to keep the original toy.
+              <div className="flex items-start">
+                <RadioGroupItem id="q28-a" value="A" className="mt-1" />
+                <Label htmlFor="q28-a" className="ml-2 text-sm">
+                  <strong>A.</strong> It is having an influence on the number of jobs available.
                 </Label>
               </div>
-              <div className="flex items-center">
-                <RadioGroupItem id="q28-b" value="B" />
-                <Label htmlFor="q28-b" className="ml-2">
-                  B They couldn't tell which toy was the copy.
+              <div className="flex items-start">
+                <RadioGroupItem id="q28-b" value="B" className="mt-1" />
+                <Label htmlFor="q28-b" className="ml-2 text-sm">
+                  <strong>B.</strong> It is changing people's attitudes towards their occupations.
                 </Label>
               </div>
-              <div className="flex items-center">
-                <RadioGroupItem id="q28-c" value="C" />
-                <Label htmlFor="q28-c" className="ml-2">
-                  C They preferred the copy of the toy.
+              <div className="flex items-start">
+                <RadioGroupItem id="q28-c" value="C" className="mt-1" />
+                <Label htmlFor="q28-c" className="ml-2 text-sm">
+                  <strong>C.</strong> It is the main reason why the production sector is declining.
                 </Label>
               </div>
-              <div className="flex items-center">
-                <RadioGroupItem id="q28-d" value="D" />
-                <Label htmlFor="q28-d" className="ml-2">
-                  D They were upset by the copying process.
+              <div className="flex items-start">
+                <RadioGroupItem id="q28-d" value="D" className="mt-1" />
+                <Label htmlFor="q28-d" className="ml-2 text-sm">
+                  <strong>D.</strong> It is a key factor driving current developments in the workplace.
                 </Label>
               </div>
             </RadioGroup>
@@ -616,31 +411,31 @@ export const Cambridge16ARTest1Questions: React.FC = () => {
 
           <div className="question-item">
             <p className="mb-3">
-              <strong>29.</strong> What does the 'endowment effect' refer to?
+              <strong>29.</strong> What did Pachidi observe at the telecommunications company?
             </p>
             <RadioGroup name="question29" className="space-y-2">
-              <div className="flex items-center">
-                <RadioGroupItem id="q29-a" value="A" />
-                <Label htmlFor="q29-a" className="ml-2">
-                  A the need to pay more for an object we desire
+              <div className="flex items-start">
+                <RadioGroupItem id="q29-a" value="A" className="mt-1" />
+                <Label htmlFor="q29-a" className="ml-2 text-sm">
+                  <strong>A.</strong> staff disagreeing with the recommendations of AI
                 </Label>
               </div>
-              <div className="flex items-center">
-                <RadioGroupItem id="q29-b" value="B" />
-                <Label htmlFor="q29-b" className="ml-2">
-                  B the reluctance to exchange something we have been given
+              <div className="flex items-start">
+                <RadioGroupItem id="q29-b" value="B" className="mt-1" />
+                <Label htmlFor="q29-b" className="ml-2 text-sm">
+                  <strong>B.</strong> staff feeling resentful about the intrusion of AI in their work
                 </Label>
               </div>
-              <div className="flex items-center">
-                <RadioGroupItem id="q29-c" value="C" />
-                <Label htmlFor="q29-c" className="ml-2">
-                  C the tendency to collect similar items
+              <div className="flex items-start">
+                <RadioGroupItem id="q29-c" value="C" className="mt-1" />
+                <Label htmlFor="q29-c" className="ml-2 text-sm">
+                  <strong>C.</strong> staff making sure that AI produces the results that they want
                 </Label>
               </div>
-              <div className="flex items-center">
-                <RadioGroupItem id="q29-d" value="D" />
-                <Label htmlFor="q29-d" className="ml-2">
-                  D the habit of becoming attached to gifts
+              <div className="flex items-start">
+                <RadioGroupItem id="q29-d" value="D" className="mt-1" />
+                <Label htmlFor="q29-d" className="ml-2 text-sm">
+                  <strong>D.</strong> staff allowing AI to carry out tasks they ought to do themselves
                 </Label>
               </div>
             </RadioGroup>
@@ -648,100 +443,31 @@ export const Cambridge16ARTest1Questions: React.FC = () => {
 
           <div className="question-item">
             <p className="mb-3">
-              <strong>30.</strong> According to the Brafmans, what can make us
-              feel a sense of ownership?
+              <strong>30.</strong> In his recently published research, Ewan McGaughey
             </p>
             <RadioGroup name="question30" className="space-y-2">
-              <div className="flex items-center">
-                <RadioGroupItem id="q30-a" value="A" />
-                <Label htmlFor="q30-a" className="ml-2">
-                  A having the legal right to an object
+              <div className="flex items-start">
+                <RadioGroupItem id="q30-a" value="A" className="mt-1" />
+                <Label htmlFor="q30-a" className="ml-2 text-sm">
+                  <strong>A.</strong> challenges the idea that redundancy is a negative thing.
                 </Label>
               </div>
-              <div className="flex items-center">
-                <RadioGroupItem id="q30-b" value="B" />
-                <Label htmlFor="q30-b" className="ml-2">
-                  B marking something as your own property
+              <div className="flex items-start">
+                <RadioGroupItem id="q30-b" value="B" className="mt-1" />
+                <Label htmlFor="q30-b" className="ml-2 text-sm">
+                  <strong>B.</strong> shows the profound effect of mass unemployment on society.
                 </Label>
               </div>
-              <div className="flex items-center">
-                <RadioGroupItem id="q30-c" value="C" />
-                <Label htmlFor="q30-c" className="ml-2">
-                  C establishing boundaries around something
+              <div className="flex items-start">
+                <RadioGroupItem id="q30-c" value="C" className="mt-1" />
+                <Label htmlFor="q30-c" className="ml-2 text-sm">
+                  <strong>C.</strong> highlights some differences between past and future job losses.
                 </Label>
               </div>
-              <div className="flex items-center">
-                <RadioGroupItem id="q30-d" value="D" />
-                <Label htmlFor="q30-d" className="ml-2">
-                  D paying a fair price for an object
-                </Label>
-              </div>
-            </RadioGroup>
-          </div>
-
-          <div className="question-item">
-            <p className="mb-3">
-              <strong>31.</strong> What point is made about the use of the word
-              'homeland' in politics?
-            </p>
-            <RadioGroup name="question31" className="space-y-2">
-              <div className="flex items-center">
-                <RadioGroupItem id="q31-a" value="A" />
-                <Label htmlFor="q31-a" className="ml-2">
-                  A It suggests that everyone has rights within a country.
-                </Label>
-              </div>
-              <div className="flex items-center">
-                <RadioGroupItem id="q31-b" value="B" />
-                <Label htmlFor="q31-b" className="ml-2">
-                  B It strengthens people's sense of ownership of their country.
-                </Label>
-              </div>
-              <div className="flex items-center">
-                <RadioGroupItem id="q31-c" value="C" />
-                <Label htmlFor="q31-c" className="ml-2">
-                  C It implies that the people are controlled by the state.
-                </Label>
-              </div>
-              <div className="flex items-center">
-                <RadioGroupItem id="q31-d" value="D" />
-                <Label htmlFor="q31-d" className="ml-2">
-                  D It establishes legal rights to a geographic area.
-                </Label>
-              </div>
-            </RadioGroup>
-          </div>
-
-          <div className="question-item">
-            <p className="mb-3">
-              <strong>32.</strong> Which of the following was demonstrated in
-              Festinger's experiment?
-            </p>
-            <RadioGroup name="question32" className="space-y-2">
-              <div className="flex items-center">
-                <RadioGroupItem id="q32-a" value="A" />
-                <Label htmlFor="q32-a" className="ml-2">
-                  A People value things more when they have worked harder to get
-                  them.
-                </Label>
-              </div>
-              <div className="flex items-center">
-                <RadioGroupItem id="q32-b" value="B" />
-                <Label htmlFor="q32-b" className="ml-2">
-                  B People perform better when they are promised rewards.
-                </Label>
-              </div>
-              <div className="flex items-center">
-                <RadioGroupItem id="q32-c" value="C" />
-                <Label htmlFor="q32-c" className="ml-2">
-                  C People prefer to complete difficult puzzles rather than easy
-                  ones.
-                </Label>
-              </div>
-              <div className="flex items-center">
-                <RadioGroupItem id="q32-d" value="D" />
-                <Label htmlFor="q32-d" className="ml-2">
-                  D People enjoy discussions more when they're in larger groups.
+              <div className="flex items-start">
+                <RadioGroupItem id="q30-d" value="D" className="mt-1" />
+                <Label htmlFor="q30-d" className="ml-2 text-sm">
+                  <strong>D.</strong> illustrates how changes in the job market can be successfully handled.
                 </Label>
               </div>
             </RadioGroup>
@@ -749,240 +475,180 @@ export const Cambridge16ARTest1Questions: React.FC = () => {
         </div>
       </div>
 
-      {/* Questions 33-37 */}
+      {/* Questions 31-34 */}
       <div className="question-set mb-8">
-        <h3 className="font-bold mb-2">Questions 33-37</h3>
-        <p className="mb-2">
-          Complete each sentence with the correct ending, <strong>A-G</strong>,
-          below.
-        </p>
+        <h3 className="font-bold mb-2">Questions 31-34</h3>
+        <p className="mb-2">Complete the summary using the list of words, A-G, below.</p>
         <p className="mb-4">
-          Write the correct letter, <strong>A-G</strong>, in boxes 33-37 on your
-          answer sheet.
+          Write the correct letter, A-G, in boxes 31-34 on your answer sheet.
         </p>
 
-        <div className="mb-4 pl-5">
-          <p className="mb-1">
-            <strong>List of Endings</strong>
+        <div className="mb-6 p-4 bg-gray-50 rounded-md">
+          <h4 className="font-bold mb-3">The 'algorithmication' of jobs</h4>
+          <p className="mb-4">
+            Stella Pachidi of Cambridge Judge Business School has been focusing on the 'algorithmication' of jobs which rely not on production but on <strong>31</strong>{" "}
+            <Input type="text" className="w-16 mx-1 inline-block" />. While monitoring a telecommunications company, Pachidi observed a growing <strong>32</strong>{" "}
+            <Input type="text" className="w-16 mx-1 inline-block" /> on the recommendations made by AI, as workers begin to learn through the 'algorithm's eyes'. Meanwhile, staff are deterred from experimenting and using their own <strong>33</strong>{" "}
+            <Input type="text" className="w-16 mx-1 inline-block" />, and are therefore prevented from achieving innovation. To avoid the kind of situations which Pachidi observed, researchers are trying to make AI's decision-making process easier to comprehend, and to increase users' <strong>34</strong>{" "}
+            <Input type="text" className="w-16 mx-1 inline-block" /> with regard to the technology.
           </p>
-          <p className="mb-1">
-            <strong>A</strong> have clear national borders.
-          </p>
-          <p className="mb-1">
-            <strong>B</strong> choose origami made by experts.
-          </p>
-          <p className="mb-1">
-            <strong>C</strong> value their origami creations highly.
-          </p>
-          <p className="mb-1">
-            <strong>D</strong> feel resistant to changes to their work.
-          </p>
-          <p className="mb-1">
-            <strong>E</strong> see value in the component parts.
-          </p>
-          <p className="mb-1">
-            <strong>F</strong> pay more than buyers for coffee mugs.
-          </p>
-          <p className="mb-1">
-            <strong>G</strong> sell their possessions readily.
-          </p>
+          
+          <div className="mt-4">
+            <div className="flex flex-wrap gap-4">
+              <span><strong>A.</strong> pressure</span>
+              <span><strong>B.</strong> satisfaction</span>
+              <span><strong>C.</strong> intuition</span>
+              <span><strong>D.</strong> promotion</span>
+              <span><strong>E.</strong> reliance</span>
+              <span><strong>F.</strong> confidence</span>
+              <span><strong>G.</strong> information</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Questions 35-40 */}
+      <div className="question-set mb-8">
+        <h3 className="font-bold mb-2">Questions 35-40</h3>
+        <p className="mb-2">
+          Look at the following statements (Questions 35-40) and the list of people below.
+        </p>
+        <p className="mb-2">
+          Match each statement with the correct person, A, B or C.
+        </p>
+        <p className="mb-4">
+          Write the correct letter, A, B or C, in boxes 35-40 on your answer sheet.
+        </p>
+        <p className="mb-4">
+          <strong>NB</strong> You may use any letter more than once.
+        </p>
+
+        <div className="mb-6 p-4 bg-gray-50 rounded-md">
+          <h4 className="font-bold mb-3">List of people</h4>
+          <p className="mb-1"><strong>A</strong> Stella Pachidi</p>
+          <p className="mb-1"><strong>B</strong> Hamish Low</p>
+          <p className="mb-1"><strong>C</strong> Ewan McGaughey</p>
         </div>
 
         <div className="space-y-4">
           <div className="question-item">
             <p className="mb-2">
-              <strong>33.</strong> In a study of buying and selling, people who
-              were given mugs
+              <strong>35.</strong> Greater levels of automation will not result in lower employment.
             </p>
-            <RadioGroup name="question33" className="flex flex-wrap gap-4">
-              {["A", "B", "C", "D", "E", "F", "G"].map((letter) => (
-                <div
-                  className="flex items-center"
-                  key={`q33-${letter.toLowerCase()}`}
-                >
-                  <RadioGroupItem
-                    id={`q33-${letter.toLowerCase()}`}
-                    value={letter}
-                  />
-                  <Label
-                    htmlFor={`q33-${letter.toLowerCase()}`}
-                    className="ml-2"
-                  >
-                    {letter}
-                  </Label>
-                </div>
-              ))}
+            <RadioGroup name="question35" className="flex gap-6">
+              <div className="flex items-center">
+                <RadioGroupItem id="q35-a" value="A" />
+                <Label htmlFor="q35-a" className="ml-2">A. Stella Pachidi</Label>
+              </div>
+              <div className="flex items-center">
+                <RadioGroupItem id="q35-b" value="B" />
+                <Label htmlFor="q35-b" className="ml-2">B. Hamish Low</Label>
+              </div>
+              <div className="flex items-center">
+                <RadioGroupItem id="q35-c" value="C" />
+                <Label htmlFor="q35-c" className="ml-2">C. Ewan McGaughey</Label>
+              </div>
             </RadioGroup>
           </div>
 
           <div className="question-item">
             <p className="mb-2">
-              <strong>34.</strong> People who fold origami animals
+              <strong>36.</strong> There are several reasons why AI is appealing to businesses.
             </p>
-            <RadioGroup name="question34" className="flex flex-wrap gap-4">
-              {["A", "B", "C", "D", "E", "F", "G"].map((letter) => (
-                <div
-                  className="flex items-center"
-                  key={`q34-${letter.toLowerCase()}`}
-                >
-                  <RadioGroupItem
-                    id={`q34-${letter.toLowerCase()}`}
-                    value={letter}
-                  />
-                  <Label
-                    htmlFor={`q34-${letter.toLowerCase()}`}
-                    className="ml-2"
-                  >
-                    {letter}
-                  </Label>
-                </div>
-              ))}
+            <RadioGroup name="question36" className="flex gap-6">
+              <div className="flex items-center">
+                <RadioGroupItem id="q36-a" value="A" />
+                <Label htmlFor="q36-a" className="ml-2">A. Stella Pachidi</Label>
+              </div>
+              <div className="flex items-center">
+                <RadioGroupItem id="q36-b" value="B" />
+                <Label htmlFor="q36-b" className="ml-2">B. Hamish Low</Label>
+              </div>
+              <div className="flex items-center">
+                <RadioGroupItem id="q36-c" value="C" />
+                <Label htmlFor="q36-c" className="ml-2">C. Ewan McGaughey</Label>
+              </div>
             </RadioGroup>
           </div>
 
           <div className="question-item">
             <p className="mb-2">
-              <strong>35.</strong> People can view a country as something they
-              own when the country
+              <strong>37.</strong> AI's potential to transform people's lives has parallels with major cultural shifts which occurred in previous eras.
             </p>
-            <RadioGroup name="question35" className="flex flex-wrap gap-4">
-              {["A", "B", "C", "D", "E", "F", "G"].map((letter) => (
-                <div
-                  className="flex items-center"
-                  key={`q35-${letter.toLowerCase()}`}
-                >
-                  <RadioGroupItem
-                    id={`q35-${letter.toLowerCase()}`}
-                    value={letter}
-                  />
-                  <Label
-                    htmlFor={`q35-${letter.toLowerCase()}`}
-                    className="ml-2"
-                  >
-                    {letter}
-                  </Label>
-                </div>
-              ))}
+            <RadioGroup name="question37" className="flex gap-6">
+              <div className="flex items-center">
+                <RadioGroupItem id="q37-a" value="A" />
+                <Label htmlFor="q37-a" className="ml-2">A. Stella Pachidi</Label>
+              </div>
+              <div className="flex items-center">
+                <RadioGroupItem id="q37-b" value="B" />
+                <Label htmlFor="q37-b" className="ml-2">B. Hamish Low</Label>
+              </div>
+              <div className="flex items-center">
+                <RadioGroupItem id="q37-c" value="C" />
+                <Label htmlFor="q37-c" className="ml-2">C. Ewan McGaughey</Label>
+              </div>
             </RadioGroup>
           </div>
 
           <div className="question-item">
             <p className="mb-2">
-              <strong>36.</strong> Buyers of IKEA furniture often
+              <strong>38.</strong> It is important to be aware of the range of problems that AI causes.
             </p>
-            <RadioGroup name="question36" className="flex flex-wrap gap-4">
-              {["A", "B", "C", "D", "E", "F", "G"].map((letter) => (
-                <div
-                  className="flex items-center"
-                  key={`q36-${letter.toLowerCase()}`}
-                >
-                  <RadioGroupItem
-                    id={`q36-${letter.toLowerCase()}`}
-                    value={letter}
-                  />
-                  <Label
-                    htmlFor={`q36-${letter.toLowerCase()}`}
-                    className="ml-2"
-                  >
-                    {letter}
-                  </Label>
-                </div>
-              ))}
+            <RadioGroup name="question38" className="flex gap-6">
+              <div className="flex items-center">
+                <RadioGroupItem id="q38-a" value="A" />
+                <Label htmlFor="q38-a" className="ml-2">A. Stella Pachidi</Label>
+              </div>
+              <div className="flex items-center">
+                <RadioGroupItem id="q38-b" value="B" />
+                <Label htmlFor="q38-b" className="ml-2">B. Hamish Low</Label>
+              </div>
+              <div className="flex items-center">
+                <RadioGroupItem id="q38-c" value="C" />
+                <Label htmlFor="q38-c" className="ml-2">C. Ewan McGaughey</Label>
+              </div>
             </RadioGroup>
           </div>
 
           <div className="question-item">
             <p className="mb-2">
-              <strong>37.</strong> Software engineers who develop features that
-              are later cut
+              <strong>39.</strong> People are going to follow a less conventional career path than in the past.
             </p>
-            <RadioGroup name="question37" className="flex flex-wrap gap-4">
-              {["A", "B", "C", "D", "E", "F", "G"].map((letter) => (
-                <div
-                  className="flex items-center"
-                  key={`q37-${letter.toLowerCase()}`}
-                >
-                  <RadioGroupItem
-                    id={`q37-${letter.toLowerCase()}`}
-                    value={letter}
-                  />
-                  <Label
-                    htmlFor={`q37-${letter.toLowerCase()}`}
-                    className="ml-2"
-                  >
-                    {letter}
-                  </Label>
-                </div>
-              ))}
+            <RadioGroup name="question39" className="flex gap-6">
+              <div className="flex items-center">
+                <RadioGroupItem id="q39-a" value="A" />
+                <Label htmlFor="q39-a" className="ml-2">A. Stella Pachidi</Label>
+              </div>
+              <div className="flex items-center">
+                <RadioGroupItem id="q39-b" value="B" />
+                <Label htmlFor="q39-b" className="ml-2">B. Hamish Low</Label>
+              </div>
+              <div className="flex items-center">
+                <RadioGroupItem id="q39-c" value="C" />
+                <Label htmlFor="q39-c" className="ml-2">C. Ewan McGaughey</Label>
+              </div>
             </RadioGroup>
           </div>
-        </div>
-      </div>
 
-      {/* Questions 38-40 */}
-      <div className="question-set mb-8">
-        <h3 className="font-bold mb-2">Questions 38-40</h3>
-        <p className="mb-2">
-          Choose <strong>THREE</strong> letters, <strong>A-G</strong>.
-        </p>
-        <p className="mb-4">
-          Write the correct letters in boxes 38-40 on your answer sheet.
-        </p>
-
-        <p className="mb-4">
-          Which <strong>THREE</strong> of the following statements are true,
-          according to the passage?
-        </p>
-
-        <div className="space-y-3">
-          <div className="flex items-start gap-2">
-            <input type="checkbox" id="q38-40-a" className="mt-1" />
-            <label htmlFor="q38-40-a" className="text-sm">
-              <strong>A</strong> People develop feelings of ownership by two
-              years of age.
-            </label>
-          </div>
-          <div className="flex items-start gap-2">
-            <input type="checkbox" id="q38-40-b" className="mt-1" />
-            <label htmlFor="q38-40-b" className="text-sm">
-              <strong>B</strong> People feel more attached to origami they have
-              made themselves than to identical ones made by others.
-            </label>
-          </div>
-          <div className="flex items-start gap-2">
-            <input type="checkbox" id="q38-40-c" className="mt-1" />
-            <label htmlFor="q38-40-c" className="text-sm">
-              <strong>C</strong> A sense of ownership can only develop for
-              objects that are legally owned.
-            </label>
-          </div>
-          <div className="flex items-start gap-2">
-            <input type="checkbox" id="q38-40-d" className="mt-1" />
-            <label htmlFor="q38-40-d" className="text-sm">
-              <strong>D</strong> Feelings of ownership are generally equivalent
-              for all members of a team.
-            </label>
-          </div>
-          <div className="flex items-start gap-2">
-            <input type="checkbox" id="q38-40-e" className="mt-1" />
-            <label htmlFor="q38-40-e" className="text-sm">
-              <strong>E</strong> Children believe that even identical copies do
-              not possess the same qualities as the original.
-            </label>
-          </div>
-          <div className="flex items-start gap-2">
-            <input type="checkbox" id="q38-40-f" className="mt-1" />
-            <label htmlFor="q38-40-f" className="text-sm">
-              <strong>F</strong> People are more likely to give away possessions
-              they have created themselves.
-            </label>
-          </div>
-          <div className="flex items-start gap-2">
-            <input type="checkbox" id="q38-40-g" className="mt-1" />
-            <label htmlFor="q38-40-g" className="text-sm">
-              <strong>G</strong> People feel a stronger sense of ownership for
-              objects they have worked hard to acquire.
-            </label>
+          <div className="question-item">
+            <p className="mb-2">
+              <strong>40.</strong> Authorities should take measures to ensure that there will be adequately paid work for everyone.
+            </p>
+            <RadioGroup name="question40" className="flex gap-6">
+              <div className="flex items-center">
+                <RadioGroupItem id="q40-a" value="A" />
+                <Label htmlFor="q40-a" className="ml-2">A. Stella Pachidi</Label>
+              </div>
+              <div className="flex items-center">
+                <RadioGroupItem id="q40-b" value="B" />
+                <Label htmlFor="q40-b" className="ml-2">B. Hamish Low</Label>
+              </div>
+              <div className="flex items-center">
+                <RadioGroupItem id="q40-c" value="C" />
+                <Label htmlFor="q40-c" className="ml-2">C. Ewan McGaughey</Label>
+              </div>
+            </RadioGroup>
           </div>
         </div>
       </div>

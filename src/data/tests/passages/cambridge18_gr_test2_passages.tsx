@@ -4,527 +4,448 @@ import React from "react";
 export const Cambridge18GRTest2Passages: React.FC = () => {
   return (
     <>
+      {" "}
       <div className="reading-passage p-4 bg-white">
         <h2 className="text-lg font-bold mb-4">SECTION 1</h2>
 
-        <h3 className="font-bold mb-4">CIVIL DISOBEDIENCE</h3>
+        <h3 className="font-bold mb-4">Questions 1–8</h3>
 
         <p className="mb-4">
-          <strong>Questions 1-8</strong>
+          Read the text below and answer <strong>Questions 1–8</strong>.
         </p>
+
+        <h4 className="font-bold mb-4">Choosing the best sleeping bag</h4>
+
+        <div className="passage-text space-y-4">
+          <div className="paragraph">
+            <p>
+              When choosing a sleeping bag, check what seasons it's for, as well
+              as how heavy it is if you're backpacking. Also think about the
+              filling. Natural duck down is very warm, has a longer lifespan and
+              is easier to pack up, while synthetic materials are easier to
+              clean, and they dry quicker and are cheaper.
+            </p>
+          </div>
+
+          <div className="paragraph">
+            <h4 className="font-semibold mb-2">A Vango Fuse -12</h4>
+            <p>
+              This all-year-round sleeping bag combines natural duck down and a
+              new synthetic fibre. The result is a bag that's warm and weighs
+              1.5kg. There's a water-resistant finish to protect it from
+              moisture.
+            </p>
+          </div>
+
+          <div className="paragraph">
+            <h4 className="font-semibold mb-2">
+              B Outwell Campion Lux Double Sleeping Bag
+            </h4>
+            <p>
+              This double sleeping bag — which is suitable for all seasons
+              except winter — is soft and cosy, and there's a handy pocket for
+              essentials, located inside near the top. It also folds up
+              remarkably small, given its size.
+            </p>
+          </div>
+
+          <div className="paragraph">
+            <h4 className="font-semibold mb-2">C Nordisk Oscar +10</h4>
+            <p>
+              At just 350g, this sleeping bag is remarkably light, and as it's
+              synthetic, it's very easy to maintain. The pack size is just
+              13x20cm, which makes it ideal for backpacking. It will work
+              perfectly for summer trekking.
+            </p>
+          </div>
+
+          <div className="paragraph">
+            <h4 className="font-semibold mb-2">
+              D The Big Sleep 250GSM Single Cowl Sleeping
+            </h4>
+            <p>
+              If you want a no-frills, budget sleeping bag that will last more
+              than one summer, opt for this. It's soft, comfy and simple to
+              wash. Give yourself a bit of time to fit it back in the bag,
+              though. Use it for spring, summer and autumn.
+            </p>
+          </div>
+
+          <div className="paragraph">
+            <h4 className="font-semibold mb-2">E Jack Wolfskin Smoozip +3</h4>
+            <p>
+              We like the extra insulation in this sleeping bag around the areas
+              that tend to feel the cold (head, chest and feet). And the hood is
+              cosy enough to use as a pillow.
+            </p>
+          </div>
+
+          <div className="paragraph">
+            <h4 className="font-semibold mb-2">F Vango Starwalker Dragon</h4>
+            <p>
+              This innovative, high-quality kids' sleeping bag enables you to
+              undo some zips and turn it into a fun, animal-themed coat. Once
+              your youngster is ready for bed, simply zip the bottom back on and
+              zip up the shoulders. Suitable for between 8 and 20 degrees
+              Celsius.
+            </p>
+          </div>
+
+          <div className="paragraph">
+            <h4 className="font-semibold mb-2">G Outwell Conqueror</h4>
+            <p>
+              This sleeping bag has an integrated down duvet and lots of space.
+              What's more, it packs up compactly and is easy to get back in the
+              bag. It's light but too big for a rucksack.
+            </p>
+          </div>
+        </div>
+
+        <h3 className="font-bold mb-4 mt-8">Questions 9–14</h3>
+
         <p className="mb-4">
-          Read the text below and answer <strong>Questions 1-8</strong>.
+          Read the text below and answer <strong>Questions 9–14</strong>.
+        </p>
+
+        <h4 className="font-bold mb-4">
+          The Spread the Word Life Writing Prize
+        </h4>
+
+        <div className="passage-text space-y-4">
+          <div className="paragraph">
+            <p>
+              We are delighted to announce The Spread the Word Life Writing
+              Prize in association with Goldsmiths Writers' Centre.
+            </p>
+          </div>
+
+          <div className="paragraph">
+            <h4 className="font-semibold mb-2">Competition Rules</h4>
+            <p>
+              Entries should be original works of life writing of no more than
+              5,000 words. The word count will be checked and entries longer
+              than 5,000 words will be disqualified. There is no minimum word
+              count.
+            </p>
+            <p>
+              For the purposes of the Prize, Life Writing is defined as
+              non-fiction and should be based on a significant portion from the
+              author's own experience. Traditional biographies, where the piece
+              is only about the experience of someone else, are excluded.
+            </p>
+            <p>
+              Writers only submit one entry each. Multiple entries by the same
+              author will result in only the first entry being considered for
+              the Prize and any additional entries disqualified. Writers who
+              have previously won or been highly commended in the Life Writing
+              Prize are excluded from entering; otherwise, previous entrants may
+              submit.
+            </p>
+            <p>
+              Entries must be the original, previously unpublished work of the
+              entrant. Graphic novel-style entries, where drawings or
+              photographs accompany text, are welcome. Entries can be
+              self-contained pieces of life writing, or the first 5,000 words of
+              a longer piece of work.
+            </p>
+            <p>
+              The Life Writing Prize is open to writers aged over 18 and
+              resident in the UK who are emerging writers, which means they have
+              not previously published in print a full-length work. We define a
+              full-length work as, for example, a complete work of fiction or
+              non-fiction over 30,000 words.
+            </p>
+            <p>
+              Entries that are simultaneously submitted elsewhere are welcome —
+              but please let us know as soon as possible if a piece is to be
+              published elsewhere or has won another prize so we can disqualify
+              it from the Life Writing Prize.
+            </p>
+            <p>
+              The winner will receive £1,500, publication on Spread the Word's
+              website, two years' membership of the Royal Society of Literature,
+              and a development meeting with an editor and an agent. Two highly
+              commended entries will receive £500 and two mentoring sessions, a
+              development meeting with an editor and an agent, and be published
+              on the Spread the Word website.
+            </p>
+          </div>
+        </div>
+      </div>{" "}
+      <div className="reading-passage p-4 bg-white mt-8">
+        <h2 className="text-lg font-bold mb-4">SECTION 2</h2>{" "}
+        <h3 className="font-bold mb-4">Questions 15–21</h3>
+        <p className="mb-4">
+          Read the text below and answer <strong>Questions 15–21</strong>.
+        </p>
+        <div className="passage-text space-y-4">
+          <h4 className="font-semibold mb-2">
+            Encouraging employees to be healthy: a guide for employers
+          </h4>
+          <div className="paragraph">
+            <h4 className="font-semibold mb-2">Benefits</h4>
+            <p>
+              Putting effort into employee wellness can reduce absenteeism and
+              encourage better teamwork in the workplace, as well as increased
+              productivity. Once you've devised a program, continue to assess
+              the outcomes and regularly survey your team to gather feedback.
+            </p>
+          </div>
+          <div className="paragraph">
+            <h4 className="font-semibold mb-2">Focus on general prevention</h4>
+            <p>
+              Consider offering flu vaccinations on site and look at offering
+              employees incentives on health insurance. Some companies arrange
+              for someone who specialises in health issues, such as a doctor, to
+              visit the workplace and speak to employees.
+            </p>
+          </div>
+          <div className="paragraph">
+            <h4 className="font-semibold mb-2">Encourage a healthier diet</h4>
+            <p>
+              Most of us know that eating healthily can help prevent future
+              diseases, but many are not aware that unhealthy eating is linked
+              to a 66 percent increased risk of loss of productivity. It may be
+              necessary to consciously develop a healthy food and drink
+              workplace policy, including a healthy catering policy. A simple
+              thing to do is substitute soda in any on-site vending machines
+              with water or juice. Also investigate the nutritional value of
+              food supplied for team meetings and work events. Consider putting
+              a bowl of fruit out in the staff room and urge everyone to help
+              themselves for free. You can encourage employees to bring in
+              healthy lunches from home by making sure that there is a fridge in
+              the break room.
+            </p>
+          </div>
+          <div className="paragraph">
+            <h4 className="font-semibold mb-2">Encourage more exercise</h4>
+            <p>
+              Encouraging employees to exercise needn't be expensive as there
+              are plenty of low-cost methods available. These might include:
+              installing racks for bikes in your staff car park; encouraging
+              employees to take part in fun runs and charity events; suggesting
+              'walking meetings' where people discuss business as they get fresh
+              air and exercise; and putting in showers to assist those who ride
+              or run to the workplace. Some companies negotiate group rates for
+              their employees at a nearby gym.
+            </p>
+          </div>
+          <div className="paragraph">
+            <h4 className="font-semibold mb-2">Improve mental health</h4>
+            <p>
+              Recent reports have shown that ignoring mental health costs
+              Australian companies at least $11 billion a year. We all have a
+              responsibility to look out for one another. Some ways you can do
+              this in the workplace include: running employee surveys to get
+              valuable information on morale in the workplace; training managers
+              on mental health strategies; offering rebates so employees are
+              compensated for counselling if required; and refusing to accept
+              any bullying and unprofessional behaviour in your workplace.
+            </p>
+          </div>{" "}
+        </div>{" "}
+        <h3 className="font-bold mb-4 mt-8">Questions 22–27</h3>
+        <p className="mb-4">
+          Read the text below and answer <strong>Questions 22–27</strong>.
+        </p>
+        <div className="passage-text space-y-4">
+          <h4 className="font-semibold mb-2">
+            Marama Beach Hotel and Bistro: guidelines for working in the kitchen
+          </h4>
+
+          <p className="mb-4">
+            The health and well-being of customers and staff is our first
+            priority, and we expect all staff to take every step possible to
+            maintain food safety and work in a hygienic manner.
+          </p>
+
+          <div className="paragraph">
+            <h4 className="font-semibold mb-2">Hygiene</h4>
+            <p>
+              Long hair must be tied back and no rings may be worn if touching
+              food.
+            </p>{" "}
+            <p>
+              The regulation chefs' shirts and trousers are to be freshly
+              laundered before starting a new shift, along with aprons if they
+              are worn.
+            </p>
+            <p>
+              Cross-contamination between raw and cooked food must be avoided.
+              To this end, staff must use a clean board each time they cut
+              different types of food.
+            </p>
+            <p>
+              Staff should not touch money and then food without washing their
+              hands in between.
+            </p>
+            <p>
+              In the case of illness or a skin problem, the staff member should
+              inform the manager. Cuts on hands and arms must be properly
+              wrapped or bandaged.
+            </p>
+          </div>
+
+          <div className="paragraph">
+            <h4 className="font-semibold mb-2">Safety rules</h4>
+            <p>All injuries must be reported to management immediately.</p>
+            <p>
+              Safety guards must not be altered in any way, and staff must
+              always wear protective clothing and gloves when working with
+              sharp, hot, cold or corrosive items or materials.
+            </p>{" "}
+            <p>
+              Loose clothing or jewellery must not be worn. Defective appliances
+              must be turned off and not used — staff must not try to fix them
+              themselves.
+            </p>
+            <p>
+              Heavy boxes should be lifted carefully with bent knees and a
+              straight back, holding the box close to the body.
+            </p>
+            <p>Work areas should be clean and free of hazards.</p>
+            <p>Spills on the floor must be dealt with immediately.</p>
+            <p>Flammable liquids must be stored away from flames.</p>{" "}
+            <p>
+              If storing containers of chemicals in the kitchen, they must have
+              clear labels, so as to avoid any confusion about the contents.
+            </p>
+          </div>
+
+          <div className="paragraph">
+            <h4 className="font-semibold mb-2">Breaks</h4>
+            <p>
+              Staff have 20 minutes of paid break time per 3 hours of work,
+              during which time they may not leave the premises. Every staff
+              member who works a shift exceeding 5 hours is entitled to a
+              30-minute unpaid break and free meals. However, please be aware
+              that the kitchen may not always be able to provide this service,
+              especially in peak times. Beverages kept in the storeroom may not
+              be consumed by staff, but filtered water is provided free of
+              charge in the staff room.
+            </p>
+          </div>
+        </div>{" "}
+      </div>{" "}
+      <div className="reading-passage p-4 bg-white mt-8">
+        <h2 className="text-lg font-bold mb-4">SECTION 3</h2>
+
+        <h3 className="font-bold mb-4">Questions 28–40</h3>
+
+        <p className="mb-4">
+          Read the text below and answer <strong>Questions 28–40</strong>.
+        </p>
+
+        <p className="mb-4">
+          <strong>
+            In the 1970s, Clothkits revolutionised home sewing. Later, a woman
+            from Sussex, England, revived the nostalgic brand and brought it up
+            to date
+          </strong>
         </p>
 
         <div className="passage-text space-y-4">
           <div className="paragraph">
             <h4 className="font-semibold mb-2">A</h4>
             <p>
-              Civil disobedience is the active refusal to obey certain laws,
-              demands or commands of a government. It involves peaceful protests
-              against laws or government demands that are regarded as unjust.
-              Practitioners of civil disobedience may be seeking to change the
-              law that they are opposing, or they may simply be looking to
-              obstruct the operation of the law or government policy.
-              Alternatively, a person who employs civil disobedience may not
-              actually object to the law they are breaking, but they consider it
-              necessary to protest against what they regard as a greater
-              injustice. Most activists who employ civil disobedience are
-              choosing to disobey the law non-violently, rather than resorting
-              to armed resistance or other forms of violent protest, which might
-              include damage to property or harm to individuals. They are
-              generally willing to accept the legal consequences of their
-              actions, although there are exceptions to this. It is this
-              acceptance of the legal consequences that has been influential in
-              changing both laws and wider attitudes towards civil disobedience.
+              'I can't remember many of the clothes I wore before I was six, but
+              I have a vivid memory of a certain skirt whose patterns I can
+              still trace in my mind. It was wraparound, with a belt that
+              threaded through itself, decorated with cats in two shades of
+              green. I wore it with a knitted red jersey my mum bought in a
+              jumble sale, and brown sandals with flowers cut into the toes. It
+              was 1979, and I was not yet five. I forgot about that skirt for a
+              long time, but when a girlfriend mentioned the name Clothkits
+              while we were chatting, it was as if a door suddenly opened on a
+              moment in the past that resonated with vivid significance for me.'
+              The brand, founded in 1968, had by the late 1980s mostly vanished
+              from people's lives, but by a combination of determination and
+              luck Kay Mawer brought it back.
             </p>
           </div>
 
           <div className="paragraph">
             <h4 className="font-semibold mb-2">B</h4>
             <p>
-              Historically, there are a number of civil disobedience movements
-              of significance. Henry David Thoreau's 1849 essay Civil
-              Disobedience, entitled 'Resistance to Civil Government', is a key
-              text. In this well-known essay, Thoreau argues for a priority of
-              individual conscience over government legislation. Before and
-              during the American Civil War, citizens who helped runaway slaves
-              were acting in breach of the law, but they were following the
-              dictates of their consciences. Thoreau himself resisted the
-              imposition of taxes that would be used to fund the US war against
-              Mexico, and was briefly imprisoned for his refusal. Despite this,
-              he was relatively privileged compared to those actively resisting
-              slavery. He was not pursued vigorously by the state because of his
-              actions. Some of his neighbors actually paid the taxes on his
-              behalf, which led to his release, but he protested even against
-              this intervention.
+              Clothkits was created by the designer Anne Kennedy, who came up
+              with the ingenious idea of printing a pattern straight on to
+              coloured fabric so that a paper pattern was not needed. It was
+              accompanied by instructions that almost anyone could follow on how
+              to cut the pieces out and sew them together. 'I was rebelling
+              against the formulaic lines of textile design at that time,'
+              Kennedy says. 'My interest was in folk art and clothes that were
+              simple to make as I had lots of unfinished sewing disasters in my
+              cupboard.' Clothkits has always embodied the spirit of the late
+              1960s and 1970s. Its initial design was a dress in a geometric
+              stripe in orange, pink, turquoise and purple. It cost 25 shillings
+              (£1.25), and after it was featured in the Observer newspaper,
+              Kennedy received more than £2,000 worth of orders. She ran the
+              company from Lewes in Sussex, where at its peak it employed more
+              than 400 people, selling to 44 countries worldwide. Sew-your-own
+              kits formed the core of the business, supplemented by knitwear.
+              Kennedy's children demonstrated the patterns by wearing them in
+              photographs.
             </p>
           </div>
 
           <div className="paragraph">
             <h4 className="font-semibold mb-2">C</h4>
             <p>
-              Mohandas (later 'Mahatma', or 'Great Soul') Gandhi was influenced
-              by Thoreau and was one of the most important 20th-century
-              proponents of civil disobedience. In South Africa, he led
-              campaigns against restrictions on immigration, and later, on
-              racial discrimination. Upon returning to India, he organized a
-              long series of campaigns against British rule. For Gandhi, the
-              notion of civil disobedience was strongly linked to his wider
-              philosophy and religious beliefs. He advocated a policy of
-              non-violence, believing that the use of violence against the
-              British would simply replace one source of oppression with
-              another. His view was that if he employed violence to achieve his
-              aims, it would be harder to resist the desire for revenge once the
-              British had been overcome. He therefore believed that if India was
-              to be truly independent and genuinely peaceful, the means used to
-              achieve those goals had to be consistent with his belief in
-              non-violence. In some cases, however, Gandhi's civil disobedience
-              campaigns were called off because they had led to violence. The
-              British Viceroy, Lord Irwin, was aware that forcible suppression
-              of the movement would lead to widespread violence, so the protests
-              became a factor in the British decision to remove themselves from
-              the governing of India, albeit after a long struggle.
+              Kennedy sold the company in the late 1980s. There had been a few
+              administrative problems with postal strikes and a new computer
+              system, which back then took up an entire room, 'but the times
+              were changing as well,' she says. 'More women were going out to
+              work and sewing less for their children.' She sold the company to
+              one of her suppliers, who then sold it on to Freeman's, which ran
+              Clothkits alongside its own brand for a while, using Kennedy's
+              impressive database, but its ethos as a big, corporate company did
+              not sit well alongside the alternative and artistic values of
+              Clothkits. In 1991, Clothkits was made dormant, and there the
+              story might have ended, were it not for Mawer's fascination with
+              discovering what happened to Clothkits.
             </p>
           </div>
 
           <div className="paragraph">
             <h4 className="font-semibold mb-2">D</h4>
             <p>
-              In the United States, under the leadership of Martin Luther King,
-              civil disobedience became a powerful part of the Civil Rights
-              movement. In the face of continuing racial segregation, even after
-              the Supreme Court ruled that separate schools for black and white
-              children were not equal, activists adopted a series of tactics to
-              resist the law. In 1955 in Montgomery, Alabama, Rosa Parks refused
-              to give up her seat to a white person on a bus - a protest that
-              led to a boycott of the bus company by supporters of the Civil
-              Rights movement. The aim was to target the company's revenues. The
-              boycott was a success, and the US Supreme Court eventually ruled
-              that the local law requiring segregation on Montgomery buses was
-              unconstitutional.
+              Mawer's mother bought her a sewing machine when she was ten and
+              taught her basic pattern-cutting and garment construction,
+              encouraging her to experiment with colour and design by trial and
+              error. The first garment Mawer made was a pair of trousers, which
+              she made by tracing around an existing pair of trousers. In her
+              late twenties, she spent five years working on digital and
+              sculptural installations. 'It was an amazing, mind-expanding
+              experience, but I knew it was unlikely I could make a living as a
+              practising artist. I was definitely looking for a way that I could
+              work in a creative industry with a commercial edge.' The
+              experience inspired Mawer to return to education, studying for a
+              degree in fine art at the University of Chichester. Her passion
+              for vintage fabric, which her mother had encouraged her to start
+              collecting, led her back to Clothkits, and from there to a journey
+              into the heart of Freeman's. Negotiations with the company took 18
+              months, but in October 2007 Clothkits was hers.
             </p>
           </div>
 
           <div className="paragraph">
             <h4 className="font-semibold mb-2">E</h4>
             <p>
-              In the UK, the suffragette movement of the early 20th century
-              campaigned to get the vote for women. Their tactics included
-              disruption of daily life through civil disobedience, such as
-              chaining themselves to railings, pouring chemicals into mailboxes
-              to damage the mail, breaking windows and even arson. The mass
-              civil disobedience of the suffragettes and the attempts to
-              suppress their activities led to around 1,000 imprisonments. Many
-              of them went on hunger strike in prison, which led to the
-              authorities force-feeding them. Faced with continuing protests,
-              bad publicity from the suffering of women when force-fed, and
-              unwillingness to release the women, the government felt forced to
-              pass the Prisoner's Temporary Discharge Act in 1913. This allowed
-              the temporary discharge of prisoners who were so weakened by
-              hunger striking that they were at risk of death, but meant that
-              they could be re-imprisoned to serve out the rest of their
-              sentence once they had recovered. This law became known as the
-              'Cat and Mouse Act' and was criticized as inhumane. Nonetheless,
-              one of the important legacies of the suffragette movement was the
-              lesson that the vote could be won, and the law changed, by direct
-              action, rather than purely by constitutional means.
-            </p>
-          </div>
-
-          <div className="paragraph">
-            <h4 className="font-semibold mb-2">F</h4>
-            <p>
-              A number of environmentalist groups have employed methods of civil
-              disobedience in opposition to nuclear weaponry and power stations.
-              For instance, in 1982 a group of women began a peace camp outside
-              the Greenham Common Royal Air Force base in Berkshire, England,
-              protesting against the siting of 96 cruise missiles there. In
-              1983, during demonstrations which aimed to disrupt the
-              transportation of the missiles into the base, more than 750 women
-              were arrested for 'obstructing the highway'. A series of similar
-              actions over the coming years resulted in more arrests, including
-              one of 200 women on a single day in December 1983. The missiles
-              were in fact installed on the base, but the campaigners continued
-              to surround it until the weapons were removed and the airbase
-              closed. The peace camp came to an end in 2000.
-            </p>
-          </div>
-
-          <div className="paragraph">
-            <h4 className="font-semibold mb-2">G</h4>
-            <p>
-              Today, civil disobedience continues to be a significant form of
-              political activism, with examples ranging from mass protests
-              against government corruption to individuals refusing to comply
-              with laws they believe are unjust. Many middle-class individuals,
-              who might not have been politically active previously, may engage
-              in this form of protest, sometimes when conventional political
-              means have proven unsuccessful. In contemporary society, the use
-              of social media to report civil disobedience may mean there is
-              greater awareness of these protests, making it more difficult for
-              authorities to dismiss or suppress civil disobedience, or to
-              control the narrative surrounding such events. Thus, while the
-              tactics of civil disobedience have not changed radically since the
-              early 20th century, their impact may be amplified by 21st century
-              technology.
-            </p>
-          </div>
-        </div>
-
-        <p className="mt-6 mb-4">
-          <strong>Questions 9-14</strong>
-        </p>
-        <p className="mb-4">
-          Do the following statements agree with the information given in the
-          text?
-        </p>
-        <p className="mb-4">In boxes 9-14 on your answer sheet, write</p>
-        <p className="mb-1">
-          <strong>TRUE</strong> if the statement agrees with the information
-        </p>
-        <p className="mb-1">
-          <strong>FALSE</strong> if the statement contradicts the information
-        </p>
-        <p className="mb-4">
-          <strong>NOT GIVEN</strong> if there is no information on this
-        </p>
-      </div>
-
-      <div className="reading-passage p-4 bg-white mt-8">
-        <h2 className="text-lg font-bold mb-4">SECTION 2</h2>
-
-        <h3 className="font-bold mb-4">WORKPLACE WELLNESS</h3>
-
-        <p className="mb-4">
-          <strong>Questions 15-27</strong>
-        </p>
-        <p className="mb-4">Read the text below and complete the notes.</p>
-        <p className="mb-4">
-          Choose <strong>NO MORE THAN TWO WORDS</strong> from the text for each
-          answer.
-        </p>
-        <p className="mb-4">
-          Write your answers in boxes 15-27 on your answer sheet.
-        </p>
-
-        <div className="passage-text space-y-4">
-          <div className="paragraph">
-            <p>
-              Creating a healthier workplace environment results in reduced
-              absenteeism and staff turnover, increased employee engagement, and
-              improved morale, which can all contribute to greater productivity.
-              Research has shown that supporting your employees to be healthier
-              and happier at work does not need to be expensive.
-            </p>
-          </div>
-
-          <div className="paragraph">
-            <h4 className="font-semibold mb-2">Healthy eating</h4>
-            <p>
-              Encourage healthier eating by replacing soda with filtered tap
-              water. Make fruit accessible in common areas where employees
-              gather. Consider installing a fridge to enable employees to store
-              their healthy meals brought from home instead of buying fast food
-              options.
-            </p>
-          </div>
-
-          <div className="paragraph">
-            <h4 className="font-semibold mb-2">Exercise</h4>
-            <p>
-              Consider creating safe storage areas for bikes to encourage
-              employees to cycle to work. If your building has the space,
-              install showers for employees who wish to exercise before work, at
-              lunch, or on their way home from work.
-            </p>
-            <p>
-              Encourage participation in local and national physical activity
-              campaigns. There are a number of free health campaigns run
-              throughout the year, such as 'National Walking Month' or 'Cycle to
-              Work Day'. Get onboard with these campaigns, which often have free
-              resources to help get your employees involved.
-            </p>
-          </div>
-
-          <div className="paragraph">
-            <h4 className="font-semibold mb-2">Feedback</h4>
-            <p>
-              A simple and effective way to encourage employee involvement is to
-              conduct health-related surveys to understand what is important to
-              them and where they would like to see improvement. These don't
-              need to be complicated – a simple 'suggestions box' can be very
-              effective, as can employee focus groups.
-            </p>
-          </div>
-
-          <div className="paragraph">
-            <h4 className="font-semibold mb-2">
-              New kitchen facilities and equipment
-            </h4>
-            <p>
-              Whether you have a new kitchen or simply have new equipment, you
-              have an opportunity to create the healthy-eating culture from the
-              start. Here are some tips for those setting up a new facility:
-            </p>
-            <ul className="list-disc ml-6 space-y-1">
-              <li>
-                Make sure that all staff members who use the kitchen wear aprons
-                for food preparation.
-              </li>
-              <li>
-                Require all staff to wash their hands when using the notice
-                board explaining how to wash hands properly.
-              </li>
-              <li>
-                Have all food thoroughly washed, and all money handling
-                containers cleaned.
-              </li>
-              <li>Do not overstock – maintain about a 2–3 day supply.</li>
-              <li>
-                Post emergency phone numbers and health department inspection
-                information.
-              </li>
-            </ul>
-          </div>
-
-          <div className="paragraph">
-            <h4 className="font-semibold mb-2">Maintenance of kitchens</h4>
-            <p>
-              Whether you have a professional kitchen or a simple office kitchen
-              area, the following might be helpful:
-            </p>
-            <ul className="list-disc ml-6 space-y-1">
-              <li>
-                Post a weekly cleaning schedule that is maintained by the
-                kitchen supervisor and accessible to all staff.
-              </li>
-              <li>
-                Check temperature of appliances daily – refrigerator should be
-                40°F (4°C), freezer should be 0°F (-17°C).
-              </li>
-              <li>
-                Keep Labels on cleaning products (detergent bottles) and keep
-                them away from food.
-              </li>
-              <li>Keep cleaning supplies in their original containers.</li>
-              <li>
-                Keep food items in the storeroom or refrigerator with the date
-                they were opened.
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-      <div className="reading-passage p-4 bg-white mt-8">
-        <h2 className="text-lg font-bold mb-4">SECTION 3</h2>
-
-        <h3 className="font-bold mb-4">
-          THE HISTORY AND DEVELOPMENT OF PRINTMAKING
-        </h3>
-
-        <p className="mb-4">
-          <strong>Questions 28-35</strong>
-        </p>
-        <p className="mb-4">Choose the correct letter, A, B, C, D or E.</p>
-        <p className="mb-4">
-          Write the correct letter in boxes 28-35 on your answer sheet.
-        </p>
-
-        <div className="passage-text space-y-4">
-          <div className="paragraph">
-            <p>
-              Printing is a process for reproducing images and text by applying
-              color under pressure to paper or other materials. It encompasses a
-              number of different techniques that have been practiced for
-              hundreds of years. They include woodcuts, engravings, etchings,
-              lithographs and screen-printing, all of which require specialist
-              skills and equipment, and all of which have been used, and are
-              still used, by artists to produce high-quality prints of their
-              work.
-            </p>
-          </div>
-
-          <div className="paragraph">
-            <p>
-              In the early days of printing, woodcuts and copper plate
-              engravings were the principal techniques. A copper-plate engraving
-              was made by cutting the image into the metal. When the plate was
-              inked, the ink remained in the sunken lines of the image and was
-              transferred to paper when the plate and paper were squeezed
-              together in a press, leaving an impression of the image. As the
-              paper was pressed into the lines of the engraving, a ridge of
-              paper was raised on the back of the print, and the ink stood proud
-              of the paper. A print expert would look for these signs to
-              identify a copper engraving. As the copper plate had to be
-              engraved in reverse – in other words, the image had to be cut into
-              the plate backwards compared to the way it would be printed out –
-              the process had technical difficulties.
-            </p>
-          </div>
-
-          <div className="paragraph">
-            <p>
-              Nevertheless, copper engraving became more and more sophisticated
-              over time. In Italy in the early 16th century, Marcantonio
-              Raimondi produced prints of unprecedented quality from engravings,
-              which he was using to reproduce paintings. He realized that since
-              the copper plate could be printed many times, the art of the great
-              painters could become available to people who could not otherwise
-              have afforded to see or purchase the originals. However, the labor
-              involved in copper engraving was considerable, and engravings were
-              still expensive, especially ones that were printed using colored
-              inks. By the 17th century, only rulers and the very rich could
-              afford to commission original prints from copper-plate engravers,
-              and less wealthy people had to be satisfied with maps and pictures
-              in books.
-            </p>
-          </div>
-
-          <div className="paragraph">
-            <p>
-              Although the techniques of engraving were not in themselves
-              scientifically sophisticated, they were used by scientists in
-              communicating their ideas and discoveries. In the 18th century,
-              biological illustrations usually started by drawing directly from
-              the subject, and were valued according to their accuracy of
-              representation. Their inclusion in scientific journals helped to
-              promote the work of the featured scientists. In 1798, the Lombardy
-              Academy of Science in Italy recommended that lithography should be
-              used for scientific illustration. Unlike copper-plate engraving,
-              stone lithography allows a wide range of tonal variations and an
-              artist can draw directly onto the stone without the need for
-              engraving. This innovation made print-making much faster; it meant
-              that many more prints could be run off, and in time led to the
-              emergence of mass-market magazines.
-            </p>
-          </div>
-
-          <div className="paragraph">
-            <p>
-              Major advances came in the early 19th century with the
-              introduction of lithography, which was invented in 1798 by Alois
-              Senefelder. Senefelder had been looking for a cheap way to publish
-              theatrical works, and found that he could use wax to draw on a
-              stone plate, which was then treated with chemicals, so that when
-              ink was applied to the stone, it stuck only to the areas where the
-              drawing had been done. This enabled him to transfer his designs to
-              paper by pressing them on the stone. This became a popular
-              technique with artists, because they could draw directly onto the
-              stone instead of having to use a printer as an intermediary.
-              Famous artists like Manet, Degas and Picasso enthusiastically
-              embraced lithography, and many artists today still use stone
-              lithography to create prints of their own designs and artwork.
-              With the continued development of lithography, color reproduction
-              techniques advanced.
-            </p>
-          </div>
-
-          <div className="paragraph">
-            <p>
-              By the early 20th century, photographic printing techniques had
-              been refined to the point where it was possible to make excellent
-              color reproductions of paintings. Print-making had declined as a
-              medium for artists, although certain major artists continued to
-              produce etchings and lithographs, using the form as a medium in
-              its own right, rather than merely a way to reproduce an image. For
-              example, the Spanish artist Goya created an entire sequence of
-              prints, entitled 'Caprichos', which allowed him to express himself
-              freely. Printmaking was an essential part of his output, and in
-              total he produced some 270 prints. Developments in photography
-              seemed to have made the artist-printmaker obsolete, but the growth
-              of a mass consumer society, and with it the emergence of mass
-              advertising in the early 20th century, meant that the skills of
-              the printmaker were still in demand, especially in the form of
-              screen-printing, which was a cheap way of making bold, striking
-              posters.
-            </p>
-          </div>
-
-          <div className="paragraph">
-            <p>
-              Screen-printing has a history that goes back to the earliest forms
-              of stencil-making in China around 1000 years ago. From China, the
-              craft spread to Japan, where the stencil technique was applied to
-              fabric. The Japanese used human hair to create a mesh that
-              supported the design. By the early 20th century, fabric was being
-              used instead of hair, and squeegees replaced brushes for pushing
-              the ink through the mesh. Today, most screen-printing is carried
-              out using a photo stencil made from a light-sensitive gelatin,
-              which is exposed to the image in a process similar to that used in
-              photography. Parts of the gelatin become hardened when exposed to
-              light, while the areas that remain in shadow can be washed away,
-              allowing the ink to penetrate the screen and print onto the
-              surface placed below. Most screen-printing is done on a commercial
-              basis to mass-produce a specified image, although many artists do
-              screen-printing as part of their practice.
-            </p>
-          </div>
-
-          <div className="paragraph">
-            <p>
-              Contemporary artists use computer-aided printing of various kinds
-              when they want to mass-produce their own work, or when they choose
-              to work in that medium as part of their creative practice. Some
-              artists continue to use traditional printing techniques such as
-              linocuts, wood carving and lithography, delighting in the
-              particularities of the chosen medium. And many contemporary
-              artists combine old and new techniques or import images from one
-              medium into another to create interesting effects.
-            </p>
-          </div>
-
-          <div className="paragraph">
-            <p>
-              Although its primary purpose is reproductive, making prints is
-              also a creative process, and artists and illustrators continue to
-              use all of the techniques described above to produce
-              limited-edition prints of their work. These are signed and
-              numbered by the artist, and are sold through galleries in editions
-              of 15 to 50 copies of each image. These days, such prints are
-              highly regarded by art critics and collectors. Prints are no
-              longer viewed as inferior to other art forms such as paintings or
-              drawings, and they are purchased by major galleries and private
-              collectors.
-            </p>
-          </div>
-
-          <div className="paragraph">
-            <h4 className="font-semibold mb-2">Screen Printing</h4>
-            <p>
-              A screen print is made by pressing ink through a mesh, parts of
-              which have been obscured by a stencil so that the ink only
-              penetrates the open areas, creating an image on a surface placed
-              beneath the mesh. The mesh, which is stretched tightly across a
-              frame, is traditionally made of fabric, although metal or nylon
-              may also be used. An artist starts the process by making a drawing
-              or design, which is followed by the construction of a stencil to
-              recreate the design. The stencil can be made in various ways, such
-              as by cutting shapes from paper, or by painting parts of the
-              screen with a liquid which dries and blocks the screen.
-            </p>
-            <p>
-              The technique of screen printing was first used in China. The
-              Chinese used human hair to construct the mesh. A stencil was
-              created, and ink forced through the mesh using a stiff brush. In
-              the early 20th century, printers in the West began to use the
-              technique. Modern stencils used in screen printing are typically
-              made using photo-sensitive gelatins, which go hard when exposed to
-              light. This allows very fine detail to be created.
-            </p>
-            <p>
-              Some artists prefer to create stencils with a geometric pattern,
-              which can be repeated to create a design, while others may prefer
-              to work with photographic images. Because the screen can be used
-              many times, it is easy to create multicolored prints by printing
-              one color at a time, using a different screen for each color.
-            </p>
-            <p>
-              While the process is part of what makes a screen print
-              distinctive, artists also need to choose what surface to print on.
-              Many artists choose newspaper, but other options include plastic,
-              card or even knitwear.
+              The ethos of Clothkits remains the same, and Mawer is proud that
+              her fabric is printed either in London or the north of England,
+              and that packaging is kept to an absolute minimum. 'I wanted to
+              feel that everyone involved in the brand, from design to
+              production, was part of a process I could witness. I couldn't see
+              the point of manufacturing on the other side of the world, as
+              that's not what Clothkits has ever been about.' The revival of
+              Clothkits has also, of course, coincided with a growing sense of
+              dissatisfaction at our disposable society, and the resulting
+              resurgence of interest in skills such as sewing and knitting.
+              Making your own clothes gives you a greater appreciation of the
+              craftsmanship in the construction of a garment,' Mawer says. 'When
+              you know the process involved in making a skirt, you treasure it
+              in a way you wouldn't if you'd bought it from a mass-producing
+              manufacturer.'
             </p>
           </div>
         </div>

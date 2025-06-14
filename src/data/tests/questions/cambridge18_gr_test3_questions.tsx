@@ -9,7 +9,6 @@ export const Cambridge18GRTest3Questions: React.FC = () => {
     <>
       <div className="reading-questions p-4 bg-white">
         <h2 className="text-lg font-bold mb-4">SECTION 1</h2>
-
         <div className="question-set mb-8">
           <h3 className="font-bold mb-2">Questions 1–7</h3>
           <p className="mb-2">
@@ -17,15 +16,14 @@ export const Cambridge18GRTest3Questions: React.FC = () => {
           </p>
           <p className="mb-2">
             For which beaches are the following statements true?
-          </p>
+          </p>{" "}
           <p className="mb-4">
             Write the correct letter, <strong>A–F</strong>, in boxes 1–7 on your
             answer sheet.
           </p>
           <p className="mb-4">
-            <em>NB You may use any letter more than once.</em>
+            <strong>NB</strong> You may use any letter more than once.
           </p>
-
           <div className="space-y-6">
             <div className="question-item">
               <p className="mb-3">
@@ -205,7 +203,6 @@ export const Cambridge18GRTest3Questions: React.FC = () => {
             </div>
           </div>
         </div>
-
         <div className="question-set mb-8">
           <h3 className="font-bold mb-2">Questions 8–14</h3>
           <p className="mb-2">
@@ -225,7 +222,6 @@ export const Cambridge18GRTest3Questions: React.FC = () => {
               <strong>NOT GIVEN</strong> if there is no information on this
             </p>
           </div>
-
           <div className="space-y-6">
             <div className="question-item">
               <p className="mb-3">
@@ -415,11 +411,8 @@ export const Cambridge18GRTest3Questions: React.FC = () => {
                 </div>
               </RadioGroup>
             </div>
-          </div>
+          </div>{" "}
         </div>
-
-        <h2 className="text-lg font-bold mb-4">SECTION 2</h2>
-
         <div className="question-set mb-8">
           <h3 className="font-bold mb-2">Questions 15–20</h3>
           <p className="mb-2">Complete the sentences below.</p>
@@ -429,7 +422,6 @@ export const Cambridge18GRTest3Questions: React.FC = () => {
           <p className="mb-4">
             Write your answers in boxes 15–20 on your answer sheet.
           </p>
-
           <div className="space-y-6">
             <div className="question-item">
               <p className="mb-3">
@@ -481,11 +473,9 @@ export const Cambridge18GRTest3Questions: React.FC = () => {
                 car parking should be sent to the HR Manager.
               </p>
             </div>
-          </div>
+          </div>{" "}
         </div>
-
-        <h2 className="text-lg font-bold mb-4">SECTION 3</h2>
-
+        <h2 className="text-lg font-bold mb-4">SECTION 2</h2>
         <div className="question-set mb-8">
           <h3 className="font-bold mb-2">Questions 21–27</h3>
           <p className="mb-2">Complete the notes below.</p>
@@ -495,7 +485,6 @@ export const Cambridge18GRTest3Questions: React.FC = () => {
           <p className="mb-4">
             Write your answers in boxes 21–27 on your answer sheet.
           </p>
-
           <div className="bg-gray-50 p-4 rounded-md mb-6">
             <h4 className="font-bold mb-2">Making sure offices are safe</h4>
             <p className="font-semibold">
@@ -553,9 +542,9 @@ export const Cambridge18GRTest3Questions: React.FC = () => {
               </li>
               <li>the mouse is placed next to the computer keyboard</li>
             </ul>
-          </div>
+          </div>{" "}
         </div>
-
+        <h2 className="text-lg font-bold mb-4">SECTION 3</h2>
         <div className="question-set mb-8">
           <h3 className="font-bold mb-2">Questions 28–33</h3>
           <p className="mb-2">
@@ -567,7 +556,7 @@ export const Cambridge18GRTest3Questions: React.FC = () => {
             your answer sheet.
           </p>
           <p className="mb-4">
-            <em>NB You may use any letter more than once.</em>
+            <strong>NB</strong> You may use any letter more than once.
           </p>
 
           <div className="space-y-6">
@@ -595,7 +584,6 @@ export const Cambridge18GRTest3Questions: React.FC = () => {
                 ))}
               </RadioGroup>
             </div>
-
             <div className="question-item">
               <p className="mb-3">
                 <strong>29</strong> reference to some current remains of Roman
@@ -621,7 +609,6 @@ export const Cambridge18GRTest3Questions: React.FC = () => {
                 ))}
               </RadioGroup>
             </div>
-
             <div className="question-item">
               <p className="mb-3">
                 <strong>30</strong> a description of preparations for building a
@@ -647,7 +634,6 @@ export const Cambridge18GRTest3Questions: React.FC = () => {
                 ))}
               </RadioGroup>
             </div>
-
             <div className="question-item">
               <p className="mb-3">
                 <strong>31</strong> the period in history when road building
@@ -673,7 +659,6 @@ export const Cambridge18GRTest3Questions: React.FC = () => {
                 ))}
               </RadioGroup>
             </div>
-
             <div className="question-item">
               <p className="mb-3">
                 <strong>32</strong> the consequence of damage caused by a
@@ -698,12 +683,11 @@ export const Cambridge18GRTest3Questions: React.FC = () => {
                   </div>
                 ))}
               </RadioGroup>
-            </div>
-
+            </div>{" "}
             <div className="question-item">
               <p className="mb-3">
-                <strong>33</strong> an explanation of why Roman roads were named
-                after particular people
+                <strong>33</strong> the total distance once crossed by Roman
+                roads
               </p>
               <RadioGroup name="question33" className="flex flex-wrap gap-4">
                 {["A", "B", "C", "D", "E", "F"].map((letter) => (
@@ -726,211 +710,201 @@ export const Cambridge18GRTest3Questions: React.FC = () => {
               </RadioGroup>
             </div>
           </div>
-        </div>
-
+        </div>{" "}
         <div className="question-set mb-8">
-          <h3 className="font-bold mb-2">Questions 34–40</h3>
-          <p className="mb-2">
-            Do the following statements agree with the information given in the
-            text?
+          <h3 className="font-bold mb-2">Questions 34–37</h3>
+          <p className="mb-4">
+            Choose the correct letter, <strong>A</strong>, <strong>B</strong>,{" "}
+            <strong>C</strong> or <strong>D</strong>.
           </p>
-          <p className="mb-2">In boxes 34–40 on your answer sheet, write</p>
-          <div className="mb-4 space-y-1">
-            <p>
-              <strong>TRUE</strong> if the statement agrees with the information
-            </p>
-            <p>
-              <strong>FALSE</strong> if the statement contradicts the
-              information
-            </p>
-            <p>
-              <strong>NOT GIVEN</strong> if there is no information on this
-            </p>
+
+          <div className="space-y-6">
+            {" "}
+            <div className="question-item">
+              <p className="mb-3">
+                <strong>34</strong> Which aspect of Roman road building does the
+                writer mention in Section A?
+              </p>
+              <RadioGroup name="question34" className="space-y-2">
+                <div className="flex items-start">
+                  <RadioGroupItem id="q34-a" value="A" className="mt-1" />
+                  <Label htmlFor="q34-a" className="ml-3">
+                    <strong>A</strong> the strength and permanence of the roads
+                  </Label>
+                </div>
+                <div className="flex items-start">
+                  <RadioGroupItem id="q34-b" value="B" className="mt-1" />
+                  <Label htmlFor="q34-b" className="ml-3">
+                    <strong>B</strong> the magnificence and practicality of the
+                    roads
+                  </Label>
+                </div>
+                <div className="flex items-start">
+                  <RadioGroupItem id="q34-c" value="C" className="mt-1" />
+                  <Label htmlFor="q34-c" className="ml-3">
+                    <strong>C</strong> the number of people involved in building
+                  </Label>
+                </div>
+                <div className="flex items-start">
+                  <RadioGroupItem id="q34-d" value="D" className="mt-1" />
+                  <Label htmlFor="q34-d" className="ml-3">
+                    <strong>D</strong> the powerful people who financed the
+                    roads
+                  </Label>
+                </div>
+              </RadioGroup>
+            </div>{" "}
+            <div className="question-item">
+              <p className="mb-3">
+                <strong>35</strong> The writer compares the Appian Way to a
+                modern highway because
+              </p>
+              <RadioGroup name="question35" className="space-y-2">
+                <div className="flex items-start">
+                  <RadioGroupItem id="q35-a" value="A" className="mt-1" />
+                  <Label htmlFor="q35-a" className="ml-3">
+                    <strong>A</strong> it was lengthened over time.
+                  </Label>
+                </div>
+                <div className="flex items-start">
+                  <RadioGroupItem id="q35-b" value="B" className="mt-1" />
+                  <Label htmlFor="q35-b" className="ml-3">
+                    <strong>B</strong> it took a long time to construct.
+                  </Label>
+                </div>
+                <div className="flex items-start">
+                  <RadioGroupItem id="q35-c" value="C" className="mt-1" />
+                  <Label htmlFor="q35-c" className="ml-3">
+                    <strong>C</strong> it was used by a large number of
+                    travellers.
+                  </Label>
+                </div>
+                <div className="flex items-start">
+                  <RadioGroupItem id="q35-d" value="D" className="mt-1" />
+                  <Label htmlFor="q35-d" className="ml-3">
+                    <strong>D</strong> it was designed to avoid certain areas.
+                  </Label>
+                </div>
+              </RadioGroup>
+            </div>{" "}
+            <div className="question-item">
+              <p className="mb-3">
+                <strong>36</strong> According to the writer, the purpose of the
+                triumphal arches was to
+              </p>
+              <RadioGroup name="question36" className="space-y-2">
+                <div className="flex items-start">
+                  <RadioGroupItem id="q36-a" value="A" className="mt-1" />
+                  <Label htmlFor="q36-a" className="ml-3">
+                    <strong>A</strong> display the power of Rome.
+                  </Label>
+                </div>
+                <div className="flex items-start">
+                  <RadioGroupItem id="q36-b" value="B" className="mt-1" />
+                  <Label htmlFor="q36-b" className="ml-3">
+                    <strong>B</strong> celebrate the opening of a road.
+                  </Label>
+                </div>
+                <div className="flex items-start">
+                  <RadioGroupItem id="q36-c" value="C" className="mt-1" />
+                  <Label htmlFor="q36-c" className="ml-3">
+                    <strong>C</strong> show the name of important roads.
+                  </Label>
+                </div>
+                <div className="flex items-start">
+                  <RadioGroupItem id="q36-d" value="D" className="mt-1" />
+                  <Label htmlFor="q36-d" className="ml-3">
+                    <strong>D</strong> provide access for important officials.
+                  </Label>
+                </div>
+              </RadioGroup>
+            </div>{" "}
+            <div className="question-item">
+              <p className="mb-3">
+                <strong>37</strong> What common use of a milestone is mentioned
+                in Section E?
+              </p>
+              <RadioGroup name="question37" className="space-y-2">
+                <div className="flex items-start">
+                  <RadioGroupItem id="q37-a" value="A" className="mt-1" />
+                  <Label htmlFor="q37-a" className="ml-3">
+                    <strong>A</strong> indicating to travellers the total length
+                    of the road
+                  </Label>
+                </div>
+                <div className="flex items-start">
+                  <RadioGroupItem id="q37-b" value="B" className="mt-1" />
+                  <Label htmlFor="q37-b" className="ml-3">
+                    <strong>B</strong> highlighting areas of the road that
+                    needed repair
+                  </Label>
+                </div>
+                <div className="flex items-start">
+                  <RadioGroupItem id="q37-c" value="C" className="mt-1" />
+                  <Label htmlFor="q37-c" className="ml-3">
+                    <strong>C</strong> noting details regarding the maintenance
+                    of the road
+                  </Label>
+                </div>
+                <div className="flex items-start">
+                  <RadioGroupItem id="q37-d" value="D" className="mt-1" />
+                  <Label htmlFor="q37-d" className="ml-3">
+                    <strong>D</strong> marking rest places along the road for
+                    travellers and their animals
+                  </Label>
+                </div>
+              </RadioGroup>
+            </div>
+          </div>
+        </div>{" "}
+        <div className="question-set mb-8">
+          <h3 className="font-bold mb-2">Questions 38–40</h3>
+          <p className="mb-4">Label the diagram below.</p>
+          <p className="mb-4">
+            Choose <strong>NO MORE THAN TWO WORDS</strong> from the passage for
+            each answer.
+          </p>
+
+          <div className="mb-6 flex justify-center">
+            <img
+              src="https://www.ieltsolve.com/wp-content/uploads/2023/08/Picture22-e1690985722303-1536x637.png"
+              alt="Roman Road Construction Diagram"
+              className="max-w-full h-auto border border-gray-300 rounded"
+            />
           </div>
 
           <div className="space-y-6">
             <div className="question-item">
               <p className="mb-3">
-                <strong>34</strong> features included to assist travelers
+                <strong>38</strong>{" "}
+                <input
+                  type="text"
+                  className="border-b border-gray-400 w-40 text-center"
+                  placeholder="Answer"
+                />
               </p>
-              <RadioGroup name="question34" className="flex flex-wrap gap-4">
-                {["A", "B", "C", "D", "E", "F"].map((letter) => (
-                  <div
-                    className="flex items-center"
-                    key={`q34-${letter.toLowerCase()}`}
-                  >
-                    <RadioGroupItem
-                      id={`q34-${letter.toLowerCase()}`}
-                      value={letter}
-                    />
-                    <Label
-                      htmlFor={`q34-${letter.toLowerCase()}`}
-                      className="ml-2"
-                    >
-                      {letter}
-                    </Label>
-                  </div>
-                ))}
-              </RadioGroup>
             </div>
 
             <div className="question-item">
               <p className="mb-3">
-                <strong>35</strong> information about the earliest major Roman
-                road
+                <strong>39</strong>{" "}
+                <input
+                  type="text"
+                  className="border-b border-gray-400 w-40 text-center"
+                  placeholder="Answer"
+                />
               </p>
-              <RadioGroup name="question35" className="flex flex-wrap gap-4">
-                {["A", "B", "C", "D", "E", "F"].map((letter) => (
-                  <div
-                    className="flex items-center"
-                    key={`q35-${letter.toLowerCase()}`}
-                  >
-                    <RadioGroupItem
-                      id={`q35-${letter.toLowerCase()}`}
-                      value={letter}
-                    />
-                    <Label
-                      htmlFor={`q35-${letter.toLowerCase()}`}
-                      className="ml-2"
-                    >
-                      {letter}
-                    </Label>
-                  </div>
-                ))}
-              </RadioGroup>
             </div>
 
             <div className="question-item">
               <p className="mb-3">
-                <strong>36</strong> Objects such as stationary vehicles should
-                not block entries.
+                <strong>40</strong>{" "}
+                <input
+                  type="text"
+                  className="border-b border-gray-400 w-40 text-center"
+                  placeholder="Answer"
+                />
               </p>
-              <RadioGroup name="question36" className="flex gap-8">
-                <div className="flex items-center">
-                  <RadioGroupItem id="q36-true" value="TRUE" />
-                  <Label htmlFor="q36-true" className="ml-2">
-                    TRUE
-                  </Label>
-                </div>
-                <div className="flex items-center">
-                  <RadioGroupItem id="q36-false" value="FALSE" />
-                  <Label htmlFor="q36-false" className="ml-2">
-                    FALSE
-                  </Label>
-                </div>
-                <div className="flex items-center">
-                  <RadioGroupItem id="q36-ng" value="NG" />
-                  <Label htmlFor="q36-ng" className="ml-2">
-                    NG
-                  </Label>
-                </div>
-              </RadioGroup>
-            </div>
-
-            <div className="question-item">
-              <p className="mb-3">
-                <strong>37</strong> Drivers do not need to display a permit when
-                using the car park.
-              </p>
-              <RadioGroup name="question37" className="flex gap-8">
-                <div className="flex items-center">
-                  <RadioGroupItem id="q37-true" value="TRUE" />
-                  <Label htmlFor="q37-true" className="ml-2">
-                    TRUE
-                  </Label>
-                </div>
-                <div className="flex items-center">
-                  <RadioGroupItem id="q37-false" value="FALSE" />
-                  <Label htmlFor="q37-false" className="ml-2">
-                    FALSE
-                  </Label>
-                </div>
-                <div className="flex items-center">
-                  <RadioGroupItem id="q37-ng" value="NG" />
-                  <Label htmlFor="q37-ng" className="ml-2">
-                    NG
-                  </Label>
-                </div>
-              </RadioGroup>
-            </div>
-
-            <div className="question-item">
-              <p className="mb-3">
-                <strong>38</strong> The car park is open 24 hours a day.
-              </p>
-              <RadioGroup name="question38" className="flex gap-8">
-                <div className="flex items-center">
-                  <RadioGroupItem id="q38-true" value="TRUE" />
-                  <Label htmlFor="q38-true" className="ml-2">
-                    TRUE
-                  </Label>
-                </div>
-                <div className="flex items-center">
-                  <RadioGroupItem id="q38-false" value="FALSE" />
-                  <Label htmlFor="q38-false" className="ml-2">
-                    FALSE
-                  </Label>
-                </div>
-                <div className="flex items-center">
-                  <RadioGroupItem id="q38-ng" value="NG" />
-                  <Label htmlFor="q38-ng" className="ml-2">
-                    NG
-                  </Label>
-                </div>
-              </RadioGroup>
-            </div>
-
-            <div className="question-item">
-              <p className="mb-3">
-                <strong>39</strong> When spaces are limited, managers have
-                priority.
-              </p>
-              <RadioGroup name="question39" className="flex gap-8">
-                <div className="flex items-center">
-                  <RadioGroupItem id="q39-true" value="TRUE" />
-                  <Label htmlFor="q39-true" className="ml-2">
-                    TRUE
-                  </Label>
-                </div>
-                <div className="flex items-center">
-                  <RadioGroupItem id="q39-false" value="FALSE" />
-                  <Label htmlFor="q39-false" className="ml-2">
-                    FALSE
-                  </Label>
-                </div>
-                <div className="flex items-center">
-                  <RadioGroupItem id="q39-ng" value="NG" />
-                  <Label htmlFor="q39-ng" className="ml-2">
-                    NG
-                  </Label>
-                </div>
-              </RadioGroup>
-            </div>
-
-            <div className="question-item">
-              <p className="mb-3">
-                <strong>40</strong> A charge is made for using the car park.
-              </p>
-              <RadioGroup name="question40" className="flex gap-8">
-                <div className="flex items-center">
-                  <RadioGroupItem id="q40-true" value="TRUE" />
-                  <Label htmlFor="q40-true" className="ml-2">
-                    TRUE
-                  </Label>
-                </div>
-                <div className="flex items-center">
-                  <RadioGroupItem id="q40-false" value="FALSE" />
-                  <Label htmlFor="q40-false" className="ml-2">
-                    FALSE
-                  </Label>
-                </div>
-                <div className="flex items-center">
-                  <RadioGroupItem id="q40-ng" value="NG" />
-                  <Label htmlFor="q40-ng" className="ml-2">
-                    NG
-                  </Label>
-                </div>
-              </RadioGroup>
             </div>
           </div>
         </div>

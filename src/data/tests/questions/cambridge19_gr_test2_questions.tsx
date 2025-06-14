@@ -10,7 +10,6 @@ export const Cambridge19GRTest2Questions: React.FC = () => {
     <>
       <div className="reading-questions p-4 bg-white">
         <h2 className="text-lg font-bold mb-4">Section 1: Passage 1</h2>
-
         <div className="question-set mb-8">
           <h3 className="font-bold mb-2">Questions 1–7</h3>
           <div className="mb-4">
@@ -301,9 +300,7 @@ export const Cambridge19GRTest2Questions: React.FC = () => {
             </div>
           </div>
         </div>
-
         <h2 className="text-lg font-bold mb-4">Section 1: Passage 2</h2>
-
         <div className="question-set mb-8">
           <h3 className="font-bold mb-2">Questions 8–14</h3>
           <div className="mb-4">
@@ -520,9 +517,7 @@ export const Cambridge19GRTest2Questions: React.FC = () => {
             </div>
           </div>
         </div>
-
         <h2 className="text-lg font-bold mb-4">SECTION 2</h2>
-
         <div className="question-set mb-8">
           <h3 className="font-bold mb-2">Questions 15-20</h3>
           <div className="mb-4">
@@ -591,7 +586,6 @@ export const Cambridge19GRTest2Questions: React.FC = () => {
             </div>
           </div>
         </div>
-
         <div className="question-set mb-8">
           <h3 className="font-bold mb-2">Questions 21-27</h3>
           <div className="mb-4">
@@ -669,9 +663,7 @@ export const Cambridge19GRTest2Questions: React.FC = () => {
             </div>
           </div>
         </div>
-
-        <h2 className="text-lg font-bold mb-4">SECTION 3</h2>
-
+        <h2 className="text-lg font-bold mb-4">SECTION 3</h2>{" "}
         <div className="question-set mb-8">
           <h3 className="font-bold mb-2">Questions 28-31</h3>
           <div className="mb-4">
@@ -695,25 +687,28 @@ export const Cambridge19GRTest2Questions: React.FC = () => {
                 <div className="flex items-center">
                   <RadioGroupItem id="q28-a" value="A" />
                   <Label htmlFor="q28-a" className="ml-2">
-                    It reduced obesity before Leeds did.
+                    Its 'Henry' programme was recommended to Leeds experts.
                   </Label>
                 </div>
                 <div className="flex items-center">
                   <RadioGroupItem id="q28-b" value="B" />
                   <Label htmlFor="q28-b" className="ml-2">
-                    It had a similar programme to 'Henry'.
+                    It was the first world city to reduce obesity levels in
+                    children.
                   </Label>
                 </div>
                 <div className="flex items-center">
                   <RadioGroupItem id="q28-c" value="C" />
                   <Label htmlFor="q28-c" className="ml-2">
-                    It had less severe obesity problems.
+                    It has experienced more severe childhood obesity levels than
+                    Leeds.
                   </Label>
                 </div>
                 <div className="flex items-center">
                   <RadioGroupItem id="q28-d" value="D" />
                   <Label htmlFor="q28-d" className="ml-2">
-                    It tackled obesity in different areas.
+                    Its pattern of success in cutting childhood obesity is like
+                    that of Leeds.
                   </Label>
                 </div>
               </RadioGroup>
@@ -721,32 +716,32 @@ export const Cambridge19GRTest2Questions: React.FC = () => {
 
             <div className="question-item">
               <p className="mb-3">
-                <strong>29</strong> Susan Jebb believes Leeds is significant
-                because
+                <strong>29</strong> How did Susan Jebb respond to the fall in
+                childhood obesity among poorer children in Leeds?
               </p>
               <RadioGroup name="question29" className="space-y-2">
                 <div className="flex items-center">
                   <RadioGroupItem id="q29-a" value="A" />
                   <Label htmlFor="q29-a" className="ml-2">
-                    the obesity figures can be trusted.
+                    She said she had expected it.
                   </Label>
                 </div>
                 <div className="flex items-center">
                   <RadioGroupItem id="q29-b" value="B" />
                   <Label htmlFor="q29-b" className="ml-2">
-                    similar cities had very different results.
+                    She said she was amazed by the figures.
                   </Label>
                 </div>
                 <div className="flex items-center">
                   <RadioGroupItem id="q29-c" value="C" />
                   <Label htmlFor="q29-c" className="ml-2">
-                    the research has been running for a long time.
+                    She wanted to review some of her team's data.
                   </Label>
                 </div>
                 <div className="flex items-center">
                   <RadioGroupItem id="q29-d" value="D" />
                   <Label htmlFor="q29-d" className="ml-2">
-                    the reduction in obesity occurred where it was most needed.
+                    She felt some results were more interesting than others.
                   </Label>
                 </div>
               </RadioGroup>
@@ -754,32 +749,34 @@ export const Cambridge19GRTest2Questions: React.FC = () => {
 
             <div className="question-item">
               <p className="mb-3">
-                <strong>30</strong> According to the text, when does the biggest
-                drop in obesity rates occur?
+                <strong>30</strong> According to the writer, the NCMP data
+                indicate that
               </p>
               <RadioGroup name="question30" className="space-y-2">
                 <div className="flex items-center">
                   <RadioGroupItem id="q30-a" value="A" />
                   <Label htmlFor="q30-a" className="ml-2">
-                    during the early school years
+                    children should be weighed more frequently.
                   </Label>
                 </div>
                 <div className="flex items-center">
                   <RadioGroupItem id="q30-b" value="B" />
                   <Label htmlFor="q30-b" className="ml-2">
-                    at the end of primary school
+                    most primary school children need to lose weight.
                   </Label>
                 </div>
                 <div className="flex items-center">
                   <RadioGroupItem id="q30-c" value="C" />
                   <Label htmlFor="q30-c" className="ml-2">
-                    among the poorest children
+                    children from wealthy families have less weight to lose than
+                    others.
                   </Label>
                 </div>
                 <div className="flex items-center">
                   <RadioGroupItem id="q30-d" value="D" />
                   <Label htmlFor="q30-d" className="ml-2">
-                    after four years of the programme
+                    the youngest children show the highest levels of weight
+                    loss.
                   </Label>
                 </div>
               </RadioGroup>
@@ -787,49 +784,224 @@ export const Cambridge19GRTest2Questions: React.FC = () => {
 
             <div className="question-item">
               <p className="mb-3">
-                <strong>31</strong> What does Kim Roberts say about
-                authoritative parenting?
+                <strong>31</strong> What links the 15 places listed in the third
+                paragraph?
               </p>
               <RadioGroup name="question31" className="space-y-2">
                 <div className="flex items-center">
                   <RadioGroupItem id="q31-a" value="A" />
                   <Label htmlFor="q31-a" className="ml-2">
-                    It encourages parents to make decisions for their children.
+                    They are not representative of the country overall.
                   </Label>
                 </div>
                 <div className="flex items-center">
                   <RadioGroupItem id="q31-b" value="B" />
                   <Label htmlFor="q31-b" className="ml-2">
-                    It allows children to feel in control of mealtime choices.
+                    They all joined the 'Henry' programme at the same time.
                   </Label>
                 </div>
                 <div className="flex items-center">
                   <RadioGroupItem id="q31-c" value="C" />
                   <Label htmlFor="q31-c" className="ml-2">
-                    It helps parents and children to reach a compromise.
+                    Their childhood obesity levels have remained the same since
+                    2009.
                   </Label>
                 </div>
                 <div className="flex items-center">
                   <RadioGroupItem id="q31-d" value="D" />
                   <Label htmlFor="q31-d" className="ml-2">
-                    It works better than telling children what to do.
+                    They are battling childhood obesity in a different way from
+                    Leeds.
                   </Label>
                 </div>
               </RadioGroup>
             </div>
           </div>
-        </div>
-
+        </div>{" "}
         <div className="question-set mb-8">
           <h3 className="font-bold mb-2">Questions 32-35</h3>
           <div className="mb-4">
             <p>
-              Complete the summary using the list of words, <strong>A-H</strong>
-              , below.
+              Look at the following statements{" "}
+              <strong>(Questions 32-35)</strong> and the list of people below.
             </p>
             <p>
-              Write the correct letter, <strong>A-H</strong>, in{" "}
+              Match each statement with the correct person, <strong>A</strong>,{" "}
+              <strong>B</strong>, <strong>C</strong> or <strong>D</strong>.
+            </p>
+            <p>
+              Write the correct letter, <strong>A</strong>, <strong>B</strong>,{" "}
+              <strong>C</strong> or <strong>D</strong>, in{" "}
               <strong>boxes 32-35</strong> on your answer sheet.
+            </p>
+            <p className="mt-2 italic">
+              <em>NB You may use any letter more than once.</em>
+            </p>
+          </div>
+
+          <div className="bg-gray-50 p-4 rounded-lg border mb-6">
+            <h4 className="font-bold mb-2">List of People</h4>
+            <div className="grid grid-cols-2 gap-2">
+              <div className="bg-white p-2 border rounded">
+                <strong>A</strong> Susan Jebb
+              </div>
+              <div className="bg-white p-2 border rounded">
+                <strong>B</strong> Kim Roberts
+              </div>
+              <div className="bg-white p-2 border rounded">
+                <strong>C</strong> Janice Burberry
+              </div>
+              <div className="bg-white p-2 border rounded">
+                <strong>D</strong> Seema Kennedy
+              </div>
+            </div>
+          </div>
+
+          <div className="space-y-6 mt-4">
+            <div className="question-item">
+              <p className="mb-3">
+                <strong>32</strong> The aim in Leeds was to take steps to stop
+                weight gain among children before it became a real problem.
+              </p>
+              <RadioGroup name="question32" className="flex gap-4">
+                <div className="flex items-center">
+                  <RadioGroupItem id="q32-a" value="A" />
+                  <Label htmlFor="q32-a" className="ml-2">
+                    A
+                  </Label>
+                </div>
+                <div className="flex items-center">
+                  <RadioGroupItem id="q32-b" value="B" />
+                  <Label htmlFor="q32-b" className="ml-2">
+                    B
+                  </Label>
+                </div>
+                <div className="flex items-center">
+                  <RadioGroupItem id="q32-c" value="C" />
+                  <Label htmlFor="q32-c" className="ml-2">
+                    C
+                  </Label>
+                </div>
+                <div className="flex items-center">
+                  <RadioGroupItem id="q32-d" value="D" />
+                  <Label htmlFor="q32-d" className="ml-2">
+                    D
+                  </Label>
+                </div>
+              </RadioGroup>
+            </div>
+
+            <div className="question-item">
+              <p className="mb-3">
+                <strong>33</strong> Childhood obesity levels in Leeds have
+                fallen consistently over a period of time.
+              </p>
+              <RadioGroup name="question33" className="flex gap-4">
+                <div className="flex items-center">
+                  <RadioGroupItem id="q33-a" value="A" />
+                  <Label htmlFor="q33-a" className="ml-2">
+                    A
+                  </Label>
+                </div>
+                <div className="flex items-center">
+                  <RadioGroupItem id="q33-b" value="B" />
+                  <Label htmlFor="q33-b" className="ml-2">
+                    B
+                  </Label>
+                </div>
+                <div className="flex items-center">
+                  <RadioGroupItem id="q33-c" value="C" />
+                  <Label htmlFor="q33-c" className="ml-2">
+                    C
+                  </Label>
+                </div>
+                <div className="flex items-center">
+                  <RadioGroupItem id="q33-d" value="D" />
+                  <Label htmlFor="q33-d" className="ml-2">
+                    D
+                  </Label>
+                </div>
+              </RadioGroup>
+            </div>
+
+            <div className="question-item">
+              <p className="mb-3">
+                <strong>34</strong> Something that simplifies the struggle to
+                get children to eat well is very helpful to parents.
+              </p>
+              <RadioGroup name="question34" className="flex gap-4">
+                <div className="flex items-center">
+                  <RadioGroupItem id="q34-a" value="A" />
+                  <Label htmlFor="q34-a" className="ml-2">
+                    A
+                  </Label>
+                </div>
+                <div className="flex items-center">
+                  <RadioGroupItem id="q34-b" value="B" />
+                  <Label htmlFor="q34-b" className="ml-2">
+                    B
+                  </Label>
+                </div>
+                <div className="flex items-center">
+                  <RadioGroupItem id="q34-c" value="C" />
+                  <Label htmlFor="q34-c" className="ml-2">
+                    C
+                  </Label>
+                </div>
+                <div className="flex items-center">
+                  <RadioGroupItem id="q34-d" value="D" />
+                  <Label htmlFor="q34-d" className="ml-2">
+                    D
+                  </Label>
+                </div>
+              </RadioGroup>
+            </div>
+
+            <div className="question-item">
+              <p className="mb-3">
+                <strong>35</strong> Parents in general are realistic about their
+                potential to make changes to their children's lifestyle.
+              </p>
+              <RadioGroup name="question35" className="flex gap-4">
+                <div className="flex items-center">
+                  <RadioGroupItem id="q35-a" value="A" />
+                  <Label htmlFor="q35-a" className="ml-2">
+                    A
+                  </Label>
+                </div>
+                <div className="flex items-center">
+                  <RadioGroupItem id="q35-b" value="B" />
+                  <Label htmlFor="q35-b" className="ml-2">
+                    B
+                  </Label>
+                </div>
+                <div className="flex items-center">
+                  <RadioGroupItem id="q35-c" value="C" />
+                  <Label htmlFor="q35-c" className="ml-2">
+                    C
+                  </Label>
+                </div>
+                <div className="flex items-center">
+                  <RadioGroupItem id="q35-d" value="D" />
+                  <Label htmlFor="q35-d" className="ml-2">
+                    D
+                  </Label>
+                </div>
+              </RadioGroup>
+            </div>
+          </div>
+        </div>{" "}
+        <div className="question-set mb-8">
+          <h3 className="font-bold mb-2">Questions 36-39</h3>
+          <div className="mb-4">
+            <p>Complete the summary below.</p>
+            <p>
+              Choose <strong>ONE WORD ONLY</strong> from the text for each
+              answer.
+            </p>
+            <p>
+              Write your answers in <strong>boxes 36-39</strong> on your answer
+              sheet.
             </p>
           </div>
 
@@ -837,203 +1009,78 @@ export const Cambridge19GRTest2Questions: React.FC = () => {
             <h4 className="font-bold mb-2">The 'Henry' programme</h4>
 
             <p className="mb-4">
-              The 'Henry' programme was introduced in Leeds in 2009 with a
-              special focus on young children and <strong>32</strong>{" "}
-              <Input type="text" className="w-32 mx-1 inline-block" />
-              families. Parents on the course learn the importance of creating{" "}
-              <strong>33</strong>{" "}
-              <Input type="text" className="w-32 mx-1 inline-block" /> for their
-              children. The programme shows parents how to adopt a style that
-              avoids simply telling children what to do, or allowing them to
-              make all their own <strong>34</strong>{" "}
-              <Input type="text" className="w-32 mx-1 inline-block" />. Lisa,
-              who attended a 'Henry' course, found benefits for her health and
-              finances and believes it made her a better <strong>35</strong>{" "}
-              <Input type="text" className="w-32 mx-1 inline-block" />.
+              'Henry' was used in Leeds from 2009 in the fight against childhood
+              obesity. The programme focuses on situations such as mealtimes and
+              bedtimes, and it encourages parents to set firm{" "}
+              <strong>36</strong>{" "}
+              <Input type="text" className="w-32 mx-1 inline-block" /> during
+              these periods.
             </p>
-
-            <div className="grid grid-cols-2 gap-2 mt-6">
-              <div className="bg-white p-2 border rounded">A bedtimes</div>
-              <div className="bg-white p-2 border rounded">B boundaries</div>
-              <div className="bg-white p-2 border rounded">C choices</div>
-              <div className="bg-white p-2 border rounded">D influence</div>
-              <div className="bg-white p-2 border rounded">E low-income</div>
-              <div className="bg-white p-2 border rounded">F parent</div>
-              <div className="bg-white p-2 border rounded">G person</div>
-              <div className="bg-white p-2 border rounded">H restrictions</div>
-            </div>
+            <p className="mb-4">
+              According to Kim Roberts, 'Henry' aims to help people become more{" "}
+              <strong>37</strong>{" "}
+              <Input type="text" className="w-32 mx-1 inline-block" /> as
+              parents. In this way, they do not instruct children to do things,
+              nor give them total freedom of choice as in a <strong>38</strong>{" "}
+              <Input type="text" className="w-32 mx-1 inline-block" /> parenting
+              style. Instead, they allow children to make some decisions for
+              themselves. This might be a choice of vegetable at the dinner
+              table or a decision about where a <strong>39</strong>{" "}
+              <Input type="text" className="w-32 mx-1 inline-block" /> should be
+              enjoyed in the evening.
+            </p>
+            <p>
+              Lisa, a parent who joined the programme, felt enthusiastic about
+              her children's responses to it and the effect it had overall on
+              her family.
+            </p>
           </div>
         </div>
-
         <div className="question-set mb-8">
-          <h3 className="font-bold mb-2">Questions 36-40</h3>
+          <h3 className="font-bold mb-2">Question 40</h3>
           <div className="mb-4">
             <p>
-              Do the following statements agree with the views of the people
-              below?
+              Choose the correct letter, <strong>A</strong>, <strong>B</strong>,{" "}
+              <strong>C</strong> or <strong>D</strong>.
             </p>
             <p>
-              In boxes <strong>36-40</strong> on your answer sheet, write
+              Write the correct letter in <strong>box 40</strong> on your answer
+              sheet.
             </p>
           </div>
 
-          <div className="mb-6 space-y-1">
-            <p>
-              <strong>YES</strong> if the statement agrees with the views of the
-              person
-            </p>
-            <p>
-              <strong>NO</strong> if the statement contradicts the views of the
-              person
-            </p>
-            <p>
-              <strong>NOT GIVEN</strong> if it is impossible to say what the
-              person thinks about this
-            </p>
-          </div>
-
-          <div className="mt-6 space-y-6">
-            <div>
-              <h4 className="font-bold">Janice Burberry</h4>
-
-              <div className="question-item mt-4">
-                <p className="mb-3">
-                  <strong>36</strong> Helping children when they are very young
-                  is important.
-                </p>
-                <RadioGroup name="question36" className="flex gap-8">
-                  <div className="flex items-center">
-                    <RadioGroupItem id="q36-yes" value="YES" />
-                    <Label htmlFor="q36-yes" className="ml-2">
-                      YES
-                    </Label>
-                  </div>
-                  <div className="flex items-center">
-                    <RadioGroupItem id="q36-no" value="NO" />
-                    <Label htmlFor="q36-no" className="ml-2">
-                      NO
-                    </Label>
-                  </div>
-                  <div className="flex items-center">
-                    <RadioGroupItem id="q36-ng" value="NG" />
-                    <Label htmlFor="q36-ng" className="ml-2">
-                      NG
-                    </Label>
-                  </div>
-                </RadioGroup>
-              </div>
-
-              <div className="question-item mt-4">
-                <p className="mb-3">
-                  <strong>37</strong> A simple approach works well for all
-                  families.
-                </p>
-                <RadioGroup name="question37" className="flex gap-8">
-                  <div className="flex items-center">
-                    <RadioGroupItem id="q37-yes" value="YES" />
-                    <Label htmlFor="q37-yes" className="ml-2">
-                      YES
-                    </Label>
-                  </div>
-                  <div className="flex items-center">
-                    <RadioGroupItem id="q37-no" value="NO" />
-                    <Label htmlFor="q37-no" className="ml-2">
-                      NO
-                    </Label>
-                  </div>
-                  <div className="flex items-center">
-                    <RadioGroupItem id="q37-ng" value="NG" />
-                    <Label htmlFor="q37-ng" className="ml-2">
-                      NG
-                    </Label>
-                  </div>
-                </RadioGroup>
-              </div>
-            </div>
-
-            <div>
-              <h4 className="font-bold">Seema Kennedy</h4>
-
-              <div className="question-item mt-4">
-                <p className="mb-3">
-                  <strong>38</strong> She is impressed by the success of local
-                  programmes.
-                </p>
-                <RadioGroup name="question38" className="flex gap-8">
-                  <div className="flex items-center">
-                    <RadioGroupItem id="q38-yes" value="YES" />
-                    <Label htmlFor="q38-yes" className="ml-2">
-                      YES
-                    </Label>
-                  </div>
-                  <div className="flex items-center">
-                    <RadioGroupItem id="q38-no" value="NO" />
-                    <Label htmlFor="q38-no" className="ml-2">
-                      NO
-                    </Label>
-                  </div>
-                  <div className="flex items-center">
-                    <RadioGroupItem id="q38-ng" value="NG" />
-                    <Label htmlFor="q38-ng" className="ml-2">
-                      NG
-                    </Label>
-                  </div>
-                </RadioGroup>
-              </div>
-
-              <div className="question-item mt-4">
-                <p className="mb-3">
-                  <strong>39</strong> Parents need to spend more time with their
-                  children.
-                </p>
-                <RadioGroup name="question39" className="flex gap-8">
-                  <div className="flex items-center">
-                    <RadioGroupItem id="q39-yes" value="YES" />
-                    <Label htmlFor="q39-yes" className="ml-2">
-                      YES
-                    </Label>
-                  </div>
-                  <div className="flex items-center">
-                    <RadioGroupItem id="q39-no" value="NO" />
-                    <Label htmlFor="q39-no" className="ml-2">
-                      NO
-                    </Label>
-                  </div>
-                  <div className="flex items-center">
-                    <RadioGroupItem id="q39-ng" value="NG" />
-                    <Label htmlFor="q39-ng" className="ml-2">
-                      NG
-                    </Label>
-                  </div>
-                </RadioGroup>
-              </div>
-
-              <div className="question-item mt-4">
-                <p className="mb-3">
-                  <strong>40</strong> Extra resources should be given to
-                  programmes like 'Henry'.
-                </p>
-                <RadioGroup name="question40" className="flex gap-8">
-                  <div className="flex items-center">
-                    <RadioGroupItem id="q40-yes" value="YES" />
-                    <Label htmlFor="q40-yes" className="ml-2">
-                      YES
-                    </Label>
-                  </div>
-                  <div className="flex items-center">
-                    <RadioGroupItem id="q40-no" value="NO" />
-                    <Label htmlFor="q40-no" className="ml-2">
-                      NO
-                    </Label>
-                  </div>
-                  <div className="flex items-center">
-                    <RadioGroupItem id="q40-ng" value="NG" />
-                    <Label htmlFor="q40-ng" className="ml-2">
-                      NG
-                    </Label>
-                  </div>
-                </RadioGroup>
-              </div>
+          <div className="space-y-6 mt-4">
+            <div className="question-item">
+              <p className="mb-3">
+                <strong>40</strong> Which title is the most suitable for the
+                text?
+              </p>
+              <RadioGroup name="question40" className="space-y-2">
+                <div className="flex items-center">
+                  <RadioGroupItem id="q40-a" value="A" />
+                  <Label htmlFor="q40-a" className="ml-2">
+                    A look at what 'Henry' has achieved in Leeds
+                  </Label>
+                </div>
+                <div className="flex items-center">
+                  <RadioGroupItem id="q40-b" value="B" />
+                  <Label htmlFor="q40-b" className="ml-2">
+                    'Henry's the best,' according to Leeds children
+                  </Label>
+                </div>
+                <div className="flex items-center">
+                  <RadioGroupItem id="q40-c" value="C" />
+                  <Label htmlFor="q40-c" className="ml-2">
+                    Leeds parents discuss how 'Henry' has helped them
+                  </Label>
+                </div>
+                <div className="flex items-center">
+                  <RadioGroupItem id="q40-d" value="D" />
+                  <Label htmlFor="q40-d" className="ml-2">
+                    It's all about saying 'no', according to 'Henry'
+                  </Label>
+                </div>
+              </RadioGroup>
             </div>
           </div>
         </div>

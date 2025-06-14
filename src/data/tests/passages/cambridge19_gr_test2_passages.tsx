@@ -4,12 +4,15 @@ import React from "react";
 export const Cambridge19GRTest2Passages: React.FC = () => {
   return (
     <>
+      {" "}
       <div className="reading-passage p-4">
         <h2 className="text-xl font-bold mb-4">SECTION 1</h2>
-
+        <p className="text-lg font-semibold mb-4">Questions 1-14</p>
+        <p className="mb-4 font-medium">
+          Read the text below and answer Questions 1-7.
+        </p>
         <div className="mb-8">
           <h3 className="font-bold mb-2">Local campsites</h3>
-
           <div className="mb-4">
             <h4 className="font-bold">A Prettycoat Farm</h4>
             <p className="text-justify">
@@ -21,7 +24,6 @@ export const Cambridge19GRTest2Passages: React.FC = () => {
               Castle. Just follow the signs.
             </p>
           </div>
-
           <div className="mb-4">
             <h4 className="font-bold">B Newgammon Wild</h4>
             <p className="text-justify">
@@ -34,7 +36,6 @@ export const Cambridge19GRTest2Passages: React.FC = () => {
               energy for the return trip at the end of the day.
             </p>
           </div>
-
           <div className="mb-4">
             <h4 className="font-bold">C Oakerly Estate</h4>
             <p className="text-justify">
@@ -47,7 +48,6 @@ export const Cambridge19GRTest2Passages: React.FC = () => {
               though.
             </p>
           </div>
-
           <div className="mb-4">
             <h4 className="font-bold">D South Turnbull</h4>
             <p className="text-justify">
@@ -58,7 +58,6 @@ export const Cambridge19GRTest2Passages: React.FC = () => {
               the website before you go.
             </p>
           </div>
-
           <div className="mb-4">
             <h4 className="font-bold">E Boxer Trepis</h4>
             <p className="text-justify">
@@ -69,9 +68,11 @@ export const Cambridge19GRTest2Passages: React.FC = () => {
               course, and there are plenty of other activities for campers to
               get involved in, such as birdwatching and bathing in the sea.
             </p>
-          </div>
+          </div>{" "}
         </div>
-
+        <p className="mb-4 font-medium">
+          Read the text below and answer Questions 8-14.
+        </p>
         <div className="mb-8">
           <h3 className="font-bold mb-2">Durridge Heights (OH) Newsletter</h3>
           <h4 className="font-bold mb-2">
@@ -143,10 +144,12 @@ export const Cambridge19GRTest2Passages: React.FC = () => {
               arrangements.
             </p>
           </div>
-        </div>
-
+        </div>{" "}
         <h2 className="text-xl font-bold mb-4">SECTION 2</h2>
-
+        <p className="text-lg font-semibold mb-4">Questions 15-27</p>
+        <p className="mb-4 font-medium">
+          Read the text below and answer Questions 15-20.
+        </p>
         <div className="mb-8">
           <h3 className="font-bold mb-2">A day in the life of a care worker</h3>
           <p className="text-justify mb-4">
@@ -155,7 +158,6 @@ export const Cambridge19GRTest2Passages: React.FC = () => {
             care home. For those interested in the work, here is what a typical
             day could be like for a trained care worker.
           </p>
-
           <p className="text-justify mb-4">
             Care workers often start early, as the first client of the day may
             need help getting out of bed and putting on their clothes; they may
@@ -173,7 +175,6 @@ export const Cambridge19GRTest2Passages: React.FC = () => {
             a client's day. Of course, there may be the breakfast dishes to do
             as well.
           </p>
-
           <p className="text-justify mb-4">
             Later in the morning, the care worker may move on to another client
             in order to help them prepare their midday meal. Care workers try to
@@ -182,7 +183,6 @@ export const Cambridge19GRTest2Passages: React.FC = () => {
             client to carry out their shopping by going with them to the local
             supermarket.
           </p>
-
           <p className="text-justify mb-4">
             During the afternoon, a care worker may help a third client with an
             outdoor activity, which could involve going for a short walk in the
@@ -190,15 +190,16 @@ export const Cambridge19GRTest2Passages: React.FC = () => {
             may not feel confident going far on their own, so having company can
             be a great help.
           </p>
-
           <p className="text-justify">
             The care worker may participate in cooking dinner with their last
             client and, before going home, they may also get out their client's
             medication. This ensures the client remembers to take it before
             going to bed.
-          </p>
+          </p>{" "}
         </div>
-
+        <p className="mb-4 font-medium">
+          Read the text below and answer Questions 21-27.
+        </p>
         <div className="mb-8">
           <h3 className="font-bold mb-2">
             How to find a good balance between your work and your personal life
@@ -268,10 +269,12 @@ export const Cambridge19GRTest2Passages: React.FC = () => {
             time with the ones you love is the best way to unwind fully and feel
             the effects of a good work-life balance.
           </p>
-        </div>
-
+        </div>{" "}
         <h2 className="text-xl font-bold mb-4">SECTION 3</h2>
-
+        <p className="text-lg font-semibold mb-4">Questions 28-40</p>
+        <p className="mb-4 font-medium">
+          Read the text below and answer Questions 28-40.
+        </p>
         <div>
           <h3 className="font-bold mb-2">
             City's 'Henry' programme gives children choices while helping

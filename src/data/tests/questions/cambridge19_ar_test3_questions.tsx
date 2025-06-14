@@ -55,12 +55,11 @@ export const Cambridge19ARTest3Questions: React.FC = () => {
                   <Label htmlFor="q1-ng">NOT GIVEN</Label>
                 </div>
               </RadioGroup>
-            </div>
-
+            </div>{" "}
             <div className="question-item">
               <p className="mb-2">
-                <strong>2</strong> The team's research on Obi was the first step
-                in their exploration of the Wallacean islands.
+                <strong>2</strong> At the Kelo sites, the researchers found the
+                first clam shell axes ever to be discovered in the region.
               </p>
               <RadioGroup className="flex flex-col space-y-1">
                 <div className="flex items-center space-x-2">
@@ -77,11 +76,10 @@ export const Cambridge19ARTest3Questions: React.FC = () => {
                 </div>
               </RadioGroup>
             </div>
-
             <div className="question-item">
               <p className="mb-2">
-                <strong>3</strong> Axes similar to the earliest ones found at
-                Kelo have been discovered on other islands in the region.
+                <strong>3</strong> The size of Obi today is less than it was
+                18,000 years ago.
               </p>
               <RadioGroup className="flex flex-col space-y-1">
                 <div className="flex items-center space-x-2">
@@ -98,11 +96,10 @@ export const Cambridge19ARTest3Questions: React.FC = () => {
                 </div>
               </RadioGroup>
             </div>
-
             <div className="question-item">
               <p className="mb-2">
-                <strong>4</strong> Obi used to be connected to the island of
-                Bisa by a land bridge.
+                <strong>4</strong> A change in the climate around 11,700 years
+                ago had a greater impact on Obi than on the surrounding islands.
               </p>
               <RadioGroup className="flex flex-col space-y-1">
                 <div className="flex items-center space-x-2">
@@ -119,11 +116,11 @@ export const Cambridge19ARTest3Questions: React.FC = () => {
                 </div>
               </RadioGroup>
             </div>
-
             <div className="question-item">
               <p className="mb-2">
-                <strong>5</strong> The use of stone instead of shell for making
-                axes was probably linked to changes in climate.
+                <strong>5</strong> The researchers believe there is a connection
+                between warmer, wetter weather and a change in the material used
+                to make axes.
               </p>
               <RadioGroup className="flex flex-col space-y-1">
                 <div className="flex items-center space-x-2">
@@ -140,11 +137,10 @@ export const Cambridge19ARTest3Questions: React.FC = () => {
                 </div>
               </RadioGroup>
             </div>
-
             <div className="question-item">
               <p className="mb-2">
-                <strong>6</strong> Rothschild's cuscus was only hunted because
-                it was destructive to the forest environment.
+                <strong>6</strong> Shipton's team were surprised to find
+                evidence of the Obi islanders' hunting practices.
               </p>
               <RadioGroup className="flex flex-col space-y-1">
                 <div className="flex items-center space-x-2">
@@ -161,11 +157,10 @@ export const Cambridge19ARTest3Questions: React.FC = () => {
                 </div>
               </RadioGroup>
             </div>
-
             <div className="question-item">
               <p className="mb-2">
-                <strong>7</strong> Fishing probably replaced hunting as the main
-                means of survival when the Kelo shelters were abandoned.
+                <strong>7</strong> It is thought that the Kelo shelters were
+                occupied continuously until about 1,000 years ago.
               </p>
               <RadioGroup className="flex flex-col space-y-1">
                 <div className="flex items-center space-x-2">
@@ -194,43 +189,54 @@ export const Cambridge19ARTest3Questions: React.FC = () => {
           </p>
           <p className="mb-4">
             Write your answers in boxes 8-13 on your answer sheet.
-          </p>
-
+          </p>{" "}
           <div className="border p-4 mb-6">
-            <h4 className="font-bold mb-2">Archaeological findings at Kelo</h4>
+            <h4 className="font-bold mb-2">Archaeological findings on Obi</h4>
 
-            <ul className="list-disc pl-5 mb-4">
+            <p className="mb-4">
+              Excavations of rock shelters inside <strong>8</strong>{" "}
+              <Input type="text" className="w-32 mx-1 inline-block" /> near the
+              village of Kelo revealed:
+            </p>
+
+            <ul className="list-disc pl-5 mb-4 space-y-2">
               <li>
-                Shipton's team found prehistoric rock shelters in{" "}
-                <strong>8</strong>{" "}
-                <Input type="text" className="w-32 mx-1 inline-block" />
-              </li>
-              <li>The first axes found at Kelo were made from clam shells</li>
-              <li>
-                Later, harder axes made from <strong>9</strong>{" "}
-                <Input type="text" className="w-32 mx-1 inline-block" /> were
-                used to clear the dense rainforest
+                axes from around 14,000 years ago, probably used to make canoes
               </li>
               <li>
-                The researchers found animal <strong>10</strong>{" "}
-                <Input type="text" className="w-32 mx-1 inline-block" />,
-                showing that prehistoric people on Obi hunted for food
+                axes made out of <strong>9</strong>{" "}
+                <Input type="text" className="w-32 mx-1 inline-block" />, dating
+                from around 11,700 years ago
               </li>
               <li>
-                Volcanic glass and <strong>11</strong>{" "}
-                <Input type="text" className="w-32 mx-1 inline-block" /> found
-                at the site show that the island's inhabitants travelled to
-                other islands
+                <strong>10</strong>{" "}
+                <Input type="text" className="w-32 mx-1 inline-block" /> of an
+                animal: evidence of what ancient islanders ate
+              </li>
+              <li>evidence of travel between islands:</li>
+              <ul className="list-disc pl-5 mt-2 space-y-1">
+                <li>obsidian: a material that is not found naturally on Obi</li>
+                <li>
+                  <strong>11</strong>{" "}
+                  <Input type="text" className="w-32 mx-1 inline-block" /> which
+                  resembled ones found on other islands.
+                </li>
+              </ul>
+            </ul>
+
+            <p className="mb-2">
+              It is thought that from 8,000 years ago, Obi islanders:
+            </p>
+            <ul className="list-disc pl-5 space-y-2">
+              <li>may have switched from hunting to fishing</li>
+              <li>
+                had <strong>12</strong>{" "}
+                <Input type="text" className="w-32 mx-1 inline-block" /> as well
+                as items made out of metal
               </li>
               <li>
-                The shelters were abandoned for thousands of years before being
-                occupied by people who owned <strong>12</strong>{" "}
-                <Input type="text" className="w-32 mx-1 inline-block" /> and
-                precious metals
-              </li>
-              <li>
-                The final occupation of the site probably involved people
-                trading <strong>13</strong>{" "}
+                probably took part in the production and sale of{" "}
+                <strong>13</strong>{" "}
                 <Input type="text" className="w-32 mx-1 inline-block" />
               </li>
             </ul>
@@ -241,203 +247,388 @@ export const Cambridge19ARTest3Questions: React.FC = () => {
       <div className="reading-questions p-4 bg-white">
         <h2 className="text-lg font-bold mb-4">
           READING PASSAGE 2: Questions 14-26
-        </h2>
-
+        </h2>{" "}
         <div className="question-set mb-8">
-          <h3 className="font-bold mb-2">Questions 14-16</h3>
-          <p className="mb-2">Reading Passage 2 has eight paragraphs, A-H.</p>
+          <h3 className="font-bold mb-2">Questions 14–17</h3>
+          <p className="mb-2">Reading Passage 2 has eight paragraphs, A–H.</p>
           <p className="mb-2">
             Which paragraph contains the following information?
           </p>
           <p className="mb-4">
-            Write the correct letter, A-H, in boxes 14-16 on your answer sheet.
+            Write the correct letter, A–H, in boxes 14–17 on your answer sheet.
           </p>
 
           <div className="space-y-4">
             <div className="question-item">
               <p className="mb-2">
-                <strong>14</strong> a mention of the need to give local
-                communities economic benefits from wetlands
+                <strong>14</strong> reference to the need to ensure that
+                inhabitants of wetland regions continue to benefit from them
               </p>
               <Input type="text" className="w-16" placeholder="A-H" />
             </div>
 
             <div className="question-item">
               <p className="mb-2">
-                <strong>15</strong> examples of ways in which wetlands are being
-                damaged or destroyed
+                <strong>15</strong> the proportion of wetlands which have
+                already been lost
               </p>
               <Input type="text" className="w-16" placeholder="A-H" />
             </div>
 
             <div className="question-item">
               <p className="mb-2">
-                <strong>16</strong> differing opinions on the current state of
-                the world's wetlands
+                <strong>16</strong> reference to the idea that people are
+                beginning to appreciate the value of wetlands
+              </p>
+              <Input type="text" className="w-16" placeholder="A-H" />
+            </div>
+
+            <div className="question-item">
+              <p className="mb-2">
+                <strong>17</strong> mention of the cultural significance of
+                wetlands
               </p>
               <Input type="text" className="w-16" placeholder="A-H" />
             </div>
           </div>
-        </div>
-
+        </div>{" "}
         <div className="question-set mb-8">
-          <h3 className="font-bold mb-2">Questions 17-20</h3>
-          <p className="mb-2">
-            Choose <strong>FOUR</strong> letters, A-H.
-          </p>
-          <p className="mb-2">
-            Write the correct letter, A-H, in boxes 17-20 on your answer sheet.
-          </p>
-          <p className="mb-4">
-            <strong>NB</strong> Your answers may be given in any order.
-          </p>
-          <p className="mb-4">
-            According to the text, which <strong>FOUR</strong> of the following
-            are benefits of wetlands?
-          </p>
-
-          <div className="space-y-3">
-            <div className="flex items-center space-x-2">
-              <input
-                type="checkbox"
-                id="q17-20-a"
-                className="h-4 w-4 rounded border-gray-300"
-              />
-              <label htmlFor="q17-20-a" className="text-sm">
-                A offering protection against the effects of extreme weather
-              </label>
-            </div>
-            <div className="flex items-center space-x-2">
-              <input
-                type="checkbox"
-                id="q17-20-b"
-                className="h-4 w-4 rounded border-gray-300"
-              />
-              <label htmlFor="q17-20-b" className="text-sm">
-                B providing people with a means of earning their living
-              </label>
-            </div>
-            <div className="flex items-center space-x-2">
-              <input
-                type="checkbox"
-                id="q17-20-c"
-                className="h-4 w-4 rounded border-gray-300"
-              />
-              <label htmlFor="q17-20-c" className="text-sm">
-                C containing minerals that are used to create essential products
-              </label>
-            </div>
-            <div className="flex items-center space-x-2">
-              <input
-                type="checkbox"
-                id="q17-20-d"
-                className="h-4 w-4 rounded border-gray-300"
-              />
-              <label htmlFor="q17-20-d" className="text-sm">
-                D preventing the loss of unique animal and plant species
-              </label>
-            </div>
-            <div className="flex items-center space-x-2">
-              <input
-                type="checkbox"
-                id="q17-20-e"
-                className="h-4 w-4 rounded border-gray-300"
-              />
-              <label htmlFor="q17-20-e" className="text-sm">
-                E having religious or cultural significance
-              </label>
-            </div>
-            <div className="flex items-center space-x-2">
-              <input
-                type="checkbox"
-                id="q17-20-f"
-                className="h-4 w-4 rounded border-gray-300"
-              />
-              <label htmlFor="q17-20-f" className="text-sm">
-                F supporting agriculture by improving the fertility of the soil
-              </label>
-            </div>
-            <div className="flex items-center space-x-2">
-              <input
-                type="checkbox"
-                id="q17-20-g"
-                className="h-4 w-4 rounded border-gray-300"
-              />
-              <label htmlFor="q17-20-g" className="text-sm">
-                G slowing the rate of climate change
-              </label>
-            </div>
-          </div>
-        </div>
-
-        <div className="question-set mb-8">
-          <h3 className="font-bold mb-2">Questions 21-22</h3>
+          <h3 className="font-bold mb-2">Questions 18–22</h3>
           <p className="mb-2">Complete the sentences below.</p>
           <p className="mb-2">
             Choose <strong>ONE WORD ONLY</strong> from the passage for each
             answer.
           </p>
           <p className="mb-4">
-            Write your answers in boxes 21-22 on your answer sheet.
+            Write your answers in boxes 18–22 on your answer sheet.
           </p>
 
           <div className="space-y-4">
             <div className="question-item">
               <p className="mb-2">
-                <strong>21</strong> When loggers want to clear wetland forests,
-                they first create{" "}
-                <Input type="text" className="w-32 mx-1 inline-block" /> to
-                allow them to enter the area by boat.
+                <strong>18</strong> Peatlands which have been drained begin to
+                release <Input type="text" className="w-32 mx-1 inline-block" />{" "}
+                instead of storing it.
               </p>
             </div>
 
             <div className="question-item">
               <p className="mb-2">
-                <strong>22</strong> Silvius is worried that some provinces in
-                Sumatra and Borneo will be affected by{" "}
-                <Input type="text" className="w-32 mx-1 inline-block" />,
-                causing parts of them to become flooded.
+                <strong>19</strong> Once peatland areas have been cleared,{" "}
+                <Input type="text" className="w-32 mx-1 inline-block" /> are
+                more likely to occur.
+              </p>
+            </div>
+
+            <div className="question-item">
+              <p className="mb-2">
+                <strong>20</strong> Clearing peatland forests to make way for
+                oil palm plantations destroys the{" "}
+                <Input type="text" className="w-32 mx-1 inline-block" /> of the
+                local environment.
+              </p>
+            </div>
+
+            <div className="question-item">
+              <p className="mb-2">
+                <strong>21</strong> Water is drained out of peatlands through
+                the <Input type="text" className="w-32 mx-1 inline-block" />{" "}
+                which are created by logging companies.
+              </p>
+            </div>
+
+            <div className="question-item">
+              <p className="mb-2">
+                <strong>22</strong> Draining peatlands leads to{" "}
+                <Input type="text" className="w-32 mx-1 inline-block" />: a
+                serious problem which can eventually result in coastal flooding
+                and land loss.
               </p>
             </div>
           </div>
-        </div>
-
+        </div>{" "}
         <div className="question-set mb-8">
-          <h3 className="font-bold mb-2">Questions 23-26</h3>
-          <p className="mb-2">Complete the summary below.</p>
+          <h3 className="font-bold mb-2">Questions 23–26</h3>
           <p className="mb-2">
-            Choose <strong>ONE WORD ONLY</strong> from the passage for each
-            answer.
+            Look at the following statements (Questions 23–26) and the list of
+            experts below.
+          </p>
+          <p className="mb-2">
+            Match each statement with the correct expert, A–D.
           </p>
           <p className="mb-4">
-            Write your answers in boxes 23-26 on your answer sheet.
+            Write the correct letter, A–D, in boxes 23–26 on your answer sheet.
           </p>
 
-          <div className="border p-4 mb-6">
-            <h4 className="font-bold mb-2">Wetlands at Risk</h4>
+          <div className="border p-4 mb-4">
+            <h4 className="font-bold mb-2">List of Experts</h4>
+            <div className="space-y-1">
+              <p>
+                <strong>A</strong> Matthew McCartney
+              </p>
+              <p>
+                <strong>B</strong> Pieter van Eijk
+              </p>
+              <p>
+                <strong>C</strong> Marcel Silvius
+              </p>
+              <p>
+                <strong>D</strong> Dave Tickner
+              </p>
+            </div>
+          </div>
 
-            <p className="mb-4">
-              Peatlands are particularly valuable as they store{" "}
-              <strong>23</strong>{" "}
-              <Input type="text" className="w-32 mx-1 inline-block" />. However,
-              when they are drained for commercial purposes, this storage
-              capacity is lost and CO2 is emitted into the atmosphere. Cleared
-              peatlands are also likely to suffer from <strong>24</strong>{" "}
-              <Input type="text" className="w-32 mx-1 inline-block" /> which
-              create further pollution. According to Silvius, oil palm
-              cultivation brings only short-term commercial benefits, but leads
-              to the permanent loss of <strong>25</strong>{" "}
-              <Input type="text" className="w-32 mx-1 inline-block" /> in the
-              areas affected.
-            </p>
+          <div className="space-y-4">
+            <div className="question-item">
+              <p className="mb-2">
+                <strong>23</strong> Communities living in wetland regions must
+                be included in discussions about the future of these areas.
+              </p>
+              <Input type="text" className="w-16" placeholder="A-D" />
+            </div>
 
-            <p className="mb-4">
-              According to Tickner, damage to wetlands can also be caused by
-              less obvious factors, such as <strong>26</strong>{" "}
-              <Input type="text" className="w-32 mx-1 inline-block" /> from
-              fields nearby. However, he believes such damage is usually
-              accidental rather than deliberate.
-            </p>
+            <div className="question-item">
+              <p className="mb-2">
+                <strong>24</strong> Official policies towards wetlands vary from
+                one nation to the next.
+              </p>
+              <Input type="text" className="w-16" placeholder="A-D" />
+            </div>
+
+            <div className="question-item">
+              <p className="mb-2">
+                <strong>25</strong> People cause harm to wetlands without having
+                any intention to do so.
+              </p>
+              <Input type="text" className="w-16" placeholder="A-D" />
+            </div>
+
+            <div className="question-item">
+              <p className="mb-2">
+                <strong>26</strong> Initiatives to reverse environmental damage
+                need not be complex.
+              </p>
+              <Input type="text" className="w-16" placeholder="A-D" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="reading-questions p-4 bg-white">
+        <h2 className="text-lg font-bold mb-4">
+          READING PASSAGE 3: Questions 27-40
+        </h2>{" "}
+        <div className="question-set mb-8">
+          <h3 className="font-bold mb-2">Questions 27–30</h3>
+          <p className="mb-2">Choose the correct letter, A, B, C or D.</p>
+          <p className="mb-4">
+            Write the correct letter in boxes 27–30 on your answer sheet.
+          </p>
+
+          <div className="space-y-6">
+            <div className="question-item">
+              <p className="mb-2">
+                <strong>27</strong> What does the reader learn about the
+                conversation in the first paragraph?
+              </p>
+              <RadioGroup className="flex flex-col space-y-2">
+                <div className="flex items-start space-x-2">
+                  <RadioGroupItem value="A" id="q27-a" className="mt-1" />
+                  <Label htmlFor="q27-a" className="flex-1">
+                    A The speakers are communicating in different languages.
+                  </Label>
+                </div>
+                <div className="flex items-start space-x-2">
+                  <RadioGroupItem value="B" id="q27-b" className="mt-1" />
+                  <Label htmlFor="q27-b" className="flex-1">
+                    B Neither of the speakers is familiar with their
+                    environment.
+                  </Label>
+                </div>
+                <div className="flex items-start space-x-2">
+                  <RadioGroupItem value="C" id="q27-c" className="mt-1" />
+                  <Label htmlFor="q27-c" className="flex-1">
+                    C The topic of the conversation is difficult for both
+                    speakers.
+                  </Label>
+                </div>
+                <div className="flex items-start space-x-2">
+                  <RadioGroupItem value="D" id="q27-d" className="mt-1" />
+                  <Label htmlFor="q27-d" className="flex-1">
+                    D Aspects of the conversation are challenging for both
+                    speakers.
+                  </Label>
+                </div>
+              </RadioGroup>
+            </div>
+
+            <div className="question-item">
+              <p className="mb-2">
+                <strong>28</strong> What assists the electronic translator
+                during lectures at Karlsruhe Institute of Technology?
+              </p>
+              <RadioGroup className="flex flex-col space-y-2">
+                <div className="flex items-start space-x-2">
+                  <RadioGroupItem value="A" id="q28-a" className="mt-1" />
+                  <Label htmlFor="q28-a" className="flex-1">
+                    A the repeated content of lectures
+                  </Label>
+                </div>
+                <div className="flex items-start space-x-2">
+                  <RadioGroupItem value="B" id="q28-b" className="mt-1" />
+                  <Label htmlFor="q28-b" className="flex-1">
+                    B the students' reading skills
+                  </Label>
+                </div>
+                <div className="flex items-start space-x-2">
+                  <RadioGroupItem value="C" id="q28-c" className="mt-1" />
+                  <Label htmlFor="q28-c" className="flex-1">
+                    C the languages used
+                  </Label>
+                </div>
+                <div className="flex items-start space-x-2">
+                  <RadioGroupItem value="D" id="q28-d" className="mt-1" />
+                  <Label htmlFor="q28-d" className="flex-1">
+                    D the lecturers' technical ability
+                  </Label>
+                </div>
+              </RadioGroup>
+            </div>
+
+            <div className="question-item">
+              <p className="mb-2">
+                <strong>29</strong> When referring to The Hitchhiker's Guide to
+                the Galaxy, the writer suggests that
+              </p>
+              <RadioGroup className="flex flex-col space-y-2">
+                <div className="flex items-start space-x-2">
+                  <RadioGroupItem value="A" id="q29-a" className="mt-1" />
+                  <Label htmlFor="q29-a" className="flex-1">
+                    A the Babel fish was considered undesirable at the time.
+                  </Label>
+                </div>
+                <div className="flex items-start space-x-2">
+                  <RadioGroupItem value="B" id="q29-b" className="mt-1" />
+                  <Label htmlFor="q29-b" className="flex-1">
+                    B this book was not seriously intending to predict the
+                    future.
+                  </Label>
+                </div>
+                <div className="flex items-start space-x-2">
+                  <RadioGroupItem value="C" id="q29-c" className="mt-1" />
+                  <Label htmlFor="q29-c" className="flex-1">
+                    C artificial speech translation was not a surprising
+                    development.
+                  </Label>
+                </div>
+                <div className="flex items-start space-x-2">
+                  <RadioGroupItem value="D" id="q29-d" className="mt-1" />
+                  <Label htmlFor="q29-d" className="flex-1">
+                    D some speech translation techniques are better than others.
+                  </Label>
+                </div>
+              </RadioGroup>
+            </div>
+
+            <div className="question-item">
+              <p className="mb-2">
+                <strong>30</strong> What does the writer say about sharing
+                earpieces?
+              </p>
+              <RadioGroup className="flex flex-col space-y-2">
+                <div className="flex items-start space-x-2">
+                  <RadioGroupItem value="A" id="q30-a" className="mt-1" />
+                  <Label htmlFor="q30-a" className="flex-1">
+                    A It is something people will get used to doing.
+                  </Label>
+                </div>
+                <div className="flex items-start space-x-2">
+                  <RadioGroupItem value="B" id="q30-b" className="mt-1" />
+                  <Label htmlFor="q30-b" className="flex-1">
+                    B The reluctance to do this is understandable.
+                  </Label>
+                </div>
+                <div className="flex items-start space-x-2">
+                  <RadioGroupItem value="C" id="q30-c" className="mt-1" />
+                  <Label htmlFor="q30-c" className="flex-1">
+                    C The equipment will be unnecessary in the future.
+                  </Label>
+                </div>
+                <div className="flex items-start space-x-2">
+                  <RadioGroupItem value="D" id="q30-d" className="mt-1" />
+                  <Label htmlFor="q30-d" className="flex-1">
+                    D It is something few people need to worry about.
+                  </Label>
+                </div>{" "}
+              </RadioGroup>
+            </div>
+          </div>
+        </div>
+        <div className="question-set mb-8">
+          <h3 className="font-bold mb-2">Questions 31–34</h3>
+          <p className="mb-2">
+            Complete each sentence with the correct ending, A–F, below.
+          </p>
+          <p className="mb-4">
+            Write the correct letter, A–F, in boxes 31–34 on your answer sheet.
+          </p>
+
+          <div className="border p-4 mb-4">
+            <div className="space-y-1">
+              <p>
+                <strong>A</strong> but there are concerns about this.
+              </p>
+              <p>
+                <strong>B</strong> as systems do not need to conform to standard
+                practices.
+              </p>
+              <p>
+                <strong>C</strong> but they are far from perfect.
+              </p>
+              <p>
+                <strong>D</strong> despite the noise issues.
+              </p>
+              <p>
+                <strong>E</strong> because translation is immediate.
+              </p>
+              <p>
+                <strong>F</strong> and have an awareness of good manners.
+              </p>
+            </div>
+          </div>
+
+          <div className="space-y-4">
+            <div className="question-item">
+              <p className="mb-2">
+                <strong>31</strong> Speech translation methods are developing
+                fast in Japan
+              </p>
+              <Input type="text" className="w-16" placeholder="A-F" />
+            </div>
+
+            <div className="question-item">
+              <p className="mb-2">
+                <strong>32</strong> TV interviews that use translation voiceover
+                methods are successful
+              </p>
+              <Input type="text" className="w-16" placeholder="A-F" />
+            </div>
+
+            <div className="question-item">
+              <p className="mb-2">
+                <strong>33</strong> Future translation systems should address
+                people appropriately
+              </p>
+              <Input type="text" className="w-16" placeholder="A-F" />
+            </div>
+
+            <div className="question-item">
+              <p className="mb-2">
+                <strong>34</strong> Users may be able to maintain their local
+                customs{" "}
+              </p>
+              <Input type="text" className="w-16" placeholder="A-F" />
+            </div>
           </div>
         </div>
       </div>
@@ -448,44 +639,44 @@ export const Cambridge19ARTest3Questions: React.FC = () => {
         </h2>
 
         <div className="question-set mb-8">
-          <h3 className="font-bold mb-2">Questions 27-31</h3>
+          <h3 className="font-bold mb-2">Questions 27–30</h3>
           <p className="mb-2">Choose the correct letter, A, B, C or D.</p>
           <p className="mb-4">
-            Write the correct letter in boxes 27-31 on your answer sheet.
+            Write the correct letter in boxes 27–30 on your answer sheet.
           </p>
 
           <div className="space-y-6">
             <div className="question-item">
               <p className="mb-2">
-                <strong>27</strong> What does the writer say in the first
-                paragraph about his conversation with Professor Waibel?
+                <strong>27</strong> What does the reader learn about the
+                conversation in the first paragraph?
               </p>
               <RadioGroup className="flex flex-col space-y-2">
                 <div className="flex items-start space-x-2">
                   <RadioGroupItem value="A" id="q27-a" className="mt-1" />
                   <Label htmlFor="q27-a" className="flex-1">
-                    It demonstrated that translation technology is effective in
-                    noisy situations.
+                    A The speakers are communicating in different languages.
                   </Label>
                 </div>
                 <div className="flex items-start space-x-2">
                   <RadioGroupItem value="B" id="q27-b" className="mt-1" />
                   <Label htmlFor="q27-b" className="flex-1">
-                    It showed that higher-quality electronic connections are
-                    needed for speech translation.
+                    B Neither of the speakers is familiar with their
+                    environment.
                   </Label>
                 </div>
                 <div className="flex items-start space-x-2">
                   <RadioGroupItem value="C" id="q27-c" className="mt-1" />
                   <Label htmlFor="q27-c" className="flex-1">
-                    It was successful despite the technological challenges
-                    involved.
+                    C The topic of the conversation is difficult for both
+                    speakers.
                   </Label>
                 </div>
                 <div className="flex items-start space-x-2">
                   <RadioGroupItem value="D" id="q27-d" className="mt-1" />
                   <Label htmlFor="q27-d" className="flex-1">
-                    It highlighted the limitations of current speech technology.
+                    D Aspects of the conversation are challenging for both
+                    speakers.
                   </Label>
                 </div>
               </RadioGroup>
@@ -493,33 +684,32 @@ export const Cambridge19ARTest3Questions: React.FC = () => {
 
             <div className="question-item">
               <p className="mb-2">
-                <strong>28</strong> What point does the writer make about the
-                system used at Karlsruhe Institute of Technology?
+                <strong>28</strong> What assists the electronic translator
+                during lectures at Karlsruhe Institute of Technology?
               </p>
               <RadioGroup className="flex flex-col space-y-2">
                 <div className="flex items-start space-x-2">
                   <RadioGroupItem value="A" id="q28-a" className="mt-1" />
                   <Label htmlFor="q28-a" className="flex-1">
-                    It benefits from optimal learning conditions.
+                    A the repeated content of lectures
                   </Label>
                 </div>
                 <div className="flex items-start space-x-2">
                   <RadioGroupItem value="B" id="q28-b" className="mt-1" />
                   <Label htmlFor="q28-b" className="flex-1">
-                    It could be made available to students at other
-                    universities.
+                    B the students' reading skills
                   </Label>
                 </div>
                 <div className="flex items-start space-x-2">
                   <RadioGroupItem value="C" id="q28-c" className="mt-1" />
                   <Label htmlFor="q28-c" className="flex-1">
-                    It offers more functions than just speech translation.
+                    C the languages used
                   </Label>
                 </div>
                 <div className="flex items-start space-x-2">
                   <RadioGroupItem value="D" id="q28-d" className="mt-1" />
                   <Label htmlFor="q28-d" className="flex-1">
-                    It is still at an early stage of development.
+                    D the lecturers' technical ability
                   </Label>
                 </div>
               </RadioGroup>
@@ -527,36 +717,34 @@ export const Cambridge19ARTest3Questions: React.FC = () => {
 
             <div className="question-item">
               <p className="mb-2">
-                <strong>29</strong> Why does the writer mention 'The
-                Hitchhiker's Guide to the Galaxy'?
+                <strong>29</strong> When referring to The Hitchhiker's Guide to
+                the Galaxy, the writer suggests that
               </p>
               <RadioGroup className="flex flex-col space-y-2">
                 <div className="flex items-start space-x-2">
                   <RadioGroupItem value="A" id="q29-a" className="mt-1" />
                   <Label htmlFor="q29-a" className="flex-1">
-                    to show how science fiction often inspires technological
-                    developments
+                    A the Babel fish was considered undesirable at the time.
                   </Label>
                 </div>
                 <div className="flex items-start space-x-2">
                   <RadioGroupItem value="B" id="q29-b" className="mt-1" />
                   <Label htmlFor="q29-b" className="flex-1">
-                    to praise the author's accurate prediction of future
-                    technology
+                    B this book was not seriously intending to predict the
+                    future.
                   </Label>
                 </div>
                 <div className="flex items-start space-x-2">
                   <RadioGroupItem value="C" id="q29-c" className="mt-1" />
                   <Label htmlFor="q29-c" className="flex-1">
-                    to provide an example of people's longstanding interest in
-                    translation devices
+                    C artificial speech translation was not a surprising
+                    development.
                   </Label>
                 </div>
                 <div className="flex items-start space-x-2">
                   <RadioGroupItem value="D" id="q29-d" className="mt-1" />
                   <Label htmlFor="q29-d" className="flex-1">
-                    to suggest that translation technology is developing more
-                    rapidly than anticipated
+                    D some speech translation techniques are better than others.
                   </Label>
                 </div>
               </RadioGroup>
@@ -564,163 +752,114 @@ export const Cambridge19ARTest3Questions: React.FC = () => {
 
             <div className="question-item">
               <p className="mb-2">
-                <strong>30</strong> According to Andrew Ochoa, what is the aim
-                of Waverly's new translator model?
+                <strong>30</strong> What does the writer say about sharing
+                earpieces?
               </p>
               <RadioGroup className="flex flex-col space-y-2">
                 <div className="flex items-start space-x-2">
                   <RadioGroupItem value="A" id="q30-a" className="mt-1" />
                   <Label htmlFor="q30-a" className="flex-1">
-                    to remove the need for strangers to share translator devices
+                    A It is something people will get used to doing.
                   </Label>
                 </div>
                 <div className="flex items-start space-x-2">
                   <RadioGroupItem value="B" id="q30-b" className="mt-1" />
                   <Label htmlFor="q30-b" className="flex-1">
-                    to make the technology work efficiently for business users
+                    B The reluctance to do this is understandable.
                   </Label>
                 </div>
                 <div className="flex items-start space-x-2">
                   <RadioGroupItem value="C" id="q30-c" className="mt-1" />
                   <Label htmlFor="q30-c" className="flex-1">
-                    to improve the experiences of tourists in foreign countries
+                    C The equipment will be unnecessary in the future.
                   </Label>
                 </div>
                 <div className="flex items-start space-x-2">
                   <RadioGroupItem value="D" id="q30-d" className="mt-1" />
                   <Label htmlFor="q30-d" className="flex-1">
-                    to make translator earpieces available to a wider range of
-                    users
+                    D It is something few people need to worry about.
                   </Label>
                 </div>
               </RadioGroup>
+            </div>
+          </div>
+        </div>
+
+        <div className="question-set mb-8">
+          <h3 className="font-bold mb-2">Questions 31–34</h3>
+          <p className="mb-2">
+            Complete each sentence with the correct ending, A–F, below.
+          </p>
+          <p className="mb-4">
+            Write the correct letter, A–F, in boxes 31–34 on your answer sheet.
+          </p>
+
+          <div className="border p-4 mb-4">
+            <div className="space-y-1">
+              <p>
+                <strong>A</strong> but there are concerns about this.
+              </p>
+              <p>
+                <strong>B</strong> as systems do not need to conform to standard
+                practices.
+              </p>
+              <p>
+                <strong>C</strong> but they are far from perfect.
+              </p>
+              <p>
+                <strong>D</strong> despite the noise issues.
+              </p>
+              <p>
+                <strong>E</strong> because translation is immediate.
+              </p>
+              <p>
+                <strong>F</strong> and have an awareness of good manners.
+              </p>
+            </div>
+          </div>
+
+          <div className="space-y-4">
+            <div className="question-item">
+              <p className="mb-2">
+                <strong>31</strong> Speech translation methods are developing
+                fast in Japan
+              </p>
+              <Input type="text" className="w-16" placeholder="A-F" />
             </div>
 
             <div className="question-item">
               <p className="mb-2">
-                <strong>31</strong> In the sixth paragraph, what aspect of
-                artificial translation does the writer mention as needing
-                improvement?
+                <strong>32</strong> TV interviews that use translation voiceover
+                methods are successful
               </p>
-              <RadioGroup className="flex flex-col space-y-2">
-                <div className="flex items-start space-x-2">
-                  <RadioGroupItem value="A" id="q31-a" className="mt-1" />
-                  <Label htmlFor="q31-a" className="flex-1">
-                    reliability across multiple languages
-                  </Label>
-                </div>
-                <div className="flex items-start space-x-2">
-                  <RadioGroupItem value="B" id="q31-b" className="mt-1" />
-                  <Label htmlFor="q31-b" className="flex-1">
-                    focus on countries outside Asia
-                  </Label>
-                </div>
-                <div className="flex items-start space-x-2">
-                  <RadioGroupItem value="C" id="q31-c" className="mt-1" />
-                  <Label htmlFor="q31-c" className="flex-1">
-                    speed of delivery
-                  </Label>
-                </div>
-                <div className="flex items-start space-x-2">
-                  <RadioGroupItem value="D" id="q31-d" className="mt-1" />
-                  <Label htmlFor="q31-d" className="flex-1">
-                    integration with mobile devices
-                  </Label>
-                </div>
-              </RadioGroup>
+              <Input type="text" className="w-16" placeholder="A-F" />
+            </div>
+
+            <div className="question-item">
+              <p className="mb-2">
+                <strong>33</strong> Future translation systems should address
+                people appropriately
+              </p>
+              <Input type="text" className="w-16" placeholder="A-F" />
+            </div>
+
+            <div className="question-item">
+              <p className="mb-2">
+                <strong>34</strong> Users may be able to maintain their local
+                customs
+              </p>
+              <Input type="text" className="w-16" placeholder="A-F" />
             </div>
           </div>
         </div>
 
         <div className="question-set mb-8">
-          <h3 className="font-bold mb-2">Questions 32-36</h3>
-          <p className="mb-2">
-            Complete the summary using the list of words, A-H, below.
-          </p>
-          <p className="mb-4">
-            Write the correct letter, A-H, in boxes 32-36 on your answer sheet.
-          </p>
-
-          <div className="border p-4 mb-6">
-            <h4 className="font-bold mb-2">
-              Challenges for translation technology
-            </h4>
-
-            <p className="mb-4">
-              Translation systems must overcome <strong>32</strong>{" "}
-              <Input
-                type="text"
-                className="w-16 mx-1 inline-block"
-                placeholder="A-H"
-              />{" "}
-              problems such as noise. They also need to deal with social and
-              cultural issues, such as showing proper <strong>33</strong>{" "}
-              <Input
-                type="text"
-                className="w-16 mx-1 inline-block"
-                placeholder="A-H"
-              />{" "}
-              to those in positions of authority. However, they could prove
-              valuable in maintaining the <strong>34</strong>{" "}
-              <Input
-                type="text"
-                className="w-16 mx-1 inline-block"
-                placeholder="A-H"
-              />{" "}
-              of particular cultures. Another promising application is in
-              reducing the <strong>35</strong>{" "}
-              <Input
-                type="text"
-                className="w-16 mx-1 inline-block"
-                placeholder="A-H"
-              />{" "}
-              between the generations in families where migration has occurred.
-              Yet the writer concludes that, whatever <strong>36</strong>{" "}
-              <Input
-                type="text"
-                className="w-16 mx-1 inline-block"
-                placeholder="A-H"
-              />{" "}
-              is made in translation technology, learning and sharing a language
-              will continue to have important social benefits.
-            </p>
-
-            <div className="grid grid-cols-4 gap-2">
-              <div>
-                <strong>A</strong> distance
-              </div>
-              <div>
-                <strong>B</strong> recognition
-              </div>
-              <div>
-                <strong>C</strong> traditions
-              </div>
-              <div>
-                <strong>D</strong> progress
-              </div>
-              <div>
-                <strong>E</strong> practical
-              </div>
-              <div>
-                <strong>F</strong> respect
-              </div>
-              <div>
-                <strong>G</strong> advantage
-              </div>
-              <div>
-                <strong>H</strong> identity
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="question-set mb-8">
-          <h3 className="font-bold mb-2">Questions 37-40</h3>
+          <h3 className="font-bold mb-2">Questions 35–40</h3>
           <p className="mb-2">
             Do the following statements agree with the views of the writer in
             Reading Passage 3?
           </p>
-          <p className="mb-2">In boxes 37-40 on your answer sheet, write</p>
+          <p className="mb-2">In boxes 35–40 on your answer sheet, write:</p>
           <div className="mb-4">
             <p className="mb-1">
               <strong>YES</strong> if the statement agrees with the views of the
@@ -739,8 +878,50 @@ export const Cambridge19ARTest3Questions: React.FC = () => {
           <div className="space-y-4">
             <div className="question-item">
               <p className="mb-2">
-                <strong>37</strong> The quality of modern artificial translation
-                devices is generally very good.
+                <strong>35</strong> Language translation systems will be seen as
+                very useful throughout the academic and professional worlds.
+              </p>
+              <RadioGroup className="flex flex-col space-y-1">
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="YES" id="q35-yes" />
+                  <Label htmlFor="q35-yes">YES</Label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="NO" id="q35-no" />
+                  <Label htmlFor="q35-no">NO</Label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="NOT GIVEN" id="q35-ng" />
+                  <Label htmlFor="q35-ng">NOT GIVEN</Label>
+                </div>
+              </RadioGroup>
+            </div>
+
+            <div className="question-item">
+              <p className="mb-2">
+                <strong>36</strong> The overall value of automated translation
+                to family life is yet to be shown.
+              </p>
+              <RadioGroup className="flex flex-col space-y-1">
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="YES" id="q36-yes" />
+                  <Label htmlFor="q36-yes">YES</Label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="NO" id="q36-no" />
+                  <Label htmlFor="q36-no">NO</Label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="NOT GIVEN" id="q36-ng" />
+                  <Label htmlFor="q36-ng">NOT GIVEN</Label>
+                </div>
+              </RadioGroup>
+            </div>
+
+            <div className="question-item">
+              <p className="mb-2">
+                <strong>37</strong> Automated translation could make life more
+                difficult for immigrant families.
               </p>
               <RadioGroup className="flex flex-col space-y-1">
                 <div className="flex items-center space-x-2">
@@ -760,8 +941,8 @@ export const Cambridge19ARTest3Questions: React.FC = () => {
 
             <div className="question-item">
               <p className="mb-2">
-                <strong>38</strong> There's a growing demand for translation
-                technology in the Asian market.
+                <strong>38</strong> Visual aspects of language translation are
+                being considered by scientists.
               </p>
               <RadioGroup className="flex flex-col space-y-1">
                 <div className="flex items-center space-x-2">
@@ -781,8 +962,8 @@ export const Cambridge19ARTest3Questions: React.FC = () => {
 
             <div className="question-item">
               <p className="mb-2">
-                <strong>39</strong> Translation devices will soon make learning
-                foreign languages unnecessary.
+                <strong>39</strong> International scientists have found English
+                easier to translate into other languages than Latin.
               </p>
               <RadioGroup className="flex flex-col space-y-1">
                 <div className="flex items-center space-x-2">
@@ -802,8 +983,8 @@ export const Cambridge19ARTest3Questions: React.FC = () => {
 
             <div className="question-item">
               <p className="mb-2">
-                <strong>40</strong> Using the same language strengthens
-                relationships between people.
+                <strong>40</strong> As far as language is concerned, there is a
+                difference between people's social and practical needs.
               </p>
               <RadioGroup className="flex flex-col space-y-1">
                 <div className="flex items-center space-x-2">

@@ -12,24 +12,21 @@ export const Cambridge18GRTest3Passages: React.FC = () => {
         <p className="mb-4">
           Read the text below and answer <strong>Questions 1–7</strong>.
         </p>
-
         <h3 className="text-lg font-bold mb-2">Manly Beaches</h3>
         <p className="mb-4">
           Next time you visit Manly, 30 minutes by ferry from the centre of
           Australia's biggest city, Sydney, try some of these less famous
           beaches
-        </p>
-
+        </p>{" "}
         <div className="mb-4">
           <h4 className="font-bold">A Fairy Bower</h4>
           <p>
-            Located-in a marine protection area, the water is perfect for
+            Located in a marine protection area, the water is perfect for
             paddling, snorkelling or even scuba diving. There is a small gift
             shop for unusual souvenirs, and a kiosk that rents stand-up
             paddleboards. Buses do not stop nearby so a walk is necessary.
           </p>
         </div>
-
         <div className="mb-4">
           <h4 className="font-bold">B North Steyne</h4>
           <p>
@@ -42,7 +39,6 @@ export const Cambridge18GRTest3Passages: React.FC = () => {
             for students and are not available for rent.
           </p>
         </div>
-
         <div className="mb-4">
           <h4 className="font-bold">C Delwood</h4>
           <p>
@@ -52,7 +48,6 @@ export const Cambridge18GRTest3Passages: React.FC = () => {
             yourself.
           </p>
         </div>
-
         <div className="mb-4">
           <h4 className="font-bold">D Little Manly</h4>
           <p>
@@ -63,7 +58,6 @@ export const Cambridge18GRTest3Passages: React.FC = () => {
             facilities, which make this a great spot for a family day out.
           </p>
         </div>
-
         <div className="mb-4">
           <h4 className="font-bold">E East Esplanade</h4>
           <p>
@@ -75,7 +69,6 @@ export const Cambridge18GRTest3Passages: React.FC = () => {
             down.
           </p>
         </div>
-
         <div className="mb-6">
           <h4 className="font-bold">F Shelly Beach</h4>
           <p>
@@ -85,24 +78,20 @@ export const Cambridge18GRTest3Passages: React.FC = () => {
             crowded at times, so avoid it on a sunny weekend afternoon.
           </p>
         </div>
-
         <hr className="my-6" />
-
         <p className="mb-4">
           <strong>Questions 8–14</strong>
         </p>
         <p className="mb-4">
           Read the text below and answer <strong>Questions 8–14</strong>.
         </p>
-
         <h3 className="text-lg font-bold mb-2">
           Sydney Water: advice for customers paying a bill
         </h3>
-
         <div className="mb-4">
           <h4 className="font-bold">About your bill</h4>
           <p>
-            Sydney Water services over live million people in greater Sydney,
+            Sydney Water services over five million people in greater Sydney,
             and if you own a property. you'll get a bill from us. Generally,
             this is just for your water and wastewater services, but there could
             be other charges. We send most bills quarterly, after we've read the
@@ -110,7 +99,6 @@ export const Cambridge18GRTest3Passages: React.FC = () => {
             of each quarter.
           </p>
         </div>
-
         <div className="mb-4">
           <h4 className="font-bold">When do we send the bill?</h4>
           <p>
@@ -120,45 +108,40 @@ export const Cambridge18GRTest3Passages: React.FC = () => {
             arrange it, just call us on 13 20 92.
           </p>
         </div>
-
         <div className="mb-4">
           <h4 className="font-bold">What if you can't pay the bill?</h4>
           <p>
-            We understand that it might be hard to pay your bill. lf you're
-            having difficulties, we have a range of Options to help. if you
+            We understand that it might be hard to pay your bill. If you're
+            having difficulties, we have a range of options to help. If you
             receive a pension, we may give you a reduction on your bill, but you
             must own and live in your home to qualify for this.
           </p>
-        </div>
-
+        </div>{" "}
         <div className="mb-4">
           <h4 className="font-bold">How can you get your billing history?</h4>
-          <ul className="list-disc ml-6">
-            <li>
-              <strong>Register for eBill.</strong> When you register for Sydney
-              Water's online billing facility, eBill, you'll be able to see your
-              past bills at any time. Once you're registered, you'll stop
-              getting paper bills and start getting electronic ones.
-            </li>
-            <li>
-              <strong>Still want paper bills?</strong> Simply cancel your
-              registration after you have saved the electronic bills you need.
-              Then you'll go back to paper bills, but you won't have access to
-              the online bills after you cancel.
-            </li>
-            <li>
-              <strong>Contact us.</strong> Simply contact us and we'll give you
-              a statement that shows the amounts we charged you and the payments
-              we received on your last five bills.
-            </li>
-            <li>
-              <strong>Need more history?</strong> If you need information that's
-              older than your last five bills, you need to pay $28.04 for a
-              'billing record search statement'.
-            </li>
-          </ul>
+          <p>
+            <strong>Register for eBill.</strong> When you register for Sydney
+            Water's online billing facility, eBill, you'll be able to see your
+            past bills at any time. Once you're registered, you'll stop getting
+            paper bills and start getting electronic ones.
+          </p>
+          <p>
+            <strong>Still want paper bills?</strong> Simply cancel your
+            registration after you have saved the electronic bills you need.
+            Then you'll go back to paper bills, but you won't have access to the
+            online bills after you cancel.
+          </p>
+          <p>
+            <strong>Contact us.</strong> Simply contact us and we'll give you a
+            statement that shows the amounts we charged you and the payments we
+            received on your last five bills.
+          </p>
+          <p>
+            <strong>Need more history?</strong> If you need information that's
+            older than your last five bills, you need to pay $28.04 for a
+            'billing record search statement'.
+          </p>
         </div>
-
         <div className="mb-6">
           <h4 className="font-bold">How do you stop a charge on a bill?</h4>
           <p>
@@ -167,7 +150,6 @@ export const Cambridge18GRTest3Passages: React.FC = () => {
             this disconnection and follow Sydney Water's standard procedures.
           </p>
         </div>
-
         <h2 className="text-xl font-bold mb-4 mt-8">SECTION 2</h2>
         <p className="mb-4">
           <strong>Questions 15–20</strong>
@@ -175,7 +157,6 @@ export const Cambridge18GRTest3Passages: React.FC = () => {
         <p className="mb-4">
           Read the text below and answer <strong>Questions 15–20</strong>.
         </p>
-
         <h3 className="text-lg font-bold mb-2">Company car parking policy</h3>
         <div className="mb-6">
           <p className="mb-2">
@@ -191,7 +172,7 @@ export const Cambridge18GRTest3Passages: React.FC = () => {
             The car parking policy aims to allocate parking on a fair and
             equitable basis with spaces being given first to those employees who
             claim above a certain mileage of travel for business purposes.
-            individuals who are allocated a parking space will be issued with a
+            Individuals who are allocated a parking space will be issued with a
             parking permit and a number which corresponds to a car parking
             space. If there are any non-allocated car parking spaces, these can
             be utilised by employees on a first-come. first-served basis. In
@@ -216,7 +197,6 @@ export const Cambridge18GRTest3Passages: React.FC = () => {
             Manager.
           </p>
         </div>
-
         <h2 className="text-xl font-bold mb-4 mt-8">SECTION 3</h2>
         <p className="mb-4">
           <strong>Questions 21–27</strong>
@@ -224,7 +204,6 @@ export const Cambridge18GRTest3Passages: React.FC = () => {
         <p className="mb-4">
           Read the text below and answer <strong>Questions 21–27</strong>.
         </p>
-
         <h3 className="text-lg font-bold mb-2">
           Ensuring safety in the office
         </h3>
@@ -281,14 +260,12 @@ export const Cambridge18GRTest3Passages: React.FC = () => {
             level.
           </p>
         </div>
-
         <p className="mb-4">
           <strong>Questions 28–40</strong>
         </p>
         <p className="mb-4">
           Read the text below and answer <strong>Questions 28–40</strong>.
         </p>
-
         <h3 className="text-lg font-bold mb-2">Roman Roads</h3>
         <div className="mb-6">
           <div className="mb-4">
@@ -306,7 +283,6 @@ export const Cambridge18GRTest3Passages: React.FC = () => {
               to eastern parts of the Roman empire.
             </p>
           </div>
-
           <div className="mb-4">
             <h4 className="font-bold inline">B</h4>
             <p className="inline ml-2">
@@ -323,7 +299,6 @@ export const Cambridge18GRTest3Passages: React.FC = () => {
               extended to 569 kilometres in length.
             </p>
           </div>
-
           <div className="mb-4">
             <h4 className="font-bold inline">C</h4>
             <p className="inline ml-2">
@@ -340,14 +315,13 @@ export const Cambridge18GRTest3Passages: React.FC = () => {
               Claudius Caecus.
             </p>
           </div>
-
           <div className="mb-4">
             <h4 className="font-bold inline">D</h4>
             <p className="inline ml-2">
               To achieve the objective of constructing the shortest routes
               possible between two points, all manner of engineering
               difficulties had to be overcome. Once extensive surveying had been
-              carried out, to ensure the preposed route was actually straight
+              carried out, to ensure the proposed route was actually straight
               and to determine what various engineering methods were needed,
               marshes had to be drained, forests cut through, creeks diverted,
               bedrock channelled, mountainsides cut into, rivers crossed with
@@ -357,7 +331,6 @@ export const Cambridge18GRTest3Passages: React.FC = () => {
               maintained, which they were for over 800 years.
             </p>
           </div>
-
           <div className="mb-4">
             <h4 className="font-bold inline">E</h4>
             <p className="inline ml-2">
@@ -373,8 +346,7 @@ export const Cambridge18GRTest3Passages: React.FC = () => {
               animals better grip, and have ruts cut into the stone to guide
               wheeled vehicles.
             </p>
-          </div>
-
+          </div>{" "}
           <p className="mb-4">
             Roads were purposely inclined slightly from the centre down to the
             kerb to allow rainwater to run off along the sides. Many also had
@@ -383,15 +355,14 @@ export const Cambridge18GRTest3Passages: React.FC = () => {
             pedestrians typically ran along each side of the road, varying in
             width from 1 to 3 metres. Separating the path from the road were the
             kerb stones, which were regular upright slabs. Busier stretches of
-            main W l roads had areas where vehicles could pull over, and some of
+            main roads had areas where vehicles could pull over, and some of
             these had services for travellers and their animals. Milestones were
             also set up at regular intervals along the road and these often
             recorded who was responsible for the upkeep of that stretch of the
             road and what repairs had been made.
           </p>
-
           <div className="mb-4">
-            <h4 className="font-bold inline">F</h4>
+            <h4 className="font-bold inline">F</h4>{" "}
             <p className="inline ml-2">
               Lasting symbols of the imagination of Roman engineers are the many
               arched bridges and viaducts still standing today that helped
@@ -399,7 +370,7 @@ export const Cambridge18GRTest3Passages: React.FC = () => {
               last, and the piers of bridges which crossed rivers, for example,
               were often built with a resistant prow-shape and used massive
               durable blocks of stone, while the upper parts might be built of
-              of stone blocks strengthened with iron clamps. Perhaps the most
+              stone blocks strengthened with iron clamps. Perhaps the most
               impressive bridge was at Narni; 180 metres long, 8 metres wide and
               as high as 33 metres, it had 4 massive semicircular arches, one of
               which, stretching 32.1 metres, ranks as one of the longest
@@ -408,7 +379,6 @@ export const Cambridge18GRTest3Passages: React.FC = () => {
               repair the effects.
             </p>
           </div>
-
           <p className="mb-4">
             Such was the engineering and surveying skill of the Romans that many
             of their roads have provided the basis for hundreds of today's

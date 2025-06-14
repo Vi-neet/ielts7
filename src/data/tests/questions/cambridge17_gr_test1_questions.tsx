@@ -16,11 +16,10 @@ export const Cambridge17GRTest1Questions: React.FC = () => {
           <h3 className="font-bold mb-2">Questions 1-5</h3>
           <p className="mb-2">
             Which places would you go to in the following situations?
-          </p>
+          </p>{" "}
           <p className="mb-4">
             Write the correct letter, A-H, in boxes 1-5 on your answer sheet.
           </p>
-
           <div className="border p-4 mb-6">
             <h4 className="font-bold mb-2">List of Places:</h4>
             <div className="grid grid-cols-2 gap-2 mb-4">
@@ -50,7 +49,6 @@ export const Cambridge17GRTest1Questions: React.FC = () => {
               </div>
             </div>
           </div>
-
           <div className="space-y-4">
             <div className="question-item">
               <p className="mb-2">
@@ -302,6 +300,7 @@ export const Cambridge17GRTest1Questions: React.FC = () => {
             </div>
 
             <div className="question-item">
+              {" "}
               <p className="mb-2">
                 <strong>12.</strong> The land that Tang bought was located
                 opposite a{" "}
@@ -335,14 +334,13 @@ export const Cambridge17GRTest1Questions: React.FC = () => {
 
         <div className="question-set mb-8">
           <h3 className="font-bold mb-2">Questions 15-20</h3>
-          <p className="mb-2">Complete the sentences below.</p>
+          <p className="mb-2">Complete the sentences below.</p>{" "}
           <p className="mb-2">
             Choose <strong>ONE WORD ONLY</strong> from the text for each answer.
           </p>
           <p className="mb-4">
             Write your answers in boxes 15-20 on your answer sheet.
           </p>
-
           <div className="space-y-4">
             <div className="question-item">
               <p className="mb-2">
@@ -353,6 +351,7 @@ export const Cambridge17GRTest1Questions: React.FC = () => {
             </div>
 
             <div className="question-item">
+              {" "}
               <p className="mb-2">
                 <strong>16.</strong> If applicants do not include what makes
                 them distinctive, their CVs are likely to appear{" "}
@@ -410,10 +409,9 @@ export const Cambridge17GRTest1Questions: React.FC = () => {
             <h4 className="font-bold mb-2">
               How to become more organised at work
             </h4>
-
             <p className="font-semibold mb-2">
               Maintaining order in the work area involves
-            </p>
+            </p>{" "}
             <ul className="list-disc pl-6 mb-4">
               <li>
                 keeping the minimum amount of necessary <strong>21.</strong>{" "}
@@ -442,10 +440,9 @@ export const Cambridge17GRTest1Questions: React.FC = () => {
                 so
               </li>
             </ul>
-
             <p className="font-semibold mb-2">
               Planning ahead is important because
-            </p>
+            </p>{" "}
             <ul className="list-disc pl-6 mb-4">
               <li>
                 in general, it will improve the employee's <strong>26.</strong>{" "}
@@ -590,7 +587,7 @@ export const Cambridge17GRTest1Questions: React.FC = () => {
 
         <div className="question-set mb-8">
           <h3 className="font-bold mb-2">Questions 33-36</h3>
-          <p className="mb-2">Complete the summary below.</p>
+          <p className="mb-2">Complete the summary below.</p>{" "}
           <p className="mb-2">
             Choose <strong>ONE WORD ONLY</strong> from the passage for each
             answer.
@@ -598,12 +595,10 @@ export const Cambridge17GRTest1Questions: React.FC = () => {
           <p className="mb-4">
             Write your answers in boxes 33-36 on your answer sheet.
           </p>
-
           <div className="border p-4 mb-6">
             <h4 className="font-bold mb-2">
               The problem of providing artificial lighting in coal mines
-            </h4>
-
+            </h4>{" "}
             <p className="mb-4">
               Coal mines in Europe only really developed from the 13th century.
               As they became deeper, the methods used for lighting them created
@@ -626,12 +621,11 @@ export const Cambridge17GRTest1Questions: React.FC = () => {
         </div>
 
         <div className="question-set mb-8">
-          <h3 className="font-bold mb-2">Questions 37-40</h3>
+          <h3 className="font-bold mb-2">Questions 37-40</h3>{" "}
           <p className="mb-2">Choose the correct letter, A, B, C or D.</p>
           <p className="mb-4">
             Write the correct letter in boxes 37-40 on your answer sheet.
           </p>
-
           <div className="space-y-6">
             <div className="question-item">
               <p className="mb-2">
@@ -667,6 +661,7 @@ export const Cambridge17GRTest1Questions: React.FC = () => {
             </div>
 
             <div className="question-item">
+              {" "}
               <p className="mb-2">
                 <strong>38.</strong> According to the writer, what was the
                 significance of the explosion at Felling Colliery in 1812?
@@ -702,6 +697,7 @@ export const Cambridge17GRTest1Questions: React.FC = () => {
             </div>
 
             <div className="question-item">
+              {" "}
               <p className="mb-2">
                 <strong>39.</strong> The lamp presented by Davy was safer than
                 previous methods of lighting because its flame

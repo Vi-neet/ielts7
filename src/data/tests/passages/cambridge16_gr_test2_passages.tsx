@@ -7,624 +7,384 @@ import React from "react";
 export const Cambridge16GRTest2Passages: React.FC = () => {
   return (
     <div className="reading-passage p-4 bg-white">
+      {" "}
       {/* READING PASSAGE 1 */}
       <div className="mb-8">
         <h3 className="text-lg font-bold mb-4">SECTION 1: Questions 1-14</h3>
-        <p className="mb-2">
-          You should spend about 20 minutes on <strong>Questions 1-14</strong>,
-          which are based on Reading Passage 1 below.
-        </p>
 
-        <h4 className="font-bold mb-2">Community Gardens</h4>
+        <h4 className="font-bold mb-4">Questions 1-7</h4>
+        <p className="mb-4">Read the text below and answer Questions 1-7</p>
+
+        <h5 className="font-bold mb-4">How to choose your builder</h5>
 
         <p className="mb-4">
-          A community garden is a piece of land gardened collectively by a group
-          of people. The land may be divided into individual plots or gardened
-          as a whole by a group of people. Community gardens provide fresh
-          produce and plants, neighborhood improvement, sense of community, and
-          connection to the environment for the people involved.
-        </p>
-
-        <h5 className="font-semibold mt-4">Benefits of Community Gardens</h5>
-        <p className="mb-4">
-          Community gardens offer numerous benefits to individuals and
-          communities. They improve the quality of life for people involved,
-          provide nutritious food, reduce family food costs, conserve resources,
-          and create opportunities for recreation, exercise, therapy, and
-          education.
+          Building a new home is a significant investment, and it's essential to
+          find the right builder for the job. Before you look for a builder,
+          it's important to develop a comprehensive budget and have clear plans.
+          Once you have a design in mind, it is time to start narrowing down
+          your builder shortlist, and this starts with assessing how qualified
+          each builder is. In Australia, this means checking that the builder
+          holds a residential building licence. Most states have their own
+          building authority who you can contact to check a builder's licence.
         </p>
 
         <p className="mb-4">
-          Community gardens also preserve green space, create community
-          development opportunities, reduce crime, beautify neighborhoods, and
-          provide opportunities for intergenerational and cross-cultural
-          connections. Gardens produce nutritious vegetables, enabling
-          participants to save money on groceries. Gardeners may take produce
-          home and many gardens also donate a portion of their harvest to food
-          pantries.
-        </p>
-
-        <h5 className="font-semibold mt-4">Types of Community Gardens</h5>
-        <p className="mb-4">
-          <strong>Neighborhood Gardens:</strong> These are the most common type
-          of community garden, typically located on vacant lots divided into
-          individual plots. These gardens beautify neighborhoods and provide
-          recreation for residents.
+          You can also check if the builder is a member of an industry
+          association such as the Housing Industry Association (HIA), and
+          whether they have won any industry awards. For instance, the HIA runs
+          a state and national awards programme, with a category that recognises
+          the level of customer service that a builder delivers.
         </p>
 
         <p className="mb-4">
-          <strong>Residential Gardens:</strong> Located at apartment complexes,
-          townhouse communities, and mobile home parks, these gardens provide
-          recreational and therapeutic opportunities for residents.
+          Most experts agree that display homes (homes constructed by the
+          builder that are open to the public) offer a great opportunity to
+          study their work up close. Display homes are usually offered by major
+          project builders who work on a large scale and can deliver good
+          quality and value. You can also talk to the salesperson and find out
+          about the home design and what is and isn't included in the sale
+          price. And it may be possible to talk to other customers you meet
+          there and ask their opinion of the workmanship in the display home.
         </p>
 
         <p className="mb-4">
-          <strong>Institutional Gardens:</strong> These are gardens located at
-          public or private organizations such as hospitals, businesses,
-          prisons, schools, colleges, and retirement centers. They may provide
-          therapy, education, recreation, or job training.
+          Finally, avoid signing any business contract before you have read and
+          understood it thoroughly. Ask your builder to use a standard building
+          contract that has been designed to comply with the Domestic Building
+          Contracts Act, and to be fair to both client and builder. You have
+          five business days within which you may withdraw from the contract
+          after signing it.
         </p>
 
-        <p className="mb-4">
-          <strong>Demonstration Gardens:</strong> These gardens showcase
-          techniques for landscaping, building soil health, or native plant
-          gardening. They often serve as examples of environmental stewardship.
-        </p>
+        <h4 className="font-bold mb-4 mt-8">Questions 8-14</h4>
+        <p className="mb-4">Read the text below and answer Questions 8-14.</p>
 
-        <p className="mb-4">
-          <strong>Food Bank Gardens:</strong> These are specifically created to
-          grow food for food pantries and homeless shelters. They are often
-          maintained by volunteers.
-        </p>
+        <h5 className="font-bold mb-4">Island adventure activities</h5>
 
-        <h5 className="font-semibold mt-4">Starting a Community Garden</h5>
-        <p className="mb-4">
-          <strong>Organize a Meeting</strong>
-          <br />
-          Determine whether a garden is really needed and wanted, what kind it
-          should be, and who will be involved.
-        </p>
+        <div className="mb-4">
+          <p className="font-semibold mb-2">A Rib riding</p>
+          <p className="mb-4">
+            Conquer stormy seas on a high-speed ride in an RIB (Rigid Inflatable
+            Boat). These powerful boats cut through choppy waters with ease.
+            You'll need to hold on tight as the boat bounces across the wake of
+            awesome cruise liners in one of the world's busiest shipping lanes.
+          </p>
+        </div>
 
-        <p className="mb-4">
-          <strong>Form a Planning Committee</strong>
-          <br />
-          This group can help divide the work and increase support for the
-          garden. The committee should represent the diversity of the community.
-        </p>
+        <div className="mb-4">
+          <p className="font-semibold mb-2">B Horse riding</p>
+          <p className="mb-4">
+            Experience the thrill of riding on horseback along peaceful country
+            lanes and secluded bridleways with the help of expert guides. Even a
+            novice can quickly take the reins and feel the thrill of riding one
+            of nature's most magnificent beasts.
+          </p>
+        </div>
 
-        <p className="mb-4">
-          <strong>Identify Resources</strong>
-          <br />
-          Look within your community for resources, such as space, funding, and
-          partnerships. Contact local municipal departments about available
-          public lands, and approach landowners with vacant private parcels.
-          Look for potential sponsors, particularly local businesses who may
-          contribute money or materials.
-        </p>
+        <div className="mb-4">
+          <p className="font-semibold mb-2">C Kayaking</p>
+          <p className="mb-4">
+            Test your kayak nerves paddling around a deserted military fort
+            built on a rocky outcrop out at sea, then explore the island's busy
+            harbours before gliding back to dry land where a hot shower and a
+            cup of tea await.
+          </p>
+        </div>
 
-        <p className="mb-4">
-          <strong>Choose a Site</strong>
-          <br />
-          Consider these factors:
-          <ul className="list-disc ml-8 mt-2">
-            <li>At least six hours of daily sunlight</li>
-            <li>Availability of water</li>
-            <li>Proximity to gardeners' homes</li>
-            <li>Access for equipment delivery</li>
-            <li>Soil testing for contaminants</li>
-            <li>Security from vandalism</li>
-          </ul>
-        </p>
+        <div className="mb-4">
+          <p className="font-semibold mb-2">D Cycling</p>
+          <p className="mb-4">
+            Test your endurance on the famous Round the Island Cycle Route. Grit
+            your teeth and tackle the brutal hills in the south of the island,
+            or for something less challenging, discover our car-free cycle
+            tracks on former railway lines.
+          </p>
+        </div>
 
-        <p className="mb-4">
-          <strong>Prepare and Develop the Site</strong>
-          <br />
-          In most cases, the land will need considerable preparation, including
-          debris removal, soil testing, and soil improvement.
-        </p>
+        <div className="mb-4">
+          <p className="font-semibold mb-2">E Segway riding</p>
+          <p className="mb-4">
+            Have you got what it takes to master a Segway? In theory, these
+            quirky electric machines are simple to control, with users leaning
+            forwards to go faster and back to slow down. In reality, you'll need
+            some practice before you can master the skill and glide around the
+            island.
+          </p>
+        </div>
 
-        <p className="mb-4">
-          <strong>Organize the Garden</strong>
-          <br />
-          Decide how many plots are desired and mark them clearly with permanent
-          stakes. Paths should be at least 3 feet wide for accessibility. Areas
-          used for group activities should be in a central location, with
-          adequate shade and seating.
-        </p>
+        <div className="mb-4">
+          <p className="font-semibold mb-2">F Tree climbing</p>
+          <p className="mb-4">
+            A climb into the canopy of a 25-metre oak tree is an amazing
+            experience. Supported by a rope and harness, you can stand on
+            branches no bigger than your wrist, and swing out between the
+            boughs, or simply take the opportunity to lie in a tree-top hammock
+            and absorb the stunning bird's eye views.
+          </p>
+        </div>
 
-        <p className="mb-4">
-          <strong>Establish Rules and Guidelines</strong>
-          <br />
-          Basic rules should cover:
-          <ul className="list-disc ml-8 mt-2">
-            <li>Membership fees</li>
-            <li>Maintenance responsibilities</li>
-            <li>Watering guidelines</li>
-            <li>Tool storage</li>
-            <li>Regular work days</li>
-            <li>How to deal with vandalism or theft</li>
-          </ul>
-        </p>
+        <div className="mb-4">
+          <p className="font-semibold mb-2">G Coasteering</p>
+          <p className="mb-4">
+            Tackle the spectacular coast in the north of the island. Scrabble
+            over the rocks around cliff edges as the waves crash around you,
+            dive through submerged caves and emerge onto a beach once used by
+            smugglers. This is a thrilling experience, but not an adventure to
+            attempt alone.
+          </p>
+        </div>
 
-        <h5 className="font-semibold mt-4">
-          Community Garden Success Story: Phoenix Community Garden
-        </h5>
-        <p className="mb-4">
-          The Phoenix Community Garden in Brooklyn, New York, demonstrates the
-          positive impact gardens can have on communities. Started in a vacant
-          lot in 2012, it now has over 30 individual plots and a shared herb
-          garden. The garden has become a hub for neighbors to connect, children
-          to learn about growing food, and for cross-cultural exchange among the
-          diverse local residents.
-        </p>
-
-        <p className="mb-4">
-          In 2018, the garden added a rain water harvesting system and
-          solar-powered lighting, making it more environmentally sustainable.
-          Garden members hold monthly workdays, weekly farmers markets in
-          summer, and educational workshops on gardening and cooking. Food not
-          used by gardeners is donated to a local food pantry, providing fresh
-          produce to those in need.
-        </p>
-
-        <p className="mb-4">
-          "The garden has transformed not just this space, but our
-          neighborhood," says Maria Rodriguez, garden coordinator. "People who
-          never spoke to each other now work side by side. Children who had
-          never seen a carrot growing now eagerly tend their own plants. We've
-          seen reduced crime in the area, and increased property values. But
-          most importantly, we've built a true community."
-        </p>
-
-        <h5 className="font-semibold mt-4">Challenges and Solutions</h5>
-        <p className="mb-4">
-          Community gardens face challenges including securing land tenure,
-          obtaining funding, maintaining volunteer engagement, and addressing
-          environmental issues like soil contamination. Solutions include
-          forming partnerships with municipalities and nonprofits, seeking
-          grants, organizing regular events, and implementing proper soil
-          testing and remediation when necessary.
-        </p>
-
-        <p className="mb-4">
-          Despite these challenges, community gardens continue to thrive and
-          expand across cities and towns worldwide, demonstrating their value as
-          green space, food sources, and community building tools.
-        </p>
-
-        <p className="mb-4">
-          For more information on starting or joining a community garden in your
-          area, contact your local extension office, parks and recreation
-          department, or visit www.communitygarden.org.
-        </p>
-      </div>
-
+        <div className="mb-4">
+          <p className="font-semibold mb-2">H Mountain boarding</p>
+          <p className="mb-4">
+            First developed as an off-season alternative to winter sports and
+            now a sport in its own right, mountain boarding has the speed of
+            snowboarding but with a harder landing when you fall. After a bit of
+            practice and a few bruises, you'll learn to control the ride and can
+            join the few people who can call themselves mountain boarders.
+          </p>
+        </div>
+      </div>{" "}
       {/* READING PASSAGE 2 */}
       <div className="mb-8">
         <h3 className="text-lg font-bold mb-4">SECTION 2: Questions 15-27</h3>
-        <p className="mb-2">
-          You should spend about 20 minutes on <strong>Questions 15-27</strong>,
-          which are based on Reading Passage 2 below.
-        </p>
 
-        <h4 className="font-bold mb-2">A Guide to Executive Coaching</h4>
+        <h4 className="font-bold mb-4">Questions 15-20</h4>
+        <p className="mb-4">Read the text below and answer Questions 15-20.</p>
 
-        <p className="mb-4">
-          Executive coaching, once viewed as a last-resort intervention for
-          fixing problematic managers, has now become widely accepted as a
-          leadership development tool for valued employees. A 2019 survey by the
-          International Coach Federation found that 83% of organizations plan to
-          expand their use of coaching in the next year, and executives who
-          receive coaching report an average return on investment of six times
-          the cost of coaching.
-        </p>
-
-        <h5 className="font-semibold mt-4">What is Executive Coaching?</h5>
-        <p className="mb-4">
-          Executive coaching is a collaborative, personalized process designed
-          to help leaders achieve specific professional goals. Unlike
-          traditional training which delivers standardized content to groups,
-          coaching is tailored to individual needs and focuses on sustainable
-          behavioral change. A professional coach works one-on-one with an
-          executive to enhance self-awareness, identify strengths and
-          weaknesses, develop new skills, and implement strategies for
-          improvement.
-        </p>
-
-        <p className="mb-4">
-          Coaching typically involves regular sessions over a period of three to
-          twelve months. The process is confidential, allowing executives to
-          openly discuss challenges they might not feel comfortable sharing with
-          colleagues or superiors. Coaching is action-oriented and
-          results-focused, with clear objectives and measurable outcomes.
-        </p>
-
-        <h5 className="font-semibold mt-4">
-          When to Consider Executive Coaching
+        <h5 className="font-bold mb-4">
+          Barrington Music Service: Business and Development Manager
         </h5>
+
         <p className="mb-4">
-          Organizations typically engage executive coaches in several scenarios:
+          Barrington Music Service organises a wide range of music activities
+          for children and young people resident in and around Barrington. It
+          provides singing and specialist instrumental lessons in schools, and
+          it owns a collection of instruments for use in schools, some of which
+          are available for hire by the parents of children having lessons. The
+          Service also arranges a number of music-related events, including
+          festivals bringing together choirs and soloists from schools in both
+          Barrington and other areas. The Music Service provides administrative
+          and financial support for the Barrington Youth Orchestra, which takes
+          part in workshops with professional artists and gives performances.
         </p>
 
         <p className="mb-4">
-          <strong>Leadership Development:</strong> Coaching helps high-potential
-          employees prepare for greater responsibility, develop specific
-          leadership competencies, and navigate transitions to new roles.
+          Barrington Music Service is seeking to recruit a Business and
+          Development Manager to manage the administrative function and build on
+          the success of the Service. We are looking for an individual with a
+          passion for delivering the best possible music provision for the
+          benefit of our children and young people.
         </p>
 
         <p className="mb-4">
-          <strong>Performance Improvement:</strong> When a valued employee has
-          specific performance issues, coaching can help identify root causes
-          and develop strategies for improvement.
+          As the Business and Development Manager, you will be responsible for
+          managing the administrative and financial systems of the Music
+          Service, ensuring it does not exceed its budget, which is currently
+          around £1m a year. You will take the lead on marketing the Service and
+          ensuring the generation of new income. The Music Service is involved
+          in several partnerships with schools and with music and community
+          organisations in the district, and you will be expected to increase
+          the number and scope of these, as well as take the lead in
+          fundraising. The Service recently embarked on a programme to broaden
+          what is taught in school music lessons, to include instruments and
+          musical styles from around the world, and you will be required to
+          further develop this emphasis on diversity.
         </p>
 
         <p className="mb-4">
-          <strong>Organizational Change:</strong> During mergers, restructuring,
-          or strategic shifts, coaching helps executives adapt to new
-          circumstances and lead their teams through uncertainty.
+          You will need to improve systems for ensuring that the records of the
+          Service's activities are accurate and maintain a database of all music
+          teachers, students, and instruments belonging to the Service.
         </p>
 
         <p className="mb-4">
-          <strong>Specialized Skill Development:</strong> Coaching can address
-          specific skills gaps such as strategic thinking, emotional
-          intelligence, communication, or conflict management.
+          The person appointed will have experience of a supervisory role and
+          the skills to motivate members of a team. You will have an
+          understanding of accounting, at a non-specialist level, and of
+          standard financial procedures. High-level IT skills and excellent
+          verbal and written communication skills are essential. Although
+          experience in music education is not crucial, good knowledge of the
+          field, or of other areas of arts management, would be an advantage.
         </p>
 
-        <h5 className="font-semibold mt-4">The Coaching Process</h5>
-        <p className="mb-4">
-          While approaches vary, most executive coaching follows a similar
-          process:
-        </p>
+        <h4 className="font-bold mb-4 mt-8">Questions 21-27</h4>
 
-        <p className="mb-4">
-          <strong>Assessment:</strong> The process begins with thorough
-          assessment using interviews, psychometric tools, and often 360-degree
-          feedback from colleagues. This creates a comprehensive picture of the
-          executive's current strengths, challenges, and development
-          opportunities.
-        </p>
-
-        <p className="mb-4">
-          <strong>Goal Setting:</strong> The coach and executive collaborate to
-          establish clear, measurable goals for the coaching engagement. These
-          should align with both organizational objectives and the executive's
-          personal development needs.
-        </p>
-
-        <p className="mb-4">
-          <strong>Action Planning:</strong> Together, they develop specific
-          strategies and action steps to achieve the established goals. This
-          includes new behaviors to practice, skills to develop, and approaches
-          to challenging situations.
-        </p>
-
-        <p className="mb-4">
-          <strong>Implementation:</strong> The executive implements the action
-          plan in their daily work, with regular coaching sessions providing
-          support, feedback, and course correction as needed.
-        </p>
-
-        <p className="mb-4">
-          <strong>Measurement and Review:</strong> Progress is regularly
-          measured against established goals. This may include follow-up
-          assessments, feedback from stakeholders, or specific performance
-          metrics.
-        </p>
-
-        <h5 className="font-semibold mt-4">Selecting the Right Coach</h5>
-        <p className="mb-4">
-          Finding the right match between coach and executive is crucial for
-          success. Consider these factors when selecting a coach:
-        </p>
-
-        <p className="mb-4">
-          <strong>Credentials and Experience:</strong> Look for coaches with
-          recognized certifications (such as those from the International Coach
-          Federation), relevant education, and experience coaching executives in
-          similar roles or industries. However, industry-specific experience is
-          less important than coaching skill and understanding of leadership
-          challenges.
-        </p>
-
-        <p className="mb-4">
-          <strong>Approach and Methodology:</strong> Different coaches use
-          different approaches. Some are more directive, others more reflective.
-          Some emphasize psychological aspects, others focus on practical
-          business challenges. The approach should match the executive's
-          learning style and needs.
-        </p>
-
-        <p className="mb-4">
-          <strong>Chemistry and Trust:</strong> The executive and coach need to
-          establish rapport and trust. Most coaches offer an initial
-          consultation to assess this fit before committing to a coaching
-          relationship.
-        </p>
-
-        <p className="mb-4">
-          <strong>Business Understanding:</strong> The coach should understand
-          organizational dynamics and business realities to provide relevant
-          guidance.
-        </p>
-
-        <h5 className="font-semibold mt-4">Maximizing Return on Investment</h5>
-        <p className="mb-4">
-          Organizations can increase the effectiveness of executive coaching by:
-        </p>
-
-        <p className="mb-4">
-          <strong>Setting Clear Objectives:</strong> Define what success looks
-          like at the outset of the coaching engagement.
-        </p>
-
-        <p className="mb-4">
-          <strong>Ensuring Organizational Alignment:</strong> The coaching goals
-          should support broader organizational objectives.
-        </p>
-
-        <p className="mb-4">
-          <strong>Involving Key Stakeholders:</strong> While maintaining
-          confidentiality, involve the executive's manager in setting objectives
-          and reviewing progress.
-        </p>
-
-        <p className="mb-4">
-          <strong>Creating Supportive Conditions:</strong> Ensure the executive
-          has opportunities to practice new skills and behaviors.
-        </p>
-
-        <p className="mb-4">
-          <strong>Measuring Results:</strong> Establish metrics to evaluate the
-          impact of coaching, which might include improved performance reviews,
-          team engagement scores, or specific business outcomes.
-        </p>
-
-        <h5 className="font-semibold mt-4">
-          Case Study: Transformational Leadership Coaching
+        <h5 className="font-bold mb-4">
+          Health and safety in small businesses
         </h5>
+
         <p className="mb-4">
-          Sarah Chen, newly appointed Chief Operating Officer at a mid-sized
-          technology company, engaged an executive coach to help her transition
-          from her previous role heading product development. While technically
-          brilliant, Sarah needed to develop broader leadership skills to
-          oversee multiple departments.
+          The rate of accidents at work is almost 75% higher in small businesses
+          than in larger companies. One possible reason is that many managers of
+          small businesses have an inadequate knowledge of health and safety
+          issues.
         </p>
 
         <p className="mb-4">
-          Through 360-degree feedback, Sarah discovered that while her teams
-          respected her expertise, they found her communication style overly
-          direct and sometimes dismissive of non-technical perspectives. With
-          her coach, Sarah developed specific strategies to improve her
-          listening skills, demonstrate appreciation for diverse viewpoints, and
-          articulate a compelling vision that resonated beyond the technical
-          teams.
+          Many managers of small businesses claim their situation is made worse
+          by bureaucracy, arguing that the huge number of regulations – not just
+          on health and safety but also on tax, the minimum wage, and much, much
+          more – makes their work difficult.
         </p>
 
         <p className="mb-4">
-          Six months later, employee engagement scores in her division had
-          improved by 24%, cross-departmental collaboration had increased, and
-          the executive team reported that Sarah was contributing more
-          effectively to strategic discussions. Sarah herself reported greater
-          confidence in her leadership approach and better work-life balance as
-          she learned to delegate more effectively.
+          Many managers are simply not aware of their responsibilities. They are
+          too busy running their companies to read manuals, employ consultants
+          or go to seminars. Moreover, the average business person doesn't know
+          where and how to get information.
         </p>
 
         <p className="mb-4">
-          "The coaching helped me see blind spots I didn't know I had," Sarah
-          said. "I'm now leading in a way that leverages my technical strengths
-          while bringing out the best in my entire team."
+          The Federation of Small Businesses argues that the special nature of
+          small businesses should be recognised by health and safety inspectors,
+          with an emphasis on education and how to comply with the law, rather
+          than simply on enforcement. For instance, inspectors could make
+          employers aware of what they really need to know, rather than swamping
+          them with mountains of leaflets which may not be relevant.
         </p>
 
-        <h5 className="font-semibold mt-4">Conclusion</h5>
         <p className="mb-4">
-          Executive coaching has evolved from remedial intervention to strategic
-          investment in leadership development. When properly implemented with
-          clear goals, appropriate coach selection, and organizational support,
-          it delivers significant benefits for both the individual and the
-          organization. As business environments become increasingly complex and
-          demanding, personalized development through coaching offers executives
-          the support they need to lead effectively.
+          Improvements are being made, however. The Health and Safety Executive
+          has issued a free guide to the most important health and safety laws
+          for employers. All employers must have their own health and safety
+          policy statement and, for businesses with more than five employees,
+          this must be in writing. It should be specific to the business and
+          clear about the arrangements for and organisation of health and safety
+          at work.
         </p>
-      </div>
 
+        <p className="mb-4">
+          We should state a strategy, detail how it will be implemented and by
+          whom, and say when it will be reviewed and updated. It is advisable to
+          involve employees in this process, as they have direct experience.
+        </p>
+
+        <p className="mb-4">
+          Assessing and identifying risks is the starting point. But to comply
+          with the law, businesses must train their employees about health and
+          safety, and provide information to others who need to know, such as
+          the contractors working for them. These are often smaller companies
+          that carry out most of the dangerous work. Helping them to get into
+          good safety habits makes it easier for them to tender for work from
+          big companies.
+        </p>
+
+        <p className="mb-4">
+          Other advice from the Health and Safety Executive for small businesses
+          tackles specific issues, such as helping small companies to deal with
+          work-related stress.
+        </p>
+      </div>{" "}
       {/* READING PASSAGE 3 */}
       <div className="mb-8">
         <h3 className="text-lg font-bold mb-4">SECTION 3: Questions 28-40</h3>
-        <p className="mb-2">
-          You should spend about 20 minutes on <strong>Questions 28-40</strong>,
-          which are based on Reading Passage 3 below.
-        </p>
 
-        <h4 className="font-bold mb-2">The Beaver: Nature's Engineer</h4>
+        <h5 className="font-bold mb-4">Jobs in Ancient Egypt</h5>
 
         <p className="mb-4">
-          For millions of years, beavers have shaped the landscape of North
-          America and Europe through their unique building activities, creating
-          wetland habitats that benefit countless other species. Known as
-          "nature's engineers," these rodents possess remarkable abilities to
-          modify their environment through dam construction, lodge building, and
-          canal digging. Once nearly extinct due to overhunting for their fur,
-          beavers are now making a comeback, and scientists are increasingly
-          recognizing their crucial role in ecosystem management and
-          restoration.
-        </p>
-
-        <h5 className="font-semibold mt-4">The Beaver's Natural History</h5>
-        <p className="mb-4">
-          Beavers are the second-largest rodents in the world (after capybaras),
-          with adults typically weighing 16-32 kg (35-70 pounds) and measuring
-          up to 1.2 meters (4 feet) in length, including their distinctive flat,
-          scaly tails. They belong to the genus Castor, with two extant species:
-          the North American beaver (Castor canadensis) and the Eurasian beaver
-          (Castor fiber). These species are remarkably similar in appearance and
-          behavior despite having evolved separately for over 7 million years.
+          In order to be engaged in the higher professions in ancient Egypt, a
+          person had to be literate and so first had to become a scribe. The
+          apprenticeship for this job lasted many years and was tough and
+          challenging. It principally involved memorizing hieroglyphic symbols
+          and practicing handwritten lettering. Scribes noted the everyday
+          activities in ancient Egypt and wrote about everything from grain
+          stocks to tax records. Therefore, most of our information on this rich
+          culture comes from their records. Most scribes were men from
+          privileged backgrounds. The occupation of scribe was among the most
+          sought-after in ancient Egypt. Craftspeople endeavored to get their
+          sons into the school for scribes, but they were rarely successful.
         </p>
 
         <p className="mb-4">
-          Perfectly adapted for their semi-aquatic lifestyle, beavers have
-          webbed hind feet, large incisor teeth for cutting wood, transparent
-          eyelids that function as underwater goggles, and dense fur that
-          provides insulation in cold water. Their most recognizable feature—the
-          broad, flat tail—serves multiple functions: as a rudder while
-          swimming, a prop for balance while cutting trees, a fat storage
-          reserve, and a warning device when slapped against the water's surface
-          to alert other beavers of danger.
+          As in many civilizations, the lower classes provided the means for
+          those above them to live comfortable lives. You needed to work if you
+          wanted to eat, but there was no shortage of jobs at any time in
+          Egypt's history. The commonplace items taken for granted today, such
+          as a brush or bowl, had to be made by hand; laundry had to be washed
+          by hand, clothing sewn, and sandals made from papyrus and palm leaves.
+          In order to make these and have paper to write on, papyrus plants had
+          to be harvested, processed and distributed and all these jobs needed
+          workers. There were rewards and sometimes difficulties. The reed
+          cutter, for example, who harvested papyrus plants along the Nile, had
+          to bear in mind that he worked in an area that was also home to
+          wildlife that, at times, could prove fatal.
         </p>
 
         <p className="mb-4">
-          Beavers are primarily nocturnal and are devoted to family life. They
-          typically live in colonies consisting of a monogamous adult pair and
-          their offspring from the current and previous year, with family units
-          averaging 6-8 individuals. Young beavers usually leave the colony at
-          two years of age to establish their own territories. With few natural
-          predators as adults, beavers can live up to 10 years in the wild and
-          sometimes longer in protected environments.
-        </p>
-
-        <h5 className="font-semibold mt-4">Masters of Construction</h5>
-        <p className="mb-4">
-          What truly sets beavers apart from other wildlife is their
-          extraordinary building behavior. Beavers build dams across streams to
-          create ponds that provide protection from predators, access to food
-          during winter, and a water route for transporting building materials.
-          Using branches, mud, stones, and other available materials, they
-          construct dams that can span more than 100 meters (328 feet) in length
-          and stand up to 3 meters (10 feet) tall. Beaver dams are remarkably
-          durable structures that can last for decades with regular maintenance.
+          At the bottom rung of all these jobs were the people who served as the
+          basis for the entire economy: the farmers. Farmers usually did not own
+          the land they worked. They were given food, implements, and living
+          quarters as payment for their labor. Although there were many more
+          glamorous jobs than farming, farmers were the backbone of the Egyptian
+          economy and sustained everyone else.
         </p>
 
         <p className="mb-4">
-          Within their ponds, beavers build dome-shaped lodges with underwater
-          entrances that lead to dry living chambers above the water line. These
-          shelters protect them from predators and weather extremes. The living
-          chamber is kept clean, dry, and well-ventilated through a small air
-          hole at the top of the lodge. In winter, the wet walls of the lodge
-          freeze, creating a fortress-like structure that predators find nearly
-          impossible to penetrate.
+          The details of lower-class jobs are known from medical reports on the
+          treatment of injuries, letters, and documents written on various
+          professions, literary works, tomb inscriptions, and artistic
+          representations. This evidence presents a comprehensive view of daily
+          work in ancient Egypt – how the jobs were done, and sometimes how
+          people felt about the work. In general, the Egyptians seem to have
+          felt pride in their work no matter what their occupation. Everyone had
+          something to contribute to the community, and no skills seem to have
+          been considered non-essential. The potter who produced cups and bowls
+          was as important to the community as the scribe, and the amulet-maker
+          as vital as the pharmacist.
         </p>
 
         <p className="mb-4">
-          Perhaps most impressive is beavers' ability to construct water canals,
-          sometimes extending hundreds of meters from their pond. These canals,
-          typically about 1 meter wide and 0.5 meters deep, allow them to
-          transport food and building materials with minimal effort and reduced
-          exposure to land predators. Some canal systems include series of small
-          dams that maintain water levels across changing terrain—a feat of
-          engineering that demonstrates an intuitive understanding of
-          hydraulics.
-        </p>
-
-        <h5 className="font-semibold mt-4">Ecological Benefits</h5>
-        <p className="mb-4">
-          Far from being mere curiosities, beaver modifications to the landscape
-          provide numerous ecological benefits. Their dams and ponds create
-          wetland habitats that support remarkable biodiversity. Research has
-          documented significant increases in the number of bird species,
-          amphibians, fish, and invertebrates in areas colonized by beavers. One
-          study in Wyoming found that beaver ponds supported 75 species of
-          waterbirds compared to just 18 species in nearby undammed streams.
+          Part of making a living, regardless of one's special skills, was
+          taking part in the king's monumental building projects. Although it is
+          commonly believed that the great monuments and temples of Egypt were
+          achieved through slave labor, there is absolutely no evidence to
+          support this. The pyramids and other monuments were built by Egyptian
+          laborers who either donated their time as community service or were
+          paid for their labor, and Egyptians from every occupation could be
+          called on to do this.
         </p>
 
         <p className="mb-4">
-          Beaver dams improve water quality by trapping sediment and filtering
-          out pollutants. The ponds they create recharge groundwater supplies,
-          raise the water table in the surrounding area, and help maintain
-          stream flows during dry periods. This water storage capacity makes
-          beaver-modified landscapes significantly more resistant to drought,
-          and their ponds can act as natural firebreaks during forest fires. The
-          dams also slow water flow, reducing downstream flooding after heavy
-          rainfall.
+          Stone had to first be quarried and this required workers to split the
+          blocks from the rock cliffs. It was done by inserting wooden wedges in
+          the rock which would swell and cause the stone to break from the face.
+          The often huge blocks were then pushed onto sleds, devices better
+          suited than wheeled vehicles to moving weighty objects over shifting
+          sand. They were then rolled to a different location where they could
+          be cut and shaped. This job was done by skilled stonemasons working
+          with copper chisels and wooden mallets. As the chisels could get
+          blunt, a specialist in sharpening would take the tool, sharpen it, and
+          bring it back. This would have been constant daily work as the masons
+          could wear down their tools on a single block.
         </p>
 
         <p className="mb-4">
-          In cold regions, beaver ponds can provide crucial winter habitat for
-          fish when other parts of streams freeze solid. The warmer, deeper
-          water of beaver ponds offers refuge for species like trout that might
-          otherwise perish. Additionally, beavers' tree-cutting and damming
-          activities create forest openings that promote habitat diversity and
-          stimulate new growth, benefiting species that require different forest
-          stages.
-        </p>
-
-        <h5 className="font-semibold mt-4">Historical Decline and Recovery</h5>
-        <p className="mb-4">
-          Historically, beavers were among the most widespread and numerous
-          mammals in North America, with population estimates ranging from 60 to
-          400 million before European colonization. In Europe, they were
-          similarly abundant. However, intensive trapping for their fur,
-          waterproof and ideal for hats and coats, led to their near extinction
-          in many regions by the early 1900s. The North American beaver was
-          reduced to perhaps 100,000 animals, while the Eurasian beaver survived
-          only in small, scattered populations across Europe and Asia.
+          The blocks were then moved into position by unskilled laborers. These
+          people were mostly farmers who could do nothing with their land during
+          the months when the Nile River overflowed its banks. Egyptologists Bob
+          Brier and Hoyt Hobbs explain: 'For two months annually, workmen
+          gathered by the tens of thousands from all over the country to
+          transport the blocks a permanent crew had quarried during the rest of
+          the year. Overseers organized the men into teams to transport the
+          stones on the sleds.' Once the pyramid was complete, the inner
+          chambers needed to be decorated by scribes who painted elaborate
+          images on the walls. Interior work on tombs and temples also required
+          sculptors who could expertly cut away the stone around certain figures
+          or scenes that had been painted.
         </p>
 
         <p className="mb-4">
-          The 20th century saw a remarkable recovery for both species thanks to
-          hunting regulations, reintroduction programs, and natural expansion
-          from surviving populations. Today, North American beavers number
-          between 10-15 million, while Eurasian beaver populations continue to
-          grow across their native range. This recovery, although impressive,
-          still leaves beaver numbers at a fraction of their historical
-          abundance.
-        </p>
-
-        <h5 className="font-semibold mt-4">
-          Beavers and Modern Water Management
-        </h5>
-        <p className="mb-4">
-          As climate change brings more intense droughts and floods to many
-          regions, the beaver's water-storing abilities are gaining new
-          appreciation among scientists and land managers. The term
-          "beaver-powered" has emerged to describe restoration projects that
-          either directly reintroduce beavers or mimic their dam-building
-          effects to restore degraded watersheds.
-        </p>
-
-        <p className="mb-4">
-          In the western United States, beaver reintroductions have successfully
-          restored eroded stream channels, raised water tables, and revitalized
-          riparian vegetation. In the United Kingdom, beaver trials in Devon
-          have demonstrated the animals' ability to reduce downstream flooding
-          by up to 30% during heavy rain events. These projects highlight how
-          working with nature—specifically, harnessing beavers' instinctive
-          behaviors—can provide cost-effective solutions to water management
-          challenges.
-        </p>
-
-        <h5 className="font-semibold mt-4">The Human-Beaver Relationship</h5>
-        <p className="mb-4">
-          Despite their ecological benefits, beavers' construction activities
-          sometimes conflict with human land uses. Flooding from beaver dams can
-          damage roads, agricultural fields, and other infrastructure. Their
-          tree-cutting can impact valuable timber or ornamental trees. These
-          conflicts have traditionally been addressed through lethal control,
-          but more coexistence strategies are now being implemented.
-        </p>
-
-        <p className="mb-4">
-          Flow devices, often called "beaver deceivers," can regulate water
-          levels in beaver ponds to prevent unwanted flooding. Tree guards
-          protect valuable trees while allowing beavers to remain in an area.
-          Increasingly, communities are finding that accommodating and managing
-          beaver activity is more cost-effective and beneficial than removing
-          them entirely.
-        </p>
-
-        <p className="mb-4">
-          Indigenous peoples across North America have long recognized the
-          beaver's ecological importance and incorporated the animal into their
-          cultural practices and stories. The beaver's recent recovery offers an
-          opportunity to integrate this traditional knowledge with modern
-          scientific understanding, developing a more harmonious relationship
-          between humans and these remarkable ecosystem engineers.
-        </p>
-
-        <p className="mb-4">
-          As we face unprecedented environmental challenges, the humble beaver
-          offers a compelling model of how a single species can positively
-          transform landscapes. Their recovery represents not just a
-          conservation success story, but a valuable opportunity to rethink our
-          approach to ecosystem management and restoration.
+          While these artists were highly skilled, everyone – no matter what
+          their job for the rest of the year – was expected to contribute to
+          communal projects. This practice was in keeping with the value of
+          ma'at (harmony and balance) which was central to Egyptian culture. One
+          was expected to care for others as much as oneself and contributing to
+          the common good was an expression of this. There is no doubt there
+          were many people who did not love their job every day, but the
+          Egyptian government was aware of how hard the people worked and so
+          staged a number of festivals throughout the year to show gratitude and
+          give them days off to relax.
         </p>
       </div>
     </div>

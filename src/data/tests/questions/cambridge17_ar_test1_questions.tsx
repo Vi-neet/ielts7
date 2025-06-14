@@ -822,7 +822,6 @@ export const Cambridge17ARTest1Questions: React.FC = () => {
                 </div>
               </RadioGroup>
             </div>
-
             <div className="question-item">
               <p className="mb-3">
                 <strong>37.</strong> Why does the reviewer include examples of
@@ -857,8 +856,7 @@ export const Cambridge17ARTest1Questions: React.FC = () => {
                   </Label>
                 </div>
               </RadioGroup>
-            </div>
-
+            </div>{" "}
             <div className="question-item">
               <p className="mb-3">
                 <strong>38.</strong> What point does the reviewer make about
@@ -868,33 +866,29 @@ export const Cambridge17ARTest1Questions: React.FC = () => {
                 <div className="flex items-center">
                   <RadioGroupItem id="q38-a" value="A" />
                   <Label htmlFor="q38-a" className="ml-2">
-                    A He chose to celebrate an unsuccessful phase of his life.
+                    A He chose to celebrate what was essentially a defeat.
                   </Label>
                 </div>
                 <div className="flex items-center">
                   <RadioGroupItem id="q38-b" value="B" />
                   <Label htmlFor="q38-b" className="ml-2">
-                    B He misunderstood how unpopular his father had been with
-                    the English people.
+                    B He misunderstood the motives of his opponents.
                   </Label>
                 </div>
                 <div className="flex items-center">
                   <RadioGroupItem id="q38-c" value="C" />
                   <Label htmlFor="q38-c" className="ml-2">
-                    C He failed to recognize how fortunate he had been to
-                    escape.
+                    C He aimed to restore people's faith in the monarchy.
                   </Label>
                 </div>
                 <div className="flex items-center">
                   <RadioGroupItem id="q38-d" value="D" />
                   <Label htmlFor="q38-d" className="ml-2">
-                    D He was unaware of the impact of his story on the English
-                    royal family.
+                    D He was driven by a desire to be popular.
                   </Label>
                 </div>
               </RadioGroup>
-            </div>
-
+            </div>{" "}
             <div className="question-item">
               <p className="mb-3">
                 <strong>39.</strong> What does the reviewer say about Charles
@@ -904,64 +898,61 @@ export const Cambridge17ARTest1Questions: React.FC = () => {
                 <div className="flex items-center">
                   <RadioGroupItem id="q39-a" value="A" />
                   <Label htmlFor="q39-a" className="ml-2">
-                    A He is very knowledgeable about the historical period in
-                    question.
+                    A His decision to write the book comes as a surprise.
                   </Label>
                 </div>
                 <div className="flex items-center">
                   <RadioGroupItem id="q39-b" value="B" />
                   <Label htmlFor="q39-b" className="ml-2">
-                    B He displays a certain prejudice against Charles II.
+                    B He takes an unbiased approach to the subject matter.
                   </Label>
                 </div>
                 <div className="flex items-center">
                   <RadioGroupItem id="q39-c" value="C" />
                   <Label htmlFor="q39-c" className="ml-2">
-                    C He has a particularly simple and direct writing style.
+                    C His descriptions of events would be better if they
+                    included more detail.
                   </Label>
                 </div>
                 <div className="flex items-center">
                   <RadioGroupItem id="q39-d" value="D" />
                   <Label htmlFor="q39-d" className="ml-2">
-                    D He concentrates more on factual information than on
-                    analysis.
+                    D He chooses language that is suitable for a
+                    twenty-first-century audience.
                   </Label>
                 </div>
               </RadioGroup>
-            </div>
-
+            </div>{" "}
             <div className="question-item">
               <p className="mb-3">
-                <strong>40.</strong> Which of the following best summarizes the
-                reviewer's opinion of the book?
+                <strong>40.</strong> When the reviewer says the book 'doesn't
+                quite hit the mark', she is making the point that
               </p>
               <RadioGroup name="question40" className="space-y-2">
                 <div className="flex items-center">
                   <RadioGroupItem id="q40-a" value="A" />
                   <Label htmlFor="q40-a" className="ml-2">
-                    A It maintains the reader's interest despite the historian's
-                    occasionally awkward style.
+                    A it overlooks the impact of events on ordinary people.
                   </Label>
                 </div>
                 <div className="flex items-center">
                   <RadioGroupItem id="q40-b" value="B" />
                   <Label htmlFor="q40-b" className="ml-2">
-                    B It is a compelling account of the events though with some
-                    minor weaknesses.
+                    B it lacks an analysis of prevalent views on monarchy.
                   </Label>
                 </div>
                 <div className="flex items-center">
                   <RadioGroupItem id="q40-c" value="C" />
                   <Label htmlFor="q40-c" className="ml-2">
-                    C It would be better if it included more analysis of Charles
-                    II's political role.
+                    C it omits any references to the deceit practised by Charles
+                    II during his time in hiding.
                   </Label>
                 </div>
                 <div className="flex items-center">
                   <RadioGroupItem id="q40-d" value="D" />
                   <Label htmlFor="q40-d" className="ml-2">
-                    D It provides an original analysis of Charles II's character
-                    which may lead to debate.
+                    D it fails to address whether Charles II's experiences had a
+                    lasting influence on him.
                   </Label>
                 </div>
               </RadioGroup>

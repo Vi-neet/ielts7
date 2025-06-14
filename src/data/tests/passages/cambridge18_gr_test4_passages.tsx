@@ -15,15 +15,12 @@ const Cambridge18GRTest4Passages: React.FC = () => {
           <p className="mb-2">
             Read the text below and answer <strong>Questions 1–7</strong>.
           </p>
-
           <h4 className="font-bold mb-2 mt-4">The best ice cream makers</h4>
-
           <p className="mb-2 italic">
             Have you ever considered making ice cream at home but thought it
             would be too complicated? Here is a selection of machines that could
             change your mind
           </p>
-
           <p className="font-bold mt-4 mb-2">A Magimix Gelato Expert</p>
           <p className="mb-4">
             If you're an ice cream fanatic, it doesn't get better than this.
@@ -33,7 +30,6 @@ const Cambridge18GRTest4Passages: React.FC = () => {
             hand, we found it noisier than many, and the ice cream is softer
             than we might have liked.
           </p>
-
           <p className="font-bold mt-4 mb-2">B Shake n Make Ice Cream Maker</p>
           <p className="mb-4">
             If you want to make some basic soft ice cream, this is a fun little
@@ -43,20 +39,18 @@ const Cambridge18GRTest4Passages: React.FC = () => {
             you measure everything exactly and shake back and forth
             consistently, it's surprisingly efficient.
           </p>
-
           <p className="font-bold mt-4 mb-2">C Sage Smart Scoop</p>
           <p className="mb-4">
             This is a seriously smart machine. Our favourite feature is the
-            built-in sensor that works out whether the consistency of your ice
+            built—in sensor that works out whether the consistency of your ice
             cream or frozen yoghurt is right for you (from the 12 hardness
             settings) so that it can stop mixing when it's ready, alerting you
             with a fun tune. As you'd expect from the considerable price tag,
             there's a built-in freezer and it feels beautifully engineered.
           </p>
-
           <p className="font-bold mt-4 mb-2">
             D Lakeland Digital Ice Cream Maker
-          </p>
+          </p>{" "}
           <p className="mb-4">
             You simply pop on the lid and pour in the ingredients, then set the
             timer using the nice, clear digital display. Some customers
@@ -64,16 +58,14 @@ const Cambridge18GRTest4Passages: React.FC = () => {
             paddle, but we didn't have that problem. We're also giving it extra
             points for the recipe book, which has some really tasty ideas.
           </p>
-
-          <p className="font-bold mt-4 mb-2">E Judge Ice Cream Maker</p>
+          <p className="font-bold mt-4 mb-2">E Judge Ice Cream Maker</p>{" "}
           <p className="mb-4">
             We had a few criticisms, perhaps not surprisingly when you consider
-            this is one of the cheapest models in our selection – notably the
+            this is one of the cheapest models in our selection — notably the
             fact that the paddle isn't as robust as the ones in other models.
             We'd have liked more recipes, too. But, for a budget machine, this
             is a bargain.
           </p>
-
           <p className="font-bold mt-4 mb-2">
             F KitchenAid Artisan Ice Cream Maker
           </p>
@@ -91,11 +83,9 @@ const Cambridge18GRTest4Passages: React.FC = () => {
           <p className="mb-2">
             Read the text below and answer <strong>Questions 8–14</strong>.
           </p>
-
           <h4 className="font-bold mb-2 mt-4">
             Photography weekend course on the coast of Cornwall
-          </h4>
-
+          </h4>{" "}
           <p className="mb-4">
             Our three-night photography weekend is designed to appeal to all
             levels. Participants will be able to enjoy some of the fantastic
@@ -103,19 +93,16 @@ const Cambridge18GRTest4Passages: React.FC = () => {
             while staying in a comfortable hotel and enjoying some typical
             dishes of this south-western region of Britain.
           </p>
-
           <p className="mb-4">
             Price includes: Personal daily tuition, discussions, welcome
             reception, and dinner, bed and breakfast for three nights in a twin
             or double room.
           </p>
-
           <p className="mb-4">
             Price does not include: Insurance and photographic equipment plus
             transport to photographic venues. Participants are required to
             arrange this. Car share during the weekend is a popular option.
           </p>
-
           <p className="font-bold mt-4 mb-2">Course information</p>
           <ul className="list-disc ml-6 mb-4">
             <li className="mb-2">
@@ -154,12 +141,10 @@ const Cambridge18GRTest4Passages: React.FC = () => {
           <h3 className="font-bold mb-2">Questions 15–21</h3>
           <p className="mb-2">
             Read the text below and answer <strong>Questions 15–21</strong>.
-          </p>
-
+          </p>{" "}
           <h4 className="font-bold mb-2 mt-4">
-            Respiratory Protective Equipment – advice for factory employees
+            Respiratory Protective Equipment — advice for factory employees
           </h4>
-
           <p className="mb-4">
             You need to wear Respiratory Protective Equipment (RPE) when you're
             doing work where you could breathe in hazardous substances in the
@@ -168,7 +153,6 @@ const Cambridge18GRTest4Passages: React.FC = () => {
             sure you are using the right RPE for the task. For example, negative
             pressure respirators should not be used in low oxygen environments.
           </p>
-
           <p className="mb-4">
             Some types of RPE must have a tight seal around the facial area to
             be effective. Your employer will arrange a yearly facial fit test to
@@ -181,14 +165,12 @@ const Cambridge18GRTest4Passages: React.FC = () => {
             employer about other forms of RPE that do not rely on a tight facial
             fit. Jewellery and long hair can also compromise an effective fit.
           </p>
-
           <p className="font-bold mt-4 mb-2">Using your RPE</p>
           <p className="mb-4">
             You should complete a visual check of your RPE for signs of damage
             before you use it. If you are using RPE that requires a tight fit,
             you must check it fits properly before entering a hazardous area.
           </p>
-
           <p className="font-bold mt-4 mb-2">Cleaning your RPE</p>
           <p className="mb-4">
             Wash and dry your RPE after using it. Use a mild detergent, as harsh
@@ -197,7 +179,6 @@ const Cambridge18GRTest4Passages: React.FC = () => {
             that can cause skin irritation. Dry your RPE on a solid wooden rack
             or suspend from a clothes line.
           </p>
-
           <p className="font-bold mt-4 mb-2">Maintaining your RPE</p>
           <p className="mb-4">
             Inspect your RPE after each use and during cleaning. Make sure you
@@ -205,7 +186,6 @@ const Cambridge18GRTest4Passages: React.FC = () => {
             of elasticity. Check the inhalation and exhalation valves are
             working and not damaged.
           </p>
-
           <p className="font-bold mt-4 mb-2">Storing your RPE</p>
           <p className="mb-4">
             Improper storage can cause distortion to your RPE. Store your RPE in
@@ -243,9 +223,9 @@ const Cambridge18GRTest4Passages: React.FC = () => {
             <li className="mb-1">
               Have a system for cleaning up milk, oil, cleaning fluid and grain
               spills as soon as they happen, and make sure it is followed.
-            </li>
+            </li>{" "}
             <li className="mb-1">
-              Install non-slip mats in wet work areas and make sure that
+              Install non—slip mats in wet work areas and make sure that
               footwear is slip-resistant.
             </li>
           </ul>
@@ -336,10 +316,8 @@ const Cambridge18GRTest4Passages: React.FC = () => {
           <p className="mb-2">
             Read the text below and answer <strong>Questions 28–40</strong>.
           </p>
-
           <h4 className="font-bold mb-2 mt-4">Night photography in autumn</h4>
-
-          <p className="font-bold mt-4 mb-2">A</p>
+          <p className="font-bold mt-4 mb-2">A</p>{" "}
           <p className="mb-4">
             November in the northern hemisphere is not the most inspiring of
             months for the photographer. The days shorten appreciably as winter
@@ -355,8 +333,7 @@ const Cambridge18GRTest4Passages: React.FC = () => {
             life forms still thrive, and provide a completely different set of
             subjects to those the daylight hours present.
           </p>
-
-          <p className="font-bold mt-4 mb-2">B</p>
+          <p className="font-bold mt-4 mb-2">B</p>{" "}
           <p className="mb-4">
             As the most noticeable object in the night sky, the moon is an
             obvious subject when making your initial attempts at night
@@ -364,7 +341,7 @@ const Cambridge18GRTest4Passages: React.FC = () => {
             because, not only does it vary according to the time of year, but
             the moon always appears largest at this point, when it is closest to
             the horizon. To capture the moon at its brilliant best, you need a
-            bit of luck too: a time when its brightest phase – a full moon –
+            bit of luck too: a time when its brightest phase — a full moon —
             coincides with the ideal weather forecast of a cloudless night sky.
             The moon is not a direct light source such as the sun or the stars;
             instead it is reflecting the light of the sun hitting its surface.
@@ -372,7 +349,6 @@ const Cambridge18GRTest4Passages: React.FC = () => {
             the sunlight, but that is still enough to illuminate buildings,
             trees, bridges and other landscape features.
           </p>
-
           <p className="font-bold mt-4 mb-2">C</p>
           <p className="mb-4">
             With today's cameras, far greater detail can be rendered. Whole
@@ -383,7 +359,6 @@ const Cambridge18GRTest4Passages: React.FC = () => {
             accessible to all photographers, thanks to the much improved,
             affordable technology.
           </p>
-
           <p className="mb-4">
             However, photographers choosing to shoot the moon may be less
             concerned by this, as they tend to prefer to use telephoto lenses to
@@ -391,8 +366,7 @@ const Cambridge18GRTest4Passages: React.FC = () => {
             and can be shown in relation to a landmark or recognisable structure
             within the frame.
           </p>
-
-          <p className="font-bold mt-4 mb-2">D</p>
+          <p className="font-bold mt-4 mb-2">D</p>{" "}
           <p className="mb-4">
             Of course, the nocturnal world offers other subjects closer to the
             ground, some that are even familiar to us by day. As cities and
@@ -400,7 +374,6 @@ const Cambridge18GRTest4Passages: React.FC = () => {
             further afield to escape our intrusions, while others adapt to their
             new urbanised surroundings.
           </p>
-
           <p className="mb-4">
             In European cities, sightings of foxes at night are increasingly
             common, as they thrive thanks to the cover of darkness and a ready
@@ -409,7 +382,6 @@ const Cambridge18GRTest4Passages: React.FC = () => {
             urban fringes in recent years, emerging from the cover of parks and
             nearby forests to forage in residential gardens by night.
           </p>
-
           <p className="font-bold mt-4 mb-2">E</p>
           <p className="mb-4">
             Such is the proliferation of urban wildlife that some photographers
@@ -421,7 +393,6 @@ const Cambridge18GRTest4Passages: React.FC = () => {
             dusk, without having to always resort to the use of specialist
             equipment.
           </p>
-
           <p className="mb-4">
             More exciting still is how the techniques of astro-photography and
             the wildlife camera-trap have combined in recent years, to produce
@@ -429,7 +400,6 @@ const Cambridge18GRTest4Passages: React.FC = () => {
             night sky. This marriage of two photographic genres has created an
             innovative style of night photography.
           </p>
-
           <p className="font-bold mt-4 mb-2">F</p>
           <p className="mb-4">
             If that all sounds a bit too complex and time-consuming, with too
@@ -442,14 +412,13 @@ const Cambridge18GRTest4Passages: React.FC = () => {
             surroundings to be seen without the aid of artificial light sources
             such as floodlights or street lamps.
           </p>
-
-          <p className="font-bold mt-4 mb-2">G</p>
+          <p className="font-bold mt-4 mb-2">G</p>{" "}
           <p className="mb-4">
             While many of us shoot sunsets, the period of dusk also provides an
             opportunity to use the ambient light low in the sky as a backdrop to
             photographing foreground subjects in varying stages of illumination,
             or even as shadowy outlines against the fading sky. The variety of
-            possible subjects includes ships at sea, flocks of low-flying birds,
+            possible subjects includes ships at sea, flocks of low—flying birds,
             trees, windmills, skyscrapers and high bridges. These are all well
             known by day, but against a night sky at dusk they lack colour, so
             any compositional strength is determined by the graphic appeal of
