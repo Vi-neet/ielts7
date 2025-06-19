@@ -695,26 +695,41 @@ export const Cambridge19GRTest1Questions: React.FC = () => {
               Write the correct number, <strong>i-viii</strong>, in{" "}
               <strong>boxes 28-32</strong> on your answer sheet.
             </p>
-          </div>
-
+          </div>{" "}
           <div className="bg-gray-50 p-4 rounded-lg border mb-6">
             <h4 className="font-bold mb-2">List of Headings</h4>
-            <ul className="list-roman ml-6">
-              <li>Why emojis may have a short life</li>
-              <li>Ways in which new emojis are designed and made available</li>
-              <li>How words and emojis both fulfil new needs in our society</li>
-              <li>
-                How emojis are regarded in different ways by different cultures
-              </li>
-              <li>
-                The use of emojis in different fields and what this means for us
-              </li>
-              <li>The rapid spread of a new way of interacting</li>
-              <li>How and where emojis were first invented</li>
-              <li>The value of emojis for making feelings clear</li>
-            </ul>
+            <div className="ml-6">
+              <div className="mb-2">
+                <strong>i</strong> Why emojis may have a short life
+              </div>
+              <div className="mb-2">
+                <strong>ii</strong> Ways in which new emojis are designed and
+                made available
+              </div>
+              <div className="mb-2">
+                <strong>iii</strong> How words and emojis both fulfil new needs
+                in our society
+              </div>
+              <div className="mb-2">
+                <strong>iv</strong> How emojis are regarded in different ways by
+                different cultures
+              </div>
+              <div className="mb-2">
+                <strong>v</strong> The use of emojis in different fields and
+                what this means for us
+              </div>
+              <div className="mb-2">
+                <strong>vi</strong> The rapid spread of a new way of interacting
+              </div>
+              <div className="mb-2">
+                <strong>vii</strong> How and where emojis were first invented
+              </div>
+              <div className="mb-2">
+                <strong>viii</strong> The value of emojis for making feelings
+                clear
+              </div>
+            </div>
           </div>
-
           <div className="space-y-4 mt-4">
             <div className="question-item">
               <p className="mb-2">
