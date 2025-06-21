@@ -27,12 +27,29 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <link 
-          href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" 
-          rel="stylesheet" 
+        {/* Google Analytics - Must be immediately after <head> */}
+        <script
+          async
+          src="https://www.googletagmanager.com/gtag/js?id=G-RVMMCZDLS0"
+        ></script>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-RVMMCZDLS0');
+            `,
+          }}
+        />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet"
         />
       </head>
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+      >
         <Header />
         <main>{children}</main>
         <Footer />
