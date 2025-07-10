@@ -42,6 +42,39 @@ export default function RootLayout({
             `,
           }}
         />
+        {/* Client-side fallback for Android 8 detection */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                try {
+                  // Only run if middleware didn't catch it (fallback)
+                  if (typeof window !== 'undefined' && navigator.userAgent) {
+                    var ua = navigator.userAgent;
+                    console.log('Client-side UA check:', ua);
+                    
+                    // Multiple patterns for better Android 8 detection
+                    var patterns = [
+                      /Android\\s+8/i,
+                      /Android[\\s\\/]8/i,
+                      /;\\s*wv\\).*Android\\s+8/i
+                    ];
+                    
+                    for (var i = 0; i < patterns.length; i++) {
+                      if (patterns[i].test(ua)) {
+                        console.log('Client-side Android 8 detected, redirecting...');
+                        window.location.replace('https://i7-pink.vercel.app/');
+                        return;
+                      }
+                    }
+                  }
+                } catch (e) {
+                  console.error('Client-side detection error:', e);
+                }
+              })();
+            `,
+          }}
+        />
         <link
           href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap"
           rel="stylesheet"

@@ -3,8 +3,6 @@
 import { useEffect, useRef } from "react";
 import HeroSection from "@/components/home/HeroSection";
 import PracticeTestsSection from "@/components/home/PracticeTestsSection";
-import FeaturesSection from "@/components/home/FeaturesSection";
-import CTASection from "@/components/home/CTASection";
 
 const HomePage = () => {
   const practiceTestsRef = useRef<HTMLDivElement>(null);
@@ -27,8 +25,6 @@ const HomePage = () => {
       <div ref={practiceTestsRef}>
         <PracticeTestsSection />
       </div>
-      {/* <FeaturesSection /> */}
-      {/* <CTASection /> */}
     </main>
   );
 };
