@@ -1,5 +1,4 @@
-import { TestContent } from "@/lib/types";
-import dynamic from "next/dynamic";
+import { TestContent } from "@/types";
 
 // Create a mapping of test IDs to dynamic import functions
 export const TestRegistry: Record<string, () => Promise<TestContent>> = {
@@ -829,300 +828,392 @@ export const TestRegistry: Record<string, () => Promise<TestContent>> = {
       questions: <Cambridge19GRTest4Questions />,
       answers: answersModule.default
     };
-  }
+  },
+
+    // Cambridge 20 Academic Reading
+  "cambridge20_ar_test1": async () => {
+    const [passagesModule, questionsModule, answersModule] = await Promise.all([
+      import("./passages/cambridge20_ar_test1_passages"),
+      import("./questions/cambridge20_ar_test1_questions"),
+      import("./answers/cambridge20_ar_test1_answers")
+    ]);
+    
+    const { Cambridge20ARTest1Passages } = passagesModule;
+    const { Cambridge20ARTest1Questions } = questionsModule;
+    
+    return {
+      passages: <Cambridge20ARTest1Passages />,
+      questions: <Cambridge20ARTest1Questions />,
+      answers: answersModule.default
+    };
+  },
+  
+  "cambridge20_ar_test2": async () => {
+    const [passagesModule, questionsModule, answersModule] = await Promise.all([
+      import("./passages/cambridge20_ar_test2_passages"),
+      import("./questions/cambridge20_ar_test2_questions"),
+      import("./answers/cambridge20_ar_test2_answers")
+    ]);
+    
+    const { Cambridge20ARTest2Passages } = passagesModule;
+    const { Cambridge20ARTest2Questions } = questionsModule;
+    
+    return {
+      passages: <Cambridge20ARTest2Passages />,
+      questions: <Cambridge20ARTest2Questions />,
+      answers: answersModule.default
+    };
+  },
+  
+  "cambridge20_ar_test3": async () => {
+    const [passagesModule, questionsModule, answersModule] = await Promise.all([
+      import("./passages/cambridge20_ar_test3_passages"),
+      import("./questions/cambridge20_ar_test3_questions"),
+      import("./answers/cambridge20_ar_test3_answers")
+    ]);
+    
+    const { Cambridge20ARTest3Passages } = passagesModule;
+    const { Cambridge20ARTest3Questions } = questionsModule;
+    
+    return {
+      passages: <Cambridge20ARTest3Passages />,
+      questions: <Cambridge20ARTest3Questions />,
+      answers: answersModule.default
+    };
+  },
+  
+  "cambridge20_ar_test4": async () => {
+    const [passagesModule, questionsModule, answersModule] = await Promise.all([
+      import("./passages/cambridge20_ar_test4_passages"),
+      import("./questions/cambridge20_ar_test4_questions"),
+      import("./answers/cambridge20_ar_test4_answers")
+    ]);
+    
+    const { Cambridge20ARTest4Passages } = passagesModule;
+    const { Cambridge20ARTest4Questions } = questionsModule;
+    
+    return {
+      passages: <Cambridge20ARTest4Passages />,
+      questions: <Cambridge20ARTest4Questions />,
+      answers: answersModule.default
+    };
+  },
 };
 
 // Test metadata without the heavy components - for listing purposes
 export const TestMetadata = {
-  "cambridge13_ar_test1": {
+  cambridge13_ar_test1: {
     title: "Cambridge 13 Academic Reading Test 1",
     type: "academic_reading",
     book: 13,
-    testNumber: 1
+    testNumber: 1,
   },
-  "cambridge13_ar_test2": {
+  cambridge13_ar_test2: {
     title: "Cambridge 13 Academic Reading Test 2",
     type: "academic_reading",
     book: 13,
-    testNumber: 2
+    testNumber: 2,
   },
-  "cambridge13_ar_test3": {
+  cambridge13_ar_test3: {
     title: "Cambridge 13 Academic Reading Test 3",
     type: "academic_reading",
     book: 13,
-    testNumber: 3
+    testNumber: 3,
   },
-  "cambridge13_ar_test4": {
+  cambridge13_ar_test4: {
     title: "Cambridge 13 Academic Reading Test 4",
     type: "academic_reading",
     book: 13,
-    testNumber: 4
+    testNumber: 4,
   },
-  "cambridge14_ar_test1": {
+  cambridge14_ar_test1: {
     title: "Cambridge 14 Academic Reading Test 1",
     type: "academic_reading",
     book: 14,
-    testNumber: 1
+    testNumber: 1,
   },
-  "cambridge14_ar_test2": {
+  cambridge14_ar_test2: {
     title: "Cambridge 14 Academic Reading Test 2",
     type: "academic_reading",
     book: 14,
-    testNumber: 2
+    testNumber: 2,
   },
-  "cambridge14_ar_test3": {
+  cambridge14_ar_test3: {
     title: "Cambridge 14 Academic Reading Test 3",
     type: "academic_reading",
     book: 14,
-    testNumber: 3
+    testNumber: 3,
   },
-  "cambridge14_ar_test4": {
+  cambridge14_ar_test4: {
     title: "Cambridge 14 Academic Reading Test 4",
     type: "academic_reading",
     book: 14,
-    testNumber: 4
+    testNumber: 4,
   },
-  "cambridge15_ar_test1": {
+  cambridge15_ar_test1: {
     title: "Cambridge 15 Academic Reading Test 1",
     type: "academic_reading",
     book: 15,
-    testNumber: 1
+    testNumber: 1,
   },
-  "cambridge15_ar_test2": {
+  cambridge15_ar_test2: {
     title: "Cambridge 15 Academic Reading Test 2",
     type: "academic_reading",
     book: 15,
-    testNumber: 2
+    testNumber: 2,
   },
-  "cambridge15_ar_test3": {
+  cambridge15_ar_test3: {
     title: "Cambridge 15 Academic Reading Test 3",
     type: "academic_reading",
     book: 15,
-    testNumber: 3
+    testNumber: 3,
   },
-  "cambridge15_ar_test4": {
+  cambridge15_ar_test4: {
     title: "Cambridge 15 Academic Reading Test 4",
     type: "academic_reading",
     book: 15,
-    testNumber: 4
+    testNumber: 4,
   },
-  "cambridge15_gr_test1": {
+  cambridge15_gr_test1: {
     title: "Cambridge 15 General Reading Test 1",
     type: "general_reading",
     book: 15,
-    testNumber: 1
+    testNumber: 1,
   },
-  "cambridge15_gr_test2": {
+  cambridge15_gr_test2: {
     title: "Cambridge 15 General Reading Test 2",
     type: "general_reading",
     book: 15,
-    testNumber: 2
+    testNumber: 2,
   },
-  "cambridge15_gr_test3": {
+  cambridge15_gr_test3: {
     title: "Cambridge 15 General Reading Test 3",
     type: "general_reading",
     book: 15,
-    testNumber: 3
+    testNumber: 3,
   },
-  "cambridge15_gr_test4": {
+  cambridge15_gr_test4: {
     title: "Cambridge 15 General Reading Test 4",
     type: "general_reading",
     book: 15,
-    testNumber: 4
+    testNumber: 4,
   },
-  "cambridge16_ar_test1": {
+  cambridge16_ar_test1: {
     title: "Cambridge 16 Academic Reading Test 1",
     type: "academic_reading",
     book: 16,
-    testNumber: 1
+    testNumber: 1,
   },
-  "cambridge16_ar_test2": {
+  cambridge16_ar_test2: {
     title: "Cambridge 16 Academic Reading Test 2",
     type: "academic_reading",
     book: 16,
-    testNumber: 2
+    testNumber: 2,
   },
-  "cambridge16_ar_test3": {
+  cambridge16_ar_test3: {
     title: "Cambridge 16 Academic Reading Test 3",
     type: "academic_reading",
     book: 16,
-    testNumber: 3
+    testNumber: 3,
   },
-  "cambridge16_ar_test4": {
+  cambridge16_ar_test4: {
     title: "Cambridge 16 Academic Reading Test 4",
     type: "academic_reading",
     book: 16,
-    testNumber: 4
+    testNumber: 4,
   },
-  "cambridge16_gr_test1": {
+  cambridge16_gr_test1: {
     title: "Cambridge 16 General Reading Test 1",
     type: "general_reading",
     book: 16,
-    testNumber: 1
+    testNumber: 1,
   },
-  "cambridge16_gr_test2": {
+  cambridge16_gr_test2: {
     title: "Cambridge 16 General Reading Test 2",
     type: "general_reading",
     book: 16,
-    testNumber: 2
+    testNumber: 2,
   },
-  "cambridge16_gr_test3": {
+  cambridge16_gr_test3: {
     title: "Cambridge 16 General Reading Test 3",
     type: "general_reading",
     book: 16,
-    testNumber: 3
+    testNumber: 3,
   },
-  "cambridge16_gr_test4": {
+  cambridge16_gr_test4: {
     title: "Cambridge 16 General Reading Test 4",
     type: "general_reading",
     book: 16,
-    testNumber: 4
+    testNumber: 4,
   },
-  "cambridge17_ar_test1": {
+  cambridge17_ar_test1: {
     title: "Cambridge 17 Academic Reading Test 1",
     type: "academic_reading",
     book: 17,
-    testNumber: 1
+    testNumber: 1,
   },
-  "cambridge17_ar_test2": {
+  cambridge17_ar_test2: {
     title: "Cambridge 17 Academic Reading Test 2",
     type: "academic_reading",
     book: 17,
-    testNumber: 2
+    testNumber: 2,
   },
-  "cambridge17_ar_test3": {
+  cambridge17_ar_test3: {
     title: "Cambridge 17 Academic Reading Test 3",
     type: "academic_reading",
     book: 17,
-    testNumber: 3
+    testNumber: 3,
   },
-  "cambridge17_ar_test4": {
+  cambridge17_ar_test4: {
     title: "Cambridge 17 Academic Reading Test 4",
     type: "academic_reading",
     book: 17,
-    testNumber: 4
+    testNumber: 4,
   },
-  "cambridge17_gr_test1": {
+  cambridge17_gr_test1: {
     title: "Cambridge 17 General Reading Test 1",
     type: "general_reading",
     book: 17,
-    testNumber: 1
+    testNumber: 1,
   },
-  "cambridge17_gr_test2": {
+  cambridge17_gr_test2: {
     title: "Cambridge 17 General Reading Test 2",
     type: "general_reading",
     book: 17,
-    testNumber: 2
+    testNumber: 2,
   },
-  "cambridge17_gr_test3": {
+  cambridge17_gr_test3: {
     title: "Cambridge 17 General Reading Test 3",
     type: "general_reading",
     book: 17,
-    testNumber: 3
+    testNumber: 3,
   },
-  "cambridge17_gr_test4": {
+  cambridge17_gr_test4: {
     title: "Cambridge 17 General Reading Test 4",
     type: "general_reading",
     book: 17,
-    testNumber: 4
+    testNumber: 4,
   },
-  "cambridge18_ar_test1": {
+  cambridge18_ar_test1: {
     title: "Cambridge 18 Academic Reading Test 1",
     type: "academic_reading",
     book: 18,
-    testNumber: 1
+    testNumber: 1,
   },
-  "cambridge18_ar_test2": {
+  cambridge18_ar_test2: {
     title: "Cambridge 18 Academic Reading Test 2",
     type: "academic_reading",
     book: 18,
-    testNumber: 2
+    testNumber: 2,
   },
-  "cambridge18_ar_test3": {
+  cambridge18_ar_test3: {
     title: "Cambridge 18 Academic Reading Test 3",
     type: "academic_reading",
     book: 18,
-    testNumber: 3
+    testNumber: 3,
   },
-  "cambridge18_ar_test4": {
+  cambridge18_ar_test4: {
     title: "Cambridge 18 Academic Reading Test 4",
     type: "academic_reading",
     book: 18,
-    testNumber: 4
+    testNumber: 4,
   },
-  "cambridge18_gr_test1": {
+  cambridge18_gr_test1: {
     title: "Cambridge 18 General Reading Test 1",
     type: "general_reading",
     book: 18,
-    testNumber: 1
+    testNumber: 1,
   },
-  "cambridge18_gr_test2": {
+  cambridge18_gr_test2: {
     title: "Cambridge 18 General Reading Test 2",
     type: "general_reading",
     book: 18,
-    testNumber: 2
+    testNumber: 2,
   },
-  "cambridge18_gr_test3": {
+  cambridge18_gr_test3: {
     title: "Cambridge 18 General Reading Test 3",
     type: "general_reading",
     book: 18,
-    testNumber: 3
+    testNumber: 3,
   },
-  "cambridge18_gr_test4": {
+  cambridge18_gr_test4: {
     title: "Cambridge 18 General Reading Test 4",
     type: "general_reading",
     book: 18,
-    testNumber: 4
+    testNumber: 4,
   },
-  "cambridge19_ar_test1": {
+  cambridge19_ar_test1: {
     title: "Cambridge 19 Academic Reading Test 1",
     type: "academic_reading",
     book: 19,
-    testNumber: 1
+    testNumber: 1,
   },
-  "cambridge19_ar_test2": {
+  cambridge19_ar_test2: {
     title: "Cambridge 19 Academic Reading Test 2",
     type: "academic_reading",
     book: 19,
-    testNumber: 2
+    testNumber: 2,
   },
-  "cambridge19_ar_test3": {
+  cambridge19_ar_test3: {
     title: "Cambridge 19 Academic Reading Test 3",
     type: "academic_reading",
     book: 19,
-    testNumber: 3
+    testNumber: 3,
   },
-  "cambridge19_ar_test4": {
+  cambridge19_ar_test4: {
     title: "Cambridge 19 Academic Reading Test 4",
     type: "academic_reading",
     book: 19,
-    testNumber: 4
+    testNumber: 4,
   },
-  "cambridge19_gr_test1": {
+  cambridge19_gr_test1: {
     title: "Cambridge 19 General Reading Test 1",
     type: "general_reading",
     book: 19,
-    testNumber: 1
+    testNumber: 1,
   },
-  "cambridge19_gr_test2": {
+  cambridge19_gr_test2: {
     title: "Cambridge 19 General Reading Test 2",
     type: "general_reading",
     book: 19,
-    testNumber: 2
+    testNumber: 2,
   },
-  "cambridge19_gr_test3": {
+  cambridge19_gr_test3: {
     title: "Cambridge 19 General Reading Test 3",
     type: "general_reading",
     book: 19,
-    testNumber: 3
+    testNumber: 3,
   },
-  "cambridge19_gr_test4": {
+  cambridge19_gr_test4: {
     title: "Cambridge 19 General Reading Test 4",
     type: "general_reading",
     book: 19,
-    testNumber: 4
+    testNumber: 4,
   },
-  // Add metadata for all other tests
+  cambridge20_ar_test1: {
+    title: "Cambridge 20 Academic Reading Test 1",
+    type: "academic_reading",
+    book: 20,
+    testNumber: 1,
+  },
+  cambridge20_ar_test2: {
+    title: "Cambridge 20 Academic Reading Test 2",
+    type: "academic_reading",
+    book: 20,
+    testNumber: 2,
+  },
+  cambridge20_ar_test3: {
+    title: "Cambridge 20 Academic Reading Test 3",
+    type: "academic_reading",
+    book: 20,
+    testNumber: 3,
+  },
+  cambridge20_ar_test4: {
+    title: "Cambridge 20 Academic Reading Test 4",
+    type: "academic_reading",
+    book: 20,
+    testNumber: 4,
+  },
 };
 
 // In-memory cache for loaded tests to prevent reloading

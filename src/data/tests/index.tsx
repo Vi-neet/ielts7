@@ -1,7 +1,8 @@
 // Index file for test exports - Now using dynamic imports for better performance
 
+import { TestContent } from "@/types";
+
 // Import TestContent type
-import { TestContent } from "@/lib/types";
 
 // Re-export the testRegistry functions for use in the application
 export { getTestById, TestRegistry, TestMetadata } from "./testRegistry";
