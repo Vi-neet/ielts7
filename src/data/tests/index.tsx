@@ -1,6 +1,6 @@
 // Index file for test exports - Now using dynamic imports for better performance
 
-import { TestContent } from "@/types";
+import { TestContent } from "@/lib/types";
 
 // Import TestContent type
 
