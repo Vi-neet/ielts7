@@ -1,4 +1,4 @@
-import { TestContent } from "@/types";
+import { TestContent } from "@/lib/types";
 
 // Create a mapping of test IDs to dynamic import functions
 export const TestRegistry: Record<string, () => Promise<TestContent>> = {
