@@ -271,7 +271,8 @@ export default async function TestPage(params: {
                   dangerouslySetInnerHTML={{
                     __html: testData.questions as string,
                   }}
-                ></div>              </div>
+                ></div>{" "}
+              </div>
             </div>
 
             {/* Answer section for listening test */}
@@ -285,17 +286,22 @@ export default async function TestPage(params: {
                     Show Answers
                   </TabsTrigger>
                 </TabsList>
-                
-                <TabsContent value="answers">
+
+                <TabsContent value="answers" forceMount>
                   <div className="p-5 bg-white rounded-lg shadow-sm border">
                     <h2 className="text-xl font-medium mb-6">Answer Key</h2>
-                    <AnswersDisplay answers={testData.answers} testType="listening" />
+                    <AnswersDisplay
+                      answers={testData.answers}
+                      testType="listening"
+                    />
                   </div>
                 </TabsContent>
-                
-                <TabsContent value="hidden">
+
+                <TabsContent value="hidden" forceMount>
                   <div className="text-center p-5">
-                    <p className="text-gray-500">Complete the test before checking answers</p>
+                    <p className="text-gray-500">
+                      Complete the test before checking answers
+                    </p>
                   </div>
                 </TabsContent>
               </Tabs>
@@ -340,18 +346,29 @@ export default async function TestPage(params: {
                 Answers
               </TabsTrigger>
             </TabsList>
-
-            <TabsContent value="passages" className="prose max-w-none">
+            <TabsContent
+              value="passages"
+              className="prose max-w-none"
+              forceMount
+            >
               <div className="passages-container p-5 bg-white rounded-lg shadow-sm border">
                 {testData.passages}
               </div>
             </TabsContent>
-
-            <TabsContent value="questions" className="prose max-w-none">
+            <TabsContent
+              value="questions"
+              className="prose max-w-none"
+              forceMount
+            >
               <div className="questions-container p-5 bg-white rounded-lg shadow-sm border">
                 {testData.questions}
               </div>
-            </TabsContent>            <TabsContent value="answers" className="prose max-w-none">
+            </TabsContent>{" "}
+            <TabsContent
+              value="answers"
+              className="prose max-w-none"
+              forceMount
+            >
               <AnswersDisplay answers={testData.answers} testType={type} />
             </TabsContent>
           </Tabs>
@@ -368,8 +385,7 @@ export default async function TestPage(params: {
                 Answers
               </TabsTrigger>
             </TabsList>
-
-            <TabsContent value="test">
+            <TabsContent value="test" forceMount>
               <div className="grid md:grid-cols-2 gap-6">
                 <div className="flex flex-col h-[calc(100vh-160px)]">
                   <h2 className="text-xl font-medium mb-4 py-2">Passages</h2>
@@ -389,7 +405,8 @@ export default async function TestPage(params: {
                   </div>
                 </div>
               </div>
-            </TabsContent>            <TabsContent value="answers">
+            </TabsContent>{" "}
+            <TabsContent value="answers" forceMount>
               <div className="p-5 bg-white rounded-lg shadow-sm border">
                 <h2 className="text-xl font-medium mb-6">Answer Key</h2>
                 <AnswersDisplay answers={testData.answers} testType={type} />
