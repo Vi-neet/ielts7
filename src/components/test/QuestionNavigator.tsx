@@ -45,21 +45,22 @@ function getSections(testType: string): SectionDef[] {
 
 function getButtonStyle(status: QuestionStatus): string {
   const base =
-    "w-8 h-8 rounded-lg text-xs font-mono font-semibold border transition-all duration-150 flex items-center justify-center focus-visible:outline-2 focus-visible:outline-forest-ink focus-visible:outline-offset-1 cursor-pointer";
+    "w-9.5 h-9.5 rounded-lg text-sm font-mono font-bold border transition-all duration-150 flex items-center justify-center focus-visible:outline focus-visible:outline-2 focus-visible:outline-forest-ink focus-visible:outline-offset-1 cursor-pointer";
 
   switch (status) {
     case "current":
-      return `${base} bg-highlighter-yellow border-[#d4c000] text-forest-ink shadow-sm`;
+      return `${base} bg-highlighter-yellow border-[#b09e00] text-forest-ink shadow-sm ring-2 ring-forest-ink/30`;
     case "answered":
-      return `${base} bg-forest-ink border-forest-ink text-white`;
+      return `${base} bg-forest-ink border-forest-ink text-white hover:bg-forest-ink/90`;
     case "checked-correct":
-      return `${base} bg-[#d8f3dc] border-[#b7e4c7] text-forest-ink`;
+      return `${base} bg-[#d8f3dc] border-[#2d6a4f] text-[#1b4332] hover:bg-[#b7e4c7] font-bold`;
     case "checked-incorrect":
-      return `${base} bg-[#fcd2c2] border-[#f8b195] text-[#cb5521]`;
+      return `${base} bg-[#fcd2c2] border-[#cb5521] text-[#991b1b] hover:bg-[#f8b195] font-bold`;
     default: // unanswered
-      return `${base} bg-white border-pencil-gray/25 text-forest-ink/45 hover:border-forest-ink/30 hover:text-forest-ink`;
+      return `${base} bg-[#f4f3ef] border-[#cfcdae] text-forest-ink/70 hover:bg-[#eadeca] hover:border-forest-ink`;
   }
 }
+
 
 export default function QuestionNavigator({
   testType,
@@ -141,7 +142,7 @@ export default function QuestionNavigator({
                   {answered}/{total}
                 </span>
               </div>
-              <div className="flex flex-wrap gap-1.5" role="group" aria-label={name}>
+              <div className="flex flex-wrap gap-2 md:gap-2.5" role="group" aria-label={name}>
                 {sectionNums.map((num) => {
                   const status = getStatus(num);
                   return (

@@ -4,7 +4,7 @@ import React, { useState, useEffect, useRef, useCallback } from "react";
 import { useAuth } from "@/lib/AuthContext";
 import { ALLOW_GUEST_TESTS } from "@/lib/featureFlags";
 import { gradeAttempt, GradeResult, formatAnswer, getAcceptableAnswers } from "@/lib/scoring";
-import { db } from "@/lib/firebase";
+import { db, auth } from "@/lib/firebase";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import { Button } from "@/components/ui/button";
 import { AnswerContext } from "./AnswerContext";
@@ -28,6 +28,8 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { cn } from "@/lib/utils";
+
 
 // ─── Props ────────────────────────────────────────────────────────────────────
 
@@ -47,10 +49,10 @@ interface TestRunnerProps {
 
 /** Walk the DOM near an input to discover its question number */
 function findQuestionNumberForInput(
-  inputEl: HTMLInputElement,
+  inputEl: HTMLElement,
   container: HTMLElement
 ): number | null {
-  const nameOrId = inputEl.name || inputEl.id || "";
+  const nameOrId = (inputEl as HTMLInputElement).name || inputEl.id || "";
   const nameMatch = nameOrId.match(/question(\d+)|q(\d+)/i);
   if (nameMatch) {
     const num = parseInt(nameMatch[1] || nameMatch[2], 10);
@@ -114,6 +116,83 @@ function findQuestionNumberForInput(
   return prevNum !== null ? prevNum : nextNum;
 }
 
+/** Helper to extract question number from a radio button or group */
+function getRadioQuestionNumber(btn: HTMLButtonElement, container: HTMLElement): number | null {
+  if (btn.id) {
+    const match = btn.id.match(/^(?:question|q)[-_]?(\d+)/i);
+    if (match) {
+      const n = parseInt(match[1], 10);
+      if (n >= 1 && n <= 40) return n;
+    }
+  }
+  const group = btn.closest('[role="radiogroup"]');
+  if (group) {
+    const groupName = group.getAttribute("name") || group.id || "";
+    const match = groupName.match(/^(?:question|q)[-_]?(\d+)/i);
+    if (match) {
+      const n = parseInt(match[1], 10);
+      if (n >= 1 && n <= 40) return n;
+    }
+  }
+  return findQuestionNumberForInput(btn, container);
+}
+
+/** Helper to extract value for a radio button */
+function getRadioValue(btn: HTMLButtonElement, container: HTMLElement): string {
+  // 1. Direct attribute or property on the button element
+  const directVal = btn.getAttribute("value") || btn.value || btn.dataset.value;
+  if (directVal && directVal !== "on") return directVal;
+
+  // 2. Fallback via associated label text
+  if (btn.id) {
+    const label =
+      container.querySelector<HTMLElement>(`label[for="${CSS.escape(btn.id)}"]`) ||
+      btn.closest("label");
+    if (label) {
+      const text = label.textContent?.trim() || "";
+      if (!text) return "";
+
+      const upperText = text.toUpperCase();
+      if (upperText === "TRUE" || upperText === "FALSE" || upperText === "NOT GIVEN") {
+        return upperText;
+      }
+      if (upperText === "YES" || upperText === "NO") {
+        return upperText;
+      }
+
+      // Check roman numerals first (i, ii, iii, iv, v, vi, vii, viii, ix, x)
+      const romanMatch = text.match(/^(i|ii|iii|iv|v|vi|vii|viii|ix|x)(?:[\.\:\)\s].*)?$/i);
+      if (romanMatch) {
+        return romanMatch[1].toLowerCase();
+      }
+
+      // Match letter prefix or single letter (A-Z)
+      const singleLetter = text.match(/^([A-Z])(?:[\.\:\)\s].*)?$/i);
+      if (singleLetter) {
+        return singleLetter[1].toUpperCase();
+      }
+
+      return text;
+    }
+  }
+  return "";
+}
+
+/** Helper to parse checkbox question range and option letter from ID */
+function parseCheckboxId(id: string): { startNum: number; endNum: number; optionLetter: string; questionNums: number[] } | null {
+  if (!id) return null;
+  const match = id.match(/^(?:question|q)(\d+)(?:-(\d+))?-([a-zA-Z])$/i);
+  if (!match) return null;
+  const startNum = parseInt(match[1], 10);
+  const endNum = match[2] ? parseInt(match[2], 10) : startNum;
+  const optionLetter = match[3].toUpperCase();
+  const questionNums: number[] = [];
+  for (let i = startNum; i <= endNum; i++) {
+    questionNums.push(i);
+  }
+  return { startNum, endNum, optionLetter, questionNums };
+}
+
 // ─── Band score (kept inline — do not change scoring.ts) ─────────────────────
 
 function getBandScore(score: number, testType: string): string {
@@ -168,16 +247,20 @@ export default function TestRunner({
 
   // ── Refs ──
   const containerRef = useRef<HTMLDivElement>(null);
-  const inputToQuestionMap = useRef<Map<HTMLInputElement, number>>(new Map());
+  const inputToQuestionMap = useRef<Map<HTMLElement, number>>(new Map());
   const autoSubmitCalledRef = useRef(false);
 
   // ── Core test state ──
   const [answers, setAnswers] = useState<Record<number, string>>({});
+  const answersRef = useRef<Record<number, string>>(answers);
+  answersRef.current = answers;
+
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [results, setResults] = useState<GradeResult | null>(null);
   const [saveStatus, setSaveStatus] = useState<"idle" | "saved" | "error">("idle");
   const [reviewMode, setReviewMode] = useState<"summary" | "context">("summary");
+  const [dbError, setDbError] = useState<string | null>(null);
 
   // ── Practice mode state ──
   // Map of question number → whether it was correct (undefined = not yet checked)
@@ -243,7 +326,7 @@ export default function TestRunner({
     const textInputs = container.querySelectorAll<HTMLInputElement>(
       'input[type="text"], input:not([type="radio"]):not([type="submit"]):not([type="button"]):not([type="hidden"])'
     );
-    const radioInputs = container.querySelectorAll<HTMLInputElement>(
+    const nativeRadios = container.querySelectorAll<HTMLInputElement>(
       'input[type="radio"]'
     );
 
@@ -253,12 +336,12 @@ export default function TestRunner({
       const num = findQuestionNumberForInput(input, container);
       if (num) {
         inputToQuestionMap.current.set(input, num);
-        input.value = answers[num] || "";
+        input.value = answersRef.current[num] || "";
         input.disabled = isSubmitted;
       }
     });
 
-    radioInputs.forEach((radio) => {
+    nativeRadios.forEach((radio) => {
       const num = findQuestionNumberForInput(radio, container);
       if (num) {
         inputToQuestionMap.current.set(radio, num);
@@ -270,11 +353,28 @@ export default function TestRunner({
           answerValue = match ? match[1].toUpperCase() : text;
         }
         (radio as HTMLInputElement & { _mappedValue?: string })._mappedValue = answerValue;
-        radio.checked = answers[num] === answerValue;
+        radio.checked = answersRef.current[num] === answerValue;
         radio.disabled = isSubmitted;
       }
     });
 
+    const radixRadios = container.querySelectorAll<HTMLButtonElement>('button[role="radio"]');
+    radixRadios.forEach((btn) => {
+      const num = getRadioQuestionNumber(btn, container);
+      if (num) {
+        inputToQuestionMap.current.set(btn, num);
+      }
+    });
+
+    const radixCheckboxes = container.querySelectorAll<HTMLButtonElement>('button[role="checkbox"]');
+    radixCheckboxes.forEach((btn) => {
+      const parsed = parseCheckboxId(btn.id);
+      if (parsed) {
+        inputToQuestionMap.current.set(btn, parsed.startNum);
+      }
+    });
+
+    // Native input / change event listener (for text inputs and native radios)
     const handleInputEvent = (e: Event) => {
       if (isSubmitted) return;
       const target = e.target as HTMLInputElement & { _mappedValue?: string };
@@ -288,20 +388,92 @@ export default function TestRunner({
       }
     };
 
+    // Click event listener (for Radix RadioGroup buttons and Radix Checkbox buttons)
+    const handleClick = (e: MouseEvent) => {
+      if (isSubmitted) return;
+      const target = e.target as HTMLElement;
+      if (!target) return;
+
+      // 1. Radix Radio Button click (or label click)
+      const radioBtn =
+        target.closest<HTMLButtonElement>('button[role="radio"]') ||
+        (() => {
+          const label = target.closest<HTMLLabelElement>("label");
+          if (!label) return null;
+          if (label.htmlFor) {
+            const escapedId = CSS.escape(label.htmlFor);
+            return (
+              container.querySelector<HTMLButtonElement>(`button#${escapedId}[role="radio"]`) ||
+              container.querySelector<HTMLButtonElement>(`#${escapedId}`)
+            );
+          }
+          return label.querySelector<HTMLButtonElement>('button[role="radio"]');
+        })();
+
+      if (radioBtn) {
+        const num = getRadioQuestionNumber(radioBtn, container);
+        const val = getRadioValue(radioBtn, container);
+        if (num && val) {
+          setAnswers((prev) => ({ ...prev, [num]: val }));
+        }
+        return;
+      }
+
+      // 2. Radix Checkbox click (or label click)
+      const checkboxBtn =
+        target.closest<HTMLButtonElement>('button[role="checkbox"]') ||
+        (() => {
+          const label = target.closest<HTMLLabelElement>("label");
+          return label?.htmlFor
+            ? container.querySelector<HTMLButtonElement>(`button#${label.htmlFor}[role="checkbox"]`)
+            : null;
+        })();
+
+      if (checkboxBtn) {
+        const parsed = parseCheckboxId(checkboxBtn.id);
+        if (parsed) {
+          const { questionNums, optionLetter } = parsed;
+          const currentSelections = questionNums
+            .map((n) => answersRef.current[n] || "")
+            .filter(Boolean);
+
+          let newSelections = [...currentSelections];
+          if (newSelections.includes(optionLetter)) {
+            newSelections = newSelections.filter((x) => x !== optionLetter);
+          } else {
+            newSelections.push(optionLetter);
+          }
+          newSelections.sort();
+
+          setAnswers((prev) => {
+            const next = { ...prev };
+            questionNums.forEach((n, idx) => {
+              next[n] = newSelections[idx] || "";
+            });
+            return next;
+          });
+        }
+        return;
+      }
+    };
+
     container.addEventListener("input", handleInputEvent);
     container.addEventListener("change", handleInputEvent);
+    container.addEventListener("click", handleClick);
 
     return () => {
       container.removeEventListener("input", handleInputEvent);
       container.removeEventListener("change", handleInputEvent);
+      container.removeEventListener("click", handleClick);
     };
   }, [questions, isSubmitted]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // ─── DOM: Sync state back to inputs ──────────────────────────────────────
+  // ─── DOM: Sync state back to all inputs (native inputs, radio buttons, checkboxes) ──
   useEffect(() => {
     if (!containerRef.current) return;
     const container = containerRef.current;
 
+    // Text inputs
     const textInputs = container.querySelectorAll<HTMLInputElement>(
       'input[type="text"], input:not([type="radio"]):not([type="submit"]):not([type="button"]):not([type="hidden"])'
     );
@@ -313,10 +485,11 @@ export default function TestRunner({
       }
     });
 
-    const radioInputs = container.querySelectorAll<HTMLInputElement>(
+    // Native radio inputs
+    const nativeRadios = container.querySelectorAll<HTMLInputElement>(
       'input[type="radio"]'
     );
-    radioInputs.forEach((radio) => {
+    nativeRadios.forEach((radio) => {
       const num = inputToQuestionMap.current.get(radio);
       if (num) {
         const val =
@@ -324,6 +497,39 @@ export default function TestRunner({
           radio.value;
         radio.checked = answers[num] === val;
         radio.disabled = isSubmitted;
+      }
+    });
+
+    // Radix radio buttons
+    const radixRadios = container.querySelectorAll<HTMLButtonElement>(
+      'button[role="radio"]'
+    );
+    radixRadios.forEach((btn) => {
+      const num = getRadioQuestionNumber(btn, container);
+      if (num) {
+        const val = getRadioValue(btn, container);
+        const isChecked = answers[num] === val;
+        btn.setAttribute("data-state", isChecked ? "checked" : "unchecked");
+        btn.setAttribute("aria-checked", isChecked ? "true" : "false");
+        btn.disabled = isSubmitted;
+      }
+    });
+
+    // Radix checkboxes
+    const radixCheckboxes = container.querySelectorAll<HTMLButtonElement>(
+      'button[role="checkbox"]'
+    );
+    radixCheckboxes.forEach((btn) => {
+      const parsed = parseCheckboxId(btn.id);
+      if (parsed) {
+        const { questionNums, optionLetter } = parsed;
+        const currentSelections = questionNums
+          .map((n) => answers[n] || "")
+          .filter(Boolean);
+        const isChecked = currentSelections.includes(optionLetter);
+        btn.setAttribute("data-state", isChecked ? "checked" : "unchecked");
+        btn.setAttribute("aria-checked", isChecked ? "true" : "false");
+        btn.disabled = isSubmitted;
       }
     });
   }, [answers, isSubmitted]);
@@ -378,9 +584,12 @@ export default function TestRunner({
     setResults(gradeResult);
 
     try {
+      const currentUid = auth.currentUser?.uid || null;
+      const isGuest = !currentUid;
+
       const attemptData = {
-        uid: user ? user.uid : null,
-        isGuest: !user,
+        uid: currentUid,
+        isGuest,
         testId,
         testType,
         answers,
@@ -392,9 +601,12 @@ export default function TestRunner({
       await addDoc(collection(db, "attempts"), attemptData);
       setSaveStatus("saved");
       setIsSubmitted(true);
-    } catch (error) {
+    } catch (error: any) {
       console.error("Failed to save attempt to Firestore:", error);
       setSaveStatus("error");
+      const errCode = error?.code || "unknown";
+      const errMsg = error?.message || String(error);
+      setDbError(`${errCode}: ${errMsg}`);
     } finally {
       setSubmitting(false);
     }
@@ -410,6 +622,7 @@ export default function TestRunner({
     setCheckedQuestions({});
     setCurrentQuestion(null);
     setPassageCollapsed(false);
+    setDbError(null);
     // Timer is not reset on retake — for exam mode, user would need to navigate back
     // and start a new exam via the mode selector (which remounts this component).
   };
@@ -898,17 +1111,6 @@ export default function TestRunner({
                 />
               </div>
 
-              {/* Navigator */}
-              <QuestionNavigator
-                testType={testType}
-                questionNumbers={questionNumbers}
-                answers={answers}
-                checkedQuestions={mode === "practice" ? checkedQuestions : {}}
-                currentQuestion={currentQuestion}
-                mode={mode}
-                onNavigate={handleNavigate}
-              />
-
               {/* Practice: Check Answer panel */}
               {mode === "practice" && currentQuestion !== null && !isSubmitted && (
                 <CheckAnswerPanel
@@ -919,58 +1121,121 @@ export default function TestRunner({
                   onCheck={() => checkAnswer(currentQuestion)}
                 />
               )}
+
+              {/* Navigator */}
+              <QuestionNavigator
+                testType={testType}
+                questionNumbers={questionNumbers}
+                answers={answers}
+                checkedQuestions={mode === "practice" ? checkedQuestions : {}}
+                currentQuestion={currentQuestion}
+                mode={mode}
+                onNavigate={handleNavigate}
+              />
             </div>
           )}
 
           {/* ── Reading layout ── */}
           {!isListening && (
-            <>
-              {/* Mobile/tablet: stacked layout */}
-              <div className="lg:hidden flex flex-col gap-4">
-                {/* Collapsible passage accordion */}
-                <div className="bg-white rounded-2xl border border-pencil-gray/20 shadow-xs overflow-hidden">
+            <div className="flex flex-col lg:flex-row gap-5 h-auto lg:h-[calc(100vh-180px)]">
+              {/* Passage panel */}
+              <div
+                className={cn(
+                  "transition-all duration-300 flex flex-col min-h-0 bg-white border border-pencil-gray/20 rounded-2xl shadow-xs overflow-hidden",
+                  passageCollapsed
+                    ? "lg:w-10 lg:shrink-0"
+                    : "lg:flex-[55] lg:min-w-0 lg:h-full lg:overflow-y-auto"
+                )}
+              >
+                {/* Passage header / mobile accordion trigger */}
+                <div className="flex items-center justify-between px-5 py-3.5 border-b border-pencil-gray/10 shrink-0">
+                  <h2 className="text-sm font-bold font-bricolage text-forest-ink">
+                    Reading Passage
+                  </h2>
+                  
+                  {/* Desktop close button */}
+                  {!passageCollapsed && (
+                    <button
+                      onClick={() => setPassageCollapsed(true)}
+                      className="hidden lg:flex items-center gap-1 text-xs font-inter text-forest-ink/45 hover:text-forest-ink transition-colors cursor-pointer"
+                      aria-label="Collapse passage panel"
+                    >
+                      <PanelLeftClose size={14} />
+                      Collapse
+                    </button>
+                  )}
+
+                  {/* Mobile toggle indicator */}
                   <button
                     onClick={() => setPassageCollapsed((p) => !p)}
-                    className="w-full flex items-center justify-between px-5 py-3.5 text-left hover:bg-whisper-gray/50 transition-colors"
-                    aria-expanded={!passageCollapsed}
-                    aria-controls="mobile-passage-panel"
+                    className="lg:hidden flex items-center justify-center p-1 text-forest-ink/50 hover:text-forest-ink cursor-pointer"
+                    aria-label={passageCollapsed ? "Expand passage" : "Collapse passage"}
                   >
-                    <span className="text-sm font-semibold font-bricolage text-forest-ink">
-                      Reading Passage
-                    </span>
                     {passageCollapsed ? (
-                      <ChevronRight size={16} className="text-forest-ink/50" />
+                      <ChevronRight size={16} />
                     ) : (
-                      <ChevronLeft size={16} className="text-forest-ink/50 rotate-90" />
+                      <ChevronLeft size={16} className="rotate-90" />
                     )}
                   </button>
-                  {!passageCollapsed && (
-                    <div
-                      id="mobile-passage-panel"
-                      className="px-5 pb-5 pt-1 prose prose-sm max-w-none border-t border-pencil-gray/10"
-                    >
-                      {passages}
-                    </div>
-                  )}
                 </div>
 
-                {/* Questions */}
-                <div className="bg-white rounded-2xl shadow-sm border border-pencil-gray/20 p-5 prose prose-sm max-w-none overflow-y-auto max-h-[60vh]">
+                {/* Passage content: on desktop, if collapsed we render it as a side strip, so content is hidden. On mobile, if collapsed, we hide the content. */}
+                {passageCollapsed ? (
+                  /* Desktop collapsed strip content */
+                  <button
+                    onClick={() => setPassageCollapsed(false)}
+                    className="hidden lg:flex flex-1 flex-col items-center justify-center gap-2 text-forest-ink/40 hover:text-forest-ink transition-colors w-full h-full cursor-pointer"
+                    aria-label="Show reading passage"
+                  >
+                    <PanelLeftOpen size={15} />
+                    <span
+                      className="text-[9px] font-mono uppercase tracking-widest"
+                      style={{ writingMode: "vertical-rl" }}
+                    >
+                      Passage
+                    </span>
+                  </button>
+                ) : (
+                  /* Expanded passage text content */
+                  <div className="flex-grow p-6 overflow-y-auto prose prose-sm max-w-none">
+                    {passages}
+                  </div>
+                )}
+              </div>
+
+              {/* Questions panel */}
+              <div
+                className={cn(
+                  "flex flex-col min-h-0 transition-all duration-300 lg:h-full lg:overflow-y-auto",
+                  passageCollapsed ? "lg:flex-1 lg:min-w-0" : "lg:flex-[45] lg:min-w-0"
+                )}
+              >
+                {/* Desktop restore button if collapsed */}
+                {passageCollapsed && (
+                  <div className="hidden lg:flex items-center justify-between mb-2 shrink-0">
+                    <h2 className="text-sm font-bold font-bricolage text-forest-ink">Questions</h2>
+                    <button
+                      onClick={() => setPassageCollapsed(false)}
+                      className="flex items-center gap-1 text-xs font-inter text-forest-ink/45 hover:text-forest-ink transition-colors cursor-pointer"
+                      aria-label="Show passage panel"
+                    >
+                      <PanelLeftOpen size={14} />
+                      Show Passage
+                    </button>
+                  </div>
+                )}
+                {!passageCollapsed && (
+                  <div className="hidden lg:block mb-2 shrink-0">
+                    <h2 className="text-sm font-bold font-bricolage text-forest-ink">Questions</h2>
+                  </div>
+                )}
+
+                {/* Single Questions block */}
+                <div className="flex-grow min-h-0 bg-white rounded-2xl border border-pencil-gray/20 shadow-xs p-5 overflow-y-auto prose prose-sm max-w-none">
                   <div ref={containerRef} className="questions-container">
                     {questions}
                   </div>
                 </div>
-
-                {/* Navigator */}
-                <QuestionNavigator
-                  testType={testType}
-                  questionNumbers={questionNumbers}
-                  answers={answers}
-                  checkedQuestions={mode === "practice" ? checkedQuestions : {}}
-                  currentQuestion={currentQuestion}
-                  mode={mode}
-                  onNavigate={handleNavigate}
-                />
 
                 {/* Practice: Check Answer panel */}
                 {mode === "practice" && currentQuestion !== null && !isSubmitted && (
@@ -982,104 +1247,19 @@ export default function TestRunner({
                     onCheck={() => checkAnswer(currentQuestion)}
                   />
                 )}
+
+                {/* Navigator */}
+                <QuestionNavigator
+                  testType={testType}
+                  questionNumbers={questionNumbers}
+                  answers={answers}
+                  checkedQuestions={mode === "practice" ? checkedQuestions : {}}
+                  currentQuestion={currentQuestion}
+                  mode={mode}
+                  onNavigate={handleNavigate}
+                />
               </div>
-
-              {/* Desktop: side-by-side layout */}
-              <div className="hidden lg:flex gap-5 h-[calc(100vh-180px)]">
-                {/* Passage panel */}
-                <div
-                  className={`transition-all duration-300 flex flex-col min-h-0 ${
-                    passageCollapsed ? "w-10 shrink-0" : "flex-[55] min-w-0"
-                  }`}
-                >
-                  {passageCollapsed ? (
-                    /* Collapsed: thin strip with expand button */
-                    <button
-                      onClick={() => setPassageCollapsed(false)}
-                      className="h-full flex flex-col items-center justify-center gap-2 text-forest-ink/40 hover:text-forest-ink transition-colors w-full border border-pencil-gray/20 rounded-2xl bg-white shadow-xs"
-                      aria-label="Show reading passage"
-                    >
-                      <PanelLeftOpen size={15} />
-                      <span
-                        className="text-[9px] font-mono uppercase tracking-widest"
-                        style={{ writingMode: "vertical-rl" }}
-                      >
-                        Passage
-                      </span>
-                    </button>
-                  ) : (
-                    <div className="flex flex-col h-full">
-                      <div className="flex items-center justify-between mb-2 shrink-0">
-                        <h2 className="text-sm font-bold font-bricolage text-forest-ink">
-                          Reading Passage
-                        </h2>
-                        <button
-                          onClick={() => setPassageCollapsed(true)}
-                          className="flex items-center gap-1 text-xs font-inter text-forest-ink/45 hover:text-forest-ink transition-colors"
-                          aria-label="Collapse passage panel"
-                        >
-                          <PanelLeftClose size={14} />
-                          Collapse
-                        </button>
-                      </div>
-                      <div className="flex-1 min-h-0 bg-white rounded-2xl border border-pencil-gray/20 shadow-xs p-6 overflow-y-auto prose prose-sm max-w-none">
-                        {passages}
-                      </div>
-                    </div>
-                  )}
-                </div>
-
-                {/* Questions panel */}
-                <div
-                  className={`flex flex-col min-h-0 transition-all duration-300 ${
-                    passageCollapsed ? "flex-1 min-w-0" : "flex-[45] min-w-0"
-                  }`}
-                >
-                  <div className="flex items-center justify-between mb-2 shrink-0">
-                    <h2 className="text-sm font-bold font-bricolage text-forest-ink">Questions</h2>
-                    {passageCollapsed && (
-                      <button
-                        onClick={() => setPassageCollapsed(false)}
-                        className="flex items-center gap-1 text-xs font-inter text-forest-ink/45 hover:text-forest-ink transition-colors"
-                        aria-label="Show passage panel"
-                      >
-                        <PanelLeftOpen size={14} />
-                        Show Passage
-                      </button>
-                    )}
-                  </div>
-
-                  {/* Scrollable questions */}
-                  <div className="flex-1 min-h-0 bg-white rounded-2xl border border-pencil-gray/20 shadow-xs p-5 overflow-y-auto prose prose-sm max-w-none">
-                    <div ref={containerRef} className="questions-container">
-                      {questions}
-                    </div>
-                  </div>
-
-                  {/* Navigator */}
-                  <QuestionNavigator
-                    testType={testType}
-                    questionNumbers={questionNumbers}
-                    answers={answers}
-                    checkedQuestions={mode === "practice" ? checkedQuestions : {}}
-                    currentQuestion={currentQuestion}
-                    mode={mode}
-                    onNavigate={handleNavigate}
-                  />
-
-                  {/* Practice: Check Answer panel */}
-                  {mode === "practice" && currentQuestion !== null && !isSubmitted && (
-                    <CheckAnswerPanel
-                      questionNum={currentQuestion}
-                      currentAnswer={currentAnswer ?? ""}
-                      checkedResult={checkedResult}
-                      correctAnswer={formatAnswer(answerKey[currentQuestion])}
-                      onCheck={() => checkAnswer(currentQuestion)}
-                    />
-                  )}
-                </div>
-              </div>
-            </>
+            </div>
           )}
 
           {/* ── Submit panel ── */}
@@ -1094,6 +1274,11 @@ export default function TestRunner({
                     connection and try clicking &ldquo;Submit&rdquo; again. Your answers are
                     preserved.
                   </span>
+                  {process.env.NODE_ENV === "development" && dbError && (
+                    <div className="mt-2 p-2 bg-[#fcd2c2] border border-[#cb5521]/20 rounded text-[10px] font-mono break-all text-[#cb5521]">
+                      Firebase error: {dbError}
+                    </div>
+                  )}
                 </div>
               </div>
             )}
@@ -1176,23 +1361,30 @@ function CheckAnswerPanel({
       initial={{ opacity: 0, y: 8 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.2 }}
-      className="mt-2 p-4 bg-white rounded-2xl border border-pencil-gray/20 shadow-xs"
+      className={cn(
+        "mt-2 p-4 rounded-2xl border shadow-xs transition-colors duration-200",
+        isChecked
+          ? checkedResult
+            ? "bg-[#d8f3dc]/30 border-[#b7e4c7]/60 text-[#1b4332]"
+            : "bg-[#fcd2c2]/20 border-[#f8b195]/40 text-[#991b1b]"
+          : "bg-white border-pencil-gray/20 text-forest-ink"
+      )}
       role="region"
       aria-label={`Check answer for question ${questionNum}`}
     >
-      <div className="flex items-center justify-between mb-3">
-        <span className="font-mono text-xs font-bold text-forest-ink/50">
+      <div className="flex items-center justify-between mb-3 border-b border-black/5 pb-2">
+        <span className="font-mono text-xs font-bold opacity-60">
           Question {questionNum}
         </span>
         {isChecked && (
           checkedResult ? (
-            <span className="flex items-center gap-1.5 text-xs font-semibold text-forest-ink">
-              <CheckCircle2 size={14} className="text-[#1a7a4a]" />
+            <span className="flex items-center gap-1.5 text-xs font-extrabold uppercase tracking-wider text-[#1a7a4a]">
+              <CheckCircle2 size={14} className="text-[#1a7a4a] shrink-0" />
               Correct
             </span>
           ) : (
-            <span className="flex items-center gap-1.5 text-xs font-semibold text-[#cb5521]">
-              <XCircle size={14} />
+            <span className="flex items-center gap-1.5 text-xs font-extrabold uppercase tracking-wider text-[#cb5521]">
+              <XCircle size={14} className="shrink-0" />
               Incorrect
             </span>
           )
@@ -1200,31 +1392,23 @@ function CheckAnswerPanel({
       </div>
 
       <div className="flex items-end justify-between gap-4">
-        <div className="flex-1 space-y-2">
+        <div className="flex-1 space-y-3">
           <div>
-            <span className="text-[10px] font-mono text-forest-ink/35 uppercase tracking-wider block mb-0.5">
+            <span className="text-[10px] font-mono uppercase tracking-wider opacity-50 block mb-0.5">
               Your Answer
             </span>
-            <span
-              className={`text-sm font-inter font-medium ${
-                isChecked
-                  ? checkedResult
-                    ? "text-forest-ink"
-                    : "text-[#cb5521]"
-                  : "text-forest-ink"
-              }`}
-            >
+            <span className="text-sm font-inter font-bold">
               {currentAnswer || (
-                <em className="text-forest-ink/30 font-normal text-xs">Not answered yet</em>
+                <em className="opacity-45 font-normal text-xs">Not answered yet</em>
               )}
             </span>
           </div>
-          {isChecked && (
-            <div className="pt-2 border-t border-pencil-gray/10">
-              <span className="text-[10px] font-mono text-forest-ink/35 uppercase tracking-wider block mb-0.5">
+          {isChecked && !checkedResult && (
+            <div className="pt-2 border-t border-black/5">
+              <span className="text-[10px] font-mono uppercase tracking-wider opacity-50 block mb-0.5">
                 Correct Answer
               </span>
-              <span className="text-sm font-mono font-semibold text-forest-ink">
+              <span className="text-sm font-mono font-bold bg-[#d8f3dc] border border-[#b7e4c7] text-[#1b4332] px-2 py-0.5 rounded-md inline-block">
                 {correctAnswer}
               </span>
             </div>
@@ -1237,7 +1421,7 @@ function CheckAnswerPanel({
             disabled={!currentAnswer}
             size="sm"
             variant="forest"
-            className="shrink-0 text-xs h-8 px-4"
+            className="shrink-0 text-xs h-8 px-4 font-semibold shadow-xs"
             aria-label={`Check answer for question ${questionNum}`}
           >
             Check Answer
