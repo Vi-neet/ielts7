@@ -1,69 +1,48 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
+import { motion, useReducedMotion, AnimatePresence } from "framer-motion";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
+import { MessageSquareQuote, ChevronLeft, ChevronRight, Star, Quote } from "lucide-react";
+import { SectionHeader } from "./SectionHeader";
 import { cn } from "@/lib/utils";
+import { testimonials } from "@/data/testimonials";
 
-type Testimonial = {
-  id: number;
-  name: string;
-  role: string;
-  content: string;
-  rating: number;
-  date: string;
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
 }
 
-const testimonials: Testimonial[] = [
-  {
-    id: 1,
-    name: "Sarah Johnson",
-    role: "IELTS Student",
-    content: "IELTS 7+ House helped me achieve my target band score of 7.5! The practice tests were incredibly similar to the actual exam, and the feedback was invaluable.",
-    rating: 5,
-    date: "March 15, 2025"
-  },
-  {
-    id: 2,
-    name: "Mohammed Al-Farsi",
-    role: "Medical Professional",
-    content: "I needed an IELTS score of 7 for my medical license, and thanks to the resources and guidance from IELTS 7+ House, I scored a 7.5 overall. Their methods are effective and practical.",
-    rating: 5,
-    date: "January 22, 2025"
-  },
-  {
-    id: 3,
-    name: "Priya Sharma",
-    role: "Graduate Student",
-    content: "The personalized feedback on my writing samples was game-changing. I finally understood where I was going wrong and improved from a 6.5 to an 8 in writing!",
-    rating: 5,
-    date: "April 3, 2025"
-  },
-  {
-    id: 4,
-    name: "Carlos Rodriguez",
-    role: "Immigration Applicant",
-    content: "The speaking practice modules helped me overcome my nervousness and score a 7 in the speaking section. Highly recommend their services!",
-    rating: 4,
-    date: "February 18, 2025"
-  },
-  {
-    id: 5,
-    name: "Liu Wei",
-    role: "International Student",
-    content: "IELTS 7+ House provided exactly what I needed - authentic practice materials and expert guidance. I achieved my dream score on the first attempt!",
-    rating: 5,
-    date: "March 30, 2025"
-  }
-];
-
-const TestimonialsSection = () => {
+export const TestimonialsSection = () => {
   const [activeIndex, setActiveIndex] = useState(0);
+  const prefersReducedMotion = useReducedMotion();
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const quoteMarkRef = useRef<SVGSVGElement>(null);
+
+  useGSAP(() => {
+    if (!sectionRef.current || prefersReducedMotion) return;
+
+    // Subtle parallax on the giant quote mark
+    gsap.to(quoteMarkRef.current, {
+      yPercent: -20,
+      ease: "none",
+      scrollTrigger: {
+        trigger: sectionRef.current,
+        start: "top bottom",
+        end: "bottom top",
+        scrub: true,
+      },
+    });
+
+  }, { scope: sectionRef });
 
   const nextTestimonial = () => {
-    setActiveIndex((prevIndex) => (prevIndex + 1) % testimonials.length);
+    setActiveIndex((prev) => (prev + 1) % testimonials.length);
   };
 
   const prevTestimonial = () => {
-    setActiveIndex((prevIndex) => (prevIndex === 0 ? testimonials.length - 1 : prevIndex - 1));
+    setActiveIndex((prev) => (prev === 0 ? testimonials.length - 1 : prev - 1));
   };
 
   const goToTestimonial = (index: number) => {
@@ -71,83 +50,115 @@ const TestimonialsSection = () => {
   };
 
   return (
-    <section className="py-16 bg-gray-50">
-      <div className="container mx-auto px-4">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">What Our Students Say</h2>
-          <div className="flex items-center justify-center gap-2 mb-2">
-            <svg className="w-6 h-6 text-yellow-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-              <path fillRule="evenodd" d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z" clipRule="evenodd" />
-            </svg>
-            <span className="text-xl font-bold text-gray-900">4.9</span>
-            <span className="text-gray-600">• Google Reviews</span>
-          </div>
-        </div>
+    <section className="py-24 bg-cream-paper relative overflow-hidden" ref={sectionRef}>
+      
+      {/* Oversized background quote mark */}
+      <div className="absolute top-1/2 left-1/4 -translate-x-1/2 -translate-y-1/2 pointer-events-none z-0">
+        <Quote 
+          ref={quoteMarkRef}
+          className="w-[400px] h-[400px] text-forest-ink/[0.03] rotate-12"
+          strokeWidth={0.5}
+        />
+      </div>
+
+      <div className="container mx-auto px-6 max-w-6xl relative z-10">
+        
+        <SectionHeader
+          eyebrowText="Student Success"
+          eyebrowIcon={<MessageSquareQuote className="w-3.5 h-3.5" />}
+          title="Don't just take our word for it"
+          description=""
+          className="mb-16"
+        />
 
         <div className="max-w-4xl mx-auto relative">
-          {/* Testimonial Card */}
-          <div className="bg-white rounded-xl shadow-lg p-8 mb-8">
-            <div className="flex items-center mb-4">
-              {[...Array(5)].map((_, i) => (
-                <svg 
-                  key={i} 
-                  className={cn("w-5 h-5", i < testimonials[activeIndex].rating ? "text-yellow-400" : "text-gray-300")}
-                  xmlns="http://www.w3.org/2000/svg" 
-                  viewBox="0 0 24 24" 
-                  fill="currentColor"
-                >
-                  <path fillRule="evenodd" d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z" clipRule="evenodd" />
-                </svg>
-              ))}
-            </div>
+          <div className="relative min-h-[400px] md:min-h-[300px] flex items-center justify-center">
+            <AnimatePresence mode="wait" custom={activeIndex}>
+              <motion.div
+                key={activeIndex}
+                custom={activeIndex}
+                initial={{ opacity: 0, x: prefersReducedMotion ? 0 : 40, filter: "blur(4px)" }}
+                animate={{ opacity: 1, x: 0, filter: "blur(0px)" }}
+                exit={{ opacity: 0, x: prefersReducedMotion ? 0 : -40, filter: "blur(4px)" }}
+                transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                className="w-full bg-white rounded-3xl p-8 md:p-12 border border-pencil-gray/20 shadow-[var(--shadow-card)]"
+              >
+                <div className="flex flex-col md:flex-row gap-8 md:gap-12 items-center md:items-start">
+                  
+                  {/* Avatar / Score */}
+                  <div className="flex-shrink-0 flex flex-col items-center">
+                    <div className="w-20 h-20 rounded-full bg-sticky-note-mint/30 flex items-center justify-center border-2 border-white shadow-md mb-4 text-forest-ink font-bricolage text-2xl font-bold uppercase overflow-hidden">
+                      {testimonials[activeIndex].name.charAt(0)}
+                    </div>
+                    <div className="inline-flex flex-col items-center px-3 py-1.5 rounded-xl bg-forest-ink/5 border border-forest-ink/10">
+                      <span className="text-[11px] font-roboto-mono text-forest-ink/60 uppercase tracking-wider mb-0.5">Rating</span>
+                      <span className="font-bricolage font-bold text-forest-ink text-lg leading-none">{testimonials[activeIndex].rating}/5</span>
+                    </div>
+                  </div>
 
-            <p className="text-gray-700 text-lg mb-6 italic">"{testimonials[activeIndex].content}"</p>
-            
-            <div className="flex justify-between items-center">
-              <div>
-                <h4 className="font-semibold text-gray-900">{testimonials[activeIndex].name}</h4>
-                <p className="text-sm text-gray-600">{testimonials[activeIndex].role}</p>
-              </div>
-              <div className="text-sm text-gray-500">
-                {testimonials[activeIndex].date}
-              </div>
-            </div>
+                  {/* Quote */}
+                  <div className="flex-1 text-center md:text-left">
+                    <div className="flex justify-center md:justify-start gap-1 mb-4">
+                      {[...Array(5)].map((_, i) => (
+                        <motion.div
+                          key={i}
+                          initial={{ opacity: 0, scale: 0 }}
+                          animate={{ opacity: 1, scale: 1 }}
+                          transition={{ delay: i * 0.05 + 0.3 }}
+                        >
+                          <Star className="w-4 h-4 fill-highlighter-yellow text-highlighter-yellow" />
+                        </motion.div>
+                      ))}
+                    </div>
+                    
+                    <h4 className="text-xl md:text-2xl font-inter font-medium text-forest-ink leading-relaxed mb-6">
+                      "{testimonials[activeIndex].content}"
+                    </h4>
+
+                    <motion.div 
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.5, duration: 0.4 }}
+                    >
+                      <p className="font-semibold text-forest-ink font-inter">{testimonials[activeIndex].name}</p>
+                      <p className="text-sm text-forest-ink/60 font-inter">{testimonials[activeIndex].role}</p>
+                    </motion.div>
+                  </div>
+                </div>
+              </motion.div>
+            </AnimatePresence>
           </div>
 
-          {/* Navigation buttons */}
-          <div className="flex justify-between items-center">
-            <button 
+          {/* Controls */}
+          <div className="flex items-center justify-center gap-4 mt-8">
+            <button
               onClick={prevTestimonial}
-              className="bg-white rounded-full p-3 shadow-md hover:bg-gray-100 transition-all duration-200"
+              className="w-10 h-10 rounded-full border border-pencil-gray/30 flex items-center justify-center text-forest-ink hover:bg-forest-ink hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-forest-ink/20"
               aria-label="Previous testimonial"
             >
-              <svg className="w-6 h-6 text-gray-700" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
-              </svg>
+              <ChevronLeft className="w-5 h-5" />
             </button>
             
-            <div className="flex gap-2">
-              {testimonials.map((_, index) => (
+            <div className="flex gap-2 mx-4">
+              {testimonials.map((_, idx) => (
                 <button
-                  key={index}
-                  onClick={() => goToTestimonial(index)}
+                  key={idx}
+                  onClick={() => goToTestimonial(idx)}
                   className={cn(
-                    "w-3 h-3 rounded-full transition-all duration-300",
-                    index === activeIndex ? "bg-blue-600 w-6" : "bg-gray-300 hover:bg-gray-400"
+                    "w-2 h-2 rounded-full transition-all duration-300",
+                    activeIndex === idx ? "bg-forest-ink w-6" : "bg-pencil-gray/40 hover:bg-pencil-gray/60"
                   )}
-                  aria-label={`Go to testimonial ${index + 1}`}
+                  aria-label={`Go to testimonial ${idx + 1}`}
                 />
               ))}
             </div>
 
-            <button 
+            <button
               onClick={nextTestimonial}
-              className="bg-white rounded-full p-3 shadow-md hover:bg-gray-100 transition-all duration-200"
+              className="w-10 h-10 rounded-full border border-pencil-gray/30 flex items-center justify-center text-forest-ink hover:bg-forest-ink hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-forest-ink/20"
               aria-label="Next testimonial"
             >
-              <svg className="w-6 h-6 text-gray-700" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
-              </svg>
+              <ChevronRight className="w-5 h-5" />
             </button>
           </div>
         </div>
@@ -155,5 +166,3 @@ const TestimonialsSection = () => {
     </section>
   );
 };
-
-export default TestimonialsSection;

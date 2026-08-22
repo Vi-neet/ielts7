@@ -1,0 +1,21 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    match /essays/{userId}/{submissionId}/{fileName} {
+      // Allow upload only if authenticated, user owns the path, and constraints match
+      allow create: if request.auth != null 
+                    && request.auth.uid == userId
+                    && request.resource.size <= 5 * 1024 * 1024
+                    && (request.resource.contentType == 'application/pdf'
+                        || request.resource.contentType == 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+                        || request.resource.contentType == 'image/jpeg'
+                        || request.resource.contentType == 'image/png');
+                        
+      // Read access is restricted to the owner
+      allow read: if request.auth != null && request.auth.uid == userId;
+      
+      // Explicitly block updates and deletions (append-only)
+      allow update, delete: if false;
+    }
+  }
+}

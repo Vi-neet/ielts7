@@ -2,6 +2,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import {
   motion,
@@ -15,12 +16,27 @@ import {
   NavigationMenuItem,
   NavigationMenuLink,
 } from "@/components/ui/navigation-menu";
+import { useAuth } from "@/lib/AuthContext";
+import { logOut } from "@/lib/firebase";
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+} from "@/components/ui/dropdown-menu";
+import { Button } from "@/components/ui/button";
+import { LogOut, History, Loader2 } from "lucide-react";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const [activeItem, setActiveItem] = useState("/");
+  const pathname = usePathname();
+  const activeItem = pathname || "/";
+  const isHomePage = activeItem === "/";
   const [hoveredItem, setHoveredItem] = useState<string | null>(null);
+  
+  const { user, loading } = useAuth();
 
   const { scrollY } = useScroll();
   const headerOpacity = useTransform(scrollY, [0, 100], [1, 0.95]);
@@ -32,9 +48,6 @@ const Header = () => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
     };
-
-    // Set active menu item based on current path
-    setActiveItem(window.location.pathname);
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
@@ -131,23 +144,28 @@ const Header = () => {
   };
 
   return (
-    <motion.header
-      initial={{ y: -100, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-      style={{
-        opacity: headerOpacity,
-        paddingTop: 16,
-        paddingBottom: 16,
-        y: headerY,
-      }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-colors duration-300 backdrop-blur-sm h-[72px] flex items-center ${
-        isScrolled ? "bg-white/80 shadow-sm" : "bg-transparent"
-      }`}
-    >
+    <>
+      {/* Centralized spacer to prevent header from overlapping page content */}
+      <div className={`w-full shrink-0 ${isHomePage ? 'h-[80px]' : 'h-[72px]'}`} aria-hidden="true" />
+      <motion.header
+        initial={{ y: -100, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+        style={{
+          opacity: headerOpacity,
+          paddingTop: 16,
+          paddingBottom: 16,
+          y: headerY,
+        }}
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 backdrop-blur-sm flex items-center ${
+          isHomePage
+            ? `mt-4 mx-4 md:mx-auto max-w-5xl rounded-[16px] border border-pencil-gray/20 h-[64px] ${isScrolled ? "bg-cream-paper/90 shadow-sm" : "bg-cream-paper/70"}`
+            : `h-[72px] ${isScrolled ? "bg-cream-paper/90 shadow-sm border-b border-pencil-gray/20" : "bg-transparent"}`
+        }`}
+      >
       <motion.div
         style={{ backdropFilter: `blur(${headerBlur}px)` }}
-        className="absolute inset-0 -z-10"
+        className={`absolute inset-0 -z-10 ${isHomePage ? "rounded-[16px]" : ""}`}
       />
 
       <div className="container mx-auto px-4 max-w-6xl">
@@ -184,8 +202,8 @@ const Header = () => {
             </Link>
           </motion.div>
 
-          {/* Desktop Navigation with improved hover animations */}
-          <div className="hidden md:block">
+          {/* Desktop Navigation with improved hover animations and Auth integration */}
+          <div className="hidden md:flex items-center gap-6">
             <NavigationMenu>
               <NavigationMenuList className="flex gap-5">
                 {navItems.map((item, i) => (
@@ -202,11 +220,11 @@ const Header = () => {
                     >
                       <Link
                         href={item.path}
-                        className={`relative px-3 py-2 font-medium text-base transition-colors ${
+                        className={`relative px-3 py-2 font-medium font-inter text-base transition-colors ${
                           activeItem === item.path
-                            ? "text-primary"
-                            : "text-gray-800"
-                        } hover:text-primary duration-300`}
+                            ? "text-forest-ink"
+                            : "text-forest-ink/70 hover:text-forest-ink"
+                        } duration-300`}
                       >
                         <span className="relative z-10">{item.name}</span>
 
@@ -215,9 +233,9 @@ const Header = () => {
                           <motion.span
                             layoutId="hoverHighlight"
                             className={`absolute -inset-1 -z-10 rounded-md ${
-                              item.name === "Free Resources"
-                                ? "bg-gradient-to-r from-primary/15 to-primary/5"
-                                : "bg-gradient-to-r from-primary/10 to-primary/0"
+                              isHomePage
+                                ? "bg-black/5"
+                                : "bg-black/5"
                             }`}
                             initial={{ opacity: 0, y: 5 }}
                             animate={{ opacity: 1, y: 0 }}
@@ -231,9 +249,9 @@ const Header = () => {
                           <motion.div
                             layoutId="underline"
                             className={`absolute left-0 right-0 bottom-0 h-0.5 ${
-                              item.name === "Free Resources"
-                                ? "bg-primary"
-                                : "bg-primary"
+                              isHomePage
+                                ? "bg-forest-ink"
+                                : "bg-forest-ink"
                             } rounded-full`}
                             initial={{ width: 0, left: "50%", right: "50%" }}
                             animate={{
@@ -256,9 +274,11 @@ const Header = () => {
                               initial="initial"
                               animate="hover"
                               className={`absolute left-0 right-0 bottom-0 h-[2px] ${
-                                item.name === "Free Resources"
-                                  ? "bg-primary/50"
-                                  : "bg-primary/30"
+                                isHomePage
+                                  ? "bg-forest-ink/30"
+                                  : item.name === "Free Resources"
+                                  ? "bg-forest-ink/50"
+                                  : "bg-forest-ink/30"
                               } origin-left rounded-full`}
                             />
                           )}
@@ -268,6 +288,61 @@ const Header = () => {
                 ))}
               </NavigationMenuList>
             </NavigationMenu>
+
+            {/* Auth Integration */}
+            <div className="flex items-center border-l border-pencil-gray/20 pl-6 gap-4">
+              {loading ? (
+                <div className="w-[80px] h-[36px] flex items-center justify-center">
+                  <Loader2 size={16} className="animate-spin text-forest-ink/40" />
+                </div>
+              ) : user ? (
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <button className="flex items-center justify-center w-9 h-9 rounded-full bg-forest-ink text-cream-paper font-bold hover:shadow-md transition-all cursor-pointer overflow-hidden">
+                      {user.photoURL ? (
+                        <img src={user.photoURL} alt="Profile" className="w-full h-full object-cover" />
+                      ) : (
+                        user.email?.[0].toUpperCase() || "U"
+                      )}
+                    </button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent className="w-56 bg-cream-paper border-pencil-gray/25 p-2 rounded-xl text-forest-ink shadow-lg mt-1" align="end">
+                    <div className="px-2 py-1.5 text-xs text-forest-ink/60 font-mono truncate">
+                      {user.email}
+                    </div>
+                    <DropdownMenuSeparator className="bg-pencil-gray/20" />
+                    <DropdownMenuItem asChild className="focus:bg-whisper-gray focus:text-forest-ink rounded-lg py-2">
+                      <Link href="/profile" className="flex items-center gap-2 cursor-pointer w-full font-medium">
+                        <History size={16} />
+                        My Tests
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator className="bg-pencil-gray/20" />
+                    <DropdownMenuItem
+                      onClick={() => logOut()}
+                      className="focus:bg-red-50 focus:text-red-600 text-red-600 rounded-lg py-2 cursor-pointer flex items-center gap-2 font-medium"
+                    >
+                      <LogOut size={16} />
+                      Log out
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              ) : (
+                <div className="flex items-center gap-4">
+                  <Link
+                    href={`/login?redirect=${encodeURIComponent(activeItem)}`}
+                    className="text-forest-ink/70 hover:text-forest-ink font-semibold font-inter transition-colors text-base"
+                  >
+                    Log In
+                  </Link>
+                  <Link href={`/signup?redirect=${encodeURIComponent(activeItem)}`}>
+                    <Button variant="forest" size="sm" className="h-9 px-4">
+                      Sign Up
+                    </Button>
+                  </Link>
+                </div>
+              )}
+            </div>
           </div>
 
           {/* Mobile Menu Button */}
@@ -280,7 +355,7 @@ const Header = () => {
           >
             <button
               onClick={toggleMenu}
-              className="p-2 rounded-full bg-primary/10 text-gray-600 hover:text-primary hover:bg-primary/20 focus:outline-none transition-all duration-300"
+              className={`p-2 rounded-full ${isHomePage ? "bg-forest-ink/5 text-forest-ink/70 hover:text-forest-ink hover:bg-forest-ink/10" : "bg-forest-ink/5 text-forest-ink/70 hover:text-forest-ink hover:bg-forest-ink/10"} focus:outline-none transition-all duration-300`}
               aria-label="Toggle menu"
             >
               <AnimatePresence mode="wait" initial={false}>
@@ -318,7 +393,7 @@ const Header = () => {
               initial="closed"
               animate="open"
               exit="closed"
-              className="md:hidden absolute top-full left-0 right-0 bg-white/95 backdrop-blur-md shadow-lg overflow-hidden border-t border-gray-100/30"
+              className="md:hidden absolute top-full left-0 right-0 bg-cream-paper/95 backdrop-blur-md shadow-lg overflow-hidden border-t border-pencil-gray/20"
             >
               <motion.nav className="flex flex-col py-4 px-6 max-w-6xl mx-auto">
                 {navItems.map((item, i) => (
@@ -326,23 +401,23 @@ const Header = () => {
                     key={item.name}
                     custom={i}
                     variants={mobileNavItemVariants}
-                    className="border-b border-gray-100 last:border-b-0"
+                    className="border-b border-pencil-gray/10 last:border-b-0"
                   >
                     <Link
                       href={item.path}
                       className={`
-                        block py-4 font-medium transition-all duration-300
+                        block py-4 font-inter transition-all duration-300
                         ${
                           activeItem === item.path
-                            ? "text-primary pl-4 border-l-2 border-primary"
+                            ? "text-forest-ink pl-4 border-l-2 border-forest-ink font-semibold"
                             : item.name === "Free Resources"
-                            ? "text-primary/90 pl-0 font-semibold"
-                            : "text-gray-800 pl-0"
+                            ? "text-forest-ink/90 pl-0 font-medium"
+                            : "text-forest-ink/70 pl-0 font-medium"
                         }
                         ${
                           item.name === "Free Resources"
-                            ? "hover:text-primary hover:pl-4 hover:border-l-2 hover:border-primary"
-                            : "hover:text-primary hover:pl-4 hover:border-l-2 hover:border-primary/50"
+                            ? "hover:text-forest-ink hover:pl-4 hover:border-l-2 hover:border-forest-ink"
+                            : "hover:text-forest-ink hover:pl-4 hover:border-l-2 hover:border-forest-ink/50"
                         }
                       `}
                       onClick={() => setIsMenuOpen(false)}
@@ -351,12 +426,71 @@ const Header = () => {
                     </Link>
                   </motion.div>
                 ))}
+
+                {/* Mobile Auth Links */}
+                <motion.div
+                  custom={navItems.length}
+                  variants={mobileNavItemVariants}
+                  className="pt-4 mt-2 border-t border-pencil-gray/10 flex flex-col gap-3"
+                >
+                  {loading ? (
+                    <span className="text-forest-ink/40 font-mono text-sm py-2">Loading...</span>
+                  ) : user ? (
+                    <>
+                      <div className="flex items-center gap-2 px-1 py-2">
+                        <div className="w-8 h-8 rounded-full bg-forest-ink text-cream-paper flex items-center justify-center font-bold text-sm overflow-hidden">
+                          {user.photoURL ? (
+                            <img src={user.photoURL} alt="Profile" className="w-full h-full object-cover" />
+                          ) : (
+                            user.email?.[0].toUpperCase() || "U"
+                          )}
+                        </div>
+                        <span className="font-medium text-forest-ink/75 truncate text-sm">{user.email}</span>
+                      </div>
+                      <Link
+                        href="/profile"
+                        className="py-2 text-forest-ink/75 hover:text-forest-ink font-semibold font-inter flex items-center gap-2"
+                        onClick={() => setIsMenuOpen(false)}
+                      >
+                        My Tests
+                      </Link>
+                      <button
+                        onClick={async () => {
+                          setIsMenuOpen(false);
+                          await logOut();
+                        }}
+                        className="py-2 text-left text-red-600 font-semibold font-inter hover:underline"
+                      >
+                        Log out
+                      </button>
+                    </>
+                  ) : (
+                    <div className="flex flex-col gap-3 pt-2">
+                      <Link
+                        href={`/login?redirect=${encodeURIComponent(activeItem)}`}
+                        className="py-2 text-forest-ink/70 hover:text-forest-ink font-semibold font-inter text-base"
+                        onClick={() => setIsMenuOpen(false)}
+                      >
+                        Log In
+                      </Link>
+                      <Link
+                        href={`/signup?redirect=${encodeURIComponent(activeItem)}`}
+                        onClick={() => setIsMenuOpen(false)}
+                      >
+                        <Button variant="forest" size="sm" className="w-full h-10 justify-center">
+                          Sign Up
+                        </Button>
+                      </Link>
+                    </div>
+                  )}
+                </motion.div>
               </motion.nav>
             </motion.div>
           )}
         </AnimatePresence>
       </div>
-    </motion.header>
+      </motion.header>
+    </>
   );
 };
 

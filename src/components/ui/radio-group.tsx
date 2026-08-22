@@ -5,15 +5,49 @@ import * as RadioGroupPrimitive from "@radix-ui/react-radio-group"
 import { CircleIcon } from "lucide-react"
 
 import { cn } from "@/lib/utils"
+import { useAnswers } from "@/components/test/AnswerContext"
 
 function RadioGroup({
   className,
+  name,
+  value,
+  onValueChange,
+  disabled,
   ...props
 }: React.ComponentProps<typeof RadioGroupPrimitive.Root>) {
+  const ctx = useAnswers();
+
+  if (ctx && name && name.startsWith("question")) {
+    const num = parseInt(name.replace("question", ""), 10);
+    if (!isNaN(num)) {
+      const ctxValue = ctx.answers[num] || "";
+      const ctxOnValueChange = (val: string) => {
+        ctx.setAnswer(num, val);
+      };
+      const ctxDisabled = ctx.disabled || disabled;
+
+      return (
+        <RadioGroupPrimitive.Root
+          data-slot="radio-group"
+          className={cn("grid gap-3", className)}
+          name={name}
+          value={ctxValue}
+          onValueChange={ctxOnValueChange}
+          disabled={ctxDisabled}
+          {...props}
+        />
+      );
+    }
+  }
+
   return (
     <RadioGroupPrimitive.Root
       data-slot="radio-group"
       className={cn("grid gap-3", className)}
+      name={name}
+      value={value}
+      onValueChange={onValueChange}
+      disabled={disabled}
       {...props}
     />
   )

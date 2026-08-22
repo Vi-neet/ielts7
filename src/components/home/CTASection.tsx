@@ -1,238 +1,160 @@
 "use client";
 
-import { motion } from "framer-motion";
-import {
-  ArrowRight,
-  CheckCircle,
-  Award,
-  BookOpen,
-  TrendingUp,
-} from "lucide-react";
-import Image from "next/image";
+import { useRef } from "react";
+import { motion, useReducedMotion } from "framer-motion";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
+import { ArrowRight, CheckCircle2, Award } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { FloatingShape } from "@/components/ui/FloatingShape";
+
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 const CTASection = () => {
+  const prefersReducedMotion = useReducedMotion();
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const cardRef = useRef<HTMLDivElement>(null);
+
+  useGSAP(() => {
+    if (!sectionRef.current || !cardRef.current || prefersReducedMotion) return;
+
+    // Card entrance
+    gsap.from(cardRef.current, {
+      y: 100,
+      opacity: 0,
+      scale: 0.95,
+      duration: 1,
+      ease: "power3.out",
+      scrollTrigger: {
+        trigger: sectionRef.current,
+        start: "top 80%",
+      },
+    });
+
+    // Staggered content inside card
+    const items = cardRef.current.querySelectorAll(".cta-animate");
+    gsap.from(items, {
+      y: 30,
+      opacity: 0,
+      duration: 0.8,
+      stagger: 0.1,
+      ease: "power2.out",
+      scrollTrigger: {
+        trigger: sectionRef.current,
+        start: "top 60%",
+      },
+    });
+
+  }, { scope: sectionRef });
+
   return (
-    <section className="py-12 md:py-24 relative overflow-hidden">
-      {/* Background gradient element */}
-      <div className="absolute inset-0 bg-gradient-to-b from-gray-50/80 to-white pointer-events-none"></div>
+    <section className="py-24 relative bg-cream-paper overflow-hidden" ref={sectionRef}>
+      
+      {/* Visual background layers */}
+      <FloatingShape speed={0.5} className="top-10 left-10 pointer-events-none opacity-20">
+        <svg width="200" height="200" viewBox="0 0 200 200" fill="none">
+          <circle cx="100" cy="100" r="90" stroke="#1a3300" strokeWidth="2" strokeDasharray="10 15" />
+        </svg>
+      </FloatingShape>
 
-      {/* Decorative elements */}
-      <div className="absolute top-0 right-0 w-1/3 h-1/3 bg-orange-500/5 rounded-full blur-3xl"></div>
-      <div className="absolute bottom-0 left-0 w-1/4 h-1/2 bg-orange-500/5 rounded-full blur-3xl"></div>
+      <FloatingShape speed={-0.4} float={true} className="bottom-0 right-0 pointer-events-none opacity-10">
+        <svg width="300" height="300" viewBox="0 0 300 300" fill="none">
+          <path d="M0 300L300 0V300H0Z" fill="#1a3300" />
+        </svg>
+      </FloatingShape>
 
-      <div className="container mx-auto px-6 relative z-10">
-        <div className="max-w-6xl mx-auto">
-          {/* CTA Card */}
-          <motion.div
-            className="relative rounded-2xl overflow-hidden"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7 }}
-          >
-            {/* Orange accent for top border */}
-            <div className="h-2 bg-gradient-to-r from-orange-500 to-amber-500 w-full"></div>
+      <div className="container mx-auto px-6 max-w-5xl relative z-10">
+        
+        <div
+          ref={cardRef}
+          className="bg-forest-ink rounded-[24px] overflow-hidden shadow-[var(--shadow-elevated)] relative"
+        >
+          {/* Subtle noise/texture over the dark background */}
+          <div 
+            className="absolute inset-0 opacity-[0.04] mix-blend-overlay pointer-events-none"
+            style={{
+              backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
+            }}
+          />
 
-            <div className="bg-white shadow-xl rounded-b-2xl overflow-hidden">
-              <div className="grid lg:grid-cols-2 gap-8 lg:gap-0 items-center">
-                {/* Left side with text content */}
-                <div className="p-8 md:p-12 lg:pr-6">
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.5, delay: 0.2 }}
-                    className="inline-flex items-center gap-2 px-4 py-1.5 mb-6 rounded-full bg-orange-100 text-orange-700 text-sm font-medium"
+          {/* Abstract SVG Geometry inside CTA */}
+          <div className="absolute top-0 right-0 w-[600px] h-full pointer-events-none overflow-hidden hidden md:block">
+            <svg viewBox="0 0 600 400" className="absolute right-0 h-full w-auto opacity-10 text-white" preserveAspectRatio="none">
+              <path d="M600,0 L0,400 L600,400 Z" fill="currentColor" />
+              <circle cx="450" cy="200" r="150" stroke="currentColor" strokeWidth="2" fill="none" />
+              <circle cx="450" cy="200" r="100" stroke="currentColor" strokeWidth="2" fill="none" strokeDasharray="5 5" />
+            </svg>
+          </div>
+
+          {/* Top highlight bar */}
+          <div className="h-2 w-full bg-highlighter-yellow" />
+
+          <div className="p-10 md:p-16 lg:p-20 grid lg:grid-cols-2 gap-12 items-center relative z-10">
+            
+            {/* Left Content */}
+            <div>
+              <div className="cta-animate inline-flex items-center gap-2 px-3.5 py-1.5 mb-8 rounded-full bg-cream-paper/10 text-cream-paper/90 text-xs font-medium font-inter uppercase tracking-wider">
+                <Award className="w-3.5 h-3.5 text-highlighter-yellow" />
+                <span>Join Thousands of Successful Students</span>
+              </div>
+
+              <h2 className="cta-animate text-4xl md:text-5xl font-extrabold text-cream-paper mb-6 leading-tight tracking-tight font-bricolage">
+                Achieve Your Target <span className="text-highlighter-yellow">IELTS Score</span> with Expert-Led Practice
+              </h2>
+
+              <p className="cta-animate text-cream-paper/70 text-lg leading-relaxed font-inter mb-10 max-w-md">
+                Our comprehensive preparation materials and proven strategies have helped thousands of students reach band 7 and above. Start practicing today.
+              </p>
+
+              {/* CTAs */}
+              <div className="cta-animate flex flex-col sm:flex-row gap-4">
+                <motion.div whileHover={prefersReducedMotion ? {} : { scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+                  <Button
+                    asChild
+                    className="w-full sm:w-auto px-8 py-6 bg-highlighter-yellow hover:bg-highlighter-yellow/90 text-forest-ink font-bold text-[16px] rounded-[8px] font-inter shadow-sm"
                   >
-                    <Award className="w-4 h-4" />
-                    <span>Join Thousands of Successful Students</span>
-                  </motion.div>
+                    <a href="/?section=practice-tests">
+                      Start Practicing Now
+                      <ArrowRight className="w-5 h-5 ml-2" />
+                    </a>
+                  </Button>
+                </motion.div>
 
-                  <motion.h2
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.5, delay: 0.3 }}
-                    className="text-3xl md:text-4xl font-bold text-gray-900 mb-6"
+                <motion.div whileHover={prefersReducedMotion ? {} : { scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+                  <Button
+                    asChild
+                    className="w-full sm:w-auto px-8 py-6 bg-transparent hover:bg-cream-paper/5 text-cream-paper border border-cream-paper/30 font-semibold text-[16px] rounded-[8px] font-inter"
                   >
-                    Achieve Your Target{" "}
-                    <span className="text-orange-600">IELTS Score</span> with
-                    Expert-Led Practice
-                  </motion.h2>
-
-                  <motion.p
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.5, delay: 0.4 }}
-                    className="text-gray-600 mb-8"
-                  >
-                    Our comprehensive preparation materials and proven
-                    strategies have helped thousands of students reach band 7
-                    and above. Start practicing today and join our community of
-                    successful test-takers.
-                  </motion.p>
-
-                  {/* Benefits list */}
-                  <motion.div
-                    className="space-y-3 mb-8"
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.5, delay: 0.5 }}
-                  >
-                    {[
-                      "Authentic practice tests from Cambridge IELTS",
-                      "Detailed performance analysis and feedback",
-                      "Structured preparation for all four test sections",
-                      "Learn from high-scoring students' strategies",
-                    ].map((item, i) => (
-                      <div key={i} className="flex items-start">
-                        <div className="mr-3 mt-1">
-                          <CheckCircle className="h-5 w-5 text-orange-500" />
-                        </div>
-                        <p className="text-gray-700">{item}</p>
-                      </div>
-                    ))}
-                  </motion.div>
-
-                  {/* CTA Buttons */}
-                  <motion.div
-                    className="flex flex-col sm:flex-row gap-4"
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.5, delay: 0.6 }}
-                  >
-                    <motion.a
-                      href="#practice-tests"
-                      className="px-8 py-3.5 bg-gradient-to-r from-orange-500 to-amber-600 text-white font-semibold rounded-lg inline-flex items-center justify-center shadow-md group relative overflow-hidden"
-                      whileHover={{
-                        scale: 1.03,
-                        boxShadow:
-                          "0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1)",
-                      }}
-                      whileTap={{ scale: 0.98 }}
-                      onClick={(e) => {
-                        e.preventDefault();
-                        const practiceTestsSection =
-                          document.getElementById("practice-tests");
-                        if (practiceTestsSection) {
-                          practiceTestsSection.scrollIntoView({
-                            behavior: "smooth",
-                          });
-                        }
-                      }}
-                    >
-                      <span>Start Practicing Now</span>
-                      <motion.div
-                        className="ml-2"
-                        initial={{ x: 0 }}
-                        whileHover={{ x: 4 }}
-                        transition={{ duration: 0.2 }}
-                      >
-                        <ArrowRight className="w-5 h-5" />
-                      </motion.div>
-
-                      {/* Animated hover effect */}
-                      <motion.div
-                        className="absolute inset-0 bg-white/20 -z-10"
-                        initial={{ x: "-100%", opacity: 0 }}
-                        whileHover={{ x: "100%", opacity: 0.4 }}
-                        transition={{ duration: 0.5 }}
-                      />
-                    </motion.a>
-
-                    <motion.a
-                      href="/about"
-                      className="px-8 py-3.5 border border-gray-300 bg-white hover:bg-gray-50 text-gray-800 font-semibold rounded-lg inline-flex items-center justify-center"
-                      whileHover={{ y: -3 }}
-                      whileTap={{ scale: 0.98 }}
-                    >
+                    <a href="/about">
                       Learn More
-                    </motion.a>
-                  </motion.div>
-                </div>
-
-                {/* Right side with image and overlapped elements */}
-                <div className="relative h-full min-h-[300px] lg:min-h-[500px] overflow-hidden rounded-bl-2xl">
-                  {/* Background pattern */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-orange-500 to-amber-600">
-                    <div className="absolute inset-0 opacity-20 bg-[url('/pattern.svg')] bg-repeat bg-[length:20px_20px]"></div>
-                  </div>
-
-                  {/* Decorative elements */}
-                  <div className="absolute top-10 right-10 bg-white/10 w-32 h-32 rounded-full blur-xl"></div>
-                  <div className="absolute bottom-10 left-10 bg-white/10 w-40 h-40 rounded-full blur-xl"></div>
-
-                  {/* Content */}
-                  <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-8">
-                    {/* Main stat */}
-                    <motion.div
-                      initial={{ opacity: 0, scale: 0.8 }}
-                      whileInView={{ opacity: 1, scale: 1 }}
-                      viewport={{ once: true }}
-                      transition={{ type: "spring", delay: 0.4 }}
-                      className="bg-white/15 backdrop-blur-md rounded-2xl p-6 mb-8 border border-white/20 shadow-xl"
-                    >
-                      <div className="flex items-center justify-center mb-2">
-                        <TrendingUp className="w-8 h-8 text-white mr-3" />
-                        <h3 className="text-2xl font-bold text-white">
-                          95% Success Rate
-                        </h3>
-                      </div>
-                      <p className="text-white text-opacity-90">
-                        Students achieving their target band score
-                      </p>
-                    </motion.div>
-
-                    {/* Floating stats */}
-                    <div className="flex flex-wrap justify-center gap-4">
-                      <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.5, delay: 0.5 }}
-                        className="bg-white/15 backdrop-blur-sm rounded-xl p-4 border border-white/20"
-                      >
-                        <div className="flex items-center">
-                          <BookOpen className="w-5 h-5 text-white mr-3" />
-                          <div>
-                            <div className="text-xl font-bold text-white">
-                              150,000+
-                            </div>
-                            <div className="text-white/75 text-sm">
-                              Practice tests taken
-                            </div>
-                          </div>
-                        </div>
-                      </motion.div>
-
-                      <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.5, delay: 0.6 }}
-                        className="bg-white/15 backdrop-blur-sm rounded-xl p-4 border border-white/20"
-                      >
-                        <div className="flex items-center">
-                          <Award className="w-5 h-5 text-white mr-3" />
-                          <div>
-                            <div className="text-xl font-bold text-white">
-                              +1.5
-                            </div>
-                            <div className="text-white/75 text-sm">
-                              Average band improvement
-                            </div>
-                          </div>
-                        </div>
-                      </motion.div>
-                    </div>
-                  </div>
-                </div>
+                    </a>
+                  </Button>
+                </motion.div>
               </div>
             </div>
-          </motion.div>
+
+            {/* Right List */}
+            <div className="cta-animate lg:pl-12 lg:border-l border-cream-paper/10">
+              <div className="space-y-6">
+                {[
+                  "Authentic practice tests from Cambridge IELTS",
+                  "Detailed performance analysis and feedback",
+                  "Structured preparation for all four test sections",
+                  "Learn from high-scoring students' strategies",
+                ].map((item, i) => (
+                  <div key={i} className="flex items-start">
+                    <div className="mr-4 mt-0.5 shrink-0">
+                      <CheckCircle2 className="h-5 w-5 text-sticky-note-mint" />
+                    </div>
+                    <p className="text-cream-paper/85 font-inter text-[15px] leading-snug">{item}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>

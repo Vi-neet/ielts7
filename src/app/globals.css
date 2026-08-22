@@ -3,6 +3,75 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* ─── IELTS 7+ House Design System Tokens (docs/DESIGN.md) ─── */
+@theme inline {
+  /* Colors */
+  --color-forest-ink: #1a3300;
+  --color-highlighter-yellow: #ffe95c;
+  --color-cream-paper: #fcfaf5;
+  --color-pencil-gray: #b6b6b6;
+  --color-whisper-gray: #f1f1f1;
+  --color-sticky-note-teal: #a8e5e5;
+  --color-sticky-note-mint: #d5f5c2;
+  --color-sticky-note-blush: #f6d0ff;
+  --color-terracotta: #cb5521;
+
+  /* Typography families (homepage-scoped, not global) */
+  --font-bricolage: 'Bricolage Grotesque', ui-sans-serif, system-ui, sans-serif;
+  --font-inter: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-roboto-mono: 'Roboto Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  /* Type scale */
+  --text-micro: 11px;
+  --text-caption: 14px;
+  --text-body-sm: 16px;
+  --text-body: 18px;
+  --text-body-lg: 20px;
+  --text-subheading: 28px;
+  --text-heading-sm: 40px;
+  --text-heading: 55px;
+  --text-heading-lg: 66px;
+  --text-display: 90px;
+
+  /* Spacing */
+  --spacing-8: 8px;
+  --spacing-16: 16px;
+  --spacing-24: 24px;
+  --spacing-32: 32px;
+  --spacing-40: 40px;
+  --spacing-48: 48px;
+  --spacing-56: 56px;
+  --spacing-64: 64px;
+  --spacing-80: 80px;
+  --spacing-96: 96px;
+  --spacing-120: 120px;
+
+  /* Radius */
+  --radius-design-sm: 6px;
+  --radius-design-md: 8px;
+  --radius-design-xl: 12px;
+  --radius-design-2xl: 16px;
+  --radius-design-full: 9999px;
+
+  /* Shadows */
+  --shadow-subtle: 0px 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-card: 0px 4px 12px rgba(0, 0, 0, 0.06);
+  --shadow-elevated: 0px 8px 24px rgba(0, 0, 0, 0.08);
+
+  /* Surfaces */
+  --surface-cream-paper: #fcfaf5;
+  --surface-sticky-note-mint: #d5f5c2;
+  --surface-highlighter-yellow: #ffe95c;
+  --surface-sticky-note-blush: #f6d0ff;
+  --surface-sticky-note-teal: #a8e5e5;
+
+  /* Layout */
+  --page-max-width: 1200px;
+  --wide-page-max-width: 1280px;
+  --reading-max-width: 720px;
+  --hero-max-width: 760px;
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);

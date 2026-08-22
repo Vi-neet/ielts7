@@ -1,4 +1,5 @@
 import { initializeApp, getApps, FirebaseApp } from "firebase/app";
+import { getStorage, FirebaseStorage } from "firebase/storage";
 import {
   getFirestore,
   collection,
@@ -21,6 +22,7 @@ import {
   UserCredential,
   signInWithPopup,
   GoogleAuthProvider,
+  sendPasswordResetEmail,
 } from "firebase/auth";
 
 /**
@@ -58,6 +60,7 @@ class Firebase {
   private _app: FirebaseApp;
   private _db: Firestore;
   private _auth: Auth;
+  private _storage: FirebaseStorage;
 
   private constructor() {
     if (getApps().length === 0) {
@@ -67,6 +70,7 @@ class Firebase {
     }
     this._db = getFirestore(this._app);
     this._auth = getAuth(this._app);
+    this._storage = getStorage(this._app);
   }
 
   public static getInstance(): Firebase {
@@ -87,6 +91,10 @@ class Firebase {
   get auth(): Auth {
     return this._auth;
   }
+
+  get storage(): FirebaseStorage {
+    return this._storage;
+  }
 }
 
 // Export Firebase instances
@@ -94,6 +102,7 @@ const firebaseInstance = Firebase.getInstance();
 const app = firebaseInstance.app;
 const db = firebaseInstance.db;
 const auth = firebaseInstance.auth;
+const storage = firebaseInstance.storage;
 
 /**
  * Authentication functions
@@ -124,6 +133,11 @@ export async function logOut(): Promise<void> {
 export async function signInWithGoogle(): Promise<UserCredential> {
   const provider = new GoogleAuthProvider();
   return signInWithPopup(auth, provider);
+}
+
+// Send password reset email
+export async function sendPasswordReset(email: string): Promise<void> {
+  return sendPasswordResetEmail(auth, email);
 }
 
 /**
@@ -198,4 +212,4 @@ export async function getAllTestBooks() {
 }
 
 // Export Firebase instances and authenticated Firestore instance
-export { app, db, auth };
+export { app, db, auth, storage };

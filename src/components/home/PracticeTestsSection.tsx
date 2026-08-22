@@ -1,20 +1,28 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { motion, useInView } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
 import {
   BookOpen,
   Headphones,
   ArrowRight,
-  CheckCircle2,
   Search,
   Clock,
   Users,
 } from "lucide-react";
 import { mockTests } from "@/data/mockTests";
 import { TestMetadata, TestType } from "@/lib/types";
+import { SectionHeader } from "./SectionHeader";
+import { cn } from "@/lib/utils";
+import { FloatingShape } from "@/components/ui/FloatingShape";
+
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 interface TypeDetails {
   title: string;
@@ -24,13 +32,14 @@ interface TypeDetails {
   description: string;
 }
 
-const PracticeTestsSection = () => {
+export const PracticeTestsSection = () => {
   const [currentType, setCurrentType] = useState<TestType>("general_reading");
   const [loading, setLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const sectionRef = useRef<HTMLDivElement>(null);
-  const isInView = useInView(sectionRef, { once: false, margin: "-100px 0px" });
-  // Handle URL query params for direct test type selection
+  const contentRef = useRef<HTMLDivElement>(null);
+  const prefersReducedMotion = useReducedMotion();
+
   useEffect(() => {
     if (typeof window !== "undefined") {
       const params = new URLSearchParams(window.location.search);
@@ -48,40 +57,54 @@ const PracticeTestsSection = () => {
     }
   }, []);
 
+  useGSAP(() => {
+    if (!contentRef.current || prefersReducedMotion) return;
+    
+    // Macro section reveal
+    gsap.from(contentRef.current, {
+      opacity: 0,
+      scale: 0.95,
+      y: 40,
+      duration: 1,
+      ease: "power3.out",
+      scrollTrigger: {
+        trigger: sectionRef.current,
+        start: "top 75%",
+      },
+    });
+  }, { scope: sectionRef });
+
   const getTypeDetails = (type: TestType): TypeDetails => {
     switch (type) {
       case "general_reading":
         return {
           title: "General Reading",
-          color: "from-rose-500 to-orange-500",
-          lightColor: "bg-rose-50",
+          color: "bg-terracotta/20 text-terracotta border-terracotta/30",
+          lightColor: "bg-terracotta/5",
           icon: BookOpen,
-          description:
-            "General interest passages from newspapers, magazines, and books.",
+          description: "General interest passages from newspapers, magazines, and books.",
         };
       case "academic_reading":
         return {
           title: "Academic Reading",
-          color: "from-amber-600 to-yellow-500",
-          lightColor: "bg-amber-50",
+          color: "bg-highlighter-yellow/30 text-forest-ink border-highlighter-yellow/50",
+          lightColor: "bg-highlighter-yellow/10",
           icon: BookOpen,
-          description:
-            "Complex academic texts from scientific journals, textbooks, and research papers.",
+          description: "Complex texts from scientific journals and textbooks.",
         };
       case "listening":
         return {
           title: "Listening",
-          color: "from-blue-500 to-cyan-400",
-          lightColor: "bg-blue-50",
+          color: "bg-sticky-note-teal text-forest-ink border-sticky-note-teal/50",
+          lightColor: "bg-sticky-note-teal/20",
           icon: Headphones,
-          description:
-            "Audio tests with various accents, situations, and academic contexts.",
+          description: "Audio tests with various accents and academic contexts.",
         };
       default:
         return {
           title: "General Reading",
-          color: "from-rose-500 to-orange-500",
-          lightColor: "bg-rose-50",
+          color: "bg-terracotta/20 text-terracotta border-terracotta/30",
+          lightColor: "bg-terracotta/5",
           icon: BookOpen,
           description: "General interest passages from various sources.",
         };
@@ -91,373 +114,226 @@ const PracticeTestsSection = () => {
   const typeDetails = getTypeDetails(currentType);
   const TypeIcon = typeDetails.icon;
 
-  // Filter tests by search query
   const filteredTests =
     mockTests[currentType]?.filter((test) =>
       test.title.toLowerCase().includes(searchQuery.toLowerCase())
     ) || [];
 
-  const tests = filteredTests;
-
   const handleTypeChange = (type: TestType) => {
     setCurrentType(type);
     setLoading(true);
     setSearchQuery("");
-    // Simulate loading
     setTimeout(() => setLoading(false), 300);
   };
 
-  // Get the URL path for a test based on its type and ID
   const getTestPath = (test: TestMetadata, type: TestType): string => {
     return `/tests/${type}/${test.id}`;
   };
 
-  // Animation variants
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.2,
+        staggerChildren: prefersReducedMotion ? 0 : 0.08,
       },
     },
   };
 
-  const itemVariants = {
-    hidden: { y: 30, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] },
+  // Cards enter from alternate directions based on index
+  const getCardVariant = (index: number) => ({
+    hidden: { 
+      x: prefersReducedMotion ? 0 : (index % 2 === 0 ? -20 : 20),
+      opacity: 0,
+      scale: prefersReducedMotion ? 1 : 0.95 
     },
-  };
+    visible: {
+      x: 0,
+      opacity: 1,
+      scale: 1,
+      transition: { duration: 0.5, ease: "easeOut" },
+    },
+  });
 
   return (
     <section
       id="practice-tests"
-      className="py-28 relative bg-gradient-to-b from-white to-gray-50"
+      className="py-24 relative bg-cream-paper overflow-hidden"
       ref={sectionRef}
     >
-      {/* Background decorative elements */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-0 left-1/4 w-64 h-64 bg-primary/5 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-blue-500/5 rounded-full blur-3xl"></div>
+      {/* Background UI fragments */}
+      <FloatingShape speed={0.3} className="top-32 left-10 opacity-10 pointer-events-none hidden lg:block">
+        <div className="w-64 h-32 bg-white rounded-xl shadow-lg border border-pencil-gray/30 p-4">
+          <div className="w-2/3 h-4 bg-pencil-gray/20 rounded mb-2" />
+          <div className="w-full h-3 bg-pencil-gray/10 rounded mb-2" />
+          <div className="w-4/5 h-3 bg-pencil-gray/10 rounded" />
+        </div>
+      </FloatingShape>
 
-        {/* Animated dots pattern */}
-        <svg
-          className="absolute top-20 right-20 opacity-10"
-          width="100"
-          height="100"
-          viewBox="0 0 100 100"
-        >
-          <pattern
-            id="dots"
-            x="0"
-            y="0"
-            width="20"
-            height="20"
-            patternUnits="userSpaceOnUse"
-          >
-            <circle cx="3" cy="3" r="2" fill="currentColor" />
-          </pattern>
-          <rect x="0" y="0" width="100%" height="100%" fill="url(#dots)" />
-        </svg>
+      <FloatingShape speed={-0.2} float={true} className="bottom-20 right-10 opacity-[0.05] pointer-events-none hidden lg:block">
+        <div className="flex gap-2">
+          <div className="w-12 h-12 rounded bg-forest-ink flex items-center justify-center text-white font-bold text-xl">A</div>
+          <div className="w-12 h-12 rounded border-2 border-forest-ink flex items-center justify-center text-forest-ink font-bold text-xl">B</div>
+          <div className="w-12 h-12 rounded border-2 border-forest-ink flex items-center justify-center text-forest-ink font-bold text-xl">C</div>
+        </div>
+      </FloatingShape>
 
-        {/* Curved lines */}
-        <svg
-          className="absolute bottom-10 left-10 opacity-10 text-primary"
-          width="200"
-          height="100"
-          viewBox="0 0 200 100"
-        >
-          <path
-            d="M0,50 C40,30 60,70 100,50 C140,30 160,70 200,50"
-            stroke="currentColor"
-            fill="none"
-            strokeWidth="2"
-          />
-          <path
-            d="M0,70 C40,50 60,90 100,70 C140,50 160,90 200,70"
-            stroke="currentColor"
-            fill="none"
-            strokeWidth="2"
-          />
-        </svg>
-      </div>
+      <div className="container mx-auto max-w-6xl px-6 relative z-10" ref={contentRef}>
+        <SectionHeader
+          eyebrowText="Free Practice Tests"
+          eyebrowIcon={<BookOpen className="w-3.5 h-3.5" />}
+          title="IELTS Practice Tests"
+          description="Prepare for your IELTS exam with our collection of authentic practice materials designed to help you achieve band 7+."
+          className="mb-14"
+        />
 
-      <div className="container mx-auto max-w-6xl px-6 relative">
-        <motion.div
-          className="mb-16 max-w-xl mx-auto text-center"
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-          transition={{ duration: 0.5 }}
-        >
-          <div className="inline-block mb-4">
-            <motion.div
-              className="px-4 py-1.5 rounded-full bg-primary/10 text-primary text-sm font-medium flex items-center gap-2"
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={
-                isInView
-                  ? {
-                      opacity: 1,
-                      scale: 1,
-                      transition: {
-                        type: "spring",
-                        stiffness: 200,
-                        damping: 12,
-                      },
-                    }
-                  : {}
-              }
-            >
-              <CheckCircle2 className="w-4 h-4" />
-              <span>Free Practice Tests</span>
-            </motion.div>
-          </div>
-
-          <motion.h2
-            className="text-3xl md:text-4xl font-bold text-gray-900 mb-4"
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.4, delay: 0.2 }}
-          >
-            IELTS Practice Tests
-          </motion.h2>
-
-          <motion.p
-            className="text-gray-600"
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.4, delay: 0.3 }}
-          >
-            Prepare for your IELTS exam with our collection of authentic
-            practice materials designed to help you achieve band 7 and above.
-          </motion.p>
-        </motion.div>
-
-        <motion.div
-          className="mb-12"
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.4, delay: 0.2 }}
-        >
-          {/* Test type selector with animated gradient border */}
-          <div className="relative mx-auto max-w-2xl p-1 rounded-xl bg-gradient-to-r from-primary/20 via-blue-500/20 to-violet-500/20">
-            <motion.div
-              className="absolute inset-0 rounded-xl bg-gradient-to-r from-primary/30 via-blue-500/30 to-violet-500/30 opacity-60"
-              animate={{
-                backgroundPosition: ["0% 0%", "100% 100%"],
-              }}
-              transition={{
-                duration: 5,
-                repeat: Infinity,
-                repeatType: "reverse",
-              }}
-            />
-
-            <div className="bg-white rounded-lg p-1 flex justify-between relative">
-              <button
-                onClick={() => handleTypeChange("general_reading")}
-                className={`flex-1 px-4 py-3.5 rounded-md font-medium text-sm transition-all flex items-center justify-center gap-2 ${
-                  currentType === "general_reading"
-                    ? "bg-gradient-to-r from-primary to-primary/90 text-white shadow-sm"
-                    : "text-gray-700 hover:bg-gray-50"
-                }`}
-              >
-                <BookOpen className="w-4 h-4" />
-                General Reading
-              </button>
-              <button
-                onClick={() => handleTypeChange("academic_reading")}
-                className={`flex-1 px-4 py-3.5 rounded-md font-medium text-sm transition-all flex items-center justify-center gap-2 ${
-                  currentType === "academic_reading"
-                    ? "bg-gradient-to-r from-amber-500 to-amber-600 text-white shadow-sm"
-                    : "text-gray-700 hover:bg-gray-50"
-                }`}
-              >
-                <BookOpen className="w-4 h-4" />
-                Academic Reading
-              </button>
-              <button
-                onClick={() => handleTypeChange("listening")}
-                className={`flex-1 px-4 py-3.5 rounded-md font-medium text-sm transition-all flex items-center justify-center gap-2 ${
-                  currentType === "listening"
-                    ? "bg-gradient-to-r from-blue-500 to-cyan-500 text-white shadow-sm"
-                    : "text-gray-700 hover:bg-gray-50"
-                }`}
-              >
-                <Headphones className="w-4 h-4" />
-                Listening
-              </button>
+        <div className="mb-10">
+          {/* Test type selector */}
+          <div className="relative mx-auto max-w-2xl p-1.5 rounded-full bg-white border border-pencil-gray/20 shadow-sm">
+            <div className="flex relative">
+              {[
+                { id: "general_reading", label: "General Reading", icon: BookOpen },
+                { id: "academic_reading", label: "Academic Reading", icon: BookOpen },
+                { id: "listening", label: "Listening", icon: Headphones },
+              ].map((type) => {
+                const isActive = currentType === type.id;
+                const Icon = type.icon;
+                
+                return (
+                  <button
+                    key={type.id}
+                    onClick={() => handleTypeChange(type.id as TestType)}
+                    className={cn(
+                      "flex-1 flex items-center justify-center gap-2 py-3 px-2 rounded-full font-inter text-[14px] font-medium transition-all duration-300 relative z-10",
+                      isActive
+                        ? "text-cream-paper"
+                        : "text-forest-ink/70 hover:text-forest-ink hover:bg-forest-ink/5"
+                    )}
+                  >
+                    {isActive && (
+                      <motion.div
+                        layoutId="activeTestTab"
+                        className="absolute inset-0 bg-forest-ink rounded-full shadow-md -z-10"
+                        transition={prefersReducedMotion ? { duration: 0 } : { type: "spring", bounce: 0.2, duration: 0.6 }}
+                      />
+                    )}
+                    <Icon className={cn("w-4 h-4", isActive ? "text-highlighter-yellow" : "")} />
+                    <span className="hidden sm:inline">{type.label}</span>
+                    <span className="sm:hidden">{type.label.split(" ")[0]}</span>
+                  </button>
+                );
+              })}
             </div>
           </div>
-        </motion.div>
+        </div>
 
-        <motion.div
-          className="mb-8 flex md:items-center flex-col md:flex-row justify-between gap-6"
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.4, delay: 0.3 }}
-        >
-          <div className="flex items-center gap-4 mr-4">
-            <div
-              className={`p-3 rounded-xl bg-gradient-to-br ${typeDetails.color} shadow-md`}
-            >
-              <TypeIcon className="w-6 h-6 text-white" />
+        {/* Content area */}
+        <div className="bg-white rounded-[24px] border border-pencil-gray/20 shadow-[var(--shadow-card)] overflow-hidden">
+          {/* Header */}
+          <div className="p-6 md:p-8 border-b border-pencil-gray/15 flex flex-col md:flex-row md:items-center justify-between gap-6 bg-[#faf9f6]">
+            <div className="flex items-center gap-4">
+              <div className={cn("w-14 h-14 rounded-xl flex items-center justify-center border", typeDetails.color)}>
+                <TypeIcon className="w-6 h-6" />
+              </div>
+              <div>
+                <h3 className="text-2xl font-semibold text-forest-ink font-inter tracking-tight">
+                  {typeDetails.title}
+                </h3>
+                <p className="text-forest-ink/65 text-sm mt-1 font-inter max-w-md">
+                  {typeDetails.description}
+                </p>
+              </div>
             </div>
-            <div>
-              <h3 className="text-xl font-bold text-gray-900 mb-1">
-                {typeDetails.title}
-              </h3>
-              <p className="text-gray-600 text-sm max-w-md">
-                {typeDetails.description}
-              </p>
-            </div>
-          </div>
 
-          {/* Search bar with animation */}
-          <motion.div
-            className="relative"
-            initial={{ width: "100%" }}
-            animate={{ width: "100%" }}
-          >
-            <div className="relative">
+            {/* Search */}
+            <div className="relative md:max-w-xs w-full">
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <Search className="h-4 w-4 text-forest-ink/40" />
+              </div>
               <input
                 type="text"
                 placeholder="Search tests..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="px-4 py-2.5 pl-10 pr-4 rounded-lg border border-gray-200 w-full focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all"
+                className="w-full pl-10 pr-4 py-2.5 bg-white border border-pencil-gray/30 rounded-lg text-sm text-forest-ink focus:outline-none focus:ring-2 focus:ring-forest-ink/20 focus:border-forest-ink/40 transition-all font-inter shadow-sm"
               />
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
             </div>
-          </motion.div>
-        </motion.div>
-
-        {loading ? (
-          <div className="flex justify-center my-16">
-            <motion.div
-              className="w-12 h-12 border-4 border-gray-200 border-t-primary rounded-full"
-              animate={{ rotate: 360 }}
-              transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-            />
           </div>
-        ) : (
-          <>
-            {/* Conditionally render "no results" message */}
-            {tests.length === 0 && (
+
+          {/* Test list */}
+          <div className="p-6 md:p-8 min-h-[400px]">
+            {loading ? (
+              <div className="flex flex-col items-center justify-center h-[300px] text-forest-ink/50">
+                <div className="w-10 h-10 border-4 border-forest-ink/20 border-t-forest-ink rounded-full animate-spin mb-4"></div>
+                <p className="font-inter">Loading tests...</p>
+              </div>
+            ) : filteredTests.length > 0 ? (
               <motion.div
-                className="text-center py-12 bg-gray-50 rounded-lg"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
+                variants={containerVariants}
+                initial="hidden"
+                animate="visible"
+                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
               >
-                <p className="text-gray-500">
-                  No tests found matching "{searchQuery}"
-                </p>
-                <button
-                  className="mt-2 text-primary underline"
-                  onClick={() => setSearchQuery("")}
-                >
-                  Clear search
-                </button>
-              </motion.div>
-            )}
-
-            <motion.div
-              className="grid md:grid-cols-2 lg:grid-cols-3 gap-6"
-              variants={containerVariants}
-              initial="hidden"
-              animate={isInView && tests.length > 0 ? "visible" : "hidden"}
-            >
-              {tests.map((test, index) => {
-                const testYear = parseInt(test.year, 10) + 2000;
-                const testPath = getTestPath(test, currentType);
-
-                return (
+                {filteredTests.map((test, index) => (
                   <motion.div
                     key={test.id}
-                    variants={itemVariants}
-                    custom={index}
-                    className="group bg-white rounded-xl shadow-sm border border-gray-100 hover:shadow-lg transition-all overflow-hidden"
-                    whileHover={{ y: -6 }}
+                    variants={getCardVariant(index)}
+                    className="group"
+                    whileHover={prefersReducedMotion ? {} : { y: -4, scale: 1.01 }}
+                    transition={{ type: "spring", stiffness: 400, damping: 25 }}
                   >
-                    <Link href={testPath} passHref>
-                      {/* Colored top bar based on test type */}
-                      <div
-                        className={`h-2 bg-gradient-to-r ${typeDetails.color}`}
-                      ></div>
-
-                      <div className="p-6">
+                    <Link href={getTestPath(test, currentType)} className="block h-full">
+                      <div className="bg-white border border-pencil-gray/25 rounded-2xl p-6 h-full transition-colors duration-300 hover:border-forest-ink/30 hover:shadow-[var(--shadow-card)] relative overflow-hidden flex flex-col">
+                        
                         <div className="flex justify-between items-start mb-4">
-                          <div>
-                            {/* <div className="flex items-center gap-1.5 mb-3">
-                              <span className="text-xs font-medium px-2.5 py-0.5 rounded-full bg-primary/10 text-primary">
-                                {testYear}
-                              </span>
-                            </div> */}
-                            <h3 className="font-medium text-gray-900 group-hover:text-primary transition-colors">
-                              {test.title}
-                            </h3>
+                          <h4 className="font-semibold text-[17px] text-forest-ink font-inter leading-tight group-hover:text-terracotta transition-colors">
+                            {test.title}
+                          </h4>
+                        </div>
+
+                        {/* Metadata with subtle hover reveal/slide */}
+                        <div className="flex items-center gap-4 mb-5 text-[12px] font-roboto-mono text-forest-ink/60 mt-auto opacity-80 group-hover:opacity-100 transition-opacity">
+                          <div className="flex items-center gap-1.5 transform translate-y-0 group-hover:-translate-y-0.5 transition-transform">
+                            <Clock className="w-3.5 h-3.5" />
+                            <span>{test.estimatedTime || "60"}m</span>
+                          </div>
+                          <div className="flex items-center gap-1.5 transform translate-y-0 group-hover:-translate-y-0.5 transition-transform delay-75">
+                            <BookOpen className="w-3.5 h-3.5" />
+                            <span>40 Qs</span>
+                          </div>
+                          <div className="flex items-center gap-1.5 transform translate-y-0 group-hover:-translate-y-0.5 transition-transform delay-100">
+                            <Users className="w-3.5 h-3.5" />
+                            <span>{test.completions?.toLocaleString() || "1,200+"}</span>
                           </div>
                         </div>
 
-                        {/* Test meta information */}
-                        <div className="grid grid-cols-2 gap-2 mb-4 text-xs text-gray-500">
-                          {test.estimatedTime && (
-                            <div className="flex items-center">
-                              <Clock className="w-3 h-3 mr-1.5" />
-                              <span>{test.estimatedTime}</span>
-                            </div>
-                          )}
-                          {test.completions && (
-                            <div className="flex items-center">
-                              <Users className="w-3 h-3 mr-1.5" />
-                              <span>
-                                {test.completions.toLocaleString()} attempts
-                              </span>
-                            </div>
-                          )}
-                        </div>
-
-                        <div className="flex items-center justify-between border-t border-gray-100 pt-4 mt-2">
-                          <div className="flex items-center text-gray-600">
-                            <TypeIcon className="w-4 h-4 mr-2" />
-                            <span className="text-sm">{typeDetails.title}</span>
-                          </div>
-
-                          <div className="flex items-center font-medium text-primary relative">
-                            <div className="relative">
-                              <span className="group-hover:translate-x-[-4px] inline-block transition-transform duration-300">
-                                View Content
-                              </span>
-                            </div>
-                            <div className="relative w-4">
-                              <ArrowRight className="h-4 w-4 group-hover:translate-x-[3px] transition-transform duration-300" />
-                            </div>
+                        <div className="pt-4 border-t border-pencil-gray/15 flex items-center justify-between mt-auto group-hover:border-forest-ink/10 transition-colors">
+                          <span className="text-[13px] font-medium text-forest-ink/80 font-inter group-hover:text-forest-ink">
+                            Start Practice
+                          </span>
+                          <div className="w-8 h-8 rounded-full bg-whisper-gray flex items-center justify-center group-hover:bg-forest-ink group-hover:text-white transition-all duration-300 transform group-hover:rotate-[-45deg]">
+                            <ArrowRight className="w-4 h-4" />
                           </div>
                         </div>
                       </div>
                     </Link>
                   </motion.div>
-                );
-              })}
-            </motion.div>
-          </>
-        )}
-      </div>
-
-      {/* Subtle top wave decoration */}
-      <div className="absolute top-0 left-0 right-0 h-12 overflow-hidden">
-        <svg
-          viewBox="0 0 1200 120"
-          preserveAspectRatio="none"
-          className="absolute top-0 left-0 w-full rotate-180"
-          style={{ height: "40px" }}
-          fill="white"
-        >
-          <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V95.8C59.71,118.11,141.89,111.27,221.93,101.3,286.36,93.06,275.65,62.23,321.39,56.44Z"></path>
-        </svg>
+                ))}
+              </motion.div>
+            ) : (
+              <div className="flex flex-col items-center justify-center h-[300px] text-forest-ink/50">
+                <Search className="w-12 h-12 mb-4 opacity-20" />
+                <p className="font-inter text-lg">No tests found matching "{searchQuery}"</p>
+                <button
+                  onClick={() => setSearchQuery("")}
+                  className="mt-4 text-terracotta hover:underline font-medium font-inter"
+                >
+                  Clear search
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
       </div>
     </section>
   );

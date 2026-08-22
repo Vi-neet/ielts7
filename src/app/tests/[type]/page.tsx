@@ -27,27 +27,23 @@ export default function TestTypePage() {
     switch (type) {
       case "general_reading":
         return {
-          border: "border-red-500",
-          hover: "hover:bg-red-50",
-          shadow: "hover:shadow-red-100",
+          wrapper: "border-sticky-note-blush/60 bg-sticky-note-blush/10 hover:bg-sticky-note-blush/20",
+          shadow: "shadow-sm hover:shadow-md",
         };
       case "listening":
         return {
-          border: "border-blue-500",
-          hover: "hover:bg-blue-50",
-          shadow: "hover:shadow-blue-100",
+          wrapper: "border-sticky-note-teal/60 bg-sticky-note-teal/10 hover:bg-sticky-note-teal/20",
+          shadow: "shadow-sm hover:shadow-md",
         };
       case "academic_reading":
         return {
-          border: "border-amber-800",
-          hover: "hover:bg-amber-50",
-          shadow: "hover:shadow-amber-100",
+          wrapper: "border-sticky-note-mint/60 bg-sticky-note-mint/10 hover:bg-sticky-note-mint/20",
+          shadow: "shadow-sm hover:shadow-md",
         };
       default:
         return {
-          border: "border-gray-200",
-          hover: "hover:bg-gray-50",
-          shadow: "hover:shadow-gray-100",
+          wrapper: "border-pencil-gray/20 bg-white hover:bg-whisper-gray",
+          shadow: "shadow-sm hover:shadow-md",
         };
     }
   };
@@ -127,8 +123,8 @@ export default function TestTypePage() {
 
   if (loading) {
     return (
-      <div className="flex justify-center items-center min-h-screen">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+      <div className="flex justify-center items-center min-h-[60vh] bg-cream-paper">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-forest-ink"></div>
       </div>
     );
   }
@@ -140,45 +136,54 @@ export default function TestTypePage() {
   const styles = getCardStyles();
 
   return (
-    <div className="container mx-auto p-4 mt-20">
-      <div className="flex items-center mb-6">
-        <Link href="/">
-          <Button
-            variant="outline"
-            size="sm"
-            className="flex items-center gap-1"
-          >
-            <ArrowLeft size={16} />
-            <span>Back</span>
-          </Button>
-        </Link>
-        <h1 className="text-3xl font-bold ml-4 capitalize">
-          {type?.replace("_", " ")} Tests
-        </h1>
-      </div>
+    <div className="min-h-screen bg-cream-paper pt-12 pb-24">
+      <div className="container mx-auto px-6 max-w-6xl">
+        <div className="flex items-center mb-10">
+          <Link href="/">
+            <Button
+              variant="outline"
+              size="sm"
+              className="flex items-center gap-1.5 rounded-full border-pencil-gray/20 bg-white text-forest-ink hover:bg-whisper-gray hover:text-forest-ink font-inter shadow-sm"
+            >
+              <ArrowLeft size={16} />
+              <span>Back</span>
+            </Button>
+          </Link>
+          <h1 className="text-3xl md:text-4xl font-extrabold ml-6 capitalize text-forest-ink font-bricolage tracking-tight">
+            {type?.replace("_", " ")} Tests
+          </h1>
+        </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {tests.map((test, index) => (
-          <div
-            key={index}
-            onClick={() => handleTestClick(test)}
-            className={`
-              bg-white p-6 rounded-lg cursor-pointer
-              transform transition-all duration-200
-              border-2 ${styles.border}
-              ${styles.hover}
-              hover:scale-105
-              shadow-lg ${styles.shadow}
-            `}
-          >
-            <h2 className="text-lg font-semibold mb-3">{test.title}</h2>
-            <p className="text-gray-600">
-              {type === "listening"
-                ? "Click to play audio and take the test"
-                : "Click to view content and take the test"}
-            </p>
-          </div>
-        ))}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {tests.map((test, index) => (
+            <div
+              key={index}
+              onClick={() => handleTestClick(test)}
+              className={`
+                p-6 rounded-2xl cursor-pointer
+                transform transition-all duration-300
+                border ${styles.wrapper}
+                hover:-translate-y-1
+                ${styles.shadow}
+                flex flex-col group
+              `}
+            >
+              <h2 className="text-xl font-bold mb-3 text-forest-ink font-bricolage group-hover:text-forest-ink/80 transition-colors line-clamp-2">{test.title}</h2>
+              <div className="mt-auto pt-4 flex items-center justify-between border-t border-forest-ink/10">
+                <p className="text-forest-ink/60 text-sm font-inter">
+                  {type === "listening"
+                    ? "Audio available"
+                    : "Interactive content"}
+                </p>
+                <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center border border-pencil-gray/10 shadow-sm group-hover:bg-highlighter-yellow transition-colors">
+                  <svg className="w-4 h-4 text-forest-ink" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                  </svg>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

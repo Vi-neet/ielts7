@@ -1,0 +1,44 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /attempts/{attemptId} {
+      allow read: if resource.data.uid == request.auth.uid;
+      allow create: if (request.resource.data.uid == request.auth.uid)
+        || (request.resource.data.uid == null
+            && request.resource.data.isGuest == true
+            && request.auth == null);
+      allow update, delete: if false;
+    }
+    match /users/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+    match /writingSubmissions/{submissionId} {
+      allow read: if request.auth != null && resource.data.uid == request.auth.uid;
+      allow create: if request.auth != null
+        && request.resource.data.uid == request.auth.uid
+        && request.resource.data.taskType in ['task_1', 'task_2']
+        && request.resource.data.submissionMethod in ['text', 'file']
+        && request.resource.data.status == 'submitted'
+        && request.resource.data.submittedAt == request.time
+        && request.resource.data.updatedAt == request.time
+        && (request.resource.data.notes == null || request.resource.data.notes is string)
+        && request.resource.data.keys().hasOnly(['uid', 'taskType', 'submissionMethod', 'essayText', 'storagePath', 'fileName', 'fileSize', 'wordCount', 'notes', 'status', 'submittedAt', 'updatedAt'])
+        && (
+          (request.resource.data.submissionMethod == 'text'
+            && request.resource.data.essayText is string && request.resource.data.essayText != ''
+            && request.resource.data.storagePath == null
+            && request.resource.data.fileName == null
+            && request.resource.data.fileSize == null
+            && (request.resource.data.wordCount is int && request.resource.data.wordCount >= 0))
+          ||
+          (request.resource.data.submissionMethod == 'file'
+            && request.resource.data.essayText == null
+            && request.resource.data.storagePath is string && request.resource.data.storagePath != ''
+            && request.resource.data.fileName is string && request.resource.data.fileName != ''
+            && request.resource.data.fileSize is int && request.resource.data.fileSize > 0 && request.resource.data.fileSize <= 5242880
+            && request.resource.data.wordCount == null)
+        );
+      allow update, delete: if false;
+    }
+  }
+}
