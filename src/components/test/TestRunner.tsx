@@ -1,29 +1,35 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import { useAuth } from "@/lib/AuthContext";
 import { ALLOW_GUEST_TESTS } from "@/lib/featureFlags";
-import { gradeAttempt, GradeResult, formatAnswer } from "@/lib/scoring";
+import { gradeAttempt, GradeResult, formatAnswer, getAcceptableAnswers } from "@/lib/scoring";
 import { db } from "@/lib/firebase";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import { Button } from "@/components/ui/button";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { AnswerContext } from "./AnswerContext";
 import { TestMetadata } from "@/data/tests/testRegistry";
+import TestHeader from "./TestHeader";
+import QuestionNavigator from "./QuestionNavigator";
 import {
   CheckCircle2,
   XCircle,
   ArrowLeft,
   ChevronRight,
+  ChevronLeft,
   Loader2,
   Sparkles,
   ClipboardList,
   AlertTriangle,
   RotateCcw,
-  ArrowRight
+  ArrowRight,
+  PanelLeftClose,
+  PanelLeftOpen,
 } from "lucide-react";
 import Link from "next/link";
 import { motion } from "framer-motion";
+
+// ─── Props ────────────────────────────────────────────────────────────────────
 
 interface TestRunnerProps {
   testId: string;
@@ -32,11 +38,18 @@ interface TestRunnerProps {
   passages: React.ReactNode | string;
   questions: React.ReactNode | string;
   answerKey: Record<number, string | string[]>;
+  mode: "practice" | "exam";
+  /** Total exam duration in seconds (ignored in practice mode) */
+  examDurationSeconds: number;
 }
 
-// Helper to determine question number for input element (bi-directional walk)
-function findQuestionNumberForInput(inputEl: HTMLInputElement, container: HTMLElement): number | null {
-  // 1. Check name/id attribute for question number
+// ─── DOM utilities ────────────────────────────────────────────────────────────
+
+/** Walk the DOM near an input to discover its question number */
+function findQuestionNumberForInput(
+  inputEl: HTMLInputElement,
+  container: HTMLElement
+): number | null {
   const nameOrId = inputEl.name || inputEl.id || "";
   const nameMatch = nameOrId.match(/question(\d+)|q(\d+)/i);
   if (nameMatch) {
@@ -46,7 +59,6 @@ function findQuestionNumberForInput(inputEl: HTMLInputElement, container: HTMLEl
 
   const isQuestionNumberText = (text: string) => {
     const clean = text.trim();
-    // Match clean numbers: "18", "18.", "(18)", "18)", "18:"
     const match = clean.match(/^[\(]?\s*(\d+)\s*[\.\:\)]?$/);
     if (match) {
       const num = parseInt(match[1], 10);
@@ -55,176 +67,92 @@ function findQuestionNumberForInput(inputEl: HTMLInputElement, container: HTMLEl
     return null;
   };
 
-  // 2. Backward search: walk backward in document order starting from inputEl
+  // Backward search
   let current: Node | null = inputEl;
   let prevNum: number | null = null;
   let prevSteps = 0;
   while (current && prevSteps < 30) {
     if (current.previousSibling) {
       current = current.previousSibling;
-      while (current.lastChild) {
-        current = current.lastChild;
-      }
+      while (current.lastChild) current = current.lastChild;
     } else {
       current = current.parentNode;
       if (!current || current === container) break;
       continue;
     }
     prevSteps++;
-
     let num: number | null = null;
-    if (current.nodeType === Node.TEXT_NODE) {
-      num = isQuestionNumberText(current.nodeValue || "");
-    } else if (current.nodeType === Node.ELEMENT_NODE) {
+    if (current.nodeType === Node.TEXT_NODE) num = isQuestionNumberText(current.nodeValue || "");
+    else if (current.nodeType === Node.ELEMENT_NODE)
       num = isQuestionNumberText((current as HTMLElement).textContent || "");
-    }
-    if (num !== null) {
-      prevNum = num;
-      break;
-    }
+    if (num !== null) { prevNum = num; break; }
   }
 
-  // 3. Forward search: walk forward in document order starting from inputEl
+  // Forward search
   current = inputEl;
   let nextNum: number | null = null;
   let nextSteps = 0;
   while (current && nextSteps < 30) {
     if (current.nextSibling) {
       current = current.nextSibling;
-      while (current.firstChild) {
-        current = current.firstChild;
-      }
+      while (current.firstChild) current = current.firstChild;
     } else {
       current = current.parentNode;
       if (!current || current === container) break;
       continue;
     }
     nextSteps++;
-
     let num: number | null = null;
-    if (current.nodeType === Node.TEXT_NODE) {
-      num = isQuestionNumberText(current.nodeValue || "");
-    } else if (current.nodeType === Node.ELEMENT_NODE) {
+    if (current.nodeType === Node.TEXT_NODE) num = isQuestionNumberText(current.nodeValue || "");
+    else if (current.nodeType === Node.ELEMENT_NODE)
       num = isQuestionNumberText((current as HTMLElement).textContent || "");
-    }
-    if (num !== null) {
-      nextNum = num;
-      break;
-    }
+    if (num !== null) { nextNum = num; break; }
   }
 
-  // Choose the closest matching number based on distance (steps)
-  if (prevNum !== null && nextNum !== null) {
+  if (prevNum !== null && nextNum !== null)
     return prevSteps <= nextSteps ? prevNum : nextNum;
-  }
   return prevNum !== null ? prevNum : nextNum;
 }
 
-// Convert raw score to estimated IELTS Band Score
+// ─── Band score (kept inline — do not change scoring.ts) ─────────────────────
+
 function getBandScore(score: number, testType: string): string {
   const isAcademic = testType === "academic_reading";
   const isListening = testType === "listening";
 
   if (isListening) {
-    if (score >= 39) return "9.0";
-    if (score >= 37) return "8.5";
-    if (score >= 35) return "8.0";
-    if (score >= 32) return "7.5";
-    if (score >= 30) return "7.0";
-    if (score >= 27) return "6.5";
-    if (score >= 23) return "6.0";
-    if (score >= 20) return "5.5";
-    if (score >= 16) return "5.0";
-    if (score >= 13) return "4.5";
-    if (score >= 10) return "4.0";
-    return "3.5";
+    if (score >= 39) return "9.0"; if (score >= 37) return "8.5";
+    if (score >= 35) return "8.0"; if (score >= 32) return "7.5";
+    if (score >= 30) return "7.0"; if (score >= 27) return "6.5";
+    if (score >= 23) return "6.0"; if (score >= 20) return "5.5";
+    if (score >= 16) return "5.0"; if (score >= 13) return "4.5";
+    if (score >= 10) return "4.0"; return "3.5";
   }
-
   if (isAcademic) {
-    if (score >= 39) return "9.0";
-    if (score >= 37) return "8.5";
-    if (score >= 35) return "8.0";
-    if (score >= 33) return "7.5";
-    if (score >= 30) return "7.0";
-    if (score >= 27) return "6.5";
-    if (score >= 23) return "6.0";
-    if (score >= 19) return "5.5";
-    if (score >= 15) return "5.0";
-    if (score >= 13) return "4.5";
-    if (score >= 10) return "4.0";
-    return "3.5";
+    if (score >= 39) return "9.0"; if (score >= 37) return "8.5";
+    if (score >= 35) return "8.0"; if (score >= 33) return "7.5";
+    if (score >= 30) return "7.0"; if (score >= 27) return "6.5";
+    if (score >= 23) return "6.0"; if (score >= 19) return "5.5";
+    if (score >= 15) return "5.0"; if (score >= 13) return "4.5";
+    if (score >= 10) return "4.0"; return "3.5";
   }
-
-  if (score >= 40) return "9.0";
-  if (score >= 39) return "8.5";
-  if (score >= 37) return "8.0";
-  if (score >= 36) return "7.5";
-  if (score >= 34) return "7.0";
-  if (score >= 32) return "6.5";
-  if (score >= 30) return "6.0";
-  {
-    if (score >= 27) return "5.5";
-    if (score >= 23) return "5.0";
-    if (score >= 19) return "4.5";
-    if (score >= 15) return "4.0";
-  }
-  return "3.5";
+  if (score >= 40) return "9.0"; if (score >= 39) return "8.5";
+  if (score >= 37) return "8.0"; if (score >= 36) return "7.5";
+  if (score >= 34) return "7.0"; if (score >= 32) return "6.5";
+  if (score >= 30) return "6.0"; if (score >= 27) return "5.5";
+  if (score >= 23) return "5.0"; if (score >= 19) return "4.5";
+  if (score >= 15) return "4.0"; return "3.5";
 }
 
-// Answers Display Subcomponent (Practice Mode key review before submission)
-function AnswersDisplay({
-  answers,
-  testType,
-}: {
-  answers: Record<number, string | string[]>;
-  testType: string;
-}) {
-  const groupedAnswers: Record<string, Record<number, string | string[]>> = {};
+// ─── Test type label ──────────────────────────────────────────────────────────
 
-  Object.entries(answers).forEach(([question, answer]) => {
-    const questionNum = parseInt(question);
-    let section = "Section 1";
+const TYPE_LABEL: Record<string, string> = {
+  general_reading: "General Reading",
+  academic_reading: "Academic Reading",
+  listening: "Listening",
+};
 
-    if (testType === "listening") {
-      if (questionNum > 10 && questionNum <= 20) section = "Section 2";
-      else if (questionNum > 20 && questionNum <= 30) section = "Section 3";
-      else if (questionNum > 30) section = "Section 4";
-    } else {
-      if (questionNum > 14 && questionNum <= 27) section = "Section 2";
-      else if (questionNum > 27) section = "Section 3";
-    }
-
-    if (!groupedAnswers[section]) {
-      groupedAnswers[section] = {};
-    }
-    groupedAnswers[section][questionNum] = answer;
-  });
-
-  return (
-    <div className="space-y-6">
-      {Object.entries(groupedAnswers).map(([section, sectionAnswers]) => (
-        <div key={section} className="bg-white rounded-2xl p-6 border border-pencil-gray/15">
-          <h3 className="text-xl font-bold mb-4 font-bricolage text-forest-ink">{section}</h3>
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
-            {Object.entries(sectionAnswers)
-              .sort((a, b) => parseInt(a[0]) - parseInt(b[0]))
-              .map(([question, answer]) => (
-                <div
-                  key={question}
-                  className="flex justify-between items-center bg-whisper-gray p-3 rounded-lg border border-pencil-gray/10 text-sm font-inter"
-                >
-                  <span className="font-semibold text-forest-ink mr-2">{question}:</span>
-                  <span className="font-mono font-medium text-right truncate max-w-[65%] text-forest-ink">
-                    {formatAnswer(answer)}
-                  </span>
-                </div>
-              ))}
-          </div>
-        </div>
-      ))}
-    </div>
-  );
-}
+// ─── Main Component ───────────────────────────────────────────────────────────
 
 export default function TestRunner({
   testId,
@@ -233,12 +161,17 @@ export default function TestRunner({
   passages,
   questions,
   answerKey,
+  mode,
+  examDurationSeconds,
 }: TestRunnerProps) {
   const { user, loading: authLoading } = useAuth();
 
+  // ── Refs ──
   const containerRef = useRef<HTMLDivElement>(null);
   const inputToQuestionMap = useRef<Map<HTMLInputElement, number>>(new Map());
+  const autoSubmitCalledRef = useRef(false);
 
+  // ── Core test state ──
   const [answers, setAnswers] = useState<Record<number, string>>({});
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
@@ -246,18 +179,70 @@ export default function TestRunner({
   const [saveStatus, setSaveStatus] = useState<"idle" | "saved" | "error">("idle");
   const [reviewMode, setReviewMode] = useState<"summary" | "context">("summary");
 
-  const isListening = testType === "listening";
+  // ── Practice mode state ──
+  // Map of question number → whether it was correct (undefined = not yet checked)
+  const [checkedQuestions, setCheckedQuestions] = useState<Record<number, boolean>>({});
+  const [currentQuestion, setCurrentQuestion] = useState<number | null>(null);
 
-  // Scan and map uncontrolled inputs inside the questions container
+  // ── Reading layout state ──
+  const [passageCollapsed, setPassageCollapsed] = useState(false);
+
+  // ── Exam timer state ──
+  const [timeRemaining, setTimeRemaining] = useState(
+    mode === "exam" ? examDurationSeconds : 0
+  );
+  const [timerExpired, setTimerExpired] = useState(false);
+
+  const isListening = testType === "listening";
+  const questionNumbers = Object.keys(answerKey)
+    .map(Number)
+    .sort((a, b) => a - b);
+  const totalQuestions = questionNumbers.length;
+  const answeredCount = questionNumbers.filter((n) => answers[n]?.trim()).length;
+
+  // ─── Timer — Exam mode only, starts on mount ──────────────────────────────
+  useEffect(() => {
+    if (mode !== "exam") return;
+
+    const interval = setInterval(() => {
+      setTimeRemaining((prev) => {
+        if (prev <= 1) {
+          clearInterval(interval);
+          setTimerExpired(true);
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, []); // intentionally empty — starts once on mount
+
+  // Stop timer display update after manual submission
+  // (interval reference is scoped inside the effect above, so it cleans up on unmount)
+
+  // ─── Auto-submit when timer expires ──────────────────────────────────────
+  useEffect(() => {
+    if (
+      timerExpired &&
+      !autoSubmitCalledRef.current &&
+      !isSubmitted &&
+      !submitting
+    ) {
+      autoSubmitCalledRef.current = true;
+      handleFormSubmit();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [timerExpired]);
+
+  // ─── DOM: Scan inputs and register event listeners ────────────────────────
   useEffect(() => {
     if (!containerRef.current) return;
     const container = containerRef.current;
 
-    // Find text inputs (excluding radio, submit, hidden inputs)
     const textInputs = container.querySelectorAll<HTMLInputElement>(
       'input[type="text"], input:not([type="radio"]):not([type="submit"]):not([type="button"]):not([type="hidden"])'
     );
-    // Find radio inputs
     const radioInputs = container.querySelectorAll<HTMLInputElement>(
       'input[type="radio"]'
     );
@@ -270,8 +255,6 @@ export default function TestRunner({
         inputToQuestionMap.current.set(input, num);
         input.value = answers[num] || "";
         input.disabled = isSubmitted;
-      } else {
-        console.warn("Defensive Fallback: Unmapped text input found in DOM.", input);
       }
     });
 
@@ -279,40 +262,29 @@ export default function TestRunner({
       const num = findQuestionNumberForInput(radio, container);
       if (num) {
         inputToQuestionMap.current.set(radio, num);
-
-        // Map QSM quiz format values to display letters (A/B/C/D) or clean text
         let answerValue = radio.value;
         const label = container.querySelector<HTMLElement>(`label[for="${radio.id}"]`);
         if (label) {
           const text = label.textContent?.trim() || "";
-          const match = text.match(/^([A-D])\b/i); // Matches letter prefix robustly (boundary handles period/paren/spaces)
-          if (match) {
-            answerValue = match[1].toUpperCase();
-          } else {
-            answerValue = text;
-          }
+          const match = text.match(/^([A-D])\b/i);
+          answerValue = match ? match[1].toUpperCase() : text;
         }
-        (radio as any)._mappedValue = answerValue;
+        (radio as HTMLInputElement & { _mappedValue?: string })._mappedValue = answerValue;
         radio.checked = answers[num] === answerValue;
         radio.disabled = isSubmitted;
-      } else {
-        if (radio.style.display !== "none") {
-          console.log("Defensive Fallback: Unmapped radio item in DOM.", radio);
-        }
       }
     });
 
     const handleInputEvent = (e: Event) => {
       if (isSubmitted) return;
-      const target = e.target as HTMLInputElement;
+      const target = e.target as HTMLInputElement & { _mappedValue?: string };
       const num = inputToQuestionMap.current.get(target);
       if (num) {
-        if (target.type === "radio") {
-          const val = (target as any)._mappedValue || target.value;
-          setAnswers((prev) => ({ ...prev, [num]: val }));
-        } else {
-          setAnswers((prev) => ({ ...prev, [num]: target.value }));
-        }
+        const val =
+          target.type === "radio"
+            ? target._mappedValue || target.value
+            : target.value;
+        setAnswers((prev) => ({ ...prev, [num]: val }));
       }
     };
 
@@ -323,9 +295,9 @@ export default function TestRunner({
       container.removeEventListener("input", handleInputEvent);
       container.removeEventListener("change", handleInputEvent);
     };
-  }, [questions, isSubmitted]);
+  }, [questions, isSubmitted]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // Sync state values back to inputs whenever answers change (using cached useRef map)
+  // ─── DOM: Sync state back to inputs ──────────────────────────────────────
   useEffect(() => {
     if (!containerRef.current) return;
     const container = containerRef.current;
@@ -347,18 +319,52 @@ export default function TestRunner({
     radioInputs.forEach((radio) => {
       const num = inputToQuestionMap.current.get(radio);
       if (num) {
-        const val = (radio as any)._mappedValue || radio.value;
+        const val =
+          (radio as HTMLInputElement & { _mappedValue?: string })._mappedValue ||
+          radio.value;
         radio.checked = answers[num] === val;
         radio.disabled = isSubmitted;
       }
     });
   }, [answers, isSubmitted]);
 
+  // ─── Answer setter ────────────────────────────────────────────────────────
   const setAnswer = (num: number, val: string) => {
     if (isSubmitted) return;
     setAnswers((prev) => ({ ...prev, [num]: val }));
   };
 
+  // ─── Practice: Check a single answer ─────────────────────────────────────
+  const checkAnswer = useCallback(
+    (num: number) => {
+      if (checkedQuestions[num] !== undefined) return;
+      const studentAns = (answers[num] || "").trim().toLowerCase();
+      const acceptable = getAcceptableAnswers(answerKey[num]);
+      const isCorrect =
+        studentAns !== "" && acceptable.some((opt) => opt === studentAns);
+      setCheckedQuestions((prev) => ({ ...prev, [num]: isCorrect }));
+    },
+    [answers, answerKey, checkedQuestions]
+  );
+
+  // ─── Navigator: scroll to question in DOM ────────────────────────────────
+  const scrollToQuestion = useCallback((num: number) => {
+    if (!containerRef.current) return;
+    for (const [input, mappedNum] of inputToQuestionMap.current) {
+      if (mappedNum === num) {
+        input.scrollIntoView({ behavior: "smooth", block: "center" });
+        try { input.focus({ preventScroll: true }); } catch (_) { /* ignore */ }
+        break;
+      }
+    }
+  }, []);
+
+  const handleNavigate = (num: number) => {
+    setCurrentQuestion(num);
+    scrollToQuestion(num);
+  };
+
+  // ─── Submission ───────────────────────────────────────────────────────────
   const handleFormSubmit = async () => {
     if (isSubmitted || submitting) return;
 
@@ -372,7 +378,6 @@ export default function TestRunner({
     setResults(gradeResult);
 
     try {
-      // Save result attempt to Firestore
       const attemptData = {
         uid: user ? user.uid : null,
         isGuest: !user,
@@ -395,7 +400,36 @@ export default function TestRunner({
     }
   };
 
-  // Render a loading state while auth resolutions are in-progress
+  // ─── Retake ───────────────────────────────────────────────────────────────
+  const handleRetake = () => {
+    setAnswers({});
+    setResults(null);
+    setSaveStatus("idle");
+    setIsSubmitted(false);
+    setReviewMode("summary");
+    setCheckedQuestions({});
+    setCurrentQuestion(null);
+    setPassageCollapsed(false);
+    // Timer is not reset on retake — for exam mode, user would need to navigate back
+    // and start a new exam via the mode selector (which remounts this component).
+  };
+
+  // ─── Next test routing ────────────────────────────────────────────────────
+  const getNextTestId = () => {
+    const currentMeta = TestMetadata[testId as keyof typeof TestMetadata];
+    if (!currentMeta) return null;
+    const sorted = Object.entries(TestMetadata)
+      .filter(([_, m]) => m.type === currentMeta.type)
+      .sort((a, b) => {
+        if (a[1].book !== b[1].book) return a[1].book - b[1].book;
+        return a[1].testNumber - b[1].testNumber;
+      });
+    const idx = sorted.findIndex(([id]) => id === testId);
+    if (idx !== -1 && idx < sorted.length - 1) return sorted[idx + 1][0];
+    return null;
+  };
+
+  // ─── Auth loading ─────────────────────────────────────────────────────────
   if (authLoading) {
     return (
       <div className="flex flex-col items-center justify-center py-20 min-h-[300px]">
@@ -405,7 +439,7 @@ export default function TestRunner({
     );
   }
 
-  // Inline sign-in prompt/block if ALLOW_GUEST_TESTS is false
+  // ─── Guest guard ──────────────────────────────────────────────────────────
   if (!user && !ALLOW_GUEST_TESTS) {
     return (
       <div className="container mx-auto max-w-2xl text-center py-20 px-4">
@@ -417,15 +451,22 @@ export default function TestRunner({
             Sign In Required
           </h2>
           <p className="text-forest-ink/75 font-inter mb-8 max-w-md">
-            Guest test-taking is currently disabled. Please sign in to access the test, submit answers, and receive detailed scores.
+            Guest test-taking is currently disabled. Please sign in to access the test,
+            submit answers, and receive detailed scores.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 w-full justify-center">
-            <Link href={`/login?redirect=${encodeURIComponent(`/tests/${testType}/${testId}`)}`} className="w-full sm:w-auto">
+            <Link
+              href={`/login?redirect=${encodeURIComponent(`/tests/${testType}/${testId}`)}`}
+              className="w-full sm:w-auto"
+            >
               <Button variant="forest" className="w-full sm:w-auto px-8 h-11">
                 Sign In to Start
               </Button>
             </Link>
-            <Link href={`/signup?redirect=${encodeURIComponent(`/tests/${testType}/${testId}`)}`} className="w-full sm:w-auto">
+            <Link
+              href={`/signup?redirect=${encodeURIComponent(`/tests/${testType}/${testId}`)}`}
+              className="w-full sm:w-auto"
+            >
               <Button variant="forestOutline" className="w-full sm:w-auto px-8 h-11">
                 Create Account
               </Button>
@@ -436,328 +477,11 @@ export default function TestRunner({
     );
   }
 
-  // Render test sheet layout (for active test-taking and read-only context review)
-  const renderTestLayout = (isReviewContext: boolean) => {
-    const bandScore = results ? getBandScore(results.score, testType) : "N/A";
-    return (
-      <AnswerContext.Provider value={{ answers, setAnswer, disabled: isSubmitted, isSubmitted }}>
-        <div className="w-full">
-          {/* Listening Specific: Audio Player */}
-          {isListening && passages && (
-            <div className="audio-player-container mb-6 bg-white rounded-2xl border border-pencil-gray/25 p-4 shadow-xs">
-              <audio controls className="w-full">
-                <source src={passages as string} type="audio/mpeg" />
-                Your browser does not support the audio element.
-              </audio>
-            </div>
-          )}
-
-          {/* Layout based on Listening vs Reading */}
-          {isListening ? (
-            <div className="w-full">
-              <Tabs defaultValue="test" className="w-full">
-                <TabsList className="mb-6 w-full flex justify-center bg-transparent gap-2">
-                  <TabsTrigger value="test" className="px-8 rounded-full border border-pencil-gray/20 data-[state=active]:bg-forest-ink data-[state=active]:text-white data-[state=inactive]:bg-white font-inter shadow-xs cursor-pointer">
-                    Test
-                  </TabsTrigger>
-                  <TabsTrigger value="answers" className="px-8 rounded-full border border-pencil-gray/20 data-[state=active]:bg-forest-ink data-[state=active]:text-white data-[state=inactive]:bg-white font-inter shadow-xs cursor-pointer">
-                    Practice Key
-                  </TabsTrigger>
-                </TabsList>
-
-                <TabsContent value="test" forceMount className="data-[state=inactive]:hidden">
-                  <div className="h-full rounded-2xl bg-white shadow-sm border border-pencil-gray/20 p-6 md:p-8 max-h-[600px] overflow-auto prose prose-lg max-w-none">
-                    <div
-                      ref={containerRef}
-                      className="questions-container"
-                      dangerouslySetInnerHTML={{ __html: questions as string }}
-                    />
-                  </div>
-                </TabsContent>
-
-                <TabsContent value="answers" className="p-6 md:p-8 bg-white rounded-2xl shadow-sm border border-pencil-gray/20">
-                  <h2 className="text-2xl font-bold mb-6 font-bricolage text-forest-ink">Self-Check Practice Key</h2>
-                  <AnswersDisplay answers={answerKey} testType="listening" />
-                </TabsContent>
-              </Tabs>
-            </div>
-          ) : (
-            /* Reading Layout */
-            <div>
-              <Tabs defaultValue="test" className="w-full">
-                <TabsList className="mb-8 w-full flex justify-center gap-2 bg-transparent">
-                  <TabsTrigger value="test" className="px-10 py-2.5 rounded-full border border-pencil-gray/20 data-[state=active]:bg-forest-ink data-[state=active]:text-white data-[state=inactive]:bg-white font-inter shadow-xs cursor-pointer">
-                    Test
-                  </TabsTrigger>
-                  <TabsTrigger value="answers" className="px-10 py-2.5 rounded-full border border-pencil-gray/20 data-[state=active]:bg-forest-ink data-[state=active]:text-white data-[state=inactive]:bg-white font-inter shadow-xs cursor-pointer">
-                    Practice Key
-                  </TabsTrigger>
-                </TabsList>
-
-                <TabsContent value="test" forceMount className="data-[state=inactive]:hidden">
-                  {/* Mobile/Tablet View inside Test tab (gated at lg collapse breakpoint) */}
-                  <div className="lg:hidden w-full">
-                    <Tabs defaultValue="passages" className="w-full">
-                      <TabsList className="mb-6 w-full bg-white/50 border border-pencil-gray/10 rounded-xl p-1 shadow-sm">
-                        <TabsTrigger value="passages" className="flex-1 font-inter data-[state=active]:bg-white data-[state=active]:shadow-sm rounded-lg">
-                          Passages
-                        </TabsTrigger>
-                        <TabsTrigger value="questions" className="flex-1 font-inter data-[state=active]:bg-white data-[state=active]:shadow-sm rounded-lg">
-                          Questions
-                        </TabsTrigger>
-                      </TabsList>
-                      <TabsContent value="passages" className="p-6 bg-white rounded-2xl shadow-sm border border-pencil-gray/20 prose max-w-none">
-                        {passages}
-                      </TabsContent>
-                      <TabsContent value="questions" className="p-6 bg-white rounded-2xl shadow-sm border border-pencil-gray/20 prose max-w-none">
-                        <div ref={containerRef}>{questions}</div>
-                      </TabsContent>
-                    </Tabs>
-                  </div>
-
-                  {/* Desktop Side-by-Side View inside Test tab (split layout at lg screen sizes) */}
-                  <div className="hidden lg:grid lg:grid-cols-2 gap-8">
-                    <div className="flex flex-col h-[calc(100vh-270px)]">
-                      <h2 className="text-2xl font-bold mb-4 py-2 font-bricolage text-forest-ink flex items-center">
-                        <div className="w-8 h-8 rounded-full bg-sticky-note-blush/30 flex items-center justify-center mr-3 border border-pencil-gray/10">
-                          <span className="text-forest-ink text-sm">P</span>
-                        </div>
-                        Passages
-                      </h2>
-                      <div className="prose prose-lg max-w-none p-8 bg-white rounded-2xl shadow-sm border border-pencil-gray/20 overflow-y-auto flex-grow scrollbar-thin">
-                        {passages}
-                      </div>
-                    </div>
-
-                    <div className="flex flex-col h-[calc(100vh-270px)]">
-                      <h2 className="text-2xl font-bold mb-4 py-2 font-bricolage text-forest-ink flex items-center">
-                        <div className="w-8 h-8 rounded-full bg-sticky-note-teal/30 flex items-center justify-center mr-3 border border-pencil-gray/10">
-                          <span className="text-forest-ink text-sm">Q</span>
-                        </div>
-                        Questions
-                      </h2>
-                      <div className="prose prose-lg max-w-none p-8 bg-white rounded-2xl shadow-sm border border-pencil-gray/20 overflow-y-auto flex-grow scrollbar-thin">
-                        <div ref={containerRef} className="questions-container">
-                          {questions}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </TabsContent>
-
-                <TabsContent value="answers" className="p-8 bg-white rounded-2xl shadow-sm border border-pencil-gray/20">
-                  <h2 className="text-2xl font-bold mb-8 font-bricolage text-forest-ink">Self-Check Practice Key</h2>
-                  <AnswersDisplay answers={answerKey} testType={testType} />
-                </TabsContent>
-              </Tabs>
-            </div>
-          )}
-
-          {/* Bottom Panel (Submit action vs. Back to Review Summary action) */}
-          {isReviewContext ? (
-            <div className="mt-8 bg-white/85 backdrop-blur-md rounded-2xl border border-pencil-gray/20 p-4 md:p-6 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-sm animate-fade-in">
-              <div className="flex items-center gap-3">
-                <ClipboardList className="text-forest-ink/60 h-5 w-5" />
-                <span className="font-inter text-forest-ink/80 text-sm">
-                  Reviewing attempt in context. Score: <strong className="text-forest-ink">{results?.score}</strong> / {results?.total} ({bandScore} Band)
-                </span>
-              </div>
-              <Button
-                onClick={() => setReviewMode("summary")}
-                variant="forest"
-                className="w-full sm:w-auto h-11 px-8 cursor-pointer font-semibold shadow-xs"
-              >
-                Back to Score Dashboard
-              </Button>
-            </div>
-          ) : (
-            <div className="mt-8 flex flex-col gap-4">
-              {saveStatus === "error" && (
-                <div className="p-4 bg-sticky-note-blush/20 border border-[#cb5521]/30 rounded-2xl flex items-start gap-2.5 text-xs text-[#cb5521] animate-fade-in font-inter">
-                  <AlertTriangle size={16} className="shrink-0 mt-0.5" />
-                  <div>
-                    <strong className="block font-bold mb-0.5">Submission Failed</strong>
-                    <span>Failed to save your practice attempt to the database. Please check your internet connection and try clicking "Submit Answers" again.</span>
-                  </div>
-                </div>
-              )}
-              <div className="bg-white/85 backdrop-blur-md rounded-2xl border border-pencil-gray/20 p-4 md:p-6 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-sm">
-                <div className="flex items-center gap-3">
-                  <ClipboardList className="text-forest-ink/60 h-5 w-5" />
-                  <span className="font-inter text-forest-ink/80 text-sm">
-                    Answers entered:{" "}
-                    <strong className="text-forest-ink">{Object.keys(answers).filter(k => answers[Number(k)]?.trim() !== "").length}</strong> /{" "}
-                    {Object.keys(answerKey).length}
-                  </span>
-                </div>
-                <Button
-                  onClick={handleFormSubmit}
-                  disabled={submitting || Object.keys(answers).length === 0}
-                  variant="forest"
-                  className="w-full sm:w-auto h-11 px-8 cursor-pointer shadow-md font-semibold"
-                >
-                  {submitting ? (
-                    <>
-                      <Loader2 size={16} className="animate-spin mr-2" />
-                      Submitting attempt...
-                    </>
-                  ) : (
-                    <>
-                      Submit Answers <ChevronRight size={16} className="ml-1" />
-                    </>
-                  )}
-                </Button>
-              </div>
-            </div>
-          )}
-        </div>
-      </AnswerContext.Provider>
-    );
-  };
-
-  // Graded results review display (Replaces test elements once submitted)
-  if (isSubmitted && results) {
+  // ─── Results: context review (read-only test sheet) ───────────────────────
+  if (isSubmitted && results && reviewMode === "context") {
     const bandScore = getBandScore(results.score, testType);
-
-    if (reviewMode === "context") {
-      return (
-        <div className="container mx-auto pt-8 pb-16 px-4 md:px-8 bg-cream-paper min-h-screen">
-          {/* Back and Navigation Header */}
-          <div className="pb-6 mb-8 border-b border-pencil-gray/10 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-            <div className="flex items-center gap-4">
-              <Link href={`/tests/${testType}`}>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="flex items-center gap-1.5 rounded-full border-pencil-gray/20 bg-white text-forest-ink hover:bg-whisper-gray font-inter shadow-sm cursor-pointer"
-                >
-                  <ArrowLeft size={16} />
-                  <span>All Tests</span>
-                </Button>
-              </Link>
-              <h1 className="text-2xl md:text-3xl font-extrabold font-bricolage text-forest-ink tracking-tight">
-                Test Review: {testName}
-              </h1>
-            </div>
-          </div>
-
-          {/* Review Mode Toggle Tab bar */}
-          <div className="flex justify-center mb-8">
-            <div className="inline-flex bg-white rounded-full p-1 border border-pencil-gray/25 shadow-xs">
-              <button
-                onClick={() => setReviewMode("summary")}
-                className="px-6 py-2 rounded-full font-inter font-medium text-xs transition-all cursor-pointer text-forest-ink/60 hover:text-forest-ink hover:bg-forest-ink/5"
-              >
-                Score Summary & Questions
-              </button>
-              <button
-                onClick={() => setReviewMode("context")}
-                className="px-6 py-2 rounded-full font-inter font-medium text-xs transition-all cursor-pointer bg-forest-ink text-white shadow-xs"
-              >
-                View Test Sheet Context (Read-Only)
-              </button>
-            </div>
-          </div>
-
-          {/* Render in-context test sheet */}
-          {renderTestLayout(true)}
-        </div>
-      );
-    }
-
-    const pctCorrect = Math.round((results.score / results.total) * 100);
-    const testTypeLabel = (
-      {
-        general_reading: "General Reading",
-        academic_reading: "Academic Reading",
-        listening: "Listening",
-      } as Record<string, string>
-    )[testType] || testType.replace(/_/g, " ");
-    const completionDate = new Date().toLocaleDateString("en-US", {
-      month: "short",
-      day: "numeric",
-      year: "numeric",
-    });
-
-    // Determine the next test ID dynamically using registry metadata
-    const getNextTestId = () => {
-      const currentMeta = TestMetadata[testId as keyof typeof TestMetadata];
-      if (!currentMeta) return null;
-      const sorted = Object.entries(TestMetadata)
-        .filter(([_, m]) => m.type === currentMeta.type)
-        .sort((a, b) => {
-          if (a[1].book !== b[1].book) return a[1].book - b[1].book;
-          return a[1].testNumber - b[1].testNumber;
-        });
-      const idx = sorted.findIndex(([id]) => id === testId);
-      if (idx !== -1 && idx < sorted.length - 1) {
-        return sorted[idx + 1][0];
-      }
-      return null;
-    };
-    const nextTestId = getNextTestId();
-
-    // Reset attempt states to retake
-    const handleRetake = () => {
-      setAnswers({});
-      setResults(null);
-      setSaveStatus("idle");
-      setIsSubmitted(false);
-      setReviewMode("summary");
-    };
-
-    // Calculate section-by-section scoring metrics
-    const sectionScores: Record<string, { correct: number; total: number }> = {};
-    const groupedResults: Record<string, Array<{ num: number; correct: boolean; student: string; correctAns: string }>> = {};
-    
-    Object.entries(results.perQuestion).forEach(([numStr, detail]) => {
-      const questionNum = parseInt(numStr);
-      let section = "Section 1";
-      if (isListening) {
-        if (questionNum > 10 && questionNum <= 20) section = "Section 2";
-        else if (questionNum > 20 && questionNum <= 30) section = "Section 3";
-        else if (questionNum > 30) section = "Section 4";
-      } else {
-        if (questionNum > 14 && questionNum <= 27) section = "Section 2";
-        else if (questionNum > 27) section = "Section 3";
-      }
-
-      if (!groupedResults[section]) groupedResults[section] = [];
-      groupedResults[section].push({
-        num: questionNum,
-        correct: detail.correct,
-        student: detail.studentAnswer,
-        correctAns: detail.correctAnswer
-      });
-
-      if (!sectionScores[section]) {
-        sectionScores[section] = { correct: 0, total: 0 };
-      }
-      if (detail.correct) {
-        sectionScores[section].correct++;
-      }
-      sectionScores[section].total++;
-    });
-
-    const getLearningSummary = () => {
-      const score = results.score;
-      const total = results.total;
-      if (score === total) {
-        return "Perfect score! Outstanding work on this practice test.";
-      }
-      if (score >= total * 0.8) {
-        return `Strong performance. You answered ${score} of ${total} questions correctly. You have solid mastery of this format.`;
-      }
-      if (score >= total * 0.6) {
-        return `Good effort. You answered ${score} of ${total} questions correctly. Check the incorrect items below to address minor gaps.`;
-      }
-      return `You answered ${score} of ${total} correctly. Review the questions below carefully before your next attempt to improve your accuracy.`;
-    };
-
     return (
       <div className="container mx-auto pt-8 pb-16 px-4 md:px-8 bg-cream-paper min-h-screen">
-        
-        {/* Back and Navigation Header */}
         <div className="pb-6 mb-8 border-b border-pencil-gray/10 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div className="flex items-center gap-4">
             <Link href={`/tests/${testType}`}>
@@ -776,32 +500,180 @@ export default function TestRunner({
           </div>
         </div>
 
-        {/* Review Mode Toggle Tab bar */}
+        <div className="flex justify-center mb-8">
+          <div className="inline-flex bg-white rounded-full p-1 border border-pencil-gray/25 shadow-xs">
+            <button
+              onClick={() => setReviewMode("summary")}
+              className="px-6 py-2 rounded-full font-inter font-medium text-xs transition-all cursor-pointer text-forest-ink/60 hover:text-forest-ink hover:bg-forest-ink/5"
+            >
+              Score Summary &amp; Questions
+            </button>
+            <button
+              onClick={() => setReviewMode("context")}
+              className="px-6 py-2 rounded-full font-inter font-medium text-xs transition-all cursor-pointer bg-forest-ink text-white shadow-xs"
+            >
+              View Test Sheet (Read-Only)
+            </button>
+          </div>
+        </div>
+
+        <AnswerContext.Provider
+          value={{ answers, setAnswer, disabled: true, isSubmitted: true }}
+        >
+          <div className="w-full">
+            {isListening && passages && (
+              <div className="audio-player-container mb-6 bg-white rounded-2xl border border-pencil-gray/25 p-4 shadow-xs">
+                <audio controls className="w-full">
+                  <source src={passages as string} type="audio/mpeg" />
+                  Your browser does not support the audio element.
+                </audio>
+              </div>
+            )}
+            {isListening ? (
+              <div className="h-full rounded-2xl bg-white shadow-sm border border-pencil-gray/20 p-6 md:p-8 max-h-[600px] overflow-auto prose prose-lg max-w-none">
+                <div
+                  ref={containerRef}
+                  className="questions-container"
+                  dangerouslySetInnerHTML={{ __html: questions as string }}
+                />
+              </div>
+            ) : (
+              <div className="hidden lg:grid lg:grid-cols-2 gap-8">
+                <div className="flex flex-col h-[calc(100vh-270px)]">
+                  <h2 className="text-xl font-bold mb-4 py-2 font-bricolage text-forest-ink">Passages</h2>
+                  <div className="prose prose-sm max-w-none p-6 bg-white rounded-2xl shadow-sm border border-pencil-gray/20 overflow-y-auto flex-grow">
+                    {passages}
+                  </div>
+                </div>
+                <div className="flex flex-col h-[calc(100vh-270px)]">
+                  <h2 className="text-xl font-bold mb-4 py-2 font-bricolage text-forest-ink">Questions</h2>
+                  <div className="prose prose-sm max-w-none p-6 bg-white rounded-2xl shadow-sm border border-pencil-gray/20 overflow-y-auto flex-grow">
+                    <div ref={containerRef} className="questions-container">{questions}</div>
+                  </div>
+                </div>
+              </div>
+            )}
+            <div className="mt-8 bg-white/85 backdrop-blur-md rounded-2xl border border-pencil-gray/20 p-4 md:p-6 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-sm animate-fade-in">
+              <div className="flex items-center gap-3">
+                <ClipboardList className="text-forest-ink/60 h-5 w-5" />
+                <span className="font-inter text-forest-ink/80 text-sm">
+                  Reviewing attempt in context. Score:{" "}
+                  <strong className="text-forest-ink">{results.score}</strong> / {results.total} (
+                  {bandScore} Band)
+                </span>
+              </div>
+              <Button
+                onClick={() => setReviewMode("summary")}
+                variant="forest"
+                className="w-full sm:w-auto h-11 px-8 cursor-pointer font-semibold shadow-xs"
+              >
+                Back to Score Dashboard
+              </Button>
+            </div>
+          </div>
+        </AnswerContext.Provider>
+      </div>
+    );
+  }
+
+  // ─── Results: summary view ────────────────────────────────────────────────
+  if (isSubmitted && results && reviewMode === "summary") {
+    const bandScore = getBandScore(results.score, testType);
+    const pctCorrect = Math.round((results.score / results.total) * 100);
+    const testTypeLabel = TYPE_LABEL[testType] || testType.replace(/_/g, " ");
+    const completionDate = new Date().toLocaleDateString("en-US", {
+      month: "short", day: "numeric", year: "numeric",
+    });
+
+    const nextTestId = getNextTestId();
+
+    const sectionScores: Record<string, { correct: number; total: number }> = {};
+    const groupedResults: Record<
+      string,
+      Array<{ num: number; correct: boolean; student: string; correctAns: string }>
+    > = {};
+
+    Object.entries(results.perQuestion).forEach(([numStr, detail]) => {
+      const questionNum = parseInt(numStr);
+      let section = "Section 1";
+      if (isListening) {
+        if (questionNum > 10 && questionNum <= 20) section = "Section 2";
+        else if (questionNum > 20 && questionNum <= 30) section = "Section 3";
+        else if (questionNum > 30) section = "Section 4";
+      } else {
+        if (questionNum > 13 && questionNum <= 27) section = "Section 2";
+        else if (questionNum > 27) section = "Section 3";
+      }
+
+      if (!groupedResults[section]) groupedResults[section] = [];
+      groupedResults[section].push({
+        num: questionNum,
+        correct: detail.correct,
+        student: detail.studentAnswer,
+        correctAns: detail.correctAnswer,
+      });
+
+      if (!sectionScores[section]) sectionScores[section] = { correct: 0, total: 0 };
+      if (detail.correct) sectionScores[section].correct++;
+      sectionScores[section].total++;
+    });
+
+    const getLearningSummary = () => {
+      const { score, total } = results;
+      if (score === total) return "Perfect score! Outstanding work on this practice test.";
+      if (score >= total * 0.8)
+        return `Strong performance. You answered ${score} of ${total} questions correctly. You have solid mastery of this format.`;
+      if (score >= total * 0.6)
+        return `Good effort. You answered ${score} of ${total} questions correctly. Check the incorrect items below to address minor gaps.`;
+      return `You answered ${score} of ${total} correctly. Review the questions below carefully before your next attempt to improve your accuracy.`;
+    };
+
+    return (
+      <div className="container mx-auto pt-8 pb-16 px-4 md:px-8 bg-cream-paper min-h-screen">
+        {/* Header */}
+        <div className="pb-6 mb-8 border-b border-pencil-gray/10 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <div className="flex items-center gap-4">
+            <Link href={`/tests/${testType}`}>
+              <Button
+                variant="outline"
+                size="sm"
+                className="flex items-center gap-1.5 rounded-full border-pencil-gray/20 bg-white text-forest-ink hover:bg-whisper-gray font-inter shadow-sm cursor-pointer"
+              >
+                <ArrowLeft size={16} />
+                <span>All Tests</span>
+              </Button>
+            </Link>
+            <h1 className="text-2xl md:text-3xl font-extrabold font-bricolage text-forest-ink tracking-tight">
+              Test Review: {testName}
+            </h1>
+          </div>
+        </div>
+
+        {/* Review mode toggle */}
         <div className="flex justify-center mb-8">
           <div className="inline-flex bg-white rounded-full p-1 border border-pencil-gray/25 shadow-xs">
             <button
               onClick={() => setReviewMode("summary")}
               className="px-6 py-2 rounded-full font-inter font-medium text-xs transition-all cursor-pointer bg-forest-ink text-white shadow-xs"
             >
-              Score Summary & Questions
+              Score Summary &amp; Questions
             </button>
             <button
               onClick={() => setReviewMode("context")}
               className="px-6 py-2 rounded-full font-inter font-medium text-xs transition-all cursor-pointer text-forest-ink/60 hover:text-forest-ink hover:bg-forest-ink/5"
             >
-              View Test Sheet Context (Read-Only)
+              View Test Sheet (Read-Only)
             </button>
           </div>
         </div>
 
-        {/* Results summary panel with staggered animation */}
+        {/* Metrics */}
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4 }}
           className="space-y-6 mb-8"
         >
-          {/* Metrics grid */}
           <div className="grid md:grid-cols-3 gap-6">
             <div className="bg-white rounded-2xl shadow-sm border border-pencil-gray/20 p-6 flex items-center justify-between col-span-2">
               <div className="space-y-1">
@@ -812,7 +684,9 @@ export default function TestRunner({
                   {testTypeLabel} • {completionDate}
                 </p>
                 <p className="text-forest-ink/65 text-sm font-inter pt-1">
-                  {user ? "Your score is saved to your profile history." : "You took this test as a Guest attempt."}
+                  {user
+                    ? "Your score is saved to your profile history."
+                    : "You took this test as a Guest attempt."}
                 </p>
                 {!user && (
                   <div className="pt-2 text-xs font-semibold text-[#cb5521]">
@@ -823,11 +697,16 @@ export default function TestRunner({
                 )}
               </div>
               <div className="text-right">
-                <div className="text-forest-ink/40 text-[10px] font-mono uppercase tracking-wider">Raw Score</div>
-                <div className="text-4xl font-extrabold font-bricolage text-forest-ink">
-                  {results.score} <span className="text-lg text-forest-ink/40">/ {results.total}</span>
+                <div className="text-forest-ink/40 text-[10px] font-mono uppercase tracking-wider">
+                  Raw Score
                 </div>
-                <div className="text-xs font-mono text-forest-ink/50 mt-0.5">{pctCorrect}% correct</div>
+                <div className="text-4xl font-extrabold font-bricolage text-forest-ink">
+                  {results.score}{" "}
+                  <span className="text-lg text-forest-ink/40">/ {results.total}</span>
+                </div>
+                <div className="text-xs font-mono text-forest-ink/50 mt-0.5">
+                  {pctCorrect}% correct
+                </div>
               </div>
             </div>
 
@@ -837,18 +716,22 @@ export default function TestRunner({
                 <p className="text-forest-ink/65 text-sm font-inter">Equivalent IELTS score</p>
               </div>
               <div className="w-14 h-14 rounded-full bg-[#d8f3dc] border border-[#b7e4c7] flex items-center justify-center shadow-xs shrink-0">
-                <span className="text-2xl font-extrabold font-bricolage text-forest-ink">{bandScore}</span>
+                <span className="text-2xl font-extrabold font-bricolage text-forest-ink">
+                  {bandScore}
+                </span>
               </div>
             </div>
           </div>
 
-          {/* Learning Summary block */}
           <div className="bg-white rounded-2xl p-6 border border-pencil-gray/20 shadow-xs">
-            <h3 className="text-sm font-mono text-forest-ink/40 uppercase tracking-wider mb-2">Performance Summary</h3>
-            <p className="font-inter text-forest-ink text-sm leading-relaxed">{getLearningSummary()}</p>
+            <h3 className="text-sm font-mono text-forest-ink/40 uppercase tracking-wider mb-2">
+              Performance Summary
+            </h3>
+            <p className="font-inter text-forest-ink text-sm leading-relaxed">
+              {getLearningSummary()}
+            </p>
           </div>
 
-          {/* Action trigger row */}
           <div className="flex flex-wrap gap-4 pt-2">
             <Button
               onClick={handleRetake}
@@ -879,26 +762,39 @@ export default function TestRunner({
           </div>
         </motion.div>
 
-        {/* Section Breakdown summaries */}
+        {/* Section breakdown */}
         <div className="bg-white rounded-2xl p-6 border border-pencil-gray/20 shadow-xs mb-8">
-          <h3 className="text-sm font-mono text-forest-ink/40 uppercase tracking-wider mb-4">Section Breakdown</h3>
+          <h3 className="text-sm font-mono text-forest-ink/40 uppercase tracking-wider mb-4">
+            Section Breakdown
+          </h3>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {Object.entries(sectionScores).map(([secName, secScore]) => (
-              <div key={secName} className="p-3 bg-whisper-gray rounded-xl border border-pencil-gray/10 text-center font-inter">
-                <span className="text-[10px] font-mono uppercase tracking-wider text-forest-ink/50 block">{secName}</span>
+              <div
+                key={secName}
+                className="p-3 bg-whisper-gray rounded-xl border border-pencil-gray/10 text-center font-inter"
+              >
+                <span className="text-[10px] font-mono uppercase tracking-wider text-forest-ink/50 block">
+                  {secName}
+                </span>
                 <div className="text-lg font-bold text-forest-ink font-mono mt-1">
-                  {secScore.correct} <span className="text-xs text-forest-ink/45">/ {secScore.total}</span>
+                  {secScore.correct}{" "}
+                  <span className="text-xs text-forest-ink/45">/ {secScore.total}</span>
                 </div>
               </div>
             ))}
           </div>
         </div>
 
-        {/* Dynamic question details cards */}
+        {/* Per-question breakdown */}
         <div className="space-y-6">
           {Object.entries(groupedResults).map(([section, sectionQuestions]) => (
-            <div key={section} className="bg-white rounded-2xl shadow-sm border border-pencil-gray/20 p-6 md:p-8">
-              <h3 className="text-xl font-bold mb-4 font-bricolage text-forest-ink">{section}</h3>
+            <div
+              key={section}
+              className="bg-white rounded-2xl shadow-sm border border-pencil-gray/20 p-6 md:p-8"
+            >
+              <h3 className="text-xl font-bold mb-4 font-bricolage text-forest-ink">
+                {section}
+              </h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                 {sectionQuestions
                   .sort((a, b) => a.num - b.num)
@@ -912,7 +808,9 @@ export default function TestRunner({
                       }`}
                     >
                       <div className="flex justify-between items-start mb-2">
-                        <span className="font-mono text-xs font-bold text-forest-ink/60">Question {q.num}</span>
+                        <span className="font-mono text-xs font-bold text-forest-ink/60">
+                          Question {q.num}
+                        </span>
                         {q.correct ? (
                           <CheckCircle2 size={16} className="text-forest-ink shrink-0" />
                         ) : (
@@ -922,13 +820,23 @@ export default function TestRunner({
                       <div className="space-y-1.5 text-xs font-inter leading-relaxed flex-grow flex flex-col justify-end">
                         <div>
                           <span className="text-forest-ink/40 text-[10px] block">Your Answer</span>
-                          <span className={`font-semibold ${q.correct ? "text-forest-ink" : "text-[#cb5521]"}`}>
-                            {q.student.trim() ? q.student : <em className="text-forest-ink/30 font-normal">Not answered</em>}
+                          <span
+                            className={`font-semibold ${
+                              q.correct ? "text-forest-ink" : "text-[#cb5521]"
+                            }`}
+                          >
+                            {q.student.trim() ? (
+                              q.student
+                            ) : (
+                              <em className="text-forest-ink/30 font-normal">Not answered</em>
+                            )}
                           </span>
                         </div>
                         <div className="pt-0.5 border-t border-pencil-gray/5">
                           <span className="text-forest-ink/40 text-[10px] block">Correct Answer</span>
-                          <span className="font-mono font-semibold text-forest-ink">{q.correctAns}</span>
+                          <span className="font-mono font-semibold text-forest-ink">
+                            {q.correctAns}
+                          </span>
                         </div>
                       </div>
                     </div>
@@ -941,6 +849,401 @@ export default function TestRunner({
     );
   }
 
-  // Normal live test state (Pre-submission)
-  return renderTestLayout(false);
+  // ─── Active test (pre-submission) ─────────────────────────────────────────
+
+  // Check Answer panel state (practice mode)
+  const checkedResult =
+    currentQuestion !== null ? checkedQuestions[currentQuestion] : undefined;
+  const currentAnswer =
+    currentQuestion !== null ? answers[currentQuestion]?.trim() : "";
+
+  return (
+    <AnswerContext.Provider value={{ answers, setAnswer, disabled: isSubmitted, isSubmitted }}>
+      <div className="min-h-screen bg-cream-paper flex flex-col">
+        {/* Sticky test header */}
+        <TestHeader
+          testName={testName}
+          testType={testType}
+          mode={mode}
+          timeRemaining={timeRemaining}
+          answeredCount={answeredCount}
+          totalQuestions={totalQuestions}
+        />
+
+        {/* Main content */}
+        <div className="flex-1 px-3 md:px-5 pt-4 pb-6 flex flex-col gap-4">
+
+          {/* ── Listening layout ── */}
+          {isListening && (
+            <div className="flex flex-col gap-4">
+              {/* Audio player */}
+              {passages && (
+                <div className="bg-white rounded-2xl border border-pencil-gray/25 p-4 shadow-xs">
+                  <p className="text-[10px] font-mono uppercase tracking-wider text-forest-ink/40 mb-2">
+                    Audio
+                  </p>
+                  <audio controls className="w-full">
+                    <source src={passages as string} type="audio/mpeg" />
+                    Your browser does not support the audio element.
+                  </audio>
+                </div>
+              )}
+
+              {/* Questions */}
+              <div className="bg-white rounded-2xl shadow-sm border border-pencil-gray/20 p-5 md:p-7 overflow-y-auto max-h-[55vh] prose prose-sm max-w-none">
+                <div
+                  ref={containerRef}
+                  className="questions-container"
+                  dangerouslySetInnerHTML={{ __html: questions as string }}
+                />
+              </div>
+
+              {/* Navigator */}
+              <QuestionNavigator
+                testType={testType}
+                questionNumbers={questionNumbers}
+                answers={answers}
+                checkedQuestions={mode === "practice" ? checkedQuestions : {}}
+                currentQuestion={currentQuestion}
+                mode={mode}
+                onNavigate={handleNavigate}
+              />
+
+              {/* Practice: Check Answer panel */}
+              {mode === "practice" && currentQuestion !== null && !isSubmitted && (
+                <CheckAnswerPanel
+                  questionNum={currentQuestion}
+                  currentAnswer={currentAnswer ?? ""}
+                  checkedResult={checkedResult}
+                  correctAnswer={formatAnswer(answerKey[currentQuestion])}
+                  onCheck={() => checkAnswer(currentQuestion)}
+                />
+              )}
+            </div>
+          )}
+
+          {/* ── Reading layout ── */}
+          {!isListening && (
+            <>
+              {/* Mobile/tablet: stacked layout */}
+              <div className="lg:hidden flex flex-col gap-4">
+                {/* Collapsible passage accordion */}
+                <div className="bg-white rounded-2xl border border-pencil-gray/20 shadow-xs overflow-hidden">
+                  <button
+                    onClick={() => setPassageCollapsed((p) => !p)}
+                    className="w-full flex items-center justify-between px-5 py-3.5 text-left hover:bg-whisper-gray/50 transition-colors"
+                    aria-expanded={!passageCollapsed}
+                    aria-controls="mobile-passage-panel"
+                  >
+                    <span className="text-sm font-semibold font-bricolage text-forest-ink">
+                      Reading Passage
+                    </span>
+                    {passageCollapsed ? (
+                      <ChevronRight size={16} className="text-forest-ink/50" />
+                    ) : (
+                      <ChevronLeft size={16} className="text-forest-ink/50 rotate-90" />
+                    )}
+                  </button>
+                  {!passageCollapsed && (
+                    <div
+                      id="mobile-passage-panel"
+                      className="px-5 pb-5 pt-1 prose prose-sm max-w-none border-t border-pencil-gray/10"
+                    >
+                      {passages}
+                    </div>
+                  )}
+                </div>
+
+                {/* Questions */}
+                <div className="bg-white rounded-2xl shadow-sm border border-pencil-gray/20 p-5 prose prose-sm max-w-none overflow-y-auto max-h-[60vh]">
+                  <div ref={containerRef} className="questions-container">
+                    {questions}
+                  </div>
+                </div>
+
+                {/* Navigator */}
+                <QuestionNavigator
+                  testType={testType}
+                  questionNumbers={questionNumbers}
+                  answers={answers}
+                  checkedQuestions={mode === "practice" ? checkedQuestions : {}}
+                  currentQuestion={currentQuestion}
+                  mode={mode}
+                  onNavigate={handleNavigate}
+                />
+
+                {/* Practice: Check Answer panel */}
+                {mode === "practice" && currentQuestion !== null && !isSubmitted && (
+                  <CheckAnswerPanel
+                    questionNum={currentQuestion}
+                    currentAnswer={currentAnswer ?? ""}
+                    checkedResult={checkedResult}
+                    correctAnswer={formatAnswer(answerKey[currentQuestion])}
+                    onCheck={() => checkAnswer(currentQuestion)}
+                  />
+                )}
+              </div>
+
+              {/* Desktop: side-by-side layout */}
+              <div className="hidden lg:flex gap-5 h-[calc(100vh-180px)]">
+                {/* Passage panel */}
+                <div
+                  className={`transition-all duration-300 flex flex-col min-h-0 ${
+                    passageCollapsed ? "w-10 shrink-0" : "flex-[55] min-w-0"
+                  }`}
+                >
+                  {passageCollapsed ? (
+                    /* Collapsed: thin strip with expand button */
+                    <button
+                      onClick={() => setPassageCollapsed(false)}
+                      className="h-full flex flex-col items-center justify-center gap-2 text-forest-ink/40 hover:text-forest-ink transition-colors w-full border border-pencil-gray/20 rounded-2xl bg-white shadow-xs"
+                      aria-label="Show reading passage"
+                    >
+                      <PanelLeftOpen size={15} />
+                      <span
+                        className="text-[9px] font-mono uppercase tracking-widest"
+                        style={{ writingMode: "vertical-rl" }}
+                      >
+                        Passage
+                      </span>
+                    </button>
+                  ) : (
+                    <div className="flex flex-col h-full">
+                      <div className="flex items-center justify-between mb-2 shrink-0">
+                        <h2 className="text-sm font-bold font-bricolage text-forest-ink">
+                          Reading Passage
+                        </h2>
+                        <button
+                          onClick={() => setPassageCollapsed(true)}
+                          className="flex items-center gap-1 text-xs font-inter text-forest-ink/45 hover:text-forest-ink transition-colors"
+                          aria-label="Collapse passage panel"
+                        >
+                          <PanelLeftClose size={14} />
+                          Collapse
+                        </button>
+                      </div>
+                      <div className="flex-1 min-h-0 bg-white rounded-2xl border border-pencil-gray/20 shadow-xs p-6 overflow-y-auto prose prose-sm max-w-none">
+                        {passages}
+                      </div>
+                    </div>
+                  )}
+                </div>
+
+                {/* Questions panel */}
+                <div
+                  className={`flex flex-col min-h-0 transition-all duration-300 ${
+                    passageCollapsed ? "flex-1 min-w-0" : "flex-[45] min-w-0"
+                  }`}
+                >
+                  <div className="flex items-center justify-between mb-2 shrink-0">
+                    <h2 className="text-sm font-bold font-bricolage text-forest-ink">Questions</h2>
+                    {passageCollapsed && (
+                      <button
+                        onClick={() => setPassageCollapsed(false)}
+                        className="flex items-center gap-1 text-xs font-inter text-forest-ink/45 hover:text-forest-ink transition-colors"
+                        aria-label="Show passage panel"
+                      >
+                        <PanelLeftOpen size={14} />
+                        Show Passage
+                      </button>
+                    )}
+                  </div>
+
+                  {/* Scrollable questions */}
+                  <div className="flex-1 min-h-0 bg-white rounded-2xl border border-pencil-gray/20 shadow-xs p-5 overflow-y-auto prose prose-sm max-w-none">
+                    <div ref={containerRef} className="questions-container">
+                      {questions}
+                    </div>
+                  </div>
+
+                  {/* Navigator */}
+                  <QuestionNavigator
+                    testType={testType}
+                    questionNumbers={questionNumbers}
+                    answers={answers}
+                    checkedQuestions={mode === "practice" ? checkedQuestions : {}}
+                    currentQuestion={currentQuestion}
+                    mode={mode}
+                    onNavigate={handleNavigate}
+                  />
+
+                  {/* Practice: Check Answer panel */}
+                  {mode === "practice" && currentQuestion !== null && !isSubmitted && (
+                    <CheckAnswerPanel
+                      questionNum={currentQuestion}
+                      currentAnswer={currentAnswer ?? ""}
+                      checkedResult={checkedResult}
+                      correctAnswer={formatAnswer(answerKey[currentQuestion])}
+                      onCheck={() => checkAnswer(currentQuestion)}
+                    />
+                  )}
+                </div>
+              </div>
+            </>
+          )}
+
+          {/* ── Submit panel ── */}
+          <div className="flex flex-col gap-3">
+            {saveStatus === "error" && (
+              <div className="p-4 bg-sticky-note-blush/20 border border-[#cb5521]/30 rounded-2xl flex items-start gap-2.5 text-xs text-[#cb5521] animate-fade-in font-inter">
+                <AlertTriangle size={16} className="shrink-0 mt-0.5" />
+                <div>
+                  <strong className="block font-bold mb-0.5">Submission Failed</strong>
+                  <span>
+                    Failed to save your attempt to the database. Please check your internet
+                    connection and try clicking &ldquo;Submit&rdquo; again. Your answers are
+                    preserved.
+                  </span>
+                </div>
+              </div>
+            )}
+
+            {/* Exam: show confirmation note if any questions unanswered */}
+            {mode === "exam" && answeredCount < totalQuestions && !submitting && (
+              <div className="px-4 py-2.5 bg-[#ffe95c]/20 border border-[#ffe95c]/50 rounded-2xl flex items-center gap-2 text-xs font-inter text-forest-ink/70">
+                <AlertTriangle size={13} className="text-[#7a6000] shrink-0" />
+                <span>
+                  <strong>{totalQuestions - answeredCount}</strong> question
+                  {totalQuestions - answeredCount !== 1 ? "s" : ""} unanswered.
+                </span>
+              </div>
+            )}
+
+            <div className="bg-white/85 backdrop-blur-md rounded-2xl border border-pencil-gray/20 p-4 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-sm">
+              <div className="flex items-center gap-3">
+                <ClipboardList className="text-forest-ink/60 h-5 w-5" />
+                <span className="font-inter text-forest-ink/80 text-sm">
+                  Answered:{" "}
+                  <strong className="text-forest-ink">{answeredCount}</strong> /{" "}
+                  {totalQuestions}
+                </span>
+              </div>
+              <Button
+                onClick={handleFormSubmit}
+                disabled={submitting || (answeredCount === 0 && !timerExpired)}
+                variant="forest"
+                className="w-full sm:w-auto h-11 px-8 cursor-pointer shadow-md font-semibold"
+                aria-label={
+                  mode === "exam" ? "Submit exam" : "Submit answers"
+                }
+              >
+                {submitting ? (
+                  <>
+                    <Loader2 size={16} className="animate-spin mr-2" />
+                    Submitting...
+                  </>
+                ) : mode === "exam" ? (
+                  <>
+                    Submit Exam <ChevronRight size={16} className="ml-1" />
+                  </>
+                ) : (
+                  <>
+                    Submit Answers <ChevronRight size={16} className="ml-1" />
+                  </>
+                )}
+              </Button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </AnswerContext.Provider>
+  );
+}
+
+// ─── Check Answer Panel (practice mode) ──────────────────────────────────────
+
+interface CheckAnswerPanelProps {
+  questionNum: number;
+  currentAnswer: string;
+  /** undefined = not yet checked; true = correct; false = incorrect */
+  checkedResult: boolean | undefined;
+  correctAnswer: string;
+  onCheck: () => void;
+}
+
+function CheckAnswerPanel({
+  questionNum,
+  currentAnswer,
+  checkedResult,
+  correctAnswer,
+  onCheck,
+}: CheckAnswerPanelProps) {
+  const isChecked = checkedResult !== undefined;
+
+  return (
+    <motion.div
+      key={questionNum}
+      initial={{ opacity: 0, y: 8 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.2 }}
+      className="mt-2 p-4 bg-white rounded-2xl border border-pencil-gray/20 shadow-xs"
+      role="region"
+      aria-label={`Check answer for question ${questionNum}`}
+    >
+      <div className="flex items-center justify-between mb-3">
+        <span className="font-mono text-xs font-bold text-forest-ink/50">
+          Question {questionNum}
+        </span>
+        {isChecked && (
+          checkedResult ? (
+            <span className="flex items-center gap-1.5 text-xs font-semibold text-forest-ink">
+              <CheckCircle2 size={14} className="text-[#1a7a4a]" />
+              Correct
+            </span>
+          ) : (
+            <span className="flex items-center gap-1.5 text-xs font-semibold text-[#cb5521]">
+              <XCircle size={14} />
+              Incorrect
+            </span>
+          )
+        )}
+      </div>
+
+      <div className="flex items-end justify-between gap-4">
+        <div className="flex-1 space-y-2">
+          <div>
+            <span className="text-[10px] font-mono text-forest-ink/35 uppercase tracking-wider block mb-0.5">
+              Your Answer
+            </span>
+            <span
+              className={`text-sm font-inter font-medium ${
+                isChecked
+                  ? checkedResult
+                    ? "text-forest-ink"
+                    : "text-[#cb5521]"
+                  : "text-forest-ink"
+              }`}
+            >
+              {currentAnswer || (
+                <em className="text-forest-ink/30 font-normal text-xs">Not answered yet</em>
+              )}
+            </span>
+          </div>
+          {isChecked && (
+            <div className="pt-2 border-t border-pencil-gray/10">
+              <span className="text-[10px] font-mono text-forest-ink/35 uppercase tracking-wider block mb-0.5">
+                Correct Answer
+              </span>
+              <span className="text-sm font-mono font-semibold text-forest-ink">
+                {correctAnswer}
+              </span>
+            </div>
+          )}
+        </div>
+
+        {!isChecked && (
+          <Button
+            onClick={onCheck}
+            disabled={!currentAnswer}
+            size="sm"
+            variant="forest"
+            className="shrink-0 text-xs h-8 px-4"
+            aria-label={`Check answer for question ${questionNum}`}
+          >
+            Check Answer
+          </Button>
+        )}
+      </div>
+    </motion.div>
+  );
 }
