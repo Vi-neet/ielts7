@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import { Timer, AlertTriangle, ArrowLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import ModeSelector from "@/components/test/ModeSelector";
-import TestRunner from "@/components/test/TestRunner";
+import TestEngineRunner from "@/components/test/engine/TestEngineRunner";
 import { TestContent } from "@/lib/types";
 import {
   getExamDurationSeconds,
@@ -205,7 +205,7 @@ export default function TestPageClient({
   // ── Active test ──
   return (
     <div className="bg-cream-paper min-h-[calc(100vh-72px)]">
-      <TestRunner
+      <TestEngineRunner
         testId={testId}
         testType={testType}
         testName={testName}

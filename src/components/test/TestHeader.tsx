@@ -13,6 +13,7 @@ interface TestHeaderProps {
   timeRemaining: number;
   answeredCount: number;
   totalQuestions: number;
+  onSubmitClick?: () => void;
 }
 
 const typeLabel: Record<string, string> = {
@@ -54,6 +55,7 @@ export default function TestHeader({
   timeRemaining,
   answeredCount,
   totalQuestions,
+  onSubmitClick,
 }: TestHeaderProps) {
   const typeDisplay = typeLabel[testType] || testType.replace(/_/g, " ");
   const isListening = testType === "listening";
@@ -106,7 +108,7 @@ export default function TestHeader({
           )}
         </div>
 
-        {/* Right: Timer (exam) or progress (practice) */}
+        {/* Right: Timer (exam), progress, and submit button */}
         <div className="shrink-0 flex items-center gap-3">
           {mode === "exam" && (
             <TimerDisplay seconds={timeRemaining} />
@@ -120,6 +122,16 @@ export default function TestHeader({
             <span>/ {totalQuestions}</span>
             <span className="hidden sm:inline text-forest-ink/35">answered</span>
           </div>
+
+          {onSubmitClick && (
+            <button
+              type="button"
+              onClick={onSubmitClick}
+              className="px-3 py-1.5 rounded-xl bg-forest-ink text-white text-xs font-bold font-mono hover:bg-forest-ink/90 transition-colors shadow-2xs"
+            >
+              Submit Test
+            </button>
+          )}
         </div>
       </div>
     </div>

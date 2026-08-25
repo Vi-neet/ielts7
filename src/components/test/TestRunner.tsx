@@ -572,7 +572,7 @@ export default function TestRunner({
 
   // ─── Submission ───────────────────────────────────────────────────────────
   const handleFormSubmit = async () => {
-    if (isSubmitted || submitting) return;
+    if ((isSubmitted && saveStatus !== "error") || submitting) return;
 
     if (!user && !ALLOW_GUEST_TESTS) {
       alert("Guest test-taking is disabled. Please sign in to submit.");
@@ -580,34 +580,51 @@ export default function TestRunner({
     }
 
     setSubmitting(true);
-    const gradeResult = gradeAttempt(answers, answerKey);
+
+    // Always fetch latest answers from answersRef to prevent closure staleness
+    const rawAnswers = answersRef.current || {};
+    const sanitizedAnswers: Record<number, string> = {};
+    for (const [key, val] of Object.entries(rawAnswers)) {
+      if (val !== undefined && val !== null) {
+        sanitizedAnswers[Number(key)] = val;
+      }
+    }
+
+    // Local grade & UI result transition (happens synchronously before Firestore)
+    const gradeResult = gradeAttempt(sanitizedAnswers, answerKey);
     setResults(gradeResult);
+    setIsSubmitted(true);
 
-    try {
-      const currentUid = auth.currentUser?.uid || null;
-      const isGuest = !currentUid;
+    // Attempt Firestore persistence if not already saved
+    if (saveStatus !== "saved") {
+      try {
+        const currentUid = auth.currentUser?.uid || null;
+        const isGuest = !currentUid;
 
-      const attemptData = {
-        uid: currentUid,
-        isGuest,
-        testId,
-        testType,
-        answers,
-        score: gradeResult.score,
-        total: gradeResult.total,
-        submittedAt: serverTimestamp(),
-      };
+        const attemptData = {
+          uid: currentUid,
+          isGuest,
+          testId,
+          testType,
+          answers: sanitizedAnswers,
+          score: gradeResult.score,
+          total: gradeResult.total,
+          submittedAt: serverTimestamp(),
+        };
 
-      await addDoc(collection(db, "attempts"), attemptData);
-      setSaveStatus("saved");
-      setIsSubmitted(true);
-    } catch (error: any) {
-      console.error("Failed to save attempt to Firestore:", error);
-      setSaveStatus("error");
-      const errCode = error?.code || "unknown";
-      const errMsg = error?.message || String(error);
-      setDbError(`${errCode}: ${errMsg}`);
-    } finally {
+        await addDoc(collection(db, "attempts"), attemptData);
+        setSaveStatus("saved");
+        setDbError(null);
+      } catch (error: any) {
+        console.error("Failed to save attempt to Firestore:", error);
+        setSaveStatus("error");
+        const errCode = error?.code || "unknown";
+        const errMsg = error?.message || String(error);
+        setDbError(`${errCode}: ${errMsg}`);
+      } finally {
+        setSubmitting(false);
+      }
+    } else {
       setSubmitting(false);
     }
   };

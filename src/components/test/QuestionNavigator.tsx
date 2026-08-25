@@ -1,21 +1,15 @@
 "use client";
 
 import React from "react";
-
-type QuestionStatus =
-  | "unanswered"
-  | "answered"
-  | "current"
-  | "checked-correct"
-  | "checked-incorrect";
+import { Bookmark } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 interface QuestionNavigatorProps {
   testType: string;
-  /** All question numbers in the answer key (sorted ascending) */
   questionNumbers: number[];
   answers: Record<number, string>;
-  /** In practice mode only: map of questionNum → correct (true/false). Empty in exam mode. */
-  checkedQuestions: Record<number, boolean>;
+  bookmarks?: Record<number, boolean>;
+  checkedQuestions?: Record<number, { isCorrect: boolean; correctAnswer: string } | boolean>;
   currentQuestion: number | null;
   mode: "practice" | "exam";
   onNavigate: (num: number) => void;
@@ -23,7 +17,7 @@ interface QuestionNavigatorProps {
 
 interface SectionDef {
   name: string;
-  range: [number, number]; // inclusive
+  range: [number, number];
 }
 
 function getSections(testType: string): SectionDef[] {
@@ -35,132 +29,132 @@ function getSections(testType: string): SectionDef[] {
       { name: "Section 4", range: [31, 40] },
     ];
   }
-  // Academic Reading & General Reading
   return [
-    { name: "Section 1", range: [1, 13] },
-    { name: "Section 2", range: [14, 27] },
-    { name: "Section 3", range: [28, 40] },
+    { name: "Passage 1", range: [1, 13] },
+    { name: "Passage 2", range: [14, 26] },
+    { name: "Passage 3", range: [27, 40] },
   ];
 }
-
-function getButtonStyle(status: QuestionStatus): string {
-  const base =
-    "w-9.5 h-9.5 rounded-lg text-sm font-mono font-bold border transition-all duration-150 flex items-center justify-center focus-visible:outline focus-visible:outline-2 focus-visible:outline-forest-ink focus-visible:outline-offset-1 cursor-pointer";
-
-  switch (status) {
-    case "current":
-      return `${base} bg-highlighter-yellow border-[#b09e00] text-forest-ink shadow-sm ring-2 ring-forest-ink/30`;
-    case "answered":
-      return `${base} bg-forest-ink border-forest-ink text-white hover:bg-forest-ink/90`;
-    case "checked-correct":
-      return `${base} bg-[#d8f3dc] border-[#2d6a4f] text-[#1b4332] hover:bg-[#b7e4c7] font-bold`;
-    case "checked-incorrect":
-      return `${base} bg-[#fcd2c2] border-[#cb5521] text-[#991b1b] hover:bg-[#f8b195] font-bold`;
-    default: // unanswered
-      return `${base} bg-[#f4f3ef] border-[#cfcdae] text-forest-ink/70 hover:bg-[#eadeca] hover:border-forest-ink`;
-  }
-}
-
 
 export default function QuestionNavigator({
   testType,
   questionNumbers,
   answers,
-  checkedQuestions,
+  bookmarks = {},
+  checkedQuestions = {},
   currentQuestion,
   mode,
   onNavigate,
 }: QuestionNavigatorProps) {
   const sections = getSections(testType);
-  const questionSet = new Set(questionNumbers);
 
-  const getStatus = (num: number): QuestionStatus => {
-    if (num === currentQuestion) return "current";
-    // Only expose correctness in practice mode
-    if (mode === "practice" && checkedQuestions[num] !== undefined) {
-      return checkedQuestions[num] ? "checked-correct" : "checked-incorrect";
+  const getBadgeStyle = (num: number) => {
+    const isCurrent = num === currentQuestion;
+    const isAns = Boolean(answers[num]?.trim());
+    const isBkmk = Boolean(bookmarks[num]);
+    const checked = checkedQuestions[num];
+
+    const isPracticeChecked =
+      mode === "practice" && checked !== undefined && checked !== null;
+    const isCorrect =
+      isPracticeChecked &&
+      (typeof checked === "object" ? checked.isCorrect : Boolean(checked));
+
+    let base =
+      "w-9 h-9 rounded-xl text-xs font-mono font-extrabold border transition-all duration-150 flex items-center justify-center relative cursor-pointer shadow-2xs";
+
+    if (isCurrent) {
+      base += " ring-4 ring-orange-500 ring-offset-2 border-orange-600 z-10";
     }
-    if (answers[num]?.trim()) return "answered";
-    return "unanswered";
+
+    if (isPracticeChecked) {
+      if (isCorrect) {
+        return `${base} bg-emerald-100 text-emerald-900 border-emerald-500 font-extrabold`;
+      }
+      return `${base} bg-rose-100 text-rose-900 border-rose-400 font-extrabold`;
+    }
+
+    if (isBkmk && isAns) {
+      return `${base} bg-emerald-600 text-white border-emerald-700`;
+    }
+
+    if (isBkmk) {
+      return `${base} bg-purple-600 text-white border-purple-700`;
+    }
+
+    if (isAns) {
+      return `${base} bg-emerald-500 text-white border-emerald-600`;
+    }
+
+    // Unanswered
+    return `${base} bg-slate-100 text-slate-700 border-slate-300 hover:bg-slate-200`;
   };
 
-  const answeredInSection = (range: [number, number]) => {
+  const answeredCount = (range: [number, number]) => {
     let count = 0;
     for (let n = range[0]; n <= range[1]; n++) {
-      if (questionSet.has(n) && answers[n]?.trim()) count++;
+      if (answers[n]?.trim()) count++;
     }
     return count;
   };
 
-  const totalInSection = (range: [number, number]) =>
-    questionNumbers.filter((n) => n >= range[0] && n <= range[1]).length;
-
   return (
-    <div className="mt-3 bg-white rounded-2xl border border-pencil-gray/15 overflow-hidden">
-      <div className="px-4 py-2.5 border-b border-pencil-gray/10 flex items-center justify-between">
-        <span className="text-[10px] font-mono uppercase tracking-widest text-forest-ink/40">
+    <div className="bg-white rounded-2xl border border-forest-ink/15 overflow-hidden shadow-sm">
+      {/* Header & Legend */}
+      <div className="px-4 py-3 border-b border-forest-ink/10 bg-forest-ink/5 flex items-center justify-between">
+        <span className="text-[11px] font-mono font-bold uppercase tracking-widest text-forest-ink">
           Question Navigator
         </span>
-        {/* Legend — only show correctness legend in practice mode */}
-        <div className="flex items-center gap-3">
-          <div className="flex items-center gap-1.5">
-            <div className="w-3 h-3 rounded-sm bg-forest-ink" aria-hidden />
-            <span className="text-[9px] font-mono text-forest-ink/40">Answered</span>
+
+        {/* Legend */}
+        <div className="flex items-center gap-2 text-[10px] font-mono">
+          <div className="flex items-center gap-1">
+            <span className="w-2.5 h-2.5 rounded bg-emerald-500" />
+            <span className="text-forest-ink/60">Ans</span>
           </div>
-          {mode === "practice" && (
-            <>
-              <div className="flex items-center gap-1.5">
-                <div className="w-3 h-3 rounded-sm bg-[#d8f3dc] border border-[#b7e4c7]" aria-hidden />
-                <span className="text-[9px] font-mono text-forest-ink/40">Correct</span>
-              </div>
-              <div className="flex items-center gap-1.5">
-                <div className="w-3 h-3 rounded-sm bg-[#fcd2c2] border border-[#f8b195]" aria-hidden />
-                <span className="text-[9px] font-mono text-forest-ink/40">Incorrect</span>
-              </div>
-            </>
-          )}
+          <div className="flex items-center gap-1">
+            <span className="w-2.5 h-2.5 rounded bg-purple-600" />
+            <span className="text-forest-ink/60">Bkmk</span>
+          </div>
         </div>
       </div>
 
-      <div className="p-3 space-y-4">
+      <div className="p-4 space-y-5">
         {sections.map(({ name, range }) => {
           const sectionNums = questionNumbers.filter(
             (n) => n >= range[0] && n <= range[1]
           );
           if (sectionNums.length === 0) return null;
 
-          const answered = answeredInSection(range);
-          const total = totalInSection(range);
+          const ans = answeredCount(range);
+          const total = sectionNums.length;
 
           return (
-            <div key={name}>
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-[10px] font-mono text-forest-ink/45 font-semibold">
-                  {name}
-                </span>
-                <span className="text-[9px] font-mono text-forest-ink/35">
-                  {answered}/{total}
+            <div key={name} className="space-y-2">
+              <div className="flex items-center justify-between text-xs font-mono">
+                <span className="font-bold text-forest-ink">{name}</span>
+                <span className="text-forest-ink/50">
+                  {ans}/{total}
                 </span>
               </div>
-              <div className="flex flex-wrap gap-2 md:gap-2.5" role="group" aria-label={name}>
-                {sectionNums.map((num) => {
-                  const status = getStatus(num);
-                  return (
-                    <button
-                      key={num}
-                      onClick={() => onNavigate(num)}
-                      className={getButtonStyle(status)}
-                      aria-label={`Question ${num}${
-                        status === "current" ? " (current)" : ""
-                      }${status === "answered" ? " (answered)" : ""}${
-                        status === "checked-correct" ? " (correct)" : ""
-                      }${status === "checked-incorrect" ? " (incorrect)" : ""}`}
-                      aria-current={status === "current" ? "true" : undefined}
-                    >
-                      {num}
-                    </button>
-                  );
-                })}
+
+              <div className="grid grid-cols-5 sm:grid-cols-7 gap-2">
+                {sectionNums.map((num) => (
+                  <button
+                    key={num}
+                    type="button"
+                    onClick={() => onNavigate(num)}
+                    className={getBadgeStyle(num)}
+                    aria-label={`Question ${num}`}
+                  >
+                    {num}
+                    {bookmarks[num] && (
+                      <span className="absolute -top-1 -right-1 w-3.5 h-3.5 bg-purple-600 text-white rounded-full flex items-center justify-center shadow-2xs border border-white">
+                        <Bookmark size={8} className="fill-white" />
+                      </span>
+                    )}
+                  </button>
+                ))}
               </div>
             </div>
           );
