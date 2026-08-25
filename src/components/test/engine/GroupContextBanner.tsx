@@ -31,7 +31,7 @@ export default function GroupContextBanner({ group }: GroupContextBannerProps) {
         </div>
 
         {group.wordLimit && (
-          <span className="px-3 py-1 rounded-full text-xs font-semibold bg-amber-50 text-amber-900 border border-amber-200">
+          <span className="px-3 py-1 rounded-xl text-xs font-semibold bg-amber-50 text-amber-900 border border-amber-200">
             {group.wordLimit}
           </span>
         )}
@@ -61,9 +61,9 @@ export default function GroupContextBanner({ group }: GroupContextBannerProps) {
 
           {!refBoxCollapsed && (
             <div className="p-4 grid grid-cols-1 sm:grid-cols-2 gap-2.5 max-h-60 overflow-y-auto">
-              {group.referenceBox.items.map((item) => (
+              {group.referenceBox.items.map((item, idx) => (
                 <div
-                  key={item.label}
+                  key={`${idx}-${item.label}`}
                   className="flex items-start gap-2.5 p-2 rounded-lg bg-white border border-forest-ink/10 text-xs"
                 >
                   <span className="font-mono font-bold text-forest-ink shrink-0 bg-forest-ink/5 px-1.5 py-0.5 rounded border border-forest-ink/10">

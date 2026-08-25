@@ -57,7 +57,7 @@ export default function SingleQuestionRenderer({
               key={`${idx}-${opt.value}`}
               type="button"
               disabled={disabled}
-              onClick={() => onChange(opt.value)}
+              onClick={() => onChange(isSelected ? "" : opt.value)}
               className={cn(
                 "w-full text-left px-4 py-3 rounded-xl border transition-all flex items-center gap-3",
                 isSelected

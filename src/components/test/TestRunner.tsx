@@ -718,7 +718,7 @@ export default function TestRunner({
               <Button
                 variant="outline"
                 size="sm"
-                className="flex items-center gap-1.5 rounded-full border-pencil-gray/20 bg-white text-forest-ink hover:bg-whisper-gray font-inter shadow-sm cursor-pointer"
+                className="flex items-center gap-1.5 rounded-xl border-pencil-gray/20 bg-white text-forest-ink hover:bg-whisper-gray font-inter shadow-sm cursor-pointer"
               >
                 <ArrowLeft size={16} />
                 <span>All Tests</span>
@@ -731,16 +731,16 @@ export default function TestRunner({
         </div>
 
         <div className="flex justify-center mb-8">
-          <div className="inline-flex bg-white rounded-full p-1 border border-pencil-gray/25 shadow-xs">
+          <div className="inline-flex bg-white rounded-xl p-1 border border-pencil-gray/25 shadow-xs">
             <button
               onClick={() => setReviewMode("summary")}
-              className="px-6 py-2 rounded-full font-inter font-medium text-xs transition-all cursor-pointer text-forest-ink/60 hover:text-forest-ink hover:bg-forest-ink/5"
+              className="px-6 py-2 rounded-xl font-inter font-medium text-xs transition-all cursor-pointer text-forest-ink/60 hover:text-forest-ink hover:bg-forest-ink/5"
             >
               Score Summary &amp; Questions
             </button>
             <button
               onClick={() => setReviewMode("context")}
-              className="px-6 py-2 rounded-full font-inter font-medium text-xs transition-all cursor-pointer bg-forest-ink text-white shadow-xs"
+              className="px-6 py-2 rounded-xl font-inter font-medium text-xs transition-all cursor-pointer bg-forest-ink text-white shadow-xs"
             >
               View Test Sheet (Read-Only)
             </button>
@@ -867,7 +867,7 @@ export default function TestRunner({
               <Button
                 variant="outline"
                 size="sm"
-                className="flex items-center gap-1.5 rounded-full border-pencil-gray/20 bg-white text-forest-ink hover:bg-whisper-gray font-inter shadow-sm cursor-pointer"
+                className="flex items-center gap-1.5 rounded-xl border-pencil-gray/20 bg-white text-forest-ink hover:bg-whisper-gray font-inter shadow-sm cursor-pointer"
               >
                 <ArrowLeft size={16} />
                 <span>All Tests</span>
@@ -881,16 +881,16 @@ export default function TestRunner({
 
         {/* Review mode toggle */}
         <div className="flex justify-center mb-8">
-          <div className="inline-flex bg-white rounded-full p-1 border border-pencil-gray/25 shadow-xs">
+          <div className="inline-flex bg-white rounded-xl p-1 border border-pencil-gray/25 shadow-xs">
             <button
               onClick={() => setReviewMode("summary")}
-              className="px-6 py-2 rounded-full font-inter font-medium text-xs transition-all cursor-pointer bg-forest-ink text-white shadow-xs"
+              className="px-6 py-2 rounded-xl font-inter font-medium text-xs transition-all cursor-pointer bg-forest-ink text-white shadow-xs"
             >
               Score Summary &amp; Questions
             </button>
             <button
               onClick={() => setReviewMode("context")}
-              className="px-6 py-2 rounded-full font-inter font-medium text-xs transition-all cursor-pointer text-forest-ink/60 hover:text-forest-ink hover:bg-forest-ink/5"
+              className="px-6 py-2 rounded-xl font-inter font-medium text-xs transition-all cursor-pointer text-forest-ink/60 hover:text-forest-ink hover:bg-forest-ink/5"
             >
               View Test Sheet (Read-Only)
             </button>

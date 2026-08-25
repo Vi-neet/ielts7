@@ -26,44 +26,71 @@ export default function PassageViewer({
       <div
         className={cn(
           "hidden md:flex flex-col bg-white rounded-2xl border border-forest-ink/15 shadow-sm transition-all duration-300 overflow-hidden",
-          passageCollapsed ? "w-14 shrink-0" : "w-[45%] shrink-0"
+          passageCollapsed
+            ? "w-14 shrink-0 bg-gradient-to-b from-forest-ink/5 via-cream-paper to-forest-ink/5 cursor-pointer hover:border-forest-ink/30 group"
+            : "w-[45%] shrink-0"
         )}
+        onClick={passageCollapsed ? onToggleCollapse : undefined}
       >
-        {/* Header Bar */}
-        <div className="px-4 py-3 bg-forest-ink/5 border-b border-forest-ink/10 flex items-center justify-between">
-          {!passageCollapsed && (
-            <div className="flex items-center gap-2">
-              <BookOpen size={16} className="text-forest-ink/70" />
-              <span className="text-xs font-bold font-mono uppercase tracking-wider text-forest-ink">
-                Reading Passage {activePassageNumber}
+        {passageCollapsed ? (
+          /* Collapsed Vertical Strip UI */
+          <div className="flex-1 flex flex-col items-center justify-between py-4 px-2 select-none">
+            <Button
+              type="button"
+              variant="ghost"
+              size="sm"
+              onClick={(e) => {
+                e.stopPropagation();
+                onToggleCollapse();
+              }}
+              className="h-9 w-9 p-0 text-forest-ink/70 hover:text-forest-ink hover:bg-forest-ink/10 rounded-xl"
+              title="Expand Passage"
+            >
+              <PanelLeftOpen size={18} />
+            </Button>
+
+            <div className="flex flex-col items-center gap-3 text-forest-ink/60 group-hover:text-forest-ink transition-colors">
+              <BookOpen size={16} className="shrink-0" />
+              <span className="[writing-mode:vertical-lr] rotate-180 text-xs font-mono font-bold tracking-widest uppercase py-2">
+                Passage {activePassageNumber} (Click to expand)
               </span>
             </div>
-          )}
-          <Button
-            type="button"
-            variant="ghost"
-            size="sm"
-            onClick={onToggleCollapse}
-            className="h-8 w-8 p-0 text-forest-ink/70 hover:text-forest-ink hover:bg-forest-ink/10"
-            title={passageCollapsed ? "Expand Passage" : "Collapse Passage"}
-          >
-            {passageCollapsed ? (
-              <PanelLeftOpen size={18} />
-            ) : (
-              <PanelLeftClose size={18} />
-            )}
-          </Button>
-        </div>
 
-        {/* Passage Content */}
-        {!passageCollapsed && (
-          <div className="p-6 overflow-y-auto max-h-[calc(100vh-160px)] space-y-4 font-inter text-forest-ink leading-relaxed text-sm">
-            {typeof passages === "string" ? (
-              <div dangerouslySetInnerHTML={{ __html: passages }} />
-            ) : (
-              passages
-            )}
+            <div className="w-2 h-2 rounded-full bg-forest-ink/20 group-hover:bg-forest-ink/40 transition-colors" />
           </div>
+        ) : (
+          /* Expanded Full Passage UI */
+          <>
+            {/* Header Bar */}
+            <div className="px-4 py-3 bg-forest-ink/5 border-b border-forest-ink/10 flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <BookOpen size={16} className="text-forest-ink/70" />
+                <span className="text-xs font-bold font-mono uppercase tracking-wider text-forest-ink">
+                  Reading Passage {activePassageNumber}
+                </span>
+              </div>
+
+              <Button
+                type="button"
+                variant="ghost"
+                size="sm"
+                onClick={onToggleCollapse}
+                className="h-8 w-8 p-0 text-forest-ink/70 hover:text-forest-ink hover:bg-forest-ink/10 rounded-lg"
+                title="Collapse Passage"
+              >
+                <PanelLeftClose size={18} />
+              </Button>
+            </div>
+
+            {/* Passage Content */}
+            <div className="p-6 overflow-y-auto max-h-[calc(100vh-160px)] space-y-4 font-inter text-forest-ink leading-relaxed text-sm">
+              {typeof passages === "string" ? (
+                <div dangerouslySetInnerHTML={{ __html: passages }} />
+              ) : (
+                passages
+              )}
+            </div>
+          </>
         )}
       </div>
 
@@ -72,7 +99,7 @@ export default function PassageViewer({
         <button
           type="button"
           onClick={() => setMobileSheetOpen(true)}
-          className="fixed bottom-20 left-4 z-40 px-4 py-2.5 rounded-full bg-forest-ink text-white shadow-lg text-xs font-bold font-mono flex items-center gap-2 border border-white/20 active:scale-95 transition-transform"
+          className="fixed bottom-20 left-4 z-40 px-4 py-2.5 rounded-xl bg-forest-ink text-white shadow-lg text-xs font-bold font-mono flex items-center gap-2 border border-white/20 active:scale-95 transition-transform"
         >
           <BookOpen size={15} /> View Passage
         </button>

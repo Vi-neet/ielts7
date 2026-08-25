@@ -952,15 +952,16 @@ export default function ProfilePage() {
                               </div>
                             </div>
 
-                            <Button
-                              variant="outline"
-                              size="sm"
-                              onClick={() => handleOpenReview(attempt)}
-                              className="rounded-full border-pencil-gray/20 text-forest-ink hover:bg-whisper-gray font-semibold font-inter shadow-xs cursor-pointer flex items-center gap-1 shrink-0"
-                            >
-                              <span>Review</span>
-                              <ChevronRight size={14} />
-                            </Button>
+                            <Link href={`/tests/${attempt.testType}/${attempt.testId}/results/${attempt.id}`}>
+                              <Button
+                                variant="outline"
+                                size="sm"
+                                className="rounded-xl border-pencil-gray/20 text-forest-ink hover:bg-whisper-gray font-semibold font-inter shadow-xs cursor-pointer flex items-center gap-1 shrink-0"
+                              >
+                                <span>Review</span>
+                                <ChevronRight size={14} />
+                              </Button>
+                            </Link>
                           </div>
                         </div>
                       );

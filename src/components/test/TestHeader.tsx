@@ -2,7 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
-import { ArrowLeft, Clock, BookOpen, Headphones } from "lucide-react";
+import { ArrowLeft, Clock, BookOpen, Headphones, RotateCcw } from "lucide-react";
 import { formatCountdown } from "@/lib/examConfig";
 
 interface TestHeaderProps {
@@ -14,6 +14,7 @@ interface TestHeaderProps {
   answeredCount: number;
   totalQuestions: number;
   onSubmitClick?: () => void;
+  onRestartClick?: () => void;
 }
 
 const typeLabel: Record<string, string> = {
@@ -28,7 +29,7 @@ function TimerDisplay({ seconds }: { seconds: number }) {
 
   return (
     <div
-      className={`flex items-center gap-2 px-3 py-1.5 rounded-full border font-mono font-bold text-sm transition-colors ${
+      className={`flex items-center gap-2 px-3 py-1.5 rounded-md border font-mono font-bold text-sm transition-colors ${
         isDanger
           ? "bg-[#fcd2c2]/30 border-[#f8b195]/60 text-[#cb5521]"
           : isWarning
@@ -56,6 +57,7 @@ export default function TestHeader({
   answeredCount,
   totalQuestions,
   onSubmitClick,
+  onRestartClick,
 }: TestHeaderProps) {
   const typeDisplay = typeLabel[testType] || testType.replace(/_/g, " ");
   const isListening = testType === "listening";
@@ -97,19 +99,19 @@ export default function TestHeader({
         {/* Center: Mode badge */}
         <div className="shrink-0">
           {mode === "exam" ? (
-            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-mono font-bold uppercase tracking-widest bg-forest-ink text-white">
+            <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-[4px] text-[10px] font-mono font-bold uppercase tracking-widest bg-forest-ink text-white">
               <Clock size={10} />
               Exam Mode
             </span>
           ) : (
-            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-mono font-bold uppercase tracking-widest bg-sticky-note-mint/50 border border-sticky-note-mint text-forest-ink">
+            <span className="inline-flex items-center px-2.5 py-[3px] rounded-[4px] text-[10px] font-mono font-bold uppercase tracking-[0.12em] border border-forest-ink/40 text-forest-ink/80 bg-transparent">
               Practice
             </span>
           )}
         </div>
 
-        {/* Right: Timer (exam), progress, and submit button */}
-        <div className="shrink-0 flex items-center gap-3">
+        {/* Right: Timer (exam), progress, restart, and submit button */}
+        <div className="shrink-0 flex items-center gap-2.5 sm:gap-3">
           {mode === "exam" && (
             <TimerDisplay seconds={timeRemaining} />
           )}
@@ -123,11 +125,24 @@ export default function TestHeader({
             <span className="hidden sm:inline text-forest-ink/35">answered</span>
           </div>
 
+          {onRestartClick && (
+            <button
+              type="button"
+              onClick={onRestartClick}
+              className="px-2.5 py-1.5 rounded-md text-forest-ink/60 text-xs font-medium hover:text-forest-ink transition-colors flex items-center gap-1.5"
+              title="Restart test (all progress will be lost)"
+              aria-label="Restart test"
+            >
+              <RotateCcw size={13} />
+              <span className="hidden md:inline">Restart</span>
+            </button>
+          )}
+
           {onSubmitClick && (
             <button
               type="button"
               onClick={onSubmitClick}
-              className="px-3 py-1.5 rounded-xl bg-forest-ink text-white text-xs font-bold font-mono hover:bg-forest-ink/90 transition-colors shadow-2xs"
+              className="px-4 py-1.5 rounded-md bg-forest-ink text-white text-xs font-semibold hover:bg-forest-ink/90 transition-colors"
             >
               Submit Test
             </button>

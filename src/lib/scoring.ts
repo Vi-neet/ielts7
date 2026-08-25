@@ -55,7 +55,26 @@ export function getAcceptableAnswers(answer: any): string[] {
   const str = String(answer);
   // Split on " OR ", ",", or slashes representing alternatives
   const parts = str.split(/\s+OR\s+|,\s*|\s*\/\s*/i);
-  return parts.map(p => p.trim().toLowerCase()).filter(Boolean);
+  const baseAcceptable = parts.map(p => p.trim().toLowerCase()).filter(Boolean);
+
+  const synonyms: string[] = [];
+  for (const acc of baseAcceptable) {
+    if (acc === "not given" || acc === "ng") {
+      synonyms.push("not given", "ng");
+    } else if (acc === "true" || acc === "t") {
+      synonyms.push("true", "t");
+    } else if (acc === "false" || acc === "f") {
+      synonyms.push("false", "f");
+    } else if (acc === "yes" || acc === "y") {
+      synonyms.push("yes", "y");
+    } else if (acc === "no" || acc === "n") {
+      synonyms.push("no", "n");
+    } else {
+      synonyms.push(acc);
+    }
+  }
+
+  return Array.from(new Set(synonyms));
 }
 
 export interface QuestionGrade {

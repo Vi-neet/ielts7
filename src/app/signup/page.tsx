@@ -68,12 +68,15 @@ function SignupForm() {
       await signInWithGoogle();
       router.push(redirect);
     } catch (err: any) {
+      if (err?.code === "auth/popup-closed-by-user" || err?.code === "auth/cancelled-popup-request") {
+        return;
+      }
       console.error("Google sign in error code:", err.code);
       if (err.code === "auth/account-exists-with-different-credential" || err.code === "auth/credential-already-in-use") {
         setError("This email is already registered with email and password. Sign in with your password first, then connect Google from your profile.");
       } else if (err.code === "auth/popup-blocked") {
         setError("Google sign-in popup was blocked by your browser. Please enable popups and try again.");
-      } else if (err.code !== "auth/popup-closed-by-user") {
+      } else {
         setError(err.message || "Google sign-in failed. Please try again.");
       }
     } finally {

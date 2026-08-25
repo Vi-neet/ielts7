@@ -3,9 +3,10 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { useAuth } from "@/lib/AuthContext";
 import { ALLOW_GUEST_TESTS } from "@/lib/featureFlags";
-import { gradeAttempt, GradeResult, formatAnswer } from "@/lib/scoring";
+import { gradeAttempt, GradeResult, formatAnswer, getAcceptableAnswers } from "@/lib/scoring";
 import { db, auth } from "@/lib/firebase";
-import { collection, addDoc, serverTimestamp } from "firebase/firestore";
+import { useRouter } from "next/navigation";
+import { doc, collection, setDoc, serverTimestamp } from "firebase/firestore";
 import { getVirtualTestIndex } from "@/lib/data/testMetadataRegistry";
 import { VirtualTestIndex, TestEngineMode } from "@/lib/types/testEngine";
 import TestHeader from "../TestHeader";
@@ -20,7 +21,9 @@ import {
   RotateCcw,
   Sparkles,
   Loader2,
+  ClipboardList,
 } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 interface TestEngineRunnerProps {
   testId: string;
@@ -95,8 +98,12 @@ export default function TestEngineRunner({
   const [saveStatus, setSaveStatus] = useState<"idle" | "saved" | "error">("idle");
   const [dbError, setDbError] = useState<string | null>(null);
   const [showSubmitConfirmModal, setShowSubmitConfirmModal] = useState(false);
+  const [showRestartConfirmModal, setShowRestartConfirmModal] = useState(false);
+  const [resultsTab, setResultsTab] = useState<"summary" | "review">("summary");
+  const [reviewFilter, setReviewFilter] = useState<"all" | "correct" | "incorrect" | "unanswered">("all");
 
   const [passageCollapsed, setPassageCollapsed] = useState(false);
+  const [navigatorCollapsed, setNavigatorCollapsed] = useState(false);
 
   // Exam mode timer state
   const [timeRemaining, setTimeRemaining] = useState(
@@ -104,6 +111,8 @@ export default function TestEngineRunner({
   );
   const [timerExpired, setTimerExpired] = useState(false);
   const autoSubmitCalledRef = useRef(false);
+
+  const router = useRouter();
 
   const questionNumbers = Array.from({ length: 40 }, (_, i) => i + 1);
   const answeredCount = questionNumbers.filter((n) => answers[n]?.trim()).length;
@@ -135,7 +144,7 @@ export default function TestEngineRunner({
       !submitting
     ) {
       autoSubmitCalledRef.current = true;
-      handleFormSubmit();
+      handleSubmitTest();
     }
   }, [timerExpired, isSubmitted, submitting]);
 
@@ -175,9 +184,7 @@ export default function TestEngineRunner({
   const checkSingleAnswer = (qNum: number) => {
     const studentAns = (answers[qNum] || "").trim().toLowerCase();
     const correctVal = answerKey[qNum];
-    const acceptable = Array.isArray(correctVal)
-      ? correctVal.map((v) => String(v).trim().toLowerCase())
-      : String(correctVal).split(/\s+OR\s+|,\s*|\s*\/\s*/i).map((v) => v.trim().toLowerCase());
+    const acceptable = getAcceptableAnswers(correctVal);
 
     const isCorrect =
       studentAns !== "" && acceptable.some((opt) => opt === studentAns);
@@ -191,11 +198,20 @@ export default function TestEngineRunner({
     }));
   };
 
-  // ── 6. Form Submission & Grading ──
-  const handleFormSubmit = async () => {
-    if ((isSubmitted && saveStatus !== "error") || submitting) return;
+  const handleRestartTest = () => {
+    setAnswers({});
+    setCheckedQuestions({});
+    setBookmarks({});
+    setCurrentQuestion(1);
+    setIsSubmitted(false);
+    setResults(null);
+    setSaveStatus("idle");
+    setDbError(null);
+    setShowRestartConfirmModal(false);
+  };
 
-    if (!user && !ALLOW_GUEST_TESTS) {
+  const handleSubmitTest = async () => {
+    if (!ALLOW_GUEST_TESTS && !user) {
       alert("Guest test-taking is disabled. Please sign in to submit.");
       return;
     }
@@ -211,43 +227,54 @@ export default function TestEngineRunner({
       }
     }
 
-    // Local grading executes synchronously
     const gradeResult = gradeAttempt(sanitizedAnswers, answerKey);
-    setResults(gradeResult);
-    setIsSubmitted(true);
+    const currentUid = auth.currentUser?.uid || null;
+    const isGuest = !currentUid;
 
-    // Firestore async persistence
-    if (saveStatus !== "saved") {
-      try {
-        const currentUid = auth.currentUser?.uid || null;
-        const isGuest = !currentUid;
+    let attemptId = `attempt_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`;
 
-        const attemptData = {
-          uid: currentUid,
-          isGuest,
-          testId,
-          testType,
-          answers: sanitizedAnswers,
-          score: gradeResult.score,
-          total: gradeResult.total,
-          submittedAt: serverTimestamp(),
-        };
+    try {
+      const docRef = doc(collection(db, "attempts"));
+      attemptId = docRef.id;
 
-        await addDoc(collection(db, "attempts"), attemptData);
-        setSaveStatus("saved");
-        setDbError(null);
-      } catch (error: any) {
-        console.error("Firestore persistence failed:", error);
-        setSaveStatus("error");
-        const errCode = error?.code || "unknown";
-        const errMsg = error?.message || String(error);
-        setDbError(`${errCode}: ${errMsg}`);
-      } finally {
-        setSubmitting(false);
-      }
-    } else {
-      setSubmitting(false);
+      const attemptData = {
+        uid: currentUid,
+        isGuest,
+        testId,
+        testType,
+        answers: sanitizedAnswers,
+        score: gradeResult.score,
+        total: gradeResult.total,
+        submittedAt: serverTimestamp(),
+      };
+
+      await setDoc(docRef, attemptData);
+    } catch (error: any) {
+      console.error("Firestore persistence failed, saving local attempt fallback:", error);
     }
+
+    // Always mirror attempt payload in localStorage so direct result URL works offline/guest
+    if (typeof window !== "undefined") {
+      try {
+        localStorage.setItem(
+          `ielts_test_attempt_${attemptId}`,
+          JSON.stringify({
+            answers: sanitizedAnswers,
+            score: gradeResult.score,
+            total: gradeResult.total,
+            testId,
+            testType,
+            submittedAt: Date.now(),
+          })
+        );
+      } catch (e) {
+        console.error("Failed to save attempt to localStorage:", e);
+      }
+    }
+
+    setSubmitting(false);
+    // Redirect to persistent dedicated results page route
+    router.push(`/tests/${testType}/${testId}/results/${attemptId}`);
   };
 
   const activeQuestion = testIndex.questions[currentQuestion];
@@ -267,6 +294,7 @@ export default function TestEngineRunner({
         totalQuestions={40}
         timeRemaining={timeRemaining}
         onSubmitClick={() => setShowSubmitConfirmModal(true)}
+        onRestartClick={() => setShowRestartConfirmModal(true)}
       />
 
       {/* Main Workspace Layout */}
@@ -307,7 +335,7 @@ export default function TestEngineRunner({
         </div>
 
         {/* Right: Persistent Question Navigator */}
-        <div className="hidden lg:block w-72 shrink-0">
+        <div className={cn("hidden lg:block shrink-0 transition-all duration-300", navigatorCollapsed ? "w-60" : "w-72")}>
           <QuestionNavigator
             testType={testType}
             questionNumbers={questionNumbers}
@@ -316,6 +344,8 @@ export default function TestEngineRunner({
             checkedQuestions={checkedQuestions}
             currentQuestion={currentQuestion}
             mode={mode}
+            isCollapsed={navigatorCollapsed}
+            onToggleCollapse={() => setNavigatorCollapsed(!navigatorCollapsed)}
             onNavigate={(num) => setCurrentQuestion(num)}
           />
         </div>
@@ -340,7 +370,7 @@ export default function TestEngineRunner({
               <Button
                 type="button"
                 variant="forest"
-                onClick={handleFormSubmit}
+                onClick={handleSubmitTest}
                 disabled={submitting}
                 className="flex-1 h-11 font-semibold"
               >
@@ -362,60 +392,44 @@ export default function TestEngineRunner({
         </div>
       )}
 
-      {/* Results View Modal */}
-      {isSubmitted && results && (
-        <div className="fixed inset-0 z-50 bg-black/60 flex items-center justify-center p-4 overflow-y-auto">
-          <div className="bg-white rounded-3xl p-8 max-w-xl w-full border border-forest-ink/20 shadow-2xl space-y-6 my-8 animate-in zoom-in-95 duration-200">
-            <div className="text-center space-y-2">
-              <div className="w-16 h-16 rounded-2xl bg-forest-ink text-white flex items-center justify-center mx-auto shadow-md">
-                <Sparkles size={32} />
-              </div>
-              <h2 className="text-2xl font-extrabold font-bricolage text-forest-ink">
-                Test Completed!
-              </h2>
-              <p className="text-xs font-mono tracking-wider text-forest-ink/60 uppercase">
-                {testName}
-              </p>
-            </div>
-
-            {/* Score & Band */}
-            <div className="grid grid-cols-2 gap-4 p-5 rounded-2xl bg-forest-ink/5 border border-forest-ink/10 text-center">
-              <div>
-                <p className="text-xs font-mono uppercase text-forest-ink/50 mb-1">
-                  Raw Score
-                </p>
-                <p className="text-3xl font-extrabold font-bricolage text-forest-ink">
-                  {results.score} / {results.total}
-                </p>
+      {/* Confirmation Modal before Restart */}
+      {showRestartConfirmModal && (
+        <div className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-2xl p-6 max-w-md w-full border border-forest-ink/15 shadow-xl space-y-4 animate-in zoom-in-95 duration-150">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center shrink-0">
+                <AlertTriangle size={20} className="text-amber-600" />
               </div>
               <div>
-                <p className="text-xs font-mono uppercase text-forest-ink/50 mb-1">
-                  Band Score
-                </p>
-                <p className="text-3xl font-extrabold font-bricolage text-emerald-600">
-                  {calculateBandScore(results.score, testType)}
+                <h3 className="text-lg font-extrabold font-bricolage text-forest-ink">
+                  Restart Test?
+                </h3>
+                <p className="text-xs font-mono text-amber-700/80 uppercase tracking-wider font-semibold">
+                  All progress will be lost
                 </p>
               </div>
             </div>
 
-            {/* Save Status / DB Notice */}
-            {saveStatus === "error" && (
-              <div className="p-3.5 rounded-xl bg-amber-50 border border-amber-200 text-amber-900 text-xs flex items-center gap-2">
-                <AlertTriangle size={16} className="shrink-0" />
-                <span>
-                  Results saved locally. Cloud sync pending ({dbError}).
-                </span>
-              </div>
-            )}
+            <p className="text-sm text-forest-ink/80 leading-relaxed">
+              Are you sure you want to restart this test? All your current answers, bookmarks, and progress will be reset immediately without saving.
+            </p>
 
             <div className="flex gap-3 pt-2">
               <Button
                 type="button"
-                variant="forest"
-                onClick={() => window.location.reload()}
-                className="flex-1 h-12 rounded-xl font-semibold shadow-sm"
+                variant="outline"
+                onClick={() => setShowRestartConfirmModal(false)}
+                className="flex-1 h-11 border-forest-ink/20 font-semibold"
               >
-                <RotateCcw size={16} className="mr-2" /> Take Another Test
+                Cancel
+              </Button>
+              <Button
+                type="button"
+                onClick={handleRestartTest}
+                className="flex-1 h-11 bg-rose-600 hover:bg-rose-700 text-white font-semibold shadow-2xs"
+              >
+                <RotateCcw size={15} className="mr-1.5" />
+                Yes, Restart Test
               </Button>
             </div>
           </div>

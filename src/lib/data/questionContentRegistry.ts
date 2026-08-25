@@ -7,70 +7,83 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "questionType": "table_completion",
       "groupId": "g_1_7",
       "extractionStatus": "extracted",
-      "promptText": "allowed businesses to ______ information regularly",
-      "sentenceBefore": "allowed businesses to",
-      "sentenceAfter": "information regularly",
+      "promptText": "Section of website CommentsDatabase of tourism services easy for tourism-related businesses to get on the list allowed businesses to ______ information regularly provided a country-wide evaluation of businesses, including their impact on the",
+      "sentenceBefore": "Section of website CommentsDatabase of tourism services easy for tourism-related businesses to get on the list allowed businesses to",
+      "sentenceAfter": "information regularly provided a country-wide evaluation of businesses, including their impact on the",
       "groupPrompt": "Complete the table below.",
       "tableContext": {
-        "cellText": "allowed businesses to"
+        "cellText": "Section of website CommentsDatabase of tourism services easy for tourism-related businesses to get on the list allowed businesses to"
       }
     },
     "2": {
       "questionType": "table_completion",
       "groupId": "g_1_7",
       "extractionStatus": "extracted",
-      "promptText": "provided a country-wide evaluation of businesses, including their impact on the ______",
-      "sentenceBefore": "provided a country-wide evaluation of businesses, including their impact on the",
+      "promptText": "information regularly provided a country-wide evaluation of businesses, including their impact on the ______ Special features on local topics e.g. an interview with a former sports",
+      "sentenceBefore": "information regularly provided a country-wide evaluation of businesses, including their impact on the",
+      "sentenceAfter": "Special features on local topics e.g. an interview with a former sports",
       "groupPrompt": "Complete the table below.",
       "tableContext": {
-        "cellText": "provided a country-wide evaluation of businesses, including their impact on the"
+        "cellText": "information regularly provided a country-wide evaluation of businesses, including their impact on the"
       }
     },
     "3": {
       "questionType": "table_completion",
       "groupId": "g_1_7",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the table below.",
-      "groupPrompt": "Complete the table below."
+      "extractionStatus": "extracted",
+      "promptText": "Special features on local topics e.g. an interview with a former sports ______ , and an interactive tour of various locations used in",
+      "sentenceBefore": "Special features on local topics e.g. an interview with a former sports",
+      "sentenceAfter": ", and an interactive tour of various locations used in",
+      "groupPrompt": "Complete the table below.",
+      "tableContext": {
+        "cellText": "Special features on local topics e.g. an interview with a former sports"
+      }
     },
     "4": {
       "questionType": "table_completion",
       "groupId": "g_1_7",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the table below.",
-      "groupPrompt": "Complete the table below."
+      "extractionStatus": "extracted",
+      "promptText": ", and an interactive tour of various locations used in ______ Information on driving routes varied depending on the",
+      "sentenceBefore": ", and an interactive tour of various locations used in",
+      "sentenceAfter": "Information on driving routes varied depending on the",
+      "groupPrompt": "Complete the table below.",
+      "tableContext": {
+        "cellText": ", and an interactive tour of various locations used in"
+      }
     },
     "5": {
       "questionType": "table_completion",
       "groupId": "g_1_7",
       "extractionStatus": "extracted",
-      "promptText": "varied depending on the ______",
-      "sentenceBefore": "varied depending on the",
+      "promptText": "Information on driving routes varied depending on the ______ Travel Plannerincluded a map showing selected places, details of public transport and local",
+      "sentenceBefore": "Information on driving routes varied depending on the",
+      "sentenceAfter": "Travel Plannerincluded a map showing selected places, details of public transport and local",
       "groupPrompt": "Complete the table below.",
       "tableContext": {
-        "cellText": "varied depending on the"
+        "cellText": "Information on driving routes varied depending on the"
       }
     },
     "6": {
       "questionType": "table_completion",
       "groupId": "g_1_7",
       "extractionStatus": "extracted",
-      "promptText": "included a map showing selected places, details of public transport and local ______",
-      "sentenceBefore": "included a map showing selected places, details of public transport and local",
+      "promptText": "Travel Plannerincluded a map showing selected places, details of public transport and local ______ 'Your Words'travelers could send a link to their",
+      "sentenceBefore": "Travel Plannerincluded a map showing selected places, details of public transport and local",
+      "sentenceAfter": "'Your Words'travelers could send a link to their",
       "groupPrompt": "Complete the table below.",
       "tableContext": {
-        "cellText": "included a map showing selected places, details of public transport and local"
+        "cellText": "Travel Plannerincluded a map showing selected places, details of public transport and local"
       }
     },
     "7": {
       "questionType": "table_completion",
       "groupId": "g_1_7",
       "extractionStatus": "extracted",
-      "promptText": "travelers could send a link to their ______",
-      "sentenceBefore": "travelers could send a link to their",
+      "promptText": "'Your Words'travelers could send a link to their ______",
+      "sentenceBefore": "'Your Words'travelers could send a link to their",
       "groupPrompt": "Complete the table below.",
       "tableContext": {
-        "cellText": "travelers could send a link to their"
+        "cellText": "'Your Words'travelers could send a link to their"
       }
     },
     "8": {
@@ -123,7 +136,40 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "referenceBox": {
         "title": "List of Headings",
         "type": "headings",
-        "items": []
+        "items": [
+          {
+            "label": "i",
+            "text": "The productive outcomes that may result from boredom"
+          },
+          {
+            "label": "ii",
+            "text": "What teachers can do to prevent boredom"
+          },
+          {
+            "label": "iii",
+            "text": "A new explanation and a new cure for boredom"
+          },
+          {
+            "label": "iv",
+            "text": "Problems with a scientific approach to boredom"
+          },
+          {
+            "label": "v",
+            "text": "A potential danger arising from boredom"
+          },
+          {
+            "label": "vi",
+            "text": "Creating a system of classification for feelings of boredom"
+          },
+          {
+            "label": "vii",
+            "text": "Age groups most affected by boredom"
+          },
+          {
+            "label": "viii",
+            "text": "Identifying those most affected by boredom"
+          }
+        ]
       }
     },
     "15": {
@@ -134,7 +180,40 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "referenceBox": {
         "title": "List of Headings",
         "type": "headings",
-        "items": []
+        "items": [
+          {
+            "label": "i",
+            "text": "The productive outcomes that may result from boredom"
+          },
+          {
+            "label": "ii",
+            "text": "What teachers can do to prevent boredom"
+          },
+          {
+            "label": "iii",
+            "text": "A new explanation and a new cure for boredom"
+          },
+          {
+            "label": "iv",
+            "text": "Problems with a scientific approach to boredom"
+          },
+          {
+            "label": "v",
+            "text": "A potential danger arising from boredom"
+          },
+          {
+            "label": "vi",
+            "text": "Creating a system of classification for feelings of boredom"
+          },
+          {
+            "label": "vii",
+            "text": "Age groups most affected by boredom"
+          },
+          {
+            "label": "viii",
+            "text": "Identifying those most affected by boredom"
+          }
+        ]
       }
     },
     "16": {
@@ -145,7 +224,40 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "referenceBox": {
         "title": "List of Headings",
         "type": "headings",
-        "items": []
+        "items": [
+          {
+            "label": "i",
+            "text": "The productive outcomes that may result from boredom"
+          },
+          {
+            "label": "ii",
+            "text": "What teachers can do to prevent boredom"
+          },
+          {
+            "label": "iii",
+            "text": "A new explanation and a new cure for boredom"
+          },
+          {
+            "label": "iv",
+            "text": "Problems with a scientific approach to boredom"
+          },
+          {
+            "label": "v",
+            "text": "A potential danger arising from boredom"
+          },
+          {
+            "label": "vi",
+            "text": "Creating a system of classification for feelings of boredom"
+          },
+          {
+            "label": "vii",
+            "text": "Age groups most affected by boredom"
+          },
+          {
+            "label": "viii",
+            "text": "Identifying those most affected by boredom"
+          }
+        ]
       }
     },
     "17": {
@@ -156,7 +268,40 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "referenceBox": {
         "title": "List of Headings",
         "type": "headings",
-        "items": []
+        "items": [
+          {
+            "label": "i",
+            "text": "The productive outcomes that may result from boredom"
+          },
+          {
+            "label": "ii",
+            "text": "What teachers can do to prevent boredom"
+          },
+          {
+            "label": "iii",
+            "text": "A new explanation and a new cure for boredom"
+          },
+          {
+            "label": "iv",
+            "text": "Problems with a scientific approach to boredom"
+          },
+          {
+            "label": "v",
+            "text": "A potential danger arising from boredom"
+          },
+          {
+            "label": "vi",
+            "text": "Creating a system of classification for feelings of boredom"
+          },
+          {
+            "label": "vii",
+            "text": "Age groups most affected by boredom"
+          },
+          {
+            "label": "viii",
+            "text": "Identifying those most affected by boredom"
+          }
+        ]
       }
     },
     "18": {
@@ -167,7 +312,40 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "referenceBox": {
         "title": "List of Headings",
         "type": "headings",
-        "items": []
+        "items": [
+          {
+            "label": "i",
+            "text": "The productive outcomes that may result from boredom"
+          },
+          {
+            "label": "ii",
+            "text": "What teachers can do to prevent boredom"
+          },
+          {
+            "label": "iii",
+            "text": "A new explanation and a new cure for boredom"
+          },
+          {
+            "label": "iv",
+            "text": "Problems with a scientific approach to boredom"
+          },
+          {
+            "label": "v",
+            "text": "A potential danger arising from boredom"
+          },
+          {
+            "label": "vi",
+            "text": "Creating a system of classification for feelings of boredom"
+          },
+          {
+            "label": "vii",
+            "text": "Age groups most affected by boredom"
+          },
+          {
+            "label": "viii",
+            "text": "Identifying those most affected by boredom"
+          }
+        ]
       }
     },
     "19": {
@@ -178,7 +356,40 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "referenceBox": {
         "title": "List of Headings",
         "type": "headings",
-        "items": []
+        "items": [
+          {
+            "label": "i",
+            "text": "The productive outcomes that may result from boredom"
+          },
+          {
+            "label": "ii",
+            "text": "What teachers can do to prevent boredom"
+          },
+          {
+            "label": "iii",
+            "text": "A new explanation and a new cure for boredom"
+          },
+          {
+            "label": "iv",
+            "text": "Problems with a scientific approach to boredom"
+          },
+          {
+            "label": "v",
+            "text": "A potential danger arising from boredom"
+          },
+          {
+            "label": "vi",
+            "text": "Creating a system of classification for feelings of boredom"
+          },
+          {
+            "label": "vii",
+            "text": "Age groups most affected by boredom"
+          },
+          {
+            "label": "viii",
+            "text": "Identifying those most affected by boredom"
+          }
+        ]
       }
     },
     "20": {
@@ -232,22 +443,28 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
     "24": {
       "questionType": "summary_completion_text",
       "groupId": "g_24_26",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "For John Eastwood, the central feature of boredom is that people cannot ______ , due to a failure in what he calls the 'attention system', and as a result they become frustrated and irritable. His team suggests that those for whom",
+      "sentenceBefore": "For John Eastwood, the central feature of boredom is that people cannot",
+      "sentenceAfter": ", due to a failure in what he calls the 'attention system', and as a result they become frustrated and irritable. His team suggests that those for whom",
       "groupPrompt": "Complete the summary below."
     },
     "25": {
       "questionType": "summary_completion_text",
       "groupId": "g_24_26",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": ", due to a failure in what he calls the 'attention system', and as a result they become frustrated and irritable. His team suggests that those for whom ______ is an important aim in life may have problems in coping with boredom, whereas those who have the characteristic of",
+      "sentenceBefore": ", due to a failure in what he calls the 'attention system', and as a result they become frustrated and irritable. His team suggests that those for whom",
+      "sentenceAfter": "is an important aim in life may have problems in coping with boredom, whereas those who have the characteristic of",
       "groupPrompt": "Complete the summary below."
     },
     "26": {
       "questionType": "summary_completion_text",
       "groupId": "g_24_26",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "is an important aim in life may have problems in coping with boredom, whereas those who have the characteristic of ______ can generally cope with it.",
+      "sentenceBefore": "is an important aim in life may have problems in coping with boredom, whereas those who have the characteristic of",
+      "sentenceAfter": "can generally cope with it.",
       "groupPrompt": "Complete the summary below."
     },
     "27": {
@@ -509,20 +726,21 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "questionType": "table_completion",
       "groupId": "g_1_9",
       "extractionStatus": "extracted",
-      "promptText": "added to ______",
-      "sentenceBefore": "added to",
+      "promptText": "The Early History of CinnamonBiblical times:added to ______ used to show",
+      "sentenceBefore": "The Early History of CinnamonBiblical times:added to",
+      "sentenceAfter": "used to show",
       "groupPrompt": "Complete the notes below.",
       "tableContext": {
-        "cellText": "added to"
+        "cellText": "The Early History of CinnamonBiblical times:added to"
       }
     },
     "2": {
       "questionType": "table_completion",
       "groupId": "g_1_9",
       "extractionStatus": "extracted",
-      "promptText": "used to show ______ between people",
+      "promptText": "used to show ______ between people Ancient Rome:used for its sweet smell at",
       "sentenceBefore": "used to show",
-      "sentenceAfter": "between people",
+      "sentenceAfter": "between people Ancient Rome:used for its sweet smell at",
       "groupPrompt": "Complete the notes below.",
       "tableContext": {
         "cellText": "used to show"
@@ -532,31 +750,33 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "questionType": "table_completion",
       "groupId": "g_1_9",
       "extractionStatus": "extracted",
-      "promptText": "used for its sweet smell at ______",
-      "sentenceBefore": "used for its sweet smell at",
+      "promptText": "between people Ancient Rome:used for its sweet smell at ______ Middle Ages:added to food, especially meatwas an indication of a person's",
+      "sentenceBefore": "between people Ancient Rome:used for its sweet smell at",
+      "sentenceAfter": "Middle Ages:added to food, especially meatwas an indication of a person's",
       "groupPrompt": "Complete the notes below.",
       "tableContext": {
-        "cellText": "used for its sweet smell at"
+        "cellText": "between people Ancient Rome:used for its sweet smell at"
       }
     },
     "4": {
       "questionType": "table_completion",
       "groupId": "g_1_9",
       "extractionStatus": "extracted",
-      "promptText": "was an indication of a person's ______",
-      "sentenceBefore": "was an indication of a person's",
+      "promptText": "Middle Ages:added to food, especially meatwas an indication of a person's ______ known as a treatment for",
+      "sentenceBefore": "Middle Ages:added to food, especially meatwas an indication of a person's",
+      "sentenceAfter": "known as a treatment for",
       "groupPrompt": "Complete the notes below.",
       "tableContext": {
-        "cellText": "was an indication of a person's"
+        "cellText": "Middle Ages:added to food, especially meatwas an indication of a person's"
       }
     },
     "5": {
       "questionType": "table_completion",
       "groupId": "g_1_9",
       "extractionStatus": "extracted",
-      "promptText": "known as a treatment for ______ and other health problems",
+      "promptText": "known as a treatment for ______ and other health problems grown in",
       "sentenceBefore": "known as a treatment for",
-      "sentenceAfter": "and other health problems",
+      "sentenceAfter": "and other health problems grown in",
       "groupPrompt": "Complete the notes below.",
       "tableContext": {
         "cellText": "known as a treatment for"
@@ -566,20 +786,21 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "questionType": "table_completion",
       "groupId": "g_1_9",
       "extractionStatus": "extracted",
-      "promptText": "grown in ______",
-      "sentenceBefore": "grown in",
+      "promptText": "and other health problems grown in ______ merchants used",
+      "sentenceBefore": "and other health problems grown in",
+      "sentenceAfter": "merchants used",
       "groupPrompt": "Complete the notes below.",
       "tableContext": {
-        "cellText": "grown in"
+        "cellText": "and other health problems grown in"
       }
     },
     "7": {
       "questionType": "table_completion",
       "groupId": "g_1_9",
       "extractionStatus": "extracted",
-      "promptText": "merchants used ______ to bring it to the Mediterranean",
+      "promptText": "merchants used ______ to bring it to the Mediterranean arrived in the Mediterranean at",
       "sentenceBefore": "merchants used",
-      "sentenceAfter": "to bring it to the Mediterranean",
+      "sentenceAfter": "to bring it to the Mediterranean arrived in the Mediterranean at",
       "groupPrompt": "Complete the notes below.",
       "tableContext": {
         "cellText": "merchants used"
@@ -589,11 +810,12 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "questionType": "table_completion",
       "groupId": "g_1_9",
       "extractionStatus": "extracted",
-      "promptText": "arrived in the Mediterranean at ______",
-      "sentenceBefore": "arrived in the Mediterranean at",
+      "promptText": "to bring it to the Mediterranean arrived in the Mediterranean at ______ traders took it to",
+      "sentenceBefore": "to bring it to the Mediterranean arrived in the Mediterranean at",
+      "sentenceAfter": "traders took it to",
       "groupPrompt": "Complete the notes below.",
       "tableContext": {
-        "cellText": "arrived in the Mediterranean at"
+        "cellText": "to bring it to the Mediterranean arrived in the Mediterranean at"
       }
     },
     "9": {
@@ -667,7 +889,7 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "promptText": "People are more trusting when affected by oxytocin.",
       "groupPrompt": "Look at the following research findings (Questions 18-20) and the list of researchers below.",
       "referenceBox": {
-        "title": "List of researchers",
+        "title": "List of Researchers",
         "type": "features",
         "items": []
       }
@@ -679,7 +901,7 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "promptText": "Oxytocin increases people's feelings of jealousy.",
       "groupPrompt": "Look at the following research findings (Questions 18-20) and the list of researchers below.",
       "referenceBox": {
-        "title": "List of researchers",
+        "title": "List of Researchers",
         "type": "features",
         "items": []
       }
@@ -691,7 +913,7 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "promptText": "The effect of oxytocin varies from one type of person to another.",
       "groupPrompt": "Look at the following research findings (Questions 18-20) and the list of researchers below.",
       "referenceBox": {
-        "title": "List of researchers",
+        "title": "List of Researchers",
         "type": "features",
         "items": []
       }
@@ -699,43 +921,55 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
     "21": {
       "questionType": "summary_completion_text",
       "groupId": "g_21_26",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "The earliest findings about oxytocin and bonding came from research involving ______ It was also discovered that humans produce oxytocin during",
+      "sentenceBefore": "The earliest findings about oxytocin and bonding came from research involving",
+      "sentenceAfter": "It was also discovered that humans produce oxytocin during",
       "groupPrompt": "Complete the summary below."
     },
     "22": {
       "questionType": "summary_completion_text",
       "groupId": "g_21_26",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "It was also discovered that humans produce oxytocin during ______ An experiment in 2005, in which participants were given either oxytocin or a",
+      "sentenceBefore": "It was also discovered that humans produce oxytocin during",
+      "sentenceAfter": "An experiment in 2005, in which participants were given either oxytocin or a",
       "groupPrompt": "Complete the summary below."
     },
     "23": {
       "questionType": "summary_completion_text",
       "groupId": "g_21_26",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "An experiment in 2005, in which participants were given either oxytocin or a ______ , reinforced the belief that the hormone had a positive effect. However, later research suggests that this is not always the case. A study at the University of Haifa where participants took part in a",
+      "sentenceBefore": "An experiment in 2005, in which participants were given either oxytocin or a",
+      "sentenceAfter": ", reinforced the belief that the hormone had a positive effect. However, later research suggests that this is not always the case. A study at the University of Haifa where participants took part in a",
       "groupPrompt": "Complete the summary below."
     },
     "24": {
       "questionType": "summary_completion_text",
       "groupId": "g_21_26",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": ", reinforced the belief that the hormone had a positive effect. However, later research suggests that this is not always the case. A study at the University of Haifa where participants took part in a ______ revealed the negative emotions which oxytocin can trigger. A study at the University of Antwerp showed people's lack of willingness to help",
+      "sentenceBefore": ", reinforced the belief that the hormone had a positive effect. However, later research suggests that this is not always the case. A study at the University of Haifa where participants took part in a",
+      "sentenceAfter": "revealed the negative emotions which oxytocin can trigger. A study at the University of Antwerp showed people's lack of willingness to help",
       "groupPrompt": "Complete the summary below."
     },
     "25": {
       "questionType": "summary_completion_text",
       "groupId": "g_21_26",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "revealed the negative emotions which oxytocin can trigger. A study at the University of Antwerp showed people's lack of willingness to help ______ while under the influence of oxytocin. Meanwhile, research at the University of Amsterdam revealed that people who have been given oxytocin consider",
+      "sentenceBefore": "revealed the negative emotions which oxytocin can trigger. A study at the University of Antwerp showed people's lack of willingness to help",
+      "sentenceAfter": "while under the influence of oxytocin. Meanwhile, research at the University of Amsterdam revealed that people who have been given oxytocin consider",
       "groupPrompt": "Complete the summary below."
     },
     "26": {
       "questionType": "summary_completion_text",
       "groupId": "g_21_26",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "while under the influence of oxytocin. Meanwhile, research at the University of Amsterdam revealed that people who have been given oxytocin consider ______ that are familiar to them in their own country to have more positive associations than those from other cultures.",
+      "sentenceBefore": "while under the influence of oxytocin. Meanwhile, research at the University of Amsterdam revealed that people who have been given oxytocin consider",
+      "sentenceAfter": "that are familiar to them in their own country to have more positive associations than those from other cultures.",
       "groupPrompt": "Complete the summary below."
     },
     "27": {
@@ -997,52 +1231,57 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "questionType": "table_completion",
       "groupId": "g_1_8",
       "extractionStatus": "extracted",
-      "promptText": "timber for houses and the making of ______",
-      "sentenceBefore": "timber for houses and the making of",
+      "promptText": "THE COCONUT PALMPartDescriptionUsestrunkup to 30 metres timber for houses and the making of ______ leavesup to 6 metres long to make brushes flowersat the top of the trunk stems provide sap, used as a drink or a source of",
+      "sentenceBefore": "THE COCONUT PALMPartDescriptionUsestrunkup to 30 metres timber for houses and the making of",
+      "sentenceAfter": "leavesup to 6 metres long to make brushes flowersat the top of the trunk stems provide sap, used as a drink or a source of",
       "groupPrompt": "Complete the table below.",
       "tableContext": {
-        "cellText": "timber for houses and the making of"
+        "cellText": "THE COCONUT PALMPartDescriptionUsestrunkup to 30 metres timber for houses and the making of"
       }
     },
     "2": {
       "questionType": "table_completion",
       "groupId": "g_1_8",
       "extractionStatus": "extracted",
-      "promptText": "stems provide sap, used as a drink or a source of ______",
-      "sentenceBefore": "stems provide sap, used as a drink or a source of",
+      "promptText": "leavesup to 6 metres long to make brushes flowersat the top of the trunk stems provide sap, used as a drink or a source of ______ fruitsouter layermiddle layer (coir fibres) used for",
+      "sentenceBefore": "leavesup to 6 metres long to make brushes flowersat the top of the trunk stems provide sap, used as a drink or a source of",
+      "sentenceAfter": "fruitsouter layermiddle layer (coir fibres) used for",
       "groupPrompt": "Complete the table below.",
       "tableContext": {
-        "cellText": "stems provide sap, used as a drink or a source of"
+        "cellText": "leavesup to 6 metres long to make brushes flowersat the top of the trunk stems provide sap, used as a drink or a source of"
       }
     },
     "3": {
       "questionType": "table_completion",
       "groupId": "g_1_8",
       "extractionStatus": "extracted",
-      "promptText": "used for ______",
-      "sentenceBefore": "used for",
+      "promptText": "fruitsouter layermiddle layer (coir fibres) used for ______ Inner layer (shell) a source of",
+      "sentenceBefore": "fruitsouter layermiddle layer (coir fibres) used for",
+      "sentenceAfter": "Inner layer (shell) a source of",
       "groupPrompt": "Complete the table below.",
       "tableContext": {
-        "cellText": "used for"
+        "cellText": "fruitsouter layermiddle layer (coir fibres) used for"
       }
     },
     "4": {
       "questionType": "table_completion",
       "groupId": "g_1_8",
       "extractionStatus": "extracted",
-      "promptText": "a source of ______",
-      "sentenceBefore": "a source of",
+      "promptText": "Inner layer (shell) a source of ______ (when halved) for",
+      "sentenceBefore": "Inner layer (shell) a source of",
+      "sentenceAfter": "(when halved) for",
       "groupPrompt": "Complete the table below.",
       "tableContext": {
-        "cellText": "a source of"
+        "cellText": "Inner layer (shell) a source of"
       }
     },
     "5": {
       "questionType": "table_completion",
       "groupId": "g_1_8",
       "extractionStatus": "extracted",
-      "promptText": "(when halved) for ______",
+      "promptText": "(when halved) for ______ coconut watera drinka source of",
       "sentenceBefore": "(when halved) for",
+      "sentenceAfter": "coconut watera drinka source of",
       "groupPrompt": "Complete the table below.",
       "tableContext": {
         "cellText": "(when halved) for"
@@ -1052,23 +1291,24 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "questionType": "table_completion",
       "groupId": "g_1_8",
       "extractionStatus": "extracted",
-      "promptText": "a drinka source of ______ for other plants",
-      "sentenceBefore": "a drinka source of",
-      "sentenceAfter": "for other plants",
+      "promptText": "coconut watera drinka source of ______ for other plants coconut fleshoil and milk for cooking and",
+      "sentenceBefore": "coconut watera drinka source of",
+      "sentenceAfter": "for other plants coconut fleshoil and milk for cooking and",
       "groupPrompt": "Complete the table below.",
       "tableContext": {
-        "cellText": "a drinka source of"
+        "cellText": "coconut watera drinka source of"
       }
     },
     "7": {
       "questionType": "table_completion",
       "groupId": "g_1_8",
       "extractionStatus": "extracted",
-      "promptText": "oil and milk for cooking and ______",
-      "sentenceBefore": "oil and milk for cooking and",
+      "promptText": "for other plants coconut fleshoil and milk for cooking and ______ glycerine (an ingredient in",
+      "sentenceBefore": "for other plants coconut fleshoil and milk for cooking and",
+      "sentenceAfter": "glycerine (an ingredient in",
       "groupPrompt": "Complete the table below.",
       "tableContext": {
-        "cellText": "oil and milk for cooking and"
+        "cellText": "for other plants coconut fleshoil and milk for cooking and"
       }
     },
     "8": {
@@ -1145,30 +1385,9 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
         }
       ],
       "referenceBox": {
-        "title": "List of researchers",
+        "title": "List of Researchers",
         "type": "features",
-        "items": [
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "C",
-            "text": ""
-          }
-        ]
+        "items": []
       }
     },
     "15": {
@@ -1198,30 +1417,9 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
         }
       ],
       "referenceBox": {
-        "title": "List of researchers",
+        "title": "List of Researchers",
         "type": "features",
-        "items": [
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "C",
-            "text": ""
-          }
-        ]
+        "items": []
       }
     },
     "16": {
@@ -1251,30 +1449,9 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
         }
       ],
       "referenceBox": {
-        "title": "List of researchers",
+        "title": "List of Researchers",
         "type": "features",
-        "items": [
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "C",
-            "text": ""
-          }
-        ]
+        "items": []
       }
     },
     "17": {
@@ -1304,72 +1481,63 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
         }
       ],
       "referenceBox": {
-        "title": "List of researchers",
+        "title": "List of Researchers",
         "type": "features",
-        "items": [
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "C",
-            "text": ""
-          }
-        ]
+        "items": []
       }
     },
     "18": {
       "questionType": "summary_completion_text",
       "groupId": "g_18_23",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "Researchers at Washington State University used ______ , together with specialised computer programs, to analyse how parents interacted with their babies during a normal day. The study revealed that",
+      "sentenceBefore": "Researchers at Washington State University used",
+      "sentenceAfter": ", together with specialised computer programs, to analyse how parents interacted with their babies during a normal day. The study revealed that",
       "groupPrompt": "Complete the summary below."
     },
     "19": {
       "questionType": "summary_completion_text",
       "groupId": "g_18_23",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": ", together with specialised computer programs, to analyse how parents interacted with their babies during a normal day. The study revealed that ______ tended not to modify their ordinary speech patterns when interacting with their babies. According to an idea known as the",
+      "sentenceBefore": ", together with specialised computer programs, to analyse how parents interacted with their babies during a normal day. The study revealed that",
+      "sentenceAfter": "tended not to modify their ordinary speech patterns when interacting with their babies. According to an idea known as the",
       "groupPrompt": "Complete the summary below."
     },
     "20": {
       "questionType": "summary_completion_text",
       "groupId": "g_18_23",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "tended not to modify their ordinary speech patterns when interacting with their babies. According to an idea known as the ______ , they may use a more adult type of speech to prepare infants for the language they will hear outside the family home. According to the researchers, hearing baby talk from one parent and 'normal' language from the other expands the baby's",
+      "sentenceBefore": "tended not to modify their ordinary speech patterns when interacting with their babies. According to an idea known as the",
+      "sentenceAfter": ", they may use a more adult type of speech to prepare infants for the language they will hear outside the family home. According to the researchers, hearing baby talk from one parent and 'normal' language from the other expands the baby's",
       "groupPrompt": "Complete the summary below."
     },
     "21": {
       "questionType": "summary_completion_text",
       "groupId": "g_18_23",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": ", they may use a more adult type of speech to prepare infants for the language they will hear outside the family home. According to the researchers, hearing baby talk from one parent and 'normal' language from the other expands the baby's ______ of types of speech which they can practise.",
+      "sentenceBefore": ", they may use a more adult type of speech to prepare infants for the language they will hear outside the family home. According to the researchers, hearing baby talk from one parent and 'normal' language from the other expands the baby's",
+      "sentenceAfter": "of types of speech which they can practise.",
       "groupPrompt": "Complete the summary below."
     },
     "22": {
       "questionType": "summary_completion_text",
       "groupId": "g_18_23",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "Meanwhile, another study carried out by scientists from the University of Washington and the University of Connecticut recorded speech and sound using special ______ that the babies were equipped with. When they studied the babies again at age two, the found that those who had heard a lot of baby talk in infancy had a much larger",
+      "sentenceBefore": "Meanwhile, another study carried out by scientists from the University of Washington and the University of Connecticut recorded speech and sound using special",
+      "sentenceAfter": "that the babies were equipped with. When they studied the babies again at age two, the found that those who had heard a lot of baby talk in infancy had a much larger",
       "groupPrompt": "Complete the summary below."
     },
     "23": {
       "questionType": "summary_completion_text",
       "groupId": "g_18_23",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "that the babies were equipped with. When they studied the babies again at age two, the found that those who had heard a lot of baby talk in infancy had a much larger ______ than those who had not.",
+      "sentenceBefore": "that the babies were equipped with. When they studied the babies again at age two, the found that those who had heard a lot of baby talk in infancy had a much larger",
+      "sentenceAfter": "than those who had not.",
       "groupPrompt": "Complete the summary below."
     },
     "24": {
@@ -1423,36 +1591,46 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
     "32": {
       "questionType": "summary_completion_text",
       "groupId": "g_32_36",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "Yama Dixit and David Hodell have found the first definitive evidence of climate change affecting the plains of north-western India thousands of years ago. By collecting the ______ of snails and analysing them, they discovered evidence of a change in water levels in a",
+      "sentenceBefore": "Yama Dixit and David Hodell have found the first definitive evidence of climate change affecting the plains of north-western India thousands of years ago. By collecting the",
+      "sentenceAfter": "of snails and analysing them, they discovered evidence of a change in water levels in a",
       "groupPrompt": "Complete the summary below."
     },
     "33": {
       "questionType": "summary_completion_text",
       "groupId": "g_32_36",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "of snails and analysing them, they discovered evidence of a change in water levels in a ______ in the region. This occurred when there was less",
+      "sentenceBefore": "of snails and analysing them, they discovered evidence of a change in water levels in a",
+      "sentenceAfter": "in the region. This occurred when there was less",
       "groupPrompt": "Complete the summary below."
     },
     "34": {
       "questionType": "summary_completion_text",
       "groupId": "g_32_36",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "in the region. This occurred when there was less ______ than evaporation, and suggests that there was an extended period of drought. Petrie and Singh's team are using archaeological records to look at",
+      "sentenceBefore": "in the region. This occurred when there was less",
+      "sentenceAfter": "than evaporation, and suggests that there was an extended period of drought. Petrie and Singh's team are using archaeological records to look at",
       "groupPrompt": "Complete the summary below."
     },
     "35": {
       "questionType": "summary_completion_text",
       "groupId": "g_32_36",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "than evaporation, and suggests that there was an extended period of drought. Petrie and Singh's team are using archaeological records to look at ______ from five millennia ago, in order to know whether people had adapted their agricultural practices to changing climatic conditions. They are also examining objects including",
+      "sentenceBefore": "than evaporation, and suggests that there was an extended period of drought. Petrie and Singh's team are using archaeological records to look at",
+      "sentenceAfter": "from five millennia ago, in order to know whether people had adapted their agricultural practices to changing climatic conditions. They are also examining objects including",
       "groupPrompt": "Complete the summary below."
     },
     "36": {
       "questionType": "summary_completion_text",
       "groupId": "g_32_36",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "from five millennia ago, in order to know whether people had adapted their agricultural practices to changing climatic conditions. They are also examining objects including ______ , so as to find out about links between inhabitants of different parts of the region and whether these changed over time.",
+      "sentenceBefore": "from five millennia ago, in order to know whether people had adapted their agricultural practices to changing climatic conditions. They are also examining objects including",
+      "sentenceAfter": ", so as to find out about links between inhabitants of different parts of the region and whether these changed over time.",
       "groupPrompt": "Complete the summary below."
     },
     "37": {
@@ -1488,42 +1666,9 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
         }
       ],
       "referenceBox": {
-        "title": "List of researchers",
+        "title": "List of Researchers",
         "type": "features",
-        "items": [
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "C",
-            "text": ""
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "C",
-            "text": ""
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "C",
-            "text": ""
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "C",
-            "text": "D"
-          }
-        ]
+        "items": []
       }
     },
     "38": {
@@ -1559,42 +1704,9 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
         }
       ],
       "referenceBox": {
-        "title": "List of researchers",
+        "title": "List of Researchers",
         "type": "features",
-        "items": [
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "C",
-            "text": ""
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "C",
-            "text": ""
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "C",
-            "text": ""
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "C",
-            "text": "D"
-          }
-        ]
+        "items": []
       }
     },
     "39": {
@@ -1630,42 +1742,9 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
         }
       ],
       "referenceBox": {
-        "title": "List of researchers",
+        "title": "List of Researchers",
         "type": "features",
-        "items": [
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "C",
-            "text": ""
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "C",
-            "text": ""
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "C",
-            "text": ""
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "C",
-            "text": "D"
-          }
-        ]
+        "items": []
       }
     },
     "40": {
@@ -1701,42 +1780,9 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
         }
       ],
       "referenceBox": {
-        "title": "List of researchers",
+        "title": "List of Researchers",
         "type": "features",
-        "items": [
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "C",
-            "text": ""
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "C",
-            "text": ""
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "C",
-            "text": ""
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "C",
-            "text": "D"
-          }
-        ]
+        "items": []
       }
     }
   },
@@ -1844,29 +1890,37 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
     "14": {
       "questionType": "summary_completion_text",
       "groupId": "g_14_17",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "Healthy soil contains a large variety of bacteria and other microorganisms, as well as plant remains and ______ . It provides us with food and also with antibiotics, and its function in storing",
+      "sentenceBefore": "Healthy soil contains a large variety of bacteria and other microorganisms, as well as plant remains and",
+      "sentenceAfter": ". It provides us with food and also with antibiotics, and its function in storing",
       "groupPrompt": "Complete the summary below."
     },
     "15": {
       "questionType": "summary_completion_text",
       "groupId": "g_14_17",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": ". It provides us with food and also with antibiotics, and its function in storing ______ has a significant effect on the climate. In addition, it prevents damage to property and infrastructure because it holds",
+      "sentenceBefore": ". It provides us with food and also with antibiotics, and its function in storing",
+      "sentenceAfter": "has a significant effect on the climate. In addition, it prevents damage to property and infrastructure because it holds",
       "groupPrompt": "Complete the summary below."
     },
     "16": {
       "questionType": "summary_completion_text",
       "groupId": "g_14_17",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "has a significant effect on the climate. In addition, it prevents damage to property and infrastructure because it holds ______ . If these microorganisms are lost, soil may lose its special properties. The main factor contributing to soil degradation is the",
+      "sentenceBefore": "has a significant effect on the climate. In addition, it prevents damage to property and infrastructure because it holds",
+      "sentenceAfter": ". If these microorganisms are lost, soil may lose its special properties. The main factor contributing to soil degradation is the",
       "groupPrompt": "Complete the summary below."
     },
     "17": {
       "questionType": "summary_completion_text",
       "groupId": "g_14_17",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": ". If these microorganisms are lost, soil may lose its special properties. The main factor contributing to soil degradation is the ______ carried out by humans.",
+      "sentenceBefore": ". If these microorganisms are lost, soil may lose its special properties. The main factor contributing to soil degradation is the",
+      "sentenceAfter": "carried out by humans.",
       "groupPrompt": "Complete the summary below."
     },
     "18": {
@@ -2026,8 +2080,10 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
     "30": {
       "questionType": "summary_completion_bank",
       "groupId": "g_30_34",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary using the list of words A-G below.",
+      "extractionStatus": "extracted",
+      "promptText": "Jeremy Bentham was active in other areas besides philosophy. In the 1790s he suggested a type of technology to improve ______ for different Government departments. He developed a new way of printing banknotes to increase",
+      "sentenceBefore": "Jeremy Bentham was active in other areas besides philosophy. In the 1790s he suggested a type of technology to improve",
+      "sentenceAfter": "for different Government departments. He developed a new way of printing banknotes to increase",
       "groupPrompt": "Complete the summary using the list of words A-G below.",
       "referenceBox": {
         "title": "Word Bank",
@@ -2038,8 +2094,10 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
     "31": {
       "questionType": "summary_completion_bank",
       "groupId": "g_30_34",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary using the list of words A-G below.",
+      "extractionStatus": "extracted",
+      "promptText": "for different Government departments. He developed a new way of printing banknotes to increase ______ and also designed a method for the",
+      "sentenceBefore": "for different Government departments. He developed a new way of printing banknotes to increase",
+      "sentenceAfter": "and also designed a method for the",
       "groupPrompt": "Complete the summary using the list of words A-G below.",
       "referenceBox": {
         "title": "Word Bank",
@@ -2050,8 +2108,10 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
     "32": {
       "questionType": "summary_completion_bank",
       "groupId": "g_30_34",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary using the list of words A-G below.",
+      "extractionStatus": "extracted",
+      "promptText": "and also designed a method for the ______ of food. He also drew up plans for a prison which allowed the",
+      "sentenceBefore": "and also designed a method for the",
+      "sentenceAfter": "of food. He also drew up plans for a prison which allowed the",
       "groupPrompt": "Complete the summary using the list of words A-G below.",
       "referenceBox": {
         "title": "Word Bank",
@@ -2062,8 +2122,10 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
     "33": {
       "questionType": "summary_completion_bank",
       "groupId": "g_30_34",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary using the list of words A-G below.",
+      "extractionStatus": "extracted",
+      "promptText": "of food. He also drew up plans for a prison which allowed the ______ of prisoners at all times, and believed the same design could be used for other institutions as well. When researching happiness, he investigated possibilities for its",
+      "sentenceBefore": "of food. He also drew up plans for a prison which allowed the",
+      "sentenceAfter": "of prisoners at all times, and believed the same design could be used for other institutions as well. When researching happiness, he investigated possibilities for its",
       "groupPrompt": "Complete the summary using the list of words A-G below.",
       "referenceBox": {
         "title": "Word Bank",
@@ -2074,8 +2136,10 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
     "34": {
       "questionType": "summary_completion_bank",
       "groupId": "g_30_34",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary using the list of words A-G below.",
+      "extractionStatus": "extracted",
+      "promptText": "of prisoners at all times, and believed the same design could be used for other institutions as well. When researching happiness, he investigated possibilities for its ______ , and suggested some methods of doing this.",
+      "sentenceBefore": "of prisoners at all times, and believed the same design could be used for other institutions as well. When researching happiness, he investigated possibilities for its",
+      "sentenceAfter": ", and suggested some methods of doing this.",
       "groupPrompt": "Complete the summary using the list of words A-G below.",
       "referenceBox": {
         "title": "Word Bank",
@@ -2443,29 +2507,37 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
     "23": {
       "questionType": "summary_completion_text",
       "groupId": "g_23_26",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "The first bike-sharing scheme was the idea of the Dutch group Provo. The people who belonged to this group were ______ They were concerned about damage to the environment and about",
+      "sentenceBefore": "The first bike-sharing scheme was the idea of the Dutch group Provo. The people who belonged to this group were",
+      "sentenceAfter": "They were concerned about damage to the environment and about",
       "groupPrompt": "Complete the summary below."
     },
     "24": {
       "questionType": "summary_completion_text",
       "groupId": "g_23_26",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "They were concerned about damage to the environment and about ______ , and believed that the bike-sharing scheme would draw attention to these issues. As well as painting some bikes white, they handed out",
+      "sentenceBefore": "They were concerned about damage to the environment and about",
+      "sentenceAfter": ", and believed that the bike-sharing scheme would draw attention to these issues. As well as painting some bikes white, they handed out",
       "groupPrompt": "Complete the summary below."
     },
     "25": {
       "questionType": "summary_completion_text",
       "groupId": "g_23_26",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": ", and believed that the bike-sharing scheme would draw attention to these issues. As well as painting some bikes white, they handed out ______ that condemned the use of cars. However, the scheme was not a great success: almost as quickly as Provo left the bikes around the city, the",
+      "sentenceBefore": ", and believed that the bike-sharing scheme would draw attention to these issues. As well as painting some bikes white, they handed out",
+      "sentenceAfter": "that condemned the use of cars. However, the scheme was not a great success: almost as quickly as Provo left the bikes around the city, the",
       "groupPrompt": "Complete the summary below."
     },
     "26": {
       "questionType": "summary_completion_text",
       "groupId": "g_23_26",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "that condemned the use of cars. However, the scheme was not a great success: almost as quickly as Provo left the bikes around the city, the ______ took them away. According to Schimmelpennink, the scheme was intended to be symbolic. The idea was to get people thinking about the issues.",
+      "sentenceBefore": "that condemned the use of cars. However, the scheme was not a great success: almost as quickly as Provo left the bikes around the city, the",
+      "sentenceAfter": "took them away. According to Schimmelpennink, the scheme was intended to be symbolic. The idea was to get people thinking about the issues.",
       "groupPrompt": "Complete the summary below."
     },
     "27": {
@@ -2559,36 +2631,46 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
     "36": {
       "questionType": "summary_completion_text",
       "groupId": "g_36_40",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "Tews, Michel and Stafford carried out research on staff in an American chain of ______ . They discovered that activities designed for staff to have fun improved their",
+      "sentenceBefore": "Tews, Michel and Stafford carried out research on staff in an American chain of",
+      "sentenceAfter": ". They discovered that activities designed for staff to have fun improved their",
       "groupPrompt": "Complete the summary below."
     },
     "37": {
       "questionType": "summary_completion_text",
       "groupId": "g_36_40",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": ". They discovered that activities designed for staff to have fun improved their ______ , and that management involvement led to lower staff",
+      "sentenceBefore": ". They discovered that activities designed for staff to have fun improved their",
+      "sentenceAfter": ", and that management involvement led to lower staff",
       "groupPrompt": "Complete the summary below."
     },
     "38": {
       "questionType": "summary_completion_text",
       "groupId": "g_36_40",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": ", and that management involvement led to lower staff ______ . They also found that the activities needed to fit with both the company's",
+      "sentenceBefore": ", and that management involvement led to lower staff",
+      "sentenceAfter": ". They also found that the activities needed to fit with both the company's",
       "groupPrompt": "Complete the summary below."
     },
     "39": {
       "questionType": "summary_completion_text",
       "groupId": "g_36_40",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": ". They also found that the activities needed to fit with both the company's ______ and the",
+      "sentenceBefore": ". They also found that the activities needed to fit with both the company's",
+      "sentenceAfter": "and the",
       "groupPrompt": "Complete the summary below."
     },
     "40": {
       "questionType": "summary_completion_text",
       "groupId": "g_36_40",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "and the ______ of the staff. A balance was required between a degree of freedom and maintaining work standards.",
+      "sentenceBefore": "and the",
+      "sentenceAfter": "of the staff. A balance was required between a degree of freedom and maintaining work standards.",
       "groupPrompt": "Complete the summary below."
     }
   },
@@ -2740,57 +2822,73 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
     "19": {
       "questionType": "summary_completion_text",
       "groupId": "g_19_26",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "Professor Alan Short examined the work of John Shaw Billings, who influenced the architectural ______ of hospitals to ensure they had good ventilation. He calculated that",
+      "sentenceBefore": "Professor Alan Short examined the work of John Shaw Billings, who influenced the architectural",
+      "sentenceAfter": "of hospitals to ensure they had good ventilation. He calculated that",
       "groupPrompt": "Complete the summary below."
     },
     "20": {
       "questionType": "summary_completion_text",
       "groupId": "g_19_26",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "of hospitals to ensure they had good ventilation. He calculated that ______ in the air coming from patients suffering form",
+      "sentenceBefore": "of hospitals to ensure they had good ventilation. He calculated that",
+      "sentenceAfter": "in the air coming from patients suffering form",
       "groupPrompt": "Complete the summary below."
     },
     "21": {
       "questionType": "summary_completion_text",
       "groupId": "g_19_26",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "in the air coming from patients suffering form ______ would not have harmed other patients. He also found that the air in",
+      "sentenceBefore": "in the air coming from patients suffering form",
+      "sentenceAfter": "would not have harmed other patients. He also found that the air in",
       "groupPrompt": "Complete the summary below."
     },
     "22": {
       "questionType": "summary_completion_text",
       "groupId": "g_19_26",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "would not have harmed other patients. He also found that the air in ______ in hospitals could change as often as in a modern operating theatre. He suggests that energy use could be reduced by locating more patients in",
+      "sentenceBefore": "would not have harmed other patients. He also found that the air in",
+      "sentenceAfter": "in hospitals could change as often as in a modern operating theatre. He suggests that energy use could be reduced by locating more patients in",
       "groupPrompt": "Complete the summary below."
     },
     "23": {
       "questionType": "summary_completion_text",
       "groupId": "g_19_26",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "in hospitals could change as often as in a modern operating theatre. He suggests that energy use could be reduced by locating more patients in ______ areas. A major reason for improving ventilation in 19th-century hospitals was the demand from the",
+      "sentenceBefore": "in hospitals could change as often as in a modern operating theatre. He suggests that energy use could be reduced by locating more patients in",
+      "sentenceAfter": "areas. A major reason for improving ventilation in 19th-century hospitals was the demand from the",
       "groupPrompt": "Complete the summary below."
     },
     "24": {
       "questionType": "summary_completion_text",
       "groupId": "g_19_26",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "areas. A major reason for improving ventilation in 19th-century hospitals was the demand from the ______ for protection against bad air, known as",
+      "sentenceBefore": "areas. A major reason for improving ventilation in 19th-century hospitals was the demand from the",
+      "sentenceAfter": "for protection against bad air, known as",
       "groupPrompt": "Complete the summary below."
     },
     "25": {
       "questionType": "summary_completion_text",
       "groupId": "g_19_26",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "for protection against bad air, known as ______ . These were blamed for the spread of disease for hundreds of years, including epidemics of",
+      "sentenceBefore": "for protection against bad air, known as",
+      "sentenceAfter": ". These were blamed for the spread of disease for hundreds of years, including epidemics of",
       "groupPrompt": "Complete the summary below."
     },
     "26": {
       "questionType": "summary_completion_text",
       "groupId": "g_19_26",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": ". These were blamed for the spread of disease for hundreds of years, including epidemics of ______ in London and Paris in the middle of the 19th century.",
+      "sentenceBefore": ". These were blamed for the spread of disease for hundreds of years, including epidemics of",
+      "sentenceAfter": "in London and Paris in the middle of the 19th century.",
       "groupPrompt": "Complete the summary below."
     },
     "27": {
@@ -2801,7 +2899,44 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "referenceBox": {
         "title": "List of Headings",
         "type": "headings",
-        "items": []
+        "items": [
+          {
+            "label": "i",
+            "text": "Complaints about the impact of a certain approach"
+          },
+          {
+            "label": "ii",
+            "text": "Fundamental beliefs that are in fact incorrect"
+          },
+          {
+            "label": "iii",
+            "text": "Early recommendations concerning business activities"
+          },
+          {
+            "label": "iv",
+            "text": "Organisations that put a new approach into practice"
+          },
+          {
+            "label": "v",
+            "text": "Companies that have suffered from changing their approach"
+          },
+          {
+            "label": "vi",
+            "text": "What people are increasingly expected to do"
+          },
+          {
+            "label": "vii",
+            "text": "How to achieve outcomes that are currently impossible"
+          },
+          {
+            "label": "viii",
+            "text": "Neither approach guarantees continuous improvement"
+          },
+          {
+            "label": "ix",
+            "text": "Evidence that a certain approach can have more disadvantages that advantages"
+          }
+        ]
       }
     },
     "28": {
@@ -2812,7 +2947,44 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "referenceBox": {
         "title": "List of Headings",
         "type": "headings",
-        "items": []
+        "items": [
+          {
+            "label": "i",
+            "text": "Complaints about the impact of a certain approach"
+          },
+          {
+            "label": "ii",
+            "text": "Fundamental beliefs that are in fact incorrect"
+          },
+          {
+            "label": "iii",
+            "text": "Early recommendations concerning business activities"
+          },
+          {
+            "label": "iv",
+            "text": "Organisations that put a new approach into practice"
+          },
+          {
+            "label": "v",
+            "text": "Companies that have suffered from changing their approach"
+          },
+          {
+            "label": "vi",
+            "text": "What people are increasingly expected to do"
+          },
+          {
+            "label": "vii",
+            "text": "How to achieve outcomes that are currently impossible"
+          },
+          {
+            "label": "viii",
+            "text": "Neither approach guarantees continuous improvement"
+          },
+          {
+            "label": "ix",
+            "text": "Evidence that a certain approach can have more disadvantages that advantages"
+          }
+        ]
       }
     },
     "29": {
@@ -2823,7 +2995,44 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "referenceBox": {
         "title": "List of Headings",
         "type": "headings",
-        "items": []
+        "items": [
+          {
+            "label": "i",
+            "text": "Complaints about the impact of a certain approach"
+          },
+          {
+            "label": "ii",
+            "text": "Fundamental beliefs that are in fact incorrect"
+          },
+          {
+            "label": "iii",
+            "text": "Early recommendations concerning business activities"
+          },
+          {
+            "label": "iv",
+            "text": "Organisations that put a new approach into practice"
+          },
+          {
+            "label": "v",
+            "text": "Companies that have suffered from changing their approach"
+          },
+          {
+            "label": "vi",
+            "text": "What people are increasingly expected to do"
+          },
+          {
+            "label": "vii",
+            "text": "How to achieve outcomes that are currently impossible"
+          },
+          {
+            "label": "viii",
+            "text": "Neither approach guarantees continuous improvement"
+          },
+          {
+            "label": "ix",
+            "text": "Evidence that a certain approach can have more disadvantages that advantages"
+          }
+        ]
       }
     },
     "30": {
@@ -2834,7 +3043,44 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "referenceBox": {
         "title": "List of Headings",
         "type": "headings",
-        "items": []
+        "items": [
+          {
+            "label": "i",
+            "text": "Complaints about the impact of a certain approach"
+          },
+          {
+            "label": "ii",
+            "text": "Fundamental beliefs that are in fact incorrect"
+          },
+          {
+            "label": "iii",
+            "text": "Early recommendations concerning business activities"
+          },
+          {
+            "label": "iv",
+            "text": "Organisations that put a new approach into practice"
+          },
+          {
+            "label": "v",
+            "text": "Companies that have suffered from changing their approach"
+          },
+          {
+            "label": "vi",
+            "text": "What people are increasingly expected to do"
+          },
+          {
+            "label": "vii",
+            "text": "How to achieve outcomes that are currently impossible"
+          },
+          {
+            "label": "viii",
+            "text": "Neither approach guarantees continuous improvement"
+          },
+          {
+            "label": "ix",
+            "text": "Evidence that a certain approach can have more disadvantages that advantages"
+          }
+        ]
       }
     },
     "31": {
@@ -2845,7 +3091,44 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "referenceBox": {
         "title": "List of Headings",
         "type": "headings",
-        "items": []
+        "items": [
+          {
+            "label": "i",
+            "text": "Complaints about the impact of a certain approach"
+          },
+          {
+            "label": "ii",
+            "text": "Fundamental beliefs that are in fact incorrect"
+          },
+          {
+            "label": "iii",
+            "text": "Early recommendations concerning business activities"
+          },
+          {
+            "label": "iv",
+            "text": "Organisations that put a new approach into practice"
+          },
+          {
+            "label": "v",
+            "text": "Companies that have suffered from changing their approach"
+          },
+          {
+            "label": "vi",
+            "text": "What people are increasingly expected to do"
+          },
+          {
+            "label": "vii",
+            "text": "How to achieve outcomes that are currently impossible"
+          },
+          {
+            "label": "viii",
+            "text": "Neither approach guarantees continuous improvement"
+          },
+          {
+            "label": "ix",
+            "text": "Evidence that a certain approach can have more disadvantages that advantages"
+          }
+        ]
       }
     },
     "32": {
@@ -2856,7 +3139,44 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "referenceBox": {
         "title": "List of Headings",
         "type": "headings",
-        "items": []
+        "items": [
+          {
+            "label": "i",
+            "text": "Complaints about the impact of a certain approach"
+          },
+          {
+            "label": "ii",
+            "text": "Fundamental beliefs that are in fact incorrect"
+          },
+          {
+            "label": "iii",
+            "text": "Early recommendations concerning business activities"
+          },
+          {
+            "label": "iv",
+            "text": "Organisations that put a new approach into practice"
+          },
+          {
+            "label": "v",
+            "text": "Companies that have suffered from changing their approach"
+          },
+          {
+            "label": "vi",
+            "text": "What people are increasingly expected to do"
+          },
+          {
+            "label": "vii",
+            "text": "How to achieve outcomes that are currently impossible"
+          },
+          {
+            "label": "viii",
+            "text": "Neither approach guarantees continuous improvement"
+          },
+          {
+            "label": "ix",
+            "text": "Evidence that a certain approach can have more disadvantages that advantages"
+          }
+        ]
       }
     },
     "33": {
@@ -2867,7 +3187,44 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "referenceBox": {
         "title": "List of Headings",
         "type": "headings",
-        "items": []
+        "items": [
+          {
+            "label": "i",
+            "text": "Complaints about the impact of a certain approach"
+          },
+          {
+            "label": "ii",
+            "text": "Fundamental beliefs that are in fact incorrect"
+          },
+          {
+            "label": "iii",
+            "text": "Early recommendations concerning business activities"
+          },
+          {
+            "label": "iv",
+            "text": "Organisations that put a new approach into practice"
+          },
+          {
+            "label": "v",
+            "text": "Companies that have suffered from changing their approach"
+          },
+          {
+            "label": "vi",
+            "text": "What people are increasingly expected to do"
+          },
+          {
+            "label": "vii",
+            "text": "How to achieve outcomes that are currently impossible"
+          },
+          {
+            "label": "viii",
+            "text": "Neither approach guarantees continuous improvement"
+          },
+          {
+            "label": "ix",
+            "text": "Evidence that a certain approach can have more disadvantages that advantages"
+          }
+        ]
       }
     },
     "34": {
@@ -2878,7 +3235,44 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "referenceBox": {
         "title": "List of Headings",
         "type": "headings",
-        "items": []
+        "items": [
+          {
+            "label": "i",
+            "text": "Complaints about the impact of a certain approach"
+          },
+          {
+            "label": "ii",
+            "text": "Fundamental beliefs that are in fact incorrect"
+          },
+          {
+            "label": "iii",
+            "text": "Early recommendations concerning business activities"
+          },
+          {
+            "label": "iv",
+            "text": "Organisations that put a new approach into practice"
+          },
+          {
+            "label": "v",
+            "text": "Companies that have suffered from changing their approach"
+          },
+          {
+            "label": "vi",
+            "text": "What people are increasingly expected to do"
+          },
+          {
+            "label": "vii",
+            "text": "How to achieve outcomes that are currently impossible"
+          },
+          {
+            "label": "viii",
+            "text": "Neither approach guarantees continuous improvement"
+          },
+          {
+            "label": "ix",
+            "text": "Evidence that a certain approach can have more disadvantages that advantages"
+          }
+        ]
       }
     },
     "35": {
@@ -3004,30 +3398,6 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
             "text": "B"
           },
           {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
             "label": "C",
             "text": ""
           }
@@ -3064,30 +3434,6 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
         "title": "List of theories",
         "type": "features",
         "items": [
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
           {
             "label": "A",
             "text": "B"
@@ -3134,30 +3480,6 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
             "text": "B"
           },
           {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
             "label": "C",
             "text": ""
           }
@@ -3194,30 +3516,6 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
         "title": "List of theories",
         "type": "features",
         "items": [
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
           {
             "label": "A",
             "text": "B"
@@ -3264,30 +3562,6 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
             "text": "B"
           },
           {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
             "label": "C",
             "text": ""
           }
@@ -3329,30 +3603,6 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
             "text": "B"
           },
           {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
             "label": "C",
             "text": ""
           }
@@ -3389,30 +3639,6 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
         "title": "List of theories",
         "type": "features",
         "items": [
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
           {
             "label": "A",
             "text": "B"
@@ -3547,29 +3773,37 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
     "23": {
       "questionType": "summary_completion_text",
       "groupId": "g_23_26",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "Ross Piper and fellow zoologists at Aberystwyth University are using their expertise in ______ when undertaking bioprospecting with insects. They are especially interested in the compounds that insects produce to overpower and preserve their",
+      "sentenceBefore": "Ross Piper and fellow zoologists at Aberystwyth University are using their expertise in",
+      "sentenceAfter": "when undertaking bioprospecting with insects. They are especially interested in the compounds that insects produce to overpower and preserve their",
       "groupPrompt": "Complete the summary below."
     },
     "24": {
       "questionType": "summary_completion_text",
       "groupId": "g_23_26",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "when undertaking bioprospecting with insects. They are especially interested in the compounds that insects produce to overpower and preserve their ______ . They are also interested in compounds which insects use to protect themselves from pathogenic bacteria and fungi found in their",
+      "sentenceBefore": "when undertaking bioprospecting with insects. They are especially interested in the compounds that insects produce to overpower and preserve their",
+      "sentenceAfter": ". They are also interested in compounds which insects use to protect themselves from pathogenic bacteria and fungi found in their",
       "groupPrompt": "Complete the summary below."
     },
     "25": {
       "questionType": "summary_completion_text",
       "groupId": "g_23_26",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": ". They are also interested in compounds which insects use to protect themselves from pathogenic bacteria and fungi found in their ______ . Piper hopes that these substances will be useful in the development of drugs such as",
+      "sentenceBefore": ". They are also interested in compounds which insects use to protect themselves from pathogenic bacteria and fungi found in their",
+      "sentenceAfter": ". Piper hopes that these substances will be useful in the development of drugs such as",
       "groupPrompt": "Complete the summary below."
     },
     "26": {
       "questionType": "summary_completion_text",
       "groupId": "g_23_26",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": ". Piper hopes that these substances will be useful in the development of drugs such as ______ .",
+      "sentenceBefore": ". Piper hopes that these substances will be useful in the development of drugs such as",
+      "sentenceAfter": ".",
       "groupPrompt": "Complete the summary below."
     },
     "27": {
@@ -3670,29 +3904,37 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
     "37": {
       "questionType": "summary_completion_text",
       "groupId": "g_37_40",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "In the simplest form of guided play, an adult contributes to the environment in which the child is playing. Alternatively, an adult can play with a child and develop the play, for instance by ______ the child to investigate different aspects of their game. Adults can help children to learn through play, and may make the activity rather structured, but it should still be based on the child's",
+      "sentenceBefore": "In the simplest form of guided play, an adult contributes to the environment in which the child is playing. Alternatively, an adult can play with a child and develop the play, for instance by",
+      "sentenceAfter": "the child to investigate different aspects of their game. Adults can help children to learn through play, and may make the activity rather structured, but it should still be based on the child's",
       "groupPrompt": "Complete the summary below."
     },
     "38": {
       "questionType": "summary_completion_text",
       "groupId": "g_37_40",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "the child to investigate different aspects of their game. Adults can help children to learn through play, and may make the activity rather structured, but it should still be based on the child's ______ to play. Play without the intervention of adults gives children real",
+      "sentenceBefore": "the child to investigate different aspects of their game. Adults can help children to learn through play, and may make the activity rather structured, but it should still be based on the child's",
+      "sentenceAfter": "to play. Play without the intervention of adults gives children real",
       "groupPrompt": "Complete the summary below."
     },
     "39": {
       "questionType": "summary_completion_text",
       "groupId": "g_37_40",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "to play. Play without the intervention of adults gives children real ______ ; with adults, play can be",
+      "sentenceBefore": "to play. Play without the intervention of adults gives children real",
+      "sentenceAfter": "; with adults, play can be",
       "groupPrompt": "Complete the summary below."
     },
     "40": {
       "questionType": "summary_completion_text",
       "groupId": "g_37_40",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "; with adults, play can be ______ at particular goals. However, all forms of play should be an opportunity for children to have fun.",
+      "sentenceBefore": "; with adults, play can be",
+      "sentenceAfter": "at particular goals. However, all forms of play should be an opportunity for children to have fun.",
       "groupPrompt": "Complete the summary below."
     }
   },
@@ -4253,46 +4495,48 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "questionType": "table_completion",
       "groupId": "g_8_13",
       "extractionStatus": "extracted",
-      "promptText": "Demand for nutmeg grew, as it was believed to be effective against the disease known as the ______",
-      "sentenceBefore": "Demand for nutmeg grew, as it was believed to be effective against the disease known as the",
+      "promptText": "16th centuryEuropean nations took control of the nutmeg trade17th centuryDemand for nutmeg grew, as it was believed to be effective against the disease known as the ______ The Dutch– took control of the Banda Islands– restricted nutmeg production to a few areas– put",
+      "sentenceBefore": "16th centuryEuropean nations took control of the nutmeg trade17th centuryDemand for nutmeg grew, as it was believed to be effective against the disease known as the",
+      "sentenceAfter": "The Dutch– took control of the Banda Islands– restricted nutmeg production to a few areas– put",
       "groupPrompt": "Complete the table below.",
       "tableContext": {
-        "cellText": "Demand for nutmeg grew, as it was believed to be effective against the disease known as the"
+        "cellText": "16th centuryEuropean nations took control of the nutmeg trade17th centuryDemand for nutmeg grew, as it was believed to be effective against the disease known as the"
       }
     },
     "10": {
       "questionType": "table_completion",
       "groupId": "g_8_13",
       "extractionStatus": "extracted",
-      "promptText": "put ______ on nutmeg to avoid it being cultivated outside the islands",
-      "sentenceBefore": "put",
-      "sentenceAfter": "on nutmeg to avoid it being cultivated outside the islands",
+      "promptText": "The Dutch– took control of the Banda Islands– restricted nutmeg production to a few areas– put ______ on nutmeg to avoid it being cultivated outside the islands – finally obtained the island of",
+      "sentenceBefore": "The Dutch– took control of the Banda Islands– restricted nutmeg production to a few areas– put",
+      "sentenceAfter": "on nutmeg to avoid it being cultivated outside the islands – finally obtained the island of",
       "groupPrompt": "Complete the table below.",
       "tableContext": {
-        "cellText": "put"
+        "cellText": "The Dutch– took control of the Banda Islands– restricted nutmeg production to a few areas– put"
       }
     },
     "11": {
       "questionType": "table_completion",
       "groupId": "g_8_13",
       "extractionStatus": "extracted",
-      "promptText": "finally obtained the island of ______ from the British",
-      "sentenceBefore": "finally obtained the island of",
-      "sentenceAfter": "from the British",
+      "promptText": "on nutmeg to avoid it being cultivated outside the islands – finally obtained the island of ______ from the British Late 18th century1770 – nutmeg plants were secretly taken to",
+      "sentenceBefore": "on nutmeg to avoid it being cultivated outside the islands – finally obtained the island of",
+      "sentenceAfter": "from the British Late 18th century1770 – nutmeg plants were secretly taken to",
       "groupPrompt": "Complete the table below.",
       "tableContext": {
-        "cellText": "finally obtained the island of"
+        "cellText": "on nutmeg to avoid it being cultivated outside the islands – finally obtained the island of"
       }
     },
     "12": {
       "questionType": "table_completion",
       "groupId": "g_8_13",
       "extractionStatus": "extracted",
-      "promptText": "1770 – nutmeg plants were secretly taken to ______",
-      "sentenceBefore": "1770 – nutmeg plants were secretly taken to",
+      "promptText": "from the British Late 18th century1770 – nutmeg plants were secretly taken to ______ 1778 – half the Banda Islands' nutmeg plantations were destroyed by a",
+      "sentenceBefore": "from the British Late 18th century1770 – nutmeg plants were secretly taken to",
+      "sentenceAfter": "1778 – half the Banda Islands' nutmeg plantations were destroyed by a",
       "groupPrompt": "Complete the table below.",
       "tableContext": {
-        "cellText": "1770 – nutmeg plants were secretly taken to"
+        "cellText": "from the British Late 18th century1770 – nutmeg plants were secretly taken to"
       }
     },
     "13": {
@@ -4339,29 +4583,37 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
     "19": {
       "questionType": "summary_completion_text",
       "groupId": "g_19_22",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "Figures from the Transport Research Laboratory indicate that most motor accidents are partly due to ______ , so the introduction of driverless vehicles will result in greater safety. In addition to the direct benefits of automation, it may bring other advantages. For example, schemes for",
+      "sentenceBefore": "Figures from the Transport Research Laboratory indicate that most motor accidents are partly due to",
+      "sentenceAfter": ", so the introduction of driverless vehicles will result in greater safety. In addition to the direct benefits of automation, it may bring other advantages. For example, schemes for",
       "groupPrompt": "Complete the summary below."
     },
     "20": {
       "questionType": "summary_completion_text",
       "groupId": "g_19_22",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": ", so the introduction of driverless vehicles will result in greater safety. In addition to the direct benefits of automation, it may bring other advantages. For example, schemes for ______ will be more workable, especially in towns and cities, resulting in fewer cars on the road. According to the University of Michigan Transportation Research Institute, there could be a 43 percent drop in",
+      "sentenceBefore": ", so the introduction of driverless vehicles will result in greater safety. In addition to the direct benefits of automation, it may bring other advantages. For example, schemes for",
+      "sentenceAfter": "will be more workable, especially in towns and cities, resulting in fewer cars on the road. According to the University of Michigan Transportation Research Institute, there could be a 43 percent drop in",
       "groupPrompt": "Complete the summary below."
     },
     "21": {
       "questionType": "summary_completion_text",
       "groupId": "g_19_22",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "will be more workable, especially in towns and cities, resulting in fewer cars on the road. According to the University of Michigan Transportation Research Institute, there could be a 43 percent drop in ______ of cars. However, this would mean that the yearly",
+      "sentenceBefore": "will be more workable, especially in towns and cities, resulting in fewer cars on the road. According to the University of Michigan Transportation Research Institute, there could be a 43 percent drop in",
+      "sentenceAfter": "of cars. However, this would mean that the yearly",
       "groupPrompt": "Complete the summary below."
     },
     "22": {
       "questionType": "summary_completion_text",
       "groupId": "g_19_22",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "of cars. However, this would mean that the yearly ______ of each car would, on average, be twice as high as it currently is. this would lead to a higher turnover of vehicles, and therefore no reduction in automotive manufacturing.",
+      "sentenceBefore": "of cars. However, this would mean that the yearly",
+      "sentenceAfter": "of each car would, on average, be twice as high as it currently is. this would lead to a higher turnover of vehicles, and therefore no reduction in automotive manufacturing.",
       "groupPrompt": "Complete the summary below."
     },
     "23": {
@@ -4775,22 +5027,28 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
     "38": {
       "questionType": "summary_completion_text",
       "groupId": "g_38_40",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "The writer has experience of a large number of ______ , and was the first stranger that certain previously",
+      "sentenceBefore": "The writer has experience of a large number of",
+      "sentenceAfter": ", and was the first stranger that certain previously",
       "groupPrompt": "Complete the summary below."
     },
     "39": {
       "questionType": "summary_completion_text",
       "groupId": "g_38_40",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": ", and was the first stranger that certain previously ______ people had encountered. He believes there is no need for further exploration of Earth's",
+      "sentenceBefore": ", and was the first stranger that certain previously",
+      "sentenceAfter": "people had encountered. He believes there is no need for further exploration of Earth's",
       "groupPrompt": "Complete the summary below."
     },
     "40": {
       "questionType": "summary_completion_text",
       "groupId": "g_38_40",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "people had encountered. He believes there is no need for further exploration of Earth's ______ , except to answer specific questions such as how buffalo eat.",
+      "sentenceBefore": "people had encountered. He believes there is no need for further exploration of Earth's",
+      "sentenceAfter": ", except to answer specific questions such as how buffalo eat.",
       "groupPrompt": "Complete the summary below."
     }
   },
@@ -4834,50 +5092,64 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
     "7": {
       "questionType": "summary_completion_text",
       "groupId": "g_7_13",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "Guard rails were introduced on British roads to improve the ______ of pedestrians, while ensuring that the movement of",
+      "sentenceBefore": "Guard rails were introduced on British roads to improve the",
+      "sentenceAfter": "of pedestrians, while ensuring that the movement of",
       "groupPrompt": "Complete the summary below."
     },
     "8": {
       "questionType": "summary_completion_text",
       "groupId": "g_7_13",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "of pedestrians, while ensuring that the movement of ______ is not disrupted. Pedestrians are led to access points, and encouraged to cross one",
+      "sentenceBefore": "of pedestrians, while ensuring that the movement of",
+      "sentenceAfter": "is not disrupted. Pedestrians are led to access points, and encouraged to cross one",
       "groupPrompt": "Complete the summary below."
     },
     "9": {
       "questionType": "summary_completion_text",
       "groupId": "g_7_13",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "is not disrupted. Pedestrians are led to access points, and encouraged to cross one ______ at a time. An unintended effect is to create psychological difficulties in crossing the road, particularly for less",
+      "sentenceBefore": "is not disrupted. Pedestrians are led to access points, and encouraged to cross one",
+      "sentenceAfter": "at a time. An unintended effect is to create psychological difficulties in crossing the road, particularly for less",
       "groupPrompt": "Complete the summary below."
     },
     "10": {
       "questionType": "summary_completion_text",
       "groupId": "g_7_13",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "at a time. An unintended effect is to create psychological difficulties in crossing the road, particularly for less ______ people. Another result is that some people cross the road in a",
+      "sentenceBefore": "at a time. An unintended effect is to create psychological difficulties in crossing the road, particularly for less",
+      "sentenceAfter": "people. Another result is that some people cross the road in a",
       "groupPrompt": "Complete the summary below."
     },
     "11": {
       "questionType": "summary_completion_text",
       "groupId": "g_7_13",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "people. Another result is that some people cross the road in a ______ way. The guard rails separate",
+      "sentenceBefore": "people. Another result is that some people cross the road in a",
+      "sentenceAfter": "way. The guard rails separate",
       "groupPrompt": "Complete the summary below."
     },
     "12": {
       "questionType": "summary_completion_text",
       "groupId": "g_7_13",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "way. The guard rails separate ______ , and make it more difficult to introduce forms of transport that are",
+      "sentenceBefore": "way. The guard rails separate",
+      "sentenceAfter": ", and make it more difficult to introduce forms of transport that are",
       "groupPrompt": "Complete the summary below."
     },
     "13": {
       "questionType": "summary_completion_text",
       "groupId": "g_7_13",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": ", and make it more difficult to introduce forms of transport that are ______ .",
+      "sentenceBefore": ", and make it more difficult to introduce forms of transport that are",
+      "sentenceAfter": ".",
       "groupPrompt": "Complete the summary below."
     },
     "14": {
@@ -4907,36 +5179,46 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
     "18": {
       "questionType": "summary_completion_text",
       "groupId": "g_18_22",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "Professor George Church and his team are trying to identify the ______ which enabled mammoths to live in the tundra. The findings could help preserve the mammoth's close relative, the endangered Asian elephant. According to Church, introducing Asian elephants to the tundra would involve certain physical adaptations to minimise",
+      "sentenceBefore": "Professor George Church and his team are trying to identify the",
+      "sentenceAfter": "which enabled mammoths to live in the tundra. The findings could help preserve the mammoth's close relative, the endangered Asian elephant. According to Church, introducing Asian elephants to the tundra would involve certain physical adaptations to minimise",
       "groupPrompt": "Complete the summary below."
     },
     "19": {
       "questionType": "summary_completion_text",
       "groupId": "g_18_22",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "which enabled mammoths to live in the tundra. The findings could help preserve the mammoth's close relative, the endangered Asian elephant. According to Church, introducing Asian elephants to the tundra would involve certain physical adaptations to minimise ______ . To survive in the tundra, the species would need to have the mammoth-like features of thicker hair,",
+      "sentenceBefore": "which enabled mammoths to live in the tundra. The findings could help preserve the mammoth's close relative, the endangered Asian elephant. According to Church, introducing Asian elephants to the tundra would involve certain physical adaptations to minimise",
+      "sentenceAfter": ". To survive in the tundra, the species would need to have the mammoth-like features of thicker hair,",
       "groupPrompt": "Complete the summary below."
     },
     "20": {
       "questionType": "summary_completion_text",
       "groupId": "g_18_22",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": ". To survive in the tundra, the species would need to have the mammoth-like features of thicker hair, ______ of a reduced size and more",
+      "sentenceBefore": ". To survive in the tundra, the species would need to have the mammoth-like features of thicker hair,",
+      "sentenceAfter": "of a reduced size and more",
       "groupPrompt": "Complete the summary below."
     },
     "21": {
       "questionType": "summary_completion_text",
       "groupId": "g_18_22",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "of a reduced size and more ______ . Repopulating the tundra with mammoths or Asian elephant/mammoth hybrids would also have an impact on the environment, which could help to reduce temperatures and decrease",
+      "sentenceBefore": "of a reduced size and more",
+      "sentenceAfter": ". Repopulating the tundra with mammoths or Asian elephant/mammoth hybrids would also have an impact on the environment, which could help to reduce temperatures and decrease",
       "groupPrompt": "Complete the summary below."
     },
     "22": {
       "questionType": "summary_completion_text",
       "groupId": "g_18_22",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": ". Repopulating the tundra with mammoths or Asian elephant/mammoth hybrids would also have an impact on the environment, which could help to reduce temperatures and decrease ______ .",
+      "sentenceBefore": ". Repopulating the tundra with mammoths or Asian elephant/mammoth hybrids would also have an impact on the environment, which could help to reduce temperatures and decrease",
+      "sentenceAfter": ".",
       "groupPrompt": "Complete the summary below."
     },
     "23": {
@@ -5150,8 +5432,10 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
     "32": {
       "questionType": "summary_completion_bank",
       "groupId": "g_32_36",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary using the list of words, A-H, below.",
+      "extractionStatus": "extracted",
+      "promptText": "In one study at Australian National University, randomly chosen groups of participants were shown one of three videos, each designed to generate a different kind of ______ . When all participants were then given a deliberately frustrating task to do, it was found that those who had watched the",
+      "sentenceBefore": "In one study at Australian National University, randomly chosen groups of participants were shown one of three videos, each designed to generate a different kind of",
+      "sentenceAfter": ". When all participants were then given a deliberately frustrating task to do, it was found that those who had watched the",
       "groupPrompt": "Complete the summary using the list of words, A-H, below.",
       "referenceBox": {
         "title": "Word Bank",
@@ -5162,8 +5446,10 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
     "33": {
       "questionType": "summary_completion_bank",
       "groupId": "g_32_36",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary using the list of words, A-H, below.",
+      "extractionStatus": "extracted",
+      "promptText": ". When all participants were then given a deliberately frustrating task to do, it was found that those who had watched the ______ video persisted with the task for longer and tried harder to accomplish the task than either of the other two groups.",
+      "sentenceBefore": ". When all participants were then given a deliberately frustrating task to do, it was found that those who had watched the",
+      "sentenceAfter": "video persisted with the task for longer and tried harder to accomplish the task than either of the other two groups.",
       "groupPrompt": "Complete the summary using the list of words, A-H, below.",
       "referenceBox": {
         "title": "Word Bank",
@@ -5174,8 +5460,10 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
     "34": {
       "questionType": "summary_completion_bank",
       "groupId": "g_32_36",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary using the list of words, A-H, below.",
+      "extractionStatus": "extracted",
+      "promptText": "A second study in which participants were asked to perform a particularly ______ task produced similar results. According to researchers David Cheng and Lu Wang, these findings suggest that humour not only reduces",
+      "sentenceBefore": "A second study in which participants were asked to perform a particularly",
+      "sentenceAfter": "task produced similar results. According to researchers David Cheng and Lu Wang, these findings suggest that humour not only reduces",
       "groupPrompt": "Complete the summary using the list of words, A-H, below.",
       "referenceBox": {
         "title": "Word Bank",
@@ -5186,8 +5474,10 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
     "35": {
       "questionType": "summary_completion_bank",
       "groupId": "g_32_36",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary using the list of words, A-H, below.",
+      "extractionStatus": "extracted",
+      "promptText": "task produced similar results. According to researchers David Cheng and Lu Wang, these findings suggest that humour not only reduces ______ and helps build social connections but it may also have a",
+      "sentenceBefore": "task produced similar results. According to researchers David Cheng and Lu Wang, these findings suggest that humour not only reduces",
+      "sentenceAfter": "and helps build social connections but it may also have a",
       "groupPrompt": "Complete the summary using the list of words, A-H, below.",
       "referenceBox": {
         "title": "Word Bank",
@@ -5198,8 +5488,10 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
     "36": {
       "questionType": "summary_completion_bank",
       "groupId": "g_32_36",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary using the list of words, A-H, below.",
+      "extractionStatus": "extracted",
+      "promptText": "and helps build social connections but it may also have a ______ effect on the body and mind.",
+      "sentenceBefore": "and helps build social connections but it may also have a",
+      "sentenceAfter": "effect on the body and mind.",
       "groupPrompt": "Complete the summary using the list of words, A-H, below.",
       "referenceBox": {
         "title": "Word Bank",
@@ -5363,7 +5655,48 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "referenceBox": {
         "title": "List of Headings",
         "type": "headings",
-        "items": []
+        "items": [
+          {
+            "label": "i",
+            "text": "Getting the finance for production"
+          },
+          {
+            "label": "ii",
+            "text": "An unexpected benefit"
+          },
+          {
+            "label": "iii",
+            "text": "From initial inspiration to new product"
+          },
+          {
+            "label": "iv",
+            "text": "The range of potential customers for the device"
+          },
+          {
+            "label": "v",
+            "text": "What makes the device different from alternatives"
+          },
+          {
+            "label": "vi",
+            "text": "Cleaning water from a range of sources"
+          },
+          {
+            "label": "vii",
+            "text": "Overcoming production difficulties"
+          },
+          {
+            "label": "viii",
+            "text": "Profit not the primary goal"
+          },
+          {
+            "label": "ix",
+            "text": "A warm welcome for the device"
+          },
+          {
+            "label": "x",
+            "text": "The number of people affected by water shortages"
+          }
+        ]
       }
     },
     "15": {
@@ -5374,7 +5707,48 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "referenceBox": {
         "title": "List of Headings",
         "type": "headings",
-        "items": []
+        "items": [
+          {
+            "label": "i",
+            "text": "Getting the finance for production"
+          },
+          {
+            "label": "ii",
+            "text": "An unexpected benefit"
+          },
+          {
+            "label": "iii",
+            "text": "From initial inspiration to new product"
+          },
+          {
+            "label": "iv",
+            "text": "The range of potential customers for the device"
+          },
+          {
+            "label": "v",
+            "text": "What makes the device different from alternatives"
+          },
+          {
+            "label": "vi",
+            "text": "Cleaning water from a range of sources"
+          },
+          {
+            "label": "vii",
+            "text": "Overcoming production difficulties"
+          },
+          {
+            "label": "viii",
+            "text": "Profit not the primary goal"
+          },
+          {
+            "label": "ix",
+            "text": "A warm welcome for the device"
+          },
+          {
+            "label": "x",
+            "text": "The number of people affected by water shortages"
+          }
+        ]
       }
     },
     "16": {
@@ -5385,7 +5759,48 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "referenceBox": {
         "title": "List of Headings",
         "type": "headings",
-        "items": []
+        "items": [
+          {
+            "label": "i",
+            "text": "Getting the finance for production"
+          },
+          {
+            "label": "ii",
+            "text": "An unexpected benefit"
+          },
+          {
+            "label": "iii",
+            "text": "From initial inspiration to new product"
+          },
+          {
+            "label": "iv",
+            "text": "The range of potential customers for the device"
+          },
+          {
+            "label": "v",
+            "text": "What makes the device different from alternatives"
+          },
+          {
+            "label": "vi",
+            "text": "Cleaning water from a range of sources"
+          },
+          {
+            "label": "vii",
+            "text": "Overcoming production difficulties"
+          },
+          {
+            "label": "viii",
+            "text": "Profit not the primary goal"
+          },
+          {
+            "label": "ix",
+            "text": "A warm welcome for the device"
+          },
+          {
+            "label": "x",
+            "text": "The number of people affected by water shortages"
+          }
+        ]
       }
     },
     "17": {
@@ -5396,7 +5811,48 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "referenceBox": {
         "title": "List of Headings",
         "type": "headings",
-        "items": []
+        "items": [
+          {
+            "label": "i",
+            "text": "Getting the finance for production"
+          },
+          {
+            "label": "ii",
+            "text": "An unexpected benefit"
+          },
+          {
+            "label": "iii",
+            "text": "From initial inspiration to new product"
+          },
+          {
+            "label": "iv",
+            "text": "The range of potential customers for the device"
+          },
+          {
+            "label": "v",
+            "text": "What makes the device different from alternatives"
+          },
+          {
+            "label": "vi",
+            "text": "Cleaning water from a range of sources"
+          },
+          {
+            "label": "vii",
+            "text": "Overcoming production difficulties"
+          },
+          {
+            "label": "viii",
+            "text": "Profit not the primary goal"
+          },
+          {
+            "label": "ix",
+            "text": "A warm welcome for the device"
+          },
+          {
+            "label": "x",
+            "text": "The number of people affected by water shortages"
+          }
+        ]
       }
     },
     "18": {
@@ -5407,7 +5863,48 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "referenceBox": {
         "title": "List of Headings",
         "type": "headings",
-        "items": []
+        "items": [
+          {
+            "label": "i",
+            "text": "Getting the finance for production"
+          },
+          {
+            "label": "ii",
+            "text": "An unexpected benefit"
+          },
+          {
+            "label": "iii",
+            "text": "From initial inspiration to new product"
+          },
+          {
+            "label": "iv",
+            "text": "The range of potential customers for the device"
+          },
+          {
+            "label": "v",
+            "text": "What makes the device different from alternatives"
+          },
+          {
+            "label": "vi",
+            "text": "Cleaning water from a range of sources"
+          },
+          {
+            "label": "vii",
+            "text": "Overcoming production difficulties"
+          },
+          {
+            "label": "viii",
+            "text": "Profit not the primary goal"
+          },
+          {
+            "label": "ix",
+            "text": "A warm welcome for the device"
+          },
+          {
+            "label": "x",
+            "text": "The number of people affected by water shortages"
+          }
+        ]
       }
     },
     "19": {
@@ -5418,7 +5915,48 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "referenceBox": {
         "title": "List of Headings",
         "type": "headings",
-        "items": []
+        "items": [
+          {
+            "label": "i",
+            "text": "Getting the finance for production"
+          },
+          {
+            "label": "ii",
+            "text": "An unexpected benefit"
+          },
+          {
+            "label": "iii",
+            "text": "From initial inspiration to new product"
+          },
+          {
+            "label": "iv",
+            "text": "The range of potential customers for the device"
+          },
+          {
+            "label": "v",
+            "text": "What makes the device different from alternatives"
+          },
+          {
+            "label": "vi",
+            "text": "Cleaning water from a range of sources"
+          },
+          {
+            "label": "vii",
+            "text": "Overcoming production difficulties"
+          },
+          {
+            "label": "viii",
+            "text": "Profit not the primary goal"
+          },
+          {
+            "label": "ix",
+            "text": "A warm welcome for the device"
+          },
+          {
+            "label": "x",
+            "text": "The number of people affected by water shortages"
+          }
+        ]
       }
     },
     "20": {
@@ -5429,49 +5967,102 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "referenceBox": {
         "title": "List of Headings",
         "type": "headings",
-        "items": []
+        "items": [
+          {
+            "label": "i",
+            "text": "Getting the finance for production"
+          },
+          {
+            "label": "ii",
+            "text": "An unexpected benefit"
+          },
+          {
+            "label": "iii",
+            "text": "From initial inspiration to new product"
+          },
+          {
+            "label": "iv",
+            "text": "The range of potential customers for the device"
+          },
+          {
+            "label": "v",
+            "text": "What makes the device different from alternatives"
+          },
+          {
+            "label": "vi",
+            "text": "Cleaning water from a range of sources"
+          },
+          {
+            "label": "vii",
+            "text": "Overcoming production difficulties"
+          },
+          {
+            "label": "viii",
+            "text": "Profit not the primary goal"
+          },
+          {
+            "label": "ix",
+            "text": "A warm welcome for the device"
+          },
+          {
+            "label": "x",
+            "text": "The number of people affected by water shortages"
+          }
+        ]
       }
     },
     "21": {
       "questionType": "summary_completion_text",
       "groupId": "g_21_26",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "The energy required to operate the Desolenator comes from sunlight. The device can be used in different locations, as it has ______ . Water is fed into a pipe, and a",
+      "sentenceBefore": "The energy required to operate the Desolenator comes from sunlight. The device can be used in different locations, as it has",
+      "sentenceAfter": ". Water is fed into a pipe, and a",
       "groupPrompt": "Complete the summary below."
     },
     "22": {
       "questionType": "summary_completion_text",
       "groupId": "g_21_26",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": ". Water is fed into a pipe, and a ______ of water flows over a solar panel. The water then enters a boiler, where it turns into steam. Any particles in the water are caught in a",
+      "sentenceBefore": ". Water is fed into a pipe, and a",
+      "sentenceAfter": "of water flows over a solar panel. The water then enters a boiler, where it turns into steam. Any particles in the water are caught in a",
       "groupPrompt": "Complete the summary below."
     },
     "23": {
       "questionType": "summary_completion_text",
       "groupId": "g_21_26",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "of water flows over a solar panel. The water then enters a boiler, where it turns into steam. Any particles in the water are caught in a ______ . The purified water comes out through one tube, and all types of",
+      "sentenceBefore": "of water flows over a solar panel. The water then enters a boiler, where it turns into steam. Any particles in the water are caught in a",
+      "sentenceAfter": ". The purified water comes out through one tube, and all types of",
       "groupPrompt": "Complete the summary below."
     },
     "24": {
       "questionType": "summary_completion_text",
       "groupId": "g_21_26",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": ". The purified water comes out through one tube, and all types of ______ come out through another. A screen displays the",
+      "sentenceBefore": ". The purified water comes out through one tube, and all types of",
+      "sentenceAfter": "come out through another. A screen displays the",
       "groupPrompt": "Complete the summary below."
     },
     "25": {
       "questionType": "summary_completion_text",
       "groupId": "g_21_26",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "come out through another. A screen displays the ______ of the device, and transmits the information to the company so that they know when the Desolenator requires",
+      "sentenceBefore": "come out through another. A screen displays the",
+      "sentenceAfter": "of the device, and transmits the information to the company so that they know when the Desolenator requires",
       "groupPrompt": "Complete the summary below."
     },
     "26": {
       "questionType": "summary_completion_text",
       "groupId": "g_21_26",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "of the device, and transmits the information to the company so that they know when the Desolenator requires ______ .",
+      "sentenceBefore": "of the device, and transmits the information to the company so that they know when the Desolenator requires",
+      "sentenceAfter": ".",
       "groupPrompt": "Complete the summary below."
     },
     "27": {
@@ -5512,8 +6103,10 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
     "32": {
       "questionType": "summary_completion_bank",
       "groupId": "g_32_36",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary using the list of words, A-I, below.",
+      "extractionStatus": "extracted",
+      "promptText": "Tehrani used techniques from evolutionary biology to find out if ______ existed among 58 stories from around the world. He also wanted to know which aspects of the stories had fewest",
+      "sentenceBefore": "Tehrani used techniques from evolutionary biology to find out if",
+      "sentenceAfter": "existed among 58 stories from around the world. He also wanted to know which aspects of the stories had fewest",
       "groupPrompt": "Complete the summary using the list of words, A-I, below.",
       "referenceBox": {
         "title": "Word Bank",
@@ -5524,8 +6117,10 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
     "33": {
       "questionType": "summary_completion_bank",
       "groupId": "g_32_36",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary using the list of words, A-I, below.",
+      "extractionStatus": "extracted",
+      "promptText": "existed among 58 stories from around the world. He also wanted to know which aspects of the stories had fewest ______ , as he believed these aspects would be the most important ones. Contrary to other beliefs, he found that some",
+      "sentenceBefore": "existed among 58 stories from around the world. He also wanted to know which aspects of the stories had fewest",
+      "sentenceAfter": ", as he believed these aspects would be the most important ones. Contrary to other beliefs, he found that some",
       "groupPrompt": "Complete the summary using the list of words, A-I, below.",
       "referenceBox": {
         "title": "Word Bank",
@@ -5536,8 +6131,10 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
     "34": {
       "questionType": "summary_completion_bank",
       "groupId": "g_32_36",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary using the list of words, A-I, below.",
+      "extractionStatus": "extracted",
+      "promptText": ", as he believed these aspects would be the most important ones. Contrary to other beliefs, he found that some ______ that were included in a story tended to change over time, and that the middle of a story seemed no more important than the other parts. He was also surprised that parts of a story which seemed to provide some sort of",
+      "sentenceBefore": ", as he believed these aspects would be the most important ones. Contrary to other beliefs, he found that some",
+      "sentenceAfter": "that were included in a story tended to change over time, and that the middle of a story seemed no more important than the other parts. He was also surprised that parts of a story which seemed to provide some sort of",
       "groupPrompt": "Complete the summary using the list of words, A-I, below.",
       "referenceBox": {
         "title": "Word Bank",
@@ -5548,8 +6145,10 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
     "35": {
       "questionType": "summary_completion_bank",
       "groupId": "g_32_36",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary using the list of words, A-I, below.",
+      "extractionStatus": "extracted",
+      "promptText": "that were included in a story tended to change over time, and that the middle of a story seemed no more important than the other parts. He was also surprised that parts of a story which seemed to provide some sort of ______ were unimportant. The aspect that he found most important in a story's survival was",
+      "sentenceBefore": "that were included in a story tended to change over time, and that the middle of a story seemed no more important than the other parts. He was also surprised that parts of a story which seemed to provide some sort of",
+      "sentenceAfter": "were unimportant. The aspect that he found most important in a story's survival was",
       "groupPrompt": "Complete the summary using the list of words, A-I, below.",
       "referenceBox": {
         "title": "Word Bank",
@@ -5560,8 +6159,9 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
     "36": {
       "questionType": "summary_completion_bank",
       "groupId": "g_32_36",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary using the list of words, A-I, below.",
+      "extractionStatus": "extracted",
+      "promptText": "were unimportant. The aspect that he found most important in a story's survival was ______",
+      "sentenceBefore": "were unimportant. The aspect that he found most important in a story's survival was",
       "groupPrompt": "Complete the summary using the list of words, A-I, below.",
       "referenceBox": {
         "title": "Word Bank",
@@ -5761,30 +6361,36 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "questionType": "table_completion",
       "groupId": "g_6_8",
       "extractionStatus": "extracted",
-      "promptText": "______",
+      "promptText": "Traditional uses of the huarango tree Part of tree Traditional use ______ Fuel",
+      "sentenceBefore": "Traditional uses of the huarango tree Part of tree Traditional use",
+      "sentenceAfter": "Fuel",
       "groupPrompt": "Complete the table below.",
       "tableContext": {
-        "cellText": "______"
+        "cellText": "Traditional uses of the huarango tree Part of tree Traditional use"
       }
     },
     "7": {
       "questionType": "table_completion",
       "groupId": "g_6_8",
       "extractionStatus": "extracted",
-      "promptText": "______",
+      "promptText": "Fuel ______ Medicine",
+      "sentenceBefore": "Fuel",
+      "sentenceAfter": "Medicine",
       "groupPrompt": "Complete the table below.",
       "tableContext": {
-        "cellText": "______"
+        "cellText": "Fuel"
       }
     },
     "8": {
       "questionType": "table_completion",
       "groupId": "g_6_8",
       "extractionStatus": "extracted",
-      "promptText": "______",
+      "promptText": "Medicine ______ Construction",
+      "sentenceBefore": "Medicine",
+      "sentenceAfter": "Construction",
       "groupPrompt": "Complete the table below.",
       "tableContext": {
-        "cellText": "______"
+        "cellText": "Medicine"
       }
     },
     "9": {
@@ -5945,8 +6551,10 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
     "27": {
       "questionType": "summary_completion_bank",
       "groupId": "g_27_31",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary using the list of words, A-J, below.",
+      "extractionStatus": "extracted",
+      "promptText": "Many big businesses today are prepared to harm people and the environment in order to make money, and they appear to have no ______ . Lack of",
+      "sentenceBefore": "Many big businesses today are prepared to harm people and the environment in order to make money, and they appear to have no",
+      "sentenceAfter": ". Lack of",
       "groupPrompt": "Complete the summary using the list of words, A-J, below.",
       "referenceBox": {
         "title": "Word Bank",
@@ -5957,8 +6565,10 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
     "28": {
       "questionType": "summary_completion_bank",
       "groupId": "g_27_31",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary using the list of words, A-J, below.",
+      "extractionStatus": "extracted",
+      "promptText": ". Lack of ______ by governments and lack of public",
+      "sentenceBefore": ". Lack of",
+      "sentenceAfter": "by governments and lack of public",
       "groupPrompt": "Complete the summary using the list of words, A-J, below.",
       "referenceBox": {
         "title": "Word Bank",
@@ -5969,8 +6579,10 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
     "29": {
       "questionType": "summary_completion_bank",
       "groupId": "g_27_31",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary using the list of words, A-J, below.",
+      "extractionStatus": "extracted",
+      "promptText": "by governments and lack of public ______ can lead to environmental problems such as",
+      "sentenceBefore": "by governments and lack of public",
+      "sentenceAfter": "can lead to environmental problems such as",
       "groupPrompt": "Complete the summary using the list of words, A-J, below.",
       "referenceBox": {
         "title": "Word Bank",
@@ -5981,8 +6593,10 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
     "30": {
       "questionType": "summary_completion_bank",
       "groupId": "g_27_31",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary using the list of words, A-J, below.",
+      "extractionStatus": "extracted",
+      "promptText": "can lead to environmental problems such as ______ or the destruction of",
+      "sentenceBefore": "can lead to environmental problems such as",
+      "sentenceAfter": "or the destruction of",
       "groupPrompt": "Complete the summary using the list of words, A-J, below.",
       "referenceBox": {
         "title": "Word Bank",
@@ -5993,8 +6607,9 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
     "31": {
       "questionType": "summary_completion_bank",
       "groupId": "g_27_31",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary using the list of words, A-J, below.",
+      "extractionStatus": "extracted",
+      "promptText": "or the destruction of ______",
+      "sentenceBefore": "or the destruction of",
       "groupPrompt": "Complete the summary using the list of words, A-J, below.",
       "referenceBox": {
         "title": "Word Bank",
@@ -6535,29 +7150,37 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
     "37": {
       "questionType": "summary_completion_text",
       "groupId": "g_37_40",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "The most basic method used by many miners began with digging some ______ out of a river and hoping it might contain gold. Small amounts were put in a pan with water. The pan was spun round, causing the liquid and less heavy contents of the pan to come out. Gold dust, which weighed more, remained in the pan or, if the miners were very lucky, there might even be some",
+      "sentenceBefore": "The most basic method used by many miners began with digging some",
+      "sentenceAfter": "out of a river and hoping it might contain gold. Small amounts were put in a pan with water. The pan was spun round, causing the liquid and less heavy contents of the pan to come out. Gold dust, which weighed more, remained in the pan or, if the miners were very lucky, there might even be some",
       "groupPrompt": "Complete the summary below."
     },
     "38": {
       "questionType": "summary_completion_text",
       "groupId": "g_37_40",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "out of a river and hoping it might contain gold. Small amounts were put in a pan with water. The pan was spun round, causing the liquid and less heavy contents of the pan to come out. Gold dust, which weighed more, remained in the pan or, if the miners were very lucky, there might even be some ______ too. It was, however, a very laborious method.",
+      "sentenceBefore": "out of a river and hoping it might contain gold. Small amounts were put in a pan with water. The pan was spun round, causing the liquid and less heavy contents of the pan to come out. Gold dust, which weighed more, remained in the pan or, if the miners were very lucky, there might even be some",
+      "sentenceAfter": "too. It was, however, a very laborious method.",
       "groupPrompt": "Complete the summary below."
     },
     "39": {
       "questionType": "summary_completion_text",
       "groupId": "g_37_40",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "The rocker was also used. A miner would put some earth and rock into the higher end, together with some water. He would then shake the rocker. Larger stones stuck in the ______ , while gold dropped to the bottom. Unfortunately, the rocker was not designed to catch what was called flour. However, a process was introduced involving",
+      "sentenceBefore": "The rocker was also used. A miner would put some earth and rock into the higher end, together with some water. He would then shake the rocker. Larger stones stuck in the",
+      "sentenceAfter": ", while gold dropped to the bottom. Unfortunately, the rocker was not designed to catch what was called flour. However, a process was introduced involving",
       "groupPrompt": "Complete the summary below."
     },
     "40": {
       "questionType": "summary_completion_text",
       "groupId": "g_37_40",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": ", while gold dropped to the bottom. Unfortunately, the rocker was not designed to catch what was called flour. However, a process was introduced involving ______ to ensure no gold was washed out in the water.",
+      "sentenceBefore": ", while gold dropped to the bottom. Unfortunately, the rocker was not designed to catch what was called flour. However, a process was introduced involving",
+      "sentenceAfter": "to ensure no gold was washed out in the water.",
       "groupPrompt": "Complete the summary below."
     }
   },
@@ -6664,66 +7287,71 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "questionType": "table_completion",
       "groupId": "g_15_20",
       "extractionStatus": "extracted",
-      "promptText": "______ , mould, bacteria, algae",
-      "sentenceAfter": ", mould, bacteria, algae",
+      "promptText": "Type of dangerExamplesRisks involvedNecessary actionBiohazard ______ , mould, bacteria, algae can lead to disease and death use protective clothing and equipment Confined spaces Contaminants e.g. gases, vapours and dusts injury from fire or explosion follow Safe Work code of practice high concentrations of harmful airborne contaminants e.g. carbon monoxide",
+      "sentenceBefore": "Type of dangerExamplesRisks involvedNecessary actionBiohazard",
+      "sentenceAfter": ", mould, bacteria, algae can lead to disease and death use protective clothing and equipment Confined spaces Contaminants e.g. gases, vapours and dusts injury from fire or explosion follow Safe Work code of practice high concentrations of harmful airborne contaminants e.g. carbon monoxide",
       "groupPrompt": "Complete the table below.",
       "tableContext": {
-        "cellText": "______ , mould, bacteria, algae"
+        "cellText": "Type of dangerExamplesRisks involvedNecessary actionBiohazard"
       }
     },
     "16": {
       "questionType": "table_completion",
       "groupId": "g_15_20",
       "extractionStatus": "extracted",
-      "promptText": "______",
+      "promptText": ", mould, bacteria, algae can lead to disease and death use protective clothing and equipment Confined spaces Contaminants e.g. gases, vapours and dusts injury from fire or explosion follow Safe Work code of practice high concentrations of harmful airborne contaminants e.g. carbon monoxide ______ follow Safe Work code of practice water",
+      "sentenceBefore": ", mould, bacteria, algae can lead to disease and death use protective clothing and equipment Confined spaces Contaminants e.g. gases, vapours and dusts injury from fire or explosion follow Safe Work code of practice high concentrations of harmful airborne contaminants e.g. carbon monoxide",
+      "sentenceAfter": "follow Safe Work code of practice water",
       "groupPrompt": "Complete the table below.",
       "tableContext": {
-        "cellText": "______"
+        "cellText": ", mould, bacteria, algae can lead to disease and death use protective clothing and equipment Confined spaces Contaminants e.g. gases, vapours and dusts injury from fire or explosion follow Safe Work code of practice high concentrations of harmful airborne contaminants e.g. carbon monoxide"
       }
     },
     "17": {
       "questionType": "table_completion",
       "groupId": "g_15_20",
       "extractionStatus": "extracted",
-      "promptText": "______",
+      "promptText": "follow Safe Work code of practice water ______ cut off water sources Electricitymetal pipes which are conductive death from electrocution – use insulated",
+      "sentenceBefore": "follow Safe Work code of practice water",
+      "sentenceAfter": "cut off water sources Electricitymetal pipes which are conductive death from electrocution – use insulated",
       "groupPrompt": "Complete the table below.",
       "tableContext": {
-        "cellText": "______"
+        "cellText": "follow Safe Work code of practice water"
       }
     },
     "18": {
       "questionType": "table_completion",
       "groupId": "g_15_20",
       "extractionStatus": "extracted",
-      "promptText": "use insulated ______ and appropriate equipment",
-      "sentenceBefore": "use insulated",
-      "sentenceAfter": "and appropriate equipment",
+      "promptText": "cut off water sources Electricitymetal pipes which are conductive death from electrocution – use insulated ______ and appropriate equipment – ensure equipment has",
+      "sentenceBefore": "cut off water sources Electricitymetal pipes which are conductive death from electrocution – use insulated",
+      "sentenceAfter": "and appropriate equipment – ensure equipment has",
       "groupPrompt": "Complete the table below.",
       "tableContext": {
-        "cellText": "use insulated"
+        "cellText": "cut off water sources Electricitymetal pipes which are conductive death from electrocution – use insulated"
       }
     },
     "19": {
       "questionType": "table_completion",
       "groupId": "g_15_20",
       "extractionStatus": "extracted",
-      "promptText": "ensure equipment has ______ on to show it is safe",
-      "sentenceBefore": "ensure equipment has",
-      "sentenceAfter": "on to show it is safe",
+      "promptText": "and appropriate equipment – ensure equipment has ______ on to show it is safe – make sure electricity has been",
+      "sentenceBefore": "and appropriate equipment – ensure equipment has",
+      "sentenceAfter": "on to show it is safe – make sure electricity has been",
       "groupPrompt": "Complete the table below.",
       "tableContext": {
-        "cellText": "ensure equipment has"
+        "cellText": "and appropriate equipment – ensure equipment has"
       }
     },
     "20": {
       "questionType": "table_completion",
       "groupId": "g_15_20",
       "extractionStatus": "extracted",
-      "promptText": "make sure electricity has been ______",
-      "sentenceBefore": "make sure electricity has been",
+      "promptText": "on to show it is safe – make sure electricity has been ______",
+      "sentenceBefore": "on to show it is safe – make sure electricity has been",
       "groupPrompt": "Complete the table below.",
       "tableContext": {
-        "cellText": "make sure electricity has been"
+        "cellText": "on to show it is safe – make sure electricity has been"
       }
     },
     "21": {
@@ -6815,7 +7443,32 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "referenceBox": {
         "title": "List of Headings",
         "type": "headings",
-        "items": []
+        "items": [
+          {
+            "label": "i",
+            "text": "Developing an item that appears true to life"
+          },
+          {
+            "label": "ii",
+            "text": "Extending the project to other endangered species"
+          },
+          {
+            "label": "iii",
+            "text": "A short but intensive investigation with longer-term follow-up"
+          },
+          {
+            "label": "iv",
+            "text": "Problems facing sea turtles at a global level"
+          },
+          {
+            "label": "v",
+            "text": "Collection of eggs and their possible onward routes"
+          },
+          {
+            "label": "vii",
+            "text": "ntensive and large-scale poaching in one location"
+          }
+        ]
       }
     },
     "29": {
@@ -6826,7 +7479,32 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "referenceBox": {
         "title": "List of Headings",
         "type": "headings",
-        "items": []
+        "items": [
+          {
+            "label": "i",
+            "text": "Developing an item that appears true to life"
+          },
+          {
+            "label": "ii",
+            "text": "Extending the project to other endangered species"
+          },
+          {
+            "label": "iii",
+            "text": "A short but intensive investigation with longer-term follow-up"
+          },
+          {
+            "label": "iv",
+            "text": "Problems facing sea turtles at a global level"
+          },
+          {
+            "label": "v",
+            "text": "Collection of eggs and their possible onward routes"
+          },
+          {
+            "label": "vii",
+            "text": "ntensive and large-scale poaching in one location"
+          }
+        ]
       }
     },
     "30": {
@@ -6837,7 +7515,32 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "referenceBox": {
         "title": "List of Headings",
         "type": "headings",
-        "items": []
+        "items": [
+          {
+            "label": "i",
+            "text": "Developing an item that appears true to life"
+          },
+          {
+            "label": "ii",
+            "text": "Extending the project to other endangered species"
+          },
+          {
+            "label": "iii",
+            "text": "A short but intensive investigation with longer-term follow-up"
+          },
+          {
+            "label": "iv",
+            "text": "Problems facing sea turtles at a global level"
+          },
+          {
+            "label": "v",
+            "text": "Collection of eggs and their possible onward routes"
+          },
+          {
+            "label": "vii",
+            "text": "ntensive and large-scale poaching in one location"
+          }
+        ]
       }
     },
     "31": {
@@ -6848,7 +7551,32 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "referenceBox": {
         "title": "List of Headings",
         "type": "headings",
-        "items": []
+        "items": [
+          {
+            "label": "i",
+            "text": "Developing an item that appears true to life"
+          },
+          {
+            "label": "ii",
+            "text": "Extending the project to other endangered species"
+          },
+          {
+            "label": "iii",
+            "text": "A short but intensive investigation with longer-term follow-up"
+          },
+          {
+            "label": "iv",
+            "text": "Problems facing sea turtles at a global level"
+          },
+          {
+            "label": "v",
+            "text": "Collection of eggs and their possible onward routes"
+          },
+          {
+            "label": "vii",
+            "text": "ntensive and large-scale poaching in one location"
+          }
+        ]
       }
     },
     "32": {
@@ -6859,7 +7587,32 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "referenceBox": {
         "title": "List of Headings",
         "type": "headings",
-        "items": []
+        "items": [
+          {
+            "label": "i",
+            "text": "Developing an item that appears true to life"
+          },
+          {
+            "label": "ii",
+            "text": "Extending the project to other endangered species"
+          },
+          {
+            "label": "iii",
+            "text": "A short but intensive investigation with longer-term follow-up"
+          },
+          {
+            "label": "iv",
+            "text": "Problems facing sea turtles at a global level"
+          },
+          {
+            "label": "v",
+            "text": "Collection of eggs and their possible onward routes"
+          },
+          {
+            "label": "vii",
+            "text": "ntensive and large-scale poaching in one location"
+          }
+        ]
       }
     },
     "33": {
@@ -6870,7 +7623,32 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "referenceBox": {
         "title": "List of Headings",
         "type": "headings",
-        "items": []
+        "items": [
+          {
+            "label": "i",
+            "text": "Developing an item that appears true to life"
+          },
+          {
+            "label": "ii",
+            "text": "Extending the project to other endangered species"
+          },
+          {
+            "label": "iii",
+            "text": "A short but intensive investigation with longer-term follow-up"
+          },
+          {
+            "label": "iv",
+            "text": "Problems facing sea turtles at a global level"
+          },
+          {
+            "label": "v",
+            "text": "Collection of eggs and their possible onward routes"
+          },
+          {
+            "label": "vii",
+            "text": "ntensive and large-scale poaching in one location"
+          }
+        ]
       }
     },
     "34": {
@@ -7004,22 +7782,28 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
     "38": {
       "questionType": "summary_completion_text",
       "groupId": "g_38_40",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "One difficulty in creating a fake sea turtle egg is to get the appropriate texture for the shell. Unlike a bird's egg, a turtle's egg has a shell which is ______ . Lauren Wilde has studied eggs from Californian turtles that live on",
+      "sentenceBefore": "One difficulty in creating a fake sea turtle egg is to get the appropriate texture for the shell. Unlike a bird's egg, a turtle's egg has a shell which is",
+      "sentenceAfter": ". Lauren Wilde has studied eggs from Californian turtles that live on",
       "groupPrompt": "Complete the summary below."
     },
     "39": {
       "questionType": "summary_completion_text",
       "groupId": "g_38_40",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": ". Lauren Wilde has studied eggs from Californian turtles that live on ______ to create a realistic reproduction of the shell. A GPS device will then be placed inside a",
+      "sentenceBefore": ". Lauren Wilde has studied eggs from Californian turtles that live on",
+      "sentenceAfter": "to create a realistic reproduction of the shell. A GPS device will then be placed inside a",
       "groupPrompt": "Complete the summary below."
     },
     "40": {
       "questionType": "summary_completion_text",
       "groupId": "g_38_40",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "to create a realistic reproduction of the shell. A GPS device will then be placed inside a ______ in the fake shell. Finally, silicone will be applied to the shell to make it waterproof.",
+      "sentenceBefore": "to create a realistic reproduction of the shell. A GPS device will then be placed inside a",
+      "sentenceAfter": "in the fake shell. Finally, silicone will be applied to the shell to make it waterproof.",
       "groupPrompt": "Complete the summary below."
     }
   },
@@ -7062,7 +7846,7 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
     "6": {
       "questionType": "true_false_not_given",
       "groupId": "g_1_7",
-      "extractionStatus": "extracted",
+      "extractionStatus": "group_inherited",
       "promptText": "Questions that the students ask the judges may count towards the final decisions.",
       "groupPrompt": "Do the following statements agree with the information given in the text?"
     },
@@ -7317,36 +8101,46 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
     "31": {
       "questionType": "summary_completion_text",
       "groupId": "g_31_35",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "In biological terms, when an animal is physically fit, its body changes, becoming more powerful and ______ . For bears, this change may be initially caused by colder weather or a lack of",
+      "sentenceBefore": "In biological terms, when an animal is physically fit, its body changes, becoming more powerful and",
+      "sentenceAfter": ". For bears, this change may be initially caused by colder weather or a lack of",
       "groupPrompt": "Complete the summary below."
     },
     "32": {
       "questionType": "summary_completion_text",
       "groupId": "g_31_35",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": ". For bears, this change may be initially caused by colder weather or a lack of ______ , which during",
+      "sentenceBefore": ". For bears, this change may be initially caused by colder weather or a lack of",
+      "sentenceAfter": ", which during",
       "groupPrompt": "Complete the summary below."
     },
     "33": {
       "questionType": "summary_completion_text",
       "groupId": "g_31_35",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": ", which during ______ causes certain compounds to be released into their",
+      "sentenceBefore": ", which during",
+      "sentenceAfter": "causes certain compounds to be released into their",
       "groupPrompt": "Complete the summary below."
     },
     "34": {
       "questionType": "summary_completion_text",
       "groupId": "g_31_35",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "causes certain compounds to be released into their ______ and to travel around the body. These compounds appear to prevent muscle loss. In the case of barnacle geese, the change may be due to a variation in",
+      "sentenceBefore": "causes certain compounds to be released into their",
+      "sentenceAfter": "and to travel around the body. These compounds appear to prevent muscle loss. In the case of barnacle geese, the change may be due to a variation in",
       "groupPrompt": "Complete the summary below."
     },
     "35": {
       "questionType": "summary_completion_text",
       "groupId": "g_31_35",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "and to travel around the body. These compounds appear to prevent muscle loss. In the case of barnacle geese, the change may be due to a variation in ______ .",
+      "sentenceBefore": "and to travel around the body. These compounds appear to prevent muscle loss. In the case of barnacle geese, the change may be due to a variation in",
+      "sentenceAfter": ".",
       "groupPrompt": "Complete the summary below."
     },
     "36": {
@@ -7668,36 +8462,46 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
     "28": {
       "questionType": "summary_completion_text",
       "groupId": "g_28_32",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "Wolves live in packs and it is clear that there are a number of ______ concerning their behaviour. Some observers believe they exhibit a sense of",
+      "sentenceBefore": "Wolves live in packs and it is clear that there are a number of",
+      "sentenceAfter": "concerning their behaviour. Some observers believe they exhibit a sense of",
       "groupPrompt": "Complete the summary below."
     },
     "29": {
       "questionType": "summary_completion_text",
       "groupId": "g_28_32",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "concerning their behaviour. Some observers believe they exhibit a sense of ______ . The stronger, more senior wolves seem to adopt the roles of the junior wolves when they are playing together. They act as if they are",
+      "sentenceBefore": "concerning their behaviour. Some observers believe they exhibit a sense of",
+      "sentenceAfter": ". The stronger, more senior wolves seem to adopt the roles of the junior wolves when they are playing together. They act as if they are",
       "groupPrompt": "Complete the summary below."
     },
     "30": {
       "questionType": "summary_completion_text",
       "groupId": "g_28_32",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": ". The stronger, more senior wolves seem to adopt the roles of the junior wolves when they are playing together. They act as if they are ______ to the juniors and even permit some gentle",
+      "sentenceBefore": ". The stronger, more senior wolves seem to adopt the roles of the junior wolves when they are playing together. They act as if they are",
+      "sentenceAfter": "to the juniors and even permit some gentle",
       "groupPrompt": "Complete the summary below."
     },
     "31": {
       "questionType": "summary_completion_text",
       "groupId": "g_28_32",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "to the juniors and even permit some gentle ______ . What is even more surprising is that when one of the juniors gets too forceful, it bends down begging for",
+      "sentenceBefore": "to the juniors and even permit some gentle",
+      "sentenceAfter": ". What is even more surprising is that when one of the juniors gets too forceful, it bends down begging for",
       "groupPrompt": "Complete the summary below."
     },
     "32": {
       "questionType": "summary_completion_text",
       "groupId": "g_28_32",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": ". What is even more surprising is that when one of the juniors gets too forceful, it bends down begging for ______ . Only when that has been granted will the wolves continue playing.",
+      "sentenceBefore": ". What is even more surprising is that when one of the juniors gets too forceful, it bends down begging for",
+      "sentenceAfter": ". Only when that has been granted will the wolves continue playing.",
       "groupPrompt": "Complete the summary below."
     },
     "33": {
@@ -8013,30 +8817,50 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
     "21": {
       "questionType": "notes_completion",
       "groupId": "g_21_24",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the notes below.",
-      "groupPrompt": "Complete the notes below."
+      "extractionStatus": "extracted",
+      "promptText": "The complex that includes the Step Pyramid and its surroundings is considered to be as big as an Egyptian ______ of the past. The area outside the pyramid included accommodation that was occupied by",
+      "sentenceBefore": "The complex that includes the Step Pyramid and its surroundings is considered to be as big as an Egyptian",
+      "sentenceAfter": "of the past. The area outside the pyramid included accommodation that was occupied by",
+      "groupPrompt": "Complete the notes below.",
+      "notesContext": {
+        "bulletPrefix": "•"
+      }
     },
     "22": {
       "questionType": "notes_completion",
       "groupId": "g_21_24",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the notes below.",
-      "groupPrompt": "Complete the notes below."
+      "extractionStatus": "extracted",
+      "promptText": "of the past. The area outside the pyramid included accommodation that was occupied by ______ , along with many other buildings and features. A wall ran around the outside of the complex and a number of false entrances were built into this. In addition, a long",
+      "sentenceBefore": "of the past. The area outside the pyramid included accommodation that was occupied by",
+      "sentenceAfter": ", along with many other buildings and features. A wall ran around the outside of the complex and a number of false entrances were built into this. In addition, a long",
+      "groupPrompt": "Complete the notes below.",
+      "notesContext": {
+        "bulletPrefix": "•"
+      }
     },
     "23": {
       "questionType": "notes_completion",
       "groupId": "g_21_24",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the notes below.",
-      "groupPrompt": "Complete the notes below."
+      "extractionStatus": "extracted",
+      "promptText": ", along with many other buildings and features. A wall ran around the outside of the complex and a number of false entrances were built into this. In addition, a long ______ encircled the wall. As a result, any visitors who had not been invited were cleverly prevented from entering the pyramid grounds unless they knew the",
+      "sentenceBefore": ", along with many other buildings and features. A wall ran around the outside of the complex and a number of false entrances were built into this. In addition, a long",
+      "sentenceAfter": "encircled the wall. As a result, any visitors who had not been invited were cleverly prevented from entering the pyramid grounds unless they knew the",
+      "groupPrompt": "Complete the notes below.",
+      "notesContext": {
+        "bulletPrefix": "•"
+      }
     },
     "24": {
       "questionType": "notes_completion",
       "groupId": "g_21_24",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the notes below.",
-      "groupPrompt": "Complete the notes below."
+      "extractionStatus": "extracted",
+      "promptText": "encircled the wall. As a result, any visitors who had not been invited were cleverly prevented from entering the pyramid grounds unless they knew the ______ of the real entrance.",
+      "sentenceBefore": "encircled the wall. As a result, any visitors who had not been invited were cleverly prevented from entering the pyramid grounds unless they knew the",
+      "sentenceAfter": "of the real entrance.",
+      "groupPrompt": "Complete the notes below.",
+      "notesContext": {
+        "bulletPrefix": "•"
+      }
     },
     "25": {
       "questionType": "multiple_choice_multi",
@@ -8143,8 +8967,10 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
     "31": {
       "questionType": "summary_completion_bank",
       "groupId": "g_31_34",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary using the list of words, A-G, below.",
+      "extractionStatus": "extracted",
+      "promptText": "Stella Pachidi of Cambridge Judge Business School has been focusing on the 'algorithmication' of jobs which rely not on production but on ______ . While monitoring a telecommunications company, Pachidi observed a growing",
+      "sentenceBefore": "Stella Pachidi of Cambridge Judge Business School has been focusing on the 'algorithmication' of jobs which rely not on production but on",
+      "sentenceAfter": ". While monitoring a telecommunications company, Pachidi observed a growing",
       "groupPrompt": "Complete the summary using the list of words, A-G, below.",
       "referenceBox": {
         "title": "Word Bank",
@@ -8155,8 +8981,10 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
     "32": {
       "questionType": "summary_completion_bank",
       "groupId": "g_31_34",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary using the list of words, A-G, below.",
+      "extractionStatus": "extracted",
+      "promptText": ". While monitoring a telecommunications company, Pachidi observed a growing ______ on the recommendations made by AI, as workers begin to learn through the 'algorithm's eyes'. Meanwhile, staff are deterred from experimenting and using their own",
+      "sentenceBefore": ". While monitoring a telecommunications company, Pachidi observed a growing",
+      "sentenceAfter": "on the recommendations made by AI, as workers begin to learn through the 'algorithm's eyes'. Meanwhile, staff are deterred from experimenting and using their own",
       "groupPrompt": "Complete the summary using the list of words, A-G, below.",
       "referenceBox": {
         "title": "Word Bank",
@@ -8167,8 +8995,10 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
     "33": {
       "questionType": "summary_completion_bank",
       "groupId": "g_31_34",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary using the list of words, A-G, below.",
+      "extractionStatus": "extracted",
+      "promptText": "on the recommendations made by AI, as workers begin to learn through the 'algorithm's eyes'. Meanwhile, staff are deterred from experimenting and using their own ______ , and are therefore prevented from achieving innovation. To avoid the kind of situations which Pachidi observed, researchers are trying to make AI's decision-making process easier to comprehend, and to increase users'",
+      "sentenceBefore": "on the recommendations made by AI, as workers begin to learn through the 'algorithm's eyes'. Meanwhile, staff are deterred from experimenting and using their own",
+      "sentenceAfter": ", and are therefore prevented from achieving innovation. To avoid the kind of situations which Pachidi observed, researchers are trying to make AI's decision-making process easier to comprehend, and to increase users'",
       "groupPrompt": "Complete the summary using the list of words, A-G, below.",
       "referenceBox": {
         "title": "Word Bank",
@@ -8179,8 +9009,10 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
     "34": {
       "questionType": "summary_completion_bank",
       "groupId": "g_31_34",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary using the list of words, A-G, below.",
+      "extractionStatus": "extracted",
+      "promptText": ", and are therefore prevented from achieving innovation. To avoid the kind of situations which Pachidi observed, researchers are trying to make AI's decision-making process easier to comprehend, and to increase users' ______ with regard to the technology.",
+      "sentenceBefore": ", and are therefore prevented from achieving innovation. To avoid the kind of situations which Pachidi observed, researchers are trying to make AI's decision-making process easier to comprehend, and to increase users'",
+      "sentenceAfter": "with regard to the technology.",
       "groupPrompt": "Complete the summary using the list of words, A-G, below.",
       "referenceBox": {
         "title": "Word Bank",
@@ -8217,16 +9049,7 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "referenceBox": {
         "title": "List of people",
         "type": "features",
-        "items": [
-          {
-            "label": "B",
-            "text": "or"
-          },
-          {
-            "label": "C",
-            "text": "Write the correct letter, A,"
-          }
-        ]
+        "items": []
       }
     },
     "36": {
@@ -8258,16 +9081,7 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "referenceBox": {
         "title": "List of people",
         "type": "features",
-        "items": [
-          {
-            "label": "B",
-            "text": "or"
-          },
-          {
-            "label": "C",
-            "text": "Write the correct letter, A,"
-          }
-        ]
+        "items": []
       }
     },
     "37": {
@@ -8299,16 +9113,7 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "referenceBox": {
         "title": "List of people",
         "type": "features",
-        "items": [
-          {
-            "label": "B",
-            "text": "or"
-          },
-          {
-            "label": "C",
-            "text": "Write the correct letter, A,"
-          }
-        ]
+        "items": []
       }
     },
     "38": {
@@ -8340,16 +9145,7 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "referenceBox": {
         "title": "List of people",
         "type": "features",
-        "items": [
-          {
-            "label": "B",
-            "text": "or"
-          },
-          {
-            "label": "C",
-            "text": "Write the correct letter, A,"
-          }
-        ]
+        "items": []
       }
     },
     "39": {
@@ -8381,16 +9177,7 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "referenceBox": {
         "title": "List of people",
         "type": "features",
-        "items": [
-          {
-            "label": "B",
-            "text": "or"
-          },
-          {
-            "label": "C",
-            "text": "Write the correct letter, A,"
-          }
-        ]
+        "items": []
       }
     },
     "40": {
@@ -8422,16 +9209,7 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "referenceBox": {
         "title": "List of people",
         "type": "features",
-        "items": [
-          {
-            "label": "B",
-            "text": "or"
-          },
-          {
-            "label": "C",
-            "text": "Write the correct letter, A,"
-          }
-        ]
+        "items": []
       }
     }
   },
@@ -8633,8 +9411,10 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
     "17": {
       "questionType": "summary_completion_bank",
       "groupId": "g_17_20",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary using the list of words, A-H, below.",
+      "extractionStatus": "extracted",
+      "promptText": "Yong's book argues that we should be more tolerant of microbes. Many have a beneficial effect, and only a relatively small number lead to ______ . And although it is misleading to think of microbes as 'friendly', we should also stop thinking of them as the enemy. In fact, we should accept that our relationship with microbes is one based on",
+      "sentenceBefore": "Yong's book argues that we should be more tolerant of microbes. Many have a beneficial effect, and only a relatively small number lead to",
+      "sentenceAfter": ". And although it is misleading to think of microbes as 'friendly', we should also stop thinking of them as the enemy. In fact, we should accept that our relationship with microbes is one based on",
       "groupPrompt": "Complete the summary using the list of words, A-H, below.",
       "referenceBox": {
         "title": "Word Bank",
@@ -8645,8 +9425,10 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
     "18": {
       "questionType": "summary_completion_bank",
       "groupId": "g_17_20",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary using the list of words, A-H, below.",
+      "extractionStatus": "extracted",
+      "promptText": ". And although it is misleading to think of microbes as 'friendly', we should also stop thinking of them as the enemy. In fact, we should accept that our relationship with microbes is one based on ______ . New research shows that microbes have numerous benefits for humans. Amongst other things, they aid digestion, remove poisons, produce vitamins, and may even help reduce obesity. However, there is a growing problem. Our poor",
+      "sentenceBefore": ". And although it is misleading to think of microbes as 'friendly', we should also stop thinking of them as the enemy. In fact, we should accept that our relationship with microbes is one based on",
+      "sentenceAfter": ". New research shows that microbes have numerous benefits for humans. Amongst other things, they aid digestion, remove poisons, produce vitamins, and may even help reduce obesity. However, there is a growing problem. Our poor",
       "groupPrompt": "Complete the summary using the list of words, A-H, below.",
       "referenceBox": {
         "title": "Word Bank",
@@ -8657,8 +9439,10 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
     "19": {
       "questionType": "summary_completion_bank",
       "groupId": "g_17_20",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary using the list of words, A-H, below.",
+      "extractionStatus": "extracted",
+      "promptText": ". New research shows that microbes have numerous benefits for humans. Amongst other things, they aid digestion, remove poisons, produce vitamins, and may even help reduce obesity. However, there is a growing problem. Our poor ______ , our overuse of antibiotics, and our excessive focus on",
+      "sentenceBefore": ". New research shows that microbes have numerous benefits for humans. Amongst other things, they aid digestion, remove poisons, produce vitamins, and may even help reduce obesity. However, there is a growing problem. Our poor",
+      "sentenceAfter": ", our overuse of antibiotics, and our excessive focus on",
       "groupPrompt": "Complete the summary using the list of words, A-H, below.",
       "referenceBox": {
         "title": "Word Bank",
@@ -8669,8 +9453,10 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
     "20": {
       "questionType": "summary_completion_bank",
       "groupId": "g_17_20",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary using the list of words, A-H, below.",
+      "extractionStatus": "extracted",
+      "promptText": ", our overuse of antibiotics, and our excessive focus on ______ are upsetting the bacterial balance and may be contributing to the huge increase in allergies and immune system problems.",
+      "sentenceBefore": ", our overuse of antibiotics, and our excessive focus on",
+      "sentenceAfter": "are upsetting the bacterial balance and may be contributing to the huge increase in allergies and immune system problems.",
       "groupPrompt": "Complete the summary using the list of words, A-H, below.",
       "referenceBox": {
         "title": "Word Bank",
@@ -8851,8 +9637,10 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
     "31": {
       "questionType": "summary_completion_bank",
       "groupId": "g_31_35",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary using the list of words, A-J, below.",
+      "extractionStatus": "extracted",
+      "promptText": "Igor Grossmann and colleagues have established four characteristics which enable us to make wise decisions. It is important to have a certain degree of ______ regarding the extent of our knowledge, and to take into account",
+      "sentenceBefore": "Igor Grossmann and colleagues have established four characteristics which enable us to make wise decisions. It is important to have a certain degree of",
+      "sentenceAfter": "regarding the extent of our knowledge, and to take into account",
       "groupPrompt": "Complete the summary using the list of words, A-J, below.",
       "referenceBox": {
         "title": "Word Bank",
@@ -8863,8 +9651,10 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
     "32": {
       "questionType": "summary_completion_bank",
       "groupId": "g_31_35",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary using the list of words, A-J, below.",
+      "extractionStatus": "extracted",
+      "promptText": "regarding the extent of our knowledge, and to take into account ______ which may not be the same as our own. We should also be able to take a broad",
+      "sentenceBefore": "regarding the extent of our knowledge, and to take into account",
+      "sentenceAfter": "which may not be the same as our own. We should also be able to take a broad",
       "groupPrompt": "Complete the summary using the list of words, A-J, below.",
       "referenceBox": {
         "title": "Word Bank",
@@ -8875,8 +9665,10 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
     "33": {
       "questionType": "summary_completion_bank",
       "groupId": "g_31_35",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary using the list of words, A-J, below.",
+      "extractionStatus": "extracted",
+      "promptText": "which may not be the same as our own. We should also be able to take a broad ______ of any situation. Another key characteristic is being aware of the likelihood of alterations in the way that people relate to each other. Grossmann also believes that it is better to regard scenarios with",
+      "sentenceBefore": "which may not be the same as our own. We should also be able to take a broad",
+      "sentenceAfter": "of any situation. Another key characteristic is being aware of the likelihood of alterations in the way that people relate to each other. Grossmann also believes that it is better to regard scenarios with",
       "groupPrompt": "Complete the summary using the list of words, A-J, below.",
       "referenceBox": {
         "title": "Word Bank",
@@ -8887,8 +9679,10 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
     "34": {
       "questionType": "summary_completion_bank",
       "groupId": "g_31_35",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary using the list of words, A-J, below.",
+      "extractionStatus": "extracted",
+      "promptText": "of any situation. Another key characteristic is being aware of the likelihood of alterations in the way that people relate to each other. Grossmann also believes that it is better to regard scenarios with ______ . By avoiding the first-person perspective, we focus more on",
+      "sentenceBefore": "of any situation. Another key characteristic is being aware of the likelihood of alterations in the way that people relate to each other. Grossmann also believes that it is better to regard scenarios with",
+      "sentenceAfter": ". By avoiding the first-person perspective, we focus more on",
       "groupPrompt": "Complete the summary using the list of words, A-J, below.",
       "referenceBox": {
         "title": "Word Bank",
@@ -8899,8 +9693,10 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
     "35": {
       "questionType": "summary_completion_bank",
       "groupId": "g_31_35",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary using the list of words, A-J, below.",
+      "extractionStatus": "extracted",
+      "promptText": ". By avoiding the first-person perspective, we focus more on ______ and on other moral ideals, which in turn leads to wiser decision-making.",
+      "sentenceBefore": ". By avoiding the first-person perspective, we focus more on",
+      "sentenceAfter": "and on other moral ideals, which in turn leads to wiser decision-making.",
       "groupPrompt": "Complete the summary using the list of words, A-J, below.",
       "referenceBox": {
         "title": "Word Bank",
@@ -8983,57 +9779,73 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
     "6": {
       "questionType": "summary_completion_text",
       "groupId": "g_6_13",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "Warships were designed so that they were ______ and moved quickly. They often remained afloat after battles and were able to sail close to land as they lacked any additional weight. A battering ram made of",
+      "sentenceBefore": "Warships were designed so that they were",
+      "sentenceAfter": "and moved quickly. They often remained afloat after battles and were able to sail close to land as they lacked any additional weight. A battering ram made of",
       "groupPrompt": "Complete the summary below."
     },
     "7": {
       "questionType": "summary_completion_text",
       "groupId": "g_6_13",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "and moved quickly. They often remained afloat after battles and were able to sail close to land as they lacked any additional weight. A battering ram made of ______ was included in the design for attacking and damaging the timber and oars of enemy ships. Warships, such as the 'trireme', had rowers on three different",
+      "sentenceBefore": "and moved quickly. They often remained afloat after battles and were able to sail close to land as they lacked any additional weight. A battering ram made of",
+      "sentenceAfter": "was included in the design for attacking and damaging the timber and oars of enemy ships. Warships, such as the 'trireme', had rowers on three different",
       "groupPrompt": "Complete the summary below."
     },
     "8": {
       "questionType": "summary_completion_text",
       "groupId": "g_6_13",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "was included in the design for attacking and damaging the timber and oars of enemy ships. Warships, such as the 'trireme', had rowers on three different ______ . Unlike warships, merchant ships had a broad",
+      "sentenceBefore": "was included in the design for attacking and damaging the timber and oars of enemy ships. Warships, such as the 'trireme', had rowers on three different",
+      "sentenceAfter": ". Unlike warships, merchant ships had a broad",
       "groupPrompt": "Complete the summary below."
     },
     "9": {
       "questionType": "summary_completion_text",
       "groupId": "g_6_13",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": ". Unlike warships, merchant ships had a broad ______ that lay far below the surface of the sea. Merchant ships were steered through the water with the help of large rudders and a tiller bar. They had both square and",
+      "sentenceBefore": ". Unlike warships, merchant ships had a broad",
+      "sentenceAfter": "that lay far below the surface of the sea. Merchant ships were steered through the water with the help of large rudders and a tiller bar. They had both square and",
       "groupPrompt": "Complete the summary below."
     },
     "10": {
       "questionType": "summary_completion_text",
       "groupId": "g_6_13",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "that lay far below the surface of the sea. Merchant ships were steered through the water with the help of large rudders and a tiller bar. They had both square and ______ sails. On merchant ships and warships,",
+      "sentenceBefore": "that lay far below the surface of the sea. Merchant ships were steered through the water with the help of large rudders and a tiller bar. They had both square and",
+      "sentenceAfter": "sails. On merchant ships and warships,",
       "groupPrompt": "Complete the summary below."
     },
     "11": {
       "questionType": "summary_completion_text",
       "groupId": "g_6_13",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "sails. On merchant ships and warships, ______ was used to ensure rowers moved their oars in and out of the water at the same time. Quantities of agricultural goods such as",
+      "sentenceBefore": "sails. On merchant ships and warships,",
+      "sentenceAfter": "was used to ensure rowers moved their oars in and out of the water at the same time. Quantities of agricultural goods such as",
       "groupPrompt": "Complete the summary below."
     },
     "12": {
       "questionType": "summary_completion_text",
       "groupId": "g_6_13",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "was used to ensure rowers moved their oars in and out of the water at the same time. Quantities of agricultural goods such as ______ were transported by merchant ships to two main ports in Italy. The ships were pulled to the shore by",
+      "sentenceBefore": "was used to ensure rowers moved their oars in and out of the water at the same time. Quantities of agricultural goods such as",
+      "sentenceAfter": "were transported by merchant ships to two main ports in Italy. The ships were pulled to the shore by",
       "groupPrompt": "Complete the summary below."
     },
     "13": {
       "questionType": "summary_completion_text",
       "groupId": "g_6_13",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "were transported by merchant ships to two main ports in Italy. The ships were pulled to the shore by ______ . When the weather was clear and they could see islands or land, sailors used landmarks that they knew to help them navigate their route.",
+      "sentenceBefore": "were transported by merchant ships to two main ports in Italy. The ships were pulled to the shore by",
+      "sentenceAfter": ". When the weather was clear and they could see islands or land, sailors used landmarks that they knew to help them navigate their route.",
       "groupPrompt": "Complete the summary below."
     },
     "14": {
@@ -9075,22 +9887,28 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
     "20": {
       "questionType": "summary_completion_text",
       "groupId": "g_20_22",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "Organic materials such as animal skins and textiles are not discovered very often at archaeological sites. They have little protection against ______ , which means that they decay relatively quickly. But this is not always the case. If temperatures are low enough, fragile artefacts can be preserved for thousands of years. A team of archaeologists have been working in the mountains in Oppland in Norway to recover artefacts revealed by shrinking ice cover. In the past, there were trade routes through these mountains and",
+      "sentenceBefore": "Organic materials such as animal skins and textiles are not discovered very often at archaeological sites. They have little protection against",
+      "sentenceAfter": ", which means that they decay relatively quickly. But this is not always the case. If temperatures are low enough, fragile artefacts can be preserved for thousands of years. A team of archaeologists have been working in the mountains in Oppland in Norway to recover artefacts revealed by shrinking ice cover. In the past, there were trade routes through these mountains and",
       "groupPrompt": "Complete the summary below."
     },
     "21": {
       "questionType": "summary_completion_text",
       "groupId": "g_20_22",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": ", which means that they decay relatively quickly. But this is not always the case. If temperatures are low enough, fragile artefacts can be preserved for thousands of years. A team of archaeologists have been working in the mountains in Oppland in Norway to recover artefacts revealed by shrinking ice cover. In the past, there were trade routes through these mountains and ______ gathered there in the summer months to avoid being attacked by",
+      "sentenceBefore": ", which means that they decay relatively quickly. But this is not always the case. If temperatures are low enough, fragile artefacts can be preserved for thousands of years. A team of archaeologists have been working in the mountains in Oppland in Norway to recover artefacts revealed by shrinking ice cover. In the past, there were trade routes through these mountains and",
+      "sentenceAfter": "gathered there in the summer months to avoid being attacked by",
       "groupPrompt": "Complete the summary below."
     },
     "22": {
       "questionType": "summary_completion_text",
       "groupId": "g_20_22",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "gathered there in the summer months to avoid being attacked by ______ on lower ground. The people who used these mountains left things behind and it is those objects that are of interest to archaeologists.",
+      "sentenceBefore": "gathered there in the summer months to avoid being attacked by",
+      "sentenceAfter": "on lower ground. The people who used these mountains left things behind and it is those objects that are of interest to archaeologists.",
       "groupPrompt": "Complete the summary below."
     },
     "23": {
@@ -9573,7 +10391,9 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "questionType": "summary_completion_bank",
       "groupId": "g_18_22",
       "extractionStatus": "extracted",
-      "promptText": "______",
+      "promptText": "There have been many studies on digital screen use, showing some ______ _______ trends. Psychologist Anne Mangen gave high-school students a short story to read, half using digital and half using print mediums. Her team then used a question-and-answer technique to find out how",
+      "sentenceBefore": "There have been many studies on digital screen use, showing some",
+      "sentenceAfter": "_______ trends. Psychologist Anne Mangen gave high-school students a short story to read, half using digital and half using print mediums. Her team then used a question-and-answer technique to find out how",
       "groupPrompt": "Complete the summary using the list of words, A-H, below.",
       "referenceBox": {
         "title": "Word Bank",
@@ -9585,7 +10405,9 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "questionType": "summary_completion_bank",
       "groupId": "g_18_22",
       "extractionStatus": "extracted",
-      "promptText": "______",
+      "promptText": "_______ trends. Psychologist Anne Mangen gave high-school students a short story to read, half using digital and half using print mediums. Her team then used a question-and-answer technique to find out how ______ _______ each group's understanding of the plot was. The findings showed a clear pattern in the responses, with those who read screens finding the order of information",
+      "sentenceBefore": "_______ trends. Psychologist Anne Mangen gave high-school students a short story to read, half using digital and half using print mediums. Her team then used a question-and-answer technique to find out how",
+      "sentenceAfter": "_______ each group's understanding of the plot was. The findings showed a clear pattern in the responses, with those who read screens finding the order of information",
       "groupPrompt": "Complete the summary using the list of words, A-H, below.",
       "referenceBox": {
         "title": "Word Bank",
@@ -9597,7 +10419,9 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "questionType": "summary_completion_bank",
       "groupId": "g_18_22",
       "extractionStatus": "extracted",
-      "promptText": "______",
+      "promptText": "_______ each group's understanding of the plot was. The findings showed a clear pattern in the responses, with those who read screens finding the order of information ______ _______ to recall. Studies by Ziming Liu show that students are tending to read",
+      "sentenceBefore": "_______ each group's understanding of the plot was. The findings showed a clear pattern in the responses, with those who read screens finding the order of information",
+      "sentenceAfter": "_______ to recall. Studies by Ziming Liu show that students are tending to read",
       "groupPrompt": "Complete the summary using the list of words, A-H, below.",
       "referenceBox": {
         "title": "Word Bank",
@@ -9609,7 +10433,9 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "questionType": "summary_completion_bank",
       "groupId": "g_18_22",
       "extractionStatus": "extracted",
-      "promptText": "______",
+      "promptText": "_______ to recall. Studies by Ziming Liu show that students are tending to read ______ _______ words and phrases in a text to save time. This approach, she says, gives the reader a superficial understanding of the",
+      "sentenceBefore": "_______ to recall. Studies by Ziming Liu show that students are tending to read",
+      "sentenceAfter": "_______ words and phrases in a text to save time. This approach, she says, gives the reader a superficial understanding of the",
       "groupPrompt": "Complete the summary using the list of words, A-H, below.",
       "referenceBox": {
         "title": "Word Bank",
@@ -9621,7 +10447,9 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "questionType": "summary_completion_bank",
       "groupId": "g_18_22",
       "extractionStatus": "extracted",
-      "promptText": "______",
+      "promptText": "_______ words and phrases in a text to save time. This approach, she says, gives the reader a superficial understanding of the ______ _______ content of material, leaving no time for thought.",
+      "sentenceBefore": "_______ words and phrases in a text to save time. This approach, she says, gives the reader a superficial understanding of the",
+      "sentenceAfter": "_______ content of material, leaving no time for thought.",
       "groupPrompt": "Complete the summary using the list of words, A-H, below.",
       "referenceBox": {
         "title": "Word Bank",
@@ -9667,6 +10495,14 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
         "type": "headings",
         "items": [
           {
+            "label": "i",
+            "text": "An increasing divergence of attitudes towards AI"
+          },
+          {
+            "label": "ii",
+            "text": "Reasons why we have more faith in human judgement than in AI"
+          },
+          {
             "label": "iii",
             "text": "The superiority of AI projections over those made by humans"
           },
@@ -9675,100 +10511,20 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
             "text": "The process by which AI can help us make good decisions"
           },
           {
-            "label": "i",
-            "text": "ii"
-          },
-          {
-            "label": "iii",
-            "text": "iv"
-          },
-          {
             "label": "v",
-            "text": "vi"
+            "text": "The advantages of involving users in AI processes"
+          },
+          {
+            "label": "vi",
+            "text": "Widespread distrust of an AI innovation"
           },
           {
             "label": "vii",
-            "text": ""
+            "text": "Encouraging openness about how AI functions"
           },
           {
-            "label": "i",
-            "text": "ii"
-          },
-          {
-            "label": "iii",
-            "text": "iv"
-          },
-          {
-            "label": "v",
-            "text": "vi"
-          },
-          {
-            "label": "vii",
-            "text": ""
-          },
-          {
-            "label": "i",
-            "text": "ii"
-          },
-          {
-            "label": "iii",
-            "text": "iv"
-          },
-          {
-            "label": "v",
-            "text": "vi"
-          },
-          {
-            "label": "vii",
-            "text": ""
-          },
-          {
-            "label": "i",
-            "text": "ii"
-          },
-          {
-            "label": "iii",
-            "text": "iv"
-          },
-          {
-            "label": "v",
-            "text": "vi"
-          },
-          {
-            "label": "vii",
-            "text": ""
-          },
-          {
-            "label": "i",
-            "text": "ii"
-          },
-          {
-            "label": "iii",
-            "text": "iv"
-          },
-          {
-            "label": "v",
-            "text": "vi"
-          },
-          {
-            "label": "vii",
-            "text": ""
-          },
-          {
-            "label": "i",
-            "text": "ii"
-          },
-          {
-            "label": "iii",
-            "text": "iv"
-          },
-          {
-            "label": "v",
-            "text": "vi"
-          },
-          {
-            "label": "vii",
-            "text": "viii"
+            "label": "viii",
+            "text": "A surprisingly successful AI application"
           }
         ]
       }
@@ -9783,6 +10539,14 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
         "type": "headings",
         "items": [
           {
+            "label": "i",
+            "text": "An increasing divergence of attitudes towards AI"
+          },
+          {
+            "label": "ii",
+            "text": "Reasons why we have more faith in human judgement than in AI"
+          },
+          {
             "label": "iii",
             "text": "The superiority of AI projections over those made by humans"
           },
@@ -9791,100 +10555,20 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
             "text": "The process by which AI can help us make good decisions"
           },
           {
-            "label": "i",
-            "text": "ii"
-          },
-          {
-            "label": "iii",
-            "text": "iv"
-          },
-          {
             "label": "v",
-            "text": "vi"
+            "text": "The advantages of involving users in AI processes"
+          },
+          {
+            "label": "vi",
+            "text": "Widespread distrust of an AI innovation"
           },
           {
             "label": "vii",
-            "text": ""
+            "text": "Encouraging openness about how AI functions"
           },
           {
-            "label": "i",
-            "text": "ii"
-          },
-          {
-            "label": "iii",
-            "text": "iv"
-          },
-          {
-            "label": "v",
-            "text": "vi"
-          },
-          {
-            "label": "vii",
-            "text": ""
-          },
-          {
-            "label": "i",
-            "text": "ii"
-          },
-          {
-            "label": "iii",
-            "text": "iv"
-          },
-          {
-            "label": "v",
-            "text": "vi"
-          },
-          {
-            "label": "vii",
-            "text": ""
-          },
-          {
-            "label": "i",
-            "text": "ii"
-          },
-          {
-            "label": "iii",
-            "text": "iv"
-          },
-          {
-            "label": "v",
-            "text": "vi"
-          },
-          {
-            "label": "vii",
-            "text": ""
-          },
-          {
-            "label": "i",
-            "text": "ii"
-          },
-          {
-            "label": "iii",
-            "text": "iv"
-          },
-          {
-            "label": "v",
-            "text": "vi"
-          },
-          {
-            "label": "vii",
-            "text": ""
-          },
-          {
-            "label": "i",
-            "text": "ii"
-          },
-          {
-            "label": "iii",
-            "text": "iv"
-          },
-          {
-            "label": "v",
-            "text": "vi"
-          },
-          {
-            "label": "vii",
-            "text": "viii"
+            "label": "viii",
+            "text": "A surprisingly successful AI application"
           }
         ]
       }
@@ -9899,6 +10583,14 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
         "type": "headings",
         "items": [
           {
+            "label": "i",
+            "text": "An increasing divergence of attitudes towards AI"
+          },
+          {
+            "label": "ii",
+            "text": "Reasons why we have more faith in human judgement than in AI"
+          },
+          {
             "label": "iii",
             "text": "The superiority of AI projections over those made by humans"
           },
@@ -9907,100 +10599,20 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
             "text": "The process by which AI can help us make good decisions"
           },
           {
-            "label": "i",
-            "text": "ii"
-          },
-          {
-            "label": "iii",
-            "text": "iv"
-          },
-          {
             "label": "v",
-            "text": "vi"
+            "text": "The advantages of involving users in AI processes"
+          },
+          {
+            "label": "vi",
+            "text": "Widespread distrust of an AI innovation"
           },
           {
             "label": "vii",
-            "text": ""
+            "text": "Encouraging openness about how AI functions"
           },
           {
-            "label": "i",
-            "text": "ii"
-          },
-          {
-            "label": "iii",
-            "text": "iv"
-          },
-          {
-            "label": "v",
-            "text": "vi"
-          },
-          {
-            "label": "vii",
-            "text": ""
-          },
-          {
-            "label": "i",
-            "text": "ii"
-          },
-          {
-            "label": "iii",
-            "text": "iv"
-          },
-          {
-            "label": "v",
-            "text": "vi"
-          },
-          {
-            "label": "vii",
-            "text": ""
-          },
-          {
-            "label": "i",
-            "text": "ii"
-          },
-          {
-            "label": "iii",
-            "text": "iv"
-          },
-          {
-            "label": "v",
-            "text": "vi"
-          },
-          {
-            "label": "vii",
-            "text": ""
-          },
-          {
-            "label": "i",
-            "text": "ii"
-          },
-          {
-            "label": "iii",
-            "text": "iv"
-          },
-          {
-            "label": "v",
-            "text": "vi"
-          },
-          {
-            "label": "vii",
-            "text": ""
-          },
-          {
-            "label": "i",
-            "text": "ii"
-          },
-          {
-            "label": "iii",
-            "text": "iv"
-          },
-          {
-            "label": "v",
-            "text": "vi"
-          },
-          {
-            "label": "vii",
-            "text": "viii"
+            "label": "viii",
+            "text": "A surprisingly successful AI application"
           }
         ]
       }
@@ -10015,6 +10627,14 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
         "type": "headings",
         "items": [
           {
+            "label": "i",
+            "text": "An increasing divergence of attitudes towards AI"
+          },
+          {
+            "label": "ii",
+            "text": "Reasons why we have more faith in human judgement than in AI"
+          },
+          {
             "label": "iii",
             "text": "The superiority of AI projections over those made by humans"
           },
@@ -10023,100 +10643,20 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
             "text": "The process by which AI can help us make good decisions"
           },
           {
-            "label": "i",
-            "text": "ii"
-          },
-          {
-            "label": "iii",
-            "text": "iv"
-          },
-          {
             "label": "v",
-            "text": "vi"
+            "text": "The advantages of involving users in AI processes"
+          },
+          {
+            "label": "vi",
+            "text": "Widespread distrust of an AI innovation"
           },
           {
             "label": "vii",
-            "text": ""
+            "text": "Encouraging openness about how AI functions"
           },
           {
-            "label": "i",
-            "text": "ii"
-          },
-          {
-            "label": "iii",
-            "text": "iv"
-          },
-          {
-            "label": "v",
-            "text": "vi"
-          },
-          {
-            "label": "vii",
-            "text": ""
-          },
-          {
-            "label": "i",
-            "text": "ii"
-          },
-          {
-            "label": "iii",
-            "text": "iv"
-          },
-          {
-            "label": "v",
-            "text": "vi"
-          },
-          {
-            "label": "vii",
-            "text": ""
-          },
-          {
-            "label": "i",
-            "text": "ii"
-          },
-          {
-            "label": "iii",
-            "text": "iv"
-          },
-          {
-            "label": "v",
-            "text": "vi"
-          },
-          {
-            "label": "vii",
-            "text": ""
-          },
-          {
-            "label": "i",
-            "text": "ii"
-          },
-          {
-            "label": "iii",
-            "text": "iv"
-          },
-          {
-            "label": "v",
-            "text": "vi"
-          },
-          {
-            "label": "vii",
-            "text": ""
-          },
-          {
-            "label": "i",
-            "text": "ii"
-          },
-          {
-            "label": "iii",
-            "text": "iv"
-          },
-          {
-            "label": "v",
-            "text": "vi"
-          },
-          {
-            "label": "vii",
-            "text": "viii"
+            "label": "viii",
+            "text": "A surprisingly successful AI application"
           }
         ]
       }
@@ -10131,6 +10671,14 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
         "type": "headings",
         "items": [
           {
+            "label": "i",
+            "text": "An increasing divergence of attitudes towards AI"
+          },
+          {
+            "label": "ii",
+            "text": "Reasons why we have more faith in human judgement than in AI"
+          },
+          {
             "label": "iii",
             "text": "The superiority of AI projections over those made by humans"
           },
@@ -10139,100 +10687,20 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
             "text": "The process by which AI can help us make good decisions"
           },
           {
-            "label": "i",
-            "text": "ii"
-          },
-          {
-            "label": "iii",
-            "text": "iv"
-          },
-          {
             "label": "v",
-            "text": "vi"
+            "text": "The advantages of involving users in AI processes"
+          },
+          {
+            "label": "vi",
+            "text": "Widespread distrust of an AI innovation"
           },
           {
             "label": "vii",
-            "text": ""
+            "text": "Encouraging openness about how AI functions"
           },
           {
-            "label": "i",
-            "text": "ii"
-          },
-          {
-            "label": "iii",
-            "text": "iv"
-          },
-          {
-            "label": "v",
-            "text": "vi"
-          },
-          {
-            "label": "vii",
-            "text": ""
-          },
-          {
-            "label": "i",
-            "text": "ii"
-          },
-          {
-            "label": "iii",
-            "text": "iv"
-          },
-          {
-            "label": "v",
-            "text": "vi"
-          },
-          {
-            "label": "vii",
-            "text": ""
-          },
-          {
-            "label": "i",
-            "text": "ii"
-          },
-          {
-            "label": "iii",
-            "text": "iv"
-          },
-          {
-            "label": "v",
-            "text": "vi"
-          },
-          {
-            "label": "vii",
-            "text": ""
-          },
-          {
-            "label": "i",
-            "text": "ii"
-          },
-          {
-            "label": "iii",
-            "text": "iv"
-          },
-          {
-            "label": "v",
-            "text": "vi"
-          },
-          {
-            "label": "vii",
-            "text": ""
-          },
-          {
-            "label": "i",
-            "text": "ii"
-          },
-          {
-            "label": "iii",
-            "text": "iv"
-          },
-          {
-            "label": "v",
-            "text": "vi"
-          },
-          {
-            "label": "vii",
-            "text": "viii"
+            "label": "viii",
+            "text": "A surprisingly successful AI application"
           }
         ]
       }
@@ -10247,6 +10715,14 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
         "type": "headings",
         "items": [
           {
+            "label": "i",
+            "text": "An increasing divergence of attitudes towards AI"
+          },
+          {
+            "label": "ii",
+            "text": "Reasons why we have more faith in human judgement than in AI"
+          },
+          {
             "label": "iii",
             "text": "The superiority of AI projections over those made by humans"
           },
@@ -10255,100 +10731,20 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
             "text": "The process by which AI can help us make good decisions"
           },
           {
-            "label": "i",
-            "text": "ii"
-          },
-          {
-            "label": "iii",
-            "text": "iv"
-          },
-          {
             "label": "v",
-            "text": "vi"
+            "text": "The advantages of involving users in AI processes"
+          },
+          {
+            "label": "vi",
+            "text": "Widespread distrust of an AI innovation"
           },
           {
             "label": "vii",
-            "text": ""
+            "text": "Encouraging openness about how AI functions"
           },
           {
-            "label": "i",
-            "text": "ii"
-          },
-          {
-            "label": "iii",
-            "text": "iv"
-          },
-          {
-            "label": "v",
-            "text": "vi"
-          },
-          {
-            "label": "vii",
-            "text": ""
-          },
-          {
-            "label": "i",
-            "text": "ii"
-          },
-          {
-            "label": "iii",
-            "text": "iv"
-          },
-          {
-            "label": "v",
-            "text": "vi"
-          },
-          {
-            "label": "vii",
-            "text": ""
-          },
-          {
-            "label": "i",
-            "text": "ii"
-          },
-          {
-            "label": "iii",
-            "text": "iv"
-          },
-          {
-            "label": "v",
-            "text": "vi"
-          },
-          {
-            "label": "vii",
-            "text": ""
-          },
-          {
-            "label": "i",
-            "text": "ii"
-          },
-          {
-            "label": "iii",
-            "text": "iv"
-          },
-          {
-            "label": "v",
-            "text": "vi"
-          },
-          {
-            "label": "vii",
-            "text": ""
-          },
-          {
-            "label": "i",
-            "text": "ii"
-          },
-          {
-            "label": "iii",
-            "text": "iv"
-          },
-          {
-            "label": "v",
-            "text": "vi"
-          },
-          {
-            "label": "vii",
-            "text": "viii"
+            "label": "viii",
+            "text": "A surprisingly successful AI application"
           }
         ]
       }
@@ -10588,35 +10984,45 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "questionType": "table_completion",
       "groupId": "g_15_20",
       "extractionStatus": "extracted",
-      "promptText": "Lifting sacks of ______ – Carrying food for animals",
-      "sentenceBefore": "Lifting sacks of",
-      "sentenceAfter": "– Carrying food for animals",
+      "promptText": "Risks and how to avoid themRisk Factor Examples of Farm Activities Risk Reduction Measures to Consider Heavy Loads – Lifting sacks of ______ Carrying food for animals – Divide into containers that weigh less – Use a vehicle such as a tractor Awkward posture – Lifting a restless",
+      "sentenceBefore": "Risks and how to avoid themRisk Factor Examples of Farm Activities Risk Reduction Measures to Consider Heavy Loads – Lifting sacks of",
+      "sentenceAfter": "Carrying food for animals – Divide into containers that weigh less – Use a vehicle such as a tractor Awkward posture – Lifting a restless",
       "groupPrompt": "Complete the notes below.",
       "tableContext": {
-        "cellText": "Lifting sacks of"
+        "cellText": "Risks and how to avoid themRisk Factor Examples of Farm Activities Risk Reduction Measures to Consider Heavy Loads – Lifting sacks of"
       }
     },
     "16": {
       "questionType": "table_completion",
       "groupId": "g_15_20",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the notes below.",
-      "groupPrompt": "Complete the notes below."
+      "extractionStatus": "extracted",
+      "promptText": "Carrying food for animals – Divide into containers that weigh less – Use a vehicle such as a tractor Awkward posture – Lifting a restless ______ Moving something around a big",
+      "sentenceBefore": "Carrying food for animals – Divide into containers that weigh less – Use a vehicle such as a tractor Awkward posture – Lifting a restless",
+      "sentenceAfter": "Moving something around a big",
+      "groupPrompt": "Complete the notes below.",
+      "tableContext": {
+        "cellText": "Carrying food for animals – Divide into containers that weigh less – Use a vehicle such as a tractor Awkward posture – Lifting a restless"
+      }
     },
     "17": {
       "questionType": "table_completion",
       "groupId": "g_15_20",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the notes below.",
-      "groupPrompt": "Complete the notes below."
+      "extractionStatus": "extracted",
+      "promptText": "Moving something around a big ______ Buy particular",
+      "sentenceBefore": "Moving something around a big",
+      "sentenceAfter": "Buy particular",
+      "groupPrompt": "Complete the notes below.",
+      "tableContext": {
+        "cellText": "Moving something around a big"
+      }
     },
     "18": {
       "questionType": "table_completion",
       "groupId": "g_15_20",
       "extractionStatus": "extracted",
-      "promptText": "Buy particular ______ to help with support",
+      "promptText": "Buy particular ______ to help with support A lot of",
       "sentenceBefore": "Buy particular",
-      "sentenceAfter": "to help with support",
+      "sentenceAfter": "to help with support A lot of",
       "groupPrompt": "Complete the notes below.",
       "tableContext": {
         "cellText": "Buy particular"
@@ -10626,23 +11032,24 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "questionType": "table_completion",
       "groupId": "g_15_20",
       "extractionStatus": "extracted",
-      "promptText": "A lot of ______ while working",
-      "sentenceBefore": "A lot of",
-      "sentenceAfter": "while working",
+      "promptText": "to help with support A lot of ______ while working Fixing a fallen",
+      "sentenceBefore": "to help with support A lot of",
+      "sentenceAfter": "while working Fixing a fallen",
       "groupPrompt": "Complete the notes below.",
       "tableContext": {
-        "cellText": "A lot of"
+        "cellText": "to help with support A lot of"
       }
     },
     "20": {
       "questionType": "table_completion",
       "groupId": "g_15_20",
       "extractionStatus": "extracted",
-      "promptText": "Fixing a fallen ______",
-      "sentenceBefore": "Fixing a fallen",
+      "promptText": "while working Fixing a fallen ______ Use a workbench instead",
+      "sentenceBefore": "while working Fixing a fallen",
+      "sentenceAfter": "Use a workbench instead",
       "groupPrompt": "Complete the notes below.",
       "tableContext": {
-        "cellText": "Fixing a fallen"
+        "cellText": "while working Fixing a fallen"
       }
     },
     "21": {
@@ -10715,7 +11122,40 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "referenceBox": {
         "title": "List of Headings",
         "type": "headings",
-        "items": []
+        "items": [
+          {
+            "label": "i",
+            "text": "A time when opportunities were limited"
+          },
+          {
+            "label": "ii",
+            "text": "The reasons why Ferrando's product is needed"
+          },
+          {
+            "label": "iii",
+            "text": "A no-risk solution"
+          },
+          {
+            "label": "iv",
+            "text": "Two inventions and some physical details"
+          },
+          {
+            "label": "v",
+            "text": "The contrasting views of different generations"
+          },
+          {
+            "label": "vi",
+            "text": "A disturbing experience"
+          },
+          {
+            "label": "vii",
+            "text": "The problems with replacing a consumer item"
+          },
+          {
+            "label": "viii",
+            "text": "Looking back at why water was bottled"
+          }
+        ]
       }
     },
     "29": {
@@ -10726,7 +11166,40 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "referenceBox": {
         "title": "List of Headings",
         "type": "headings",
-        "items": []
+        "items": [
+          {
+            "label": "i",
+            "text": "A time when opportunities were limited"
+          },
+          {
+            "label": "ii",
+            "text": "The reasons why Ferrando's product is needed"
+          },
+          {
+            "label": "iii",
+            "text": "A no-risk solution"
+          },
+          {
+            "label": "iv",
+            "text": "Two inventions and some physical details"
+          },
+          {
+            "label": "v",
+            "text": "The contrasting views of different generations"
+          },
+          {
+            "label": "vi",
+            "text": "A disturbing experience"
+          },
+          {
+            "label": "vii",
+            "text": "The problems with replacing a consumer item"
+          },
+          {
+            "label": "viii",
+            "text": "Looking back at why water was bottled"
+          }
+        ]
       }
     },
     "30": {
@@ -10737,7 +11210,40 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "referenceBox": {
         "title": "List of Headings",
         "type": "headings",
-        "items": []
+        "items": [
+          {
+            "label": "i",
+            "text": "A time when opportunities were limited"
+          },
+          {
+            "label": "ii",
+            "text": "The reasons why Ferrando's product is needed"
+          },
+          {
+            "label": "iii",
+            "text": "A no-risk solution"
+          },
+          {
+            "label": "iv",
+            "text": "Two inventions and some physical details"
+          },
+          {
+            "label": "v",
+            "text": "The contrasting views of different generations"
+          },
+          {
+            "label": "vi",
+            "text": "A disturbing experience"
+          },
+          {
+            "label": "vii",
+            "text": "The problems with replacing a consumer item"
+          },
+          {
+            "label": "viii",
+            "text": "Looking back at why water was bottled"
+          }
+        ]
       }
     },
     "31": {
@@ -10748,7 +11254,40 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "referenceBox": {
         "title": "List of Headings",
         "type": "headings",
-        "items": []
+        "items": [
+          {
+            "label": "i",
+            "text": "A time when opportunities were limited"
+          },
+          {
+            "label": "ii",
+            "text": "The reasons why Ferrando's product is needed"
+          },
+          {
+            "label": "iii",
+            "text": "A no-risk solution"
+          },
+          {
+            "label": "iv",
+            "text": "Two inventions and some physical details"
+          },
+          {
+            "label": "v",
+            "text": "The contrasting views of different generations"
+          },
+          {
+            "label": "vi",
+            "text": "A disturbing experience"
+          },
+          {
+            "label": "vii",
+            "text": "The problems with replacing a consumer item"
+          },
+          {
+            "label": "viii",
+            "text": "Looking back at why water was bottled"
+          }
+        ]
       }
     },
     "32": {
@@ -10759,7 +11298,40 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "referenceBox": {
         "title": "List of Headings",
         "type": "headings",
-        "items": []
+        "items": [
+          {
+            "label": "i",
+            "text": "A time when opportunities were limited"
+          },
+          {
+            "label": "ii",
+            "text": "The reasons why Ferrando's product is needed"
+          },
+          {
+            "label": "iii",
+            "text": "A no-risk solution"
+          },
+          {
+            "label": "iv",
+            "text": "Two inventions and some physical details"
+          },
+          {
+            "label": "v",
+            "text": "The contrasting views of different generations"
+          },
+          {
+            "label": "vi",
+            "text": "A disturbing experience"
+          },
+          {
+            "label": "vii",
+            "text": "The problems with replacing a consumer item"
+          },
+          {
+            "label": "viii",
+            "text": "Looking back at why water was bottled"
+          }
+        ]
       }
     },
     "33": {
@@ -10770,7 +11342,40 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "referenceBox": {
         "title": "List of Headings",
         "type": "headings",
-        "items": []
+        "items": [
+          {
+            "label": "i",
+            "text": "A time when opportunities were limited"
+          },
+          {
+            "label": "ii",
+            "text": "The reasons why Ferrando's product is needed"
+          },
+          {
+            "label": "iii",
+            "text": "A no-risk solution"
+          },
+          {
+            "label": "iv",
+            "text": "Two inventions and some physical details"
+          },
+          {
+            "label": "v",
+            "text": "The contrasting views of different generations"
+          },
+          {
+            "label": "vi",
+            "text": "A disturbing experience"
+          },
+          {
+            "label": "vii",
+            "text": "The problems with replacing a consumer item"
+          },
+          {
+            "label": "viii",
+            "text": "Looking back at why water was bottled"
+          }
+        ]
       }
     },
     "34": {
@@ -10781,7 +11386,40 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "referenceBox": {
         "title": "List of Headings",
         "type": "headings",
-        "items": []
+        "items": [
+          {
+            "label": "i",
+            "text": "A time when opportunities were limited"
+          },
+          {
+            "label": "ii",
+            "text": "The reasons why Ferrando's product is needed"
+          },
+          {
+            "label": "iii",
+            "text": "A no-risk solution"
+          },
+          {
+            "label": "iv",
+            "text": "Two inventions and some physical details"
+          },
+          {
+            "label": "v",
+            "text": "The contrasting views of different generations"
+          },
+          {
+            "label": "vi",
+            "text": "A disturbing experience"
+          },
+          {
+            "label": "vii",
+            "text": "The problems with replacing a consumer item"
+          },
+          {
+            "label": "viii",
+            "text": "Looking back at why water was bottled"
+          }
+        ]
       }
     },
     "35": {
@@ -10891,15 +11529,19 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
     "39": {
       "questionType": "summary_completion_text",
       "groupId": "g_38_40",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "In order to get immediate funding, the method Ferrando took was to use a well-known ______ to advertise his product and request financial support. People who gave a certain figure or over were offered a free gift. In addition, Ferrando advised his donors that his company would create bottles in two colours, followed by a",
+      "sentenceBefore": "In order to get immediate funding, the method Ferrando took was to use a well-known",
+      "sentenceAfter": "to advertise his product and request financial support. People who gave a certain figure or over were offered a free gift. In addition, Ferrando advised his donors that his company would create bottles in two colours, followed by a",
       "groupPrompt": "Complete the summary below."
     },
     "40": {
       "questionType": "summary_completion_text",
       "groupId": "g_38_40",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "to advertise his product and request financial support. People who gave a certain figure or over were offered a free gift. In addition, Ferrando advised his donors that his company would create bottles in two colours, followed by a ______ bottle once they had received a more significant amount. In this way Ferrando avoided debt and found out how many people might want his products before manufacturing them.",
+      "sentenceBefore": "to advertise his product and request financial support. People who gave a certain figure or over were offered a free gift. In addition, Ferrando advised his donors that his company would create bottles in two colours, followed by a",
+      "sentenceAfter": "bottle once they had received a more significant amount. In this way Ferrando avoided debt and found out how many people might want his products before manufacturing them.",
       "groupPrompt": "Complete the summary below."
     }
   },
@@ -11018,8 +11660,9 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "questionType": "notes_completion",
       "groupId": "g_15_20",
       "extractionStatus": "extracted",
-      "promptText": "be responsible for keeping to the ______",
-      "sentenceBefore": "be responsible for keeping to the",
+      "promptText": "Post of Business and Development Manager – person appointed willmanage the administration of the Servicebe responsible for keeping to the ______ build",
+      "sentenceBefore": "Post of Business and Development Manager – person appointed willmanage the administration of the Servicebe responsible for keeping to the",
+      "sentenceAfter": "build",
       "groupPrompt": "Complete the notes below.",
       "notesContext": {
         "bulletPrefix": "•"
@@ -11029,9 +11672,9 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "questionType": "notes_completion",
       "groupId": "g_15_20",
       "extractionStatus": "extracted",
-      "promptText": "build ______ with other organisations",
+      "promptText": "build ______ with other organisations be proactive in fundraisingincrease the focus on",
       "sentenceBefore": "build",
-      "sentenceAfter": "with other organisations",
+      "sentenceAfter": "with other organisations be proactive in fundraisingincrease the focus on",
       "groupPrompt": "Complete the notes below.",
       "notesContext": {
         "bulletPrefix": "•"
@@ -11041,9 +11684,9 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "questionType": "notes_completion",
       "groupId": "g_15_20",
       "extractionStatus": "extracted",
-      "promptText": "increase the focus on ______ in school music lessons (e.g., international styles)",
-      "sentenceBefore": "increase the focus on",
-      "sentenceAfter": "in school music lessons (e.g., international styles)",
+      "promptText": "with other organisations be proactive in fundraisingincrease the focus on ______ in school music lessons (e.g., international styles) make sure records and a",
+      "sentenceBefore": "with other organisations be proactive in fundraisingincrease the focus on",
+      "sentenceAfter": "in school music lessons (e.g., international styles) make sure records and a",
       "groupPrompt": "Complete the notes below.",
       "notesContext": {
         "bulletPrefix": "•"
@@ -11053,8 +11696,8 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "questionType": "notes_completion",
       "groupId": "g_15_20",
       "extractionStatus": "extracted",
-      "promptText": "make sure records and a ______ is kept up-to-date",
-      "sentenceBefore": "make sure records and a",
+      "promptText": "in school music lessons (e.g., international styles) make sure records and a ______ is kept up-to-date",
+      "sentenceBefore": "in school music lessons (e.g., international styles) make sure records and a",
       "sentenceAfter": "is kept up-to-date",
       "groupPrompt": "Complete the notes below.",
       "notesContext": {
@@ -11377,15 +12020,19 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
     "38": {
       "questionType": "summary_completion_text",
       "groupId": "g_37_40",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "The work involved breaking up stone cliffs using wooden wedges. The large pieces of stone were then transported to another site on sleds, which moved easily over the ______ Here, the blocks could be cut and shaped using tools made of",
+      "sentenceBefore": "The work involved breaking up stone cliffs using wooden wedges. The large pieces of stone were then transported to another site on sleds, which moved easily over the",
+      "sentenceAfter": "Here, the blocks could be cut and shaped using tools made of",
       "groupPrompt": "Complete the summary below."
     },
     "39": {
       "questionType": "summary_completion_text",
       "groupId": "g_37_40",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "Here, the blocks could be cut and shaped using tools made of ______ and wood. Some of these had to be sharpened regularly.",
+      "sentenceBefore": "Here, the blocks could be cut and shaped using tools made of",
+      "sentenceAfter": "and wood. Some of these had to be sharpened regularly.",
       "groupPrompt": "Complete the summary below."
     },
     "40": {
@@ -11496,9 +12143,9 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "questionType": "notes_completion",
       "groupId": "g_15_22",
       "extractionStatus": "extracted",
-      "promptText": "Be sure you make drinks that are ______ for the customer",
-      "sentenceBefore": "Be sure you make drinks that are",
-      "sentenceAfter": "for the customer",
+      "promptText": "Serving the customerBe sure you make drinks that are ______ for the customer Ignore any",
+      "sentenceBefore": "Serving the customerBe sure you make drinks that are",
+      "sentenceAfter": "for the customer Ignore any",
       "groupPrompt": "Complete the notes below.",
       "notesContext": {
         "bulletPrefix": "•"
@@ -11508,8 +12155,8 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "questionType": "notes_completion",
       "groupId": "g_15_22",
       "extractionStatus": "extracted",
-      "promptText": "Ignore any ______ around you",
-      "sentenceBefore": "Ignore any",
+      "promptText": "for the customer Ignore any ______ around you",
+      "sentenceBefore": "for the customer Ignore any",
       "sentenceAfter": "around you",
       "groupPrompt": "Complete the notes below.",
       "notesContext": {
@@ -11520,9 +12167,9 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "questionType": "notes_completion",
       "groupId": "g_15_22",
       "extractionStatus": "extracted",
-      "promptText": "Clean the machine ______ regularly",
-      "sentenceBefore": "Clean the machine",
-      "sentenceAfter": "regularly",
+      "promptText": "Using the equipmentClean the machine ______ regularly Grinding: always use ground coffee that is",
+      "sentenceBefore": "Using the equipmentClean the machine",
+      "sentenceAfter": "regularly Grinding: always use ground coffee that is",
       "groupPrompt": "Complete the notes below.",
       "notesContext": {
         "bulletPrefix": "•"
@@ -11532,8 +12179,9 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "questionType": "notes_completion",
       "groupId": "g_15_22",
       "extractionStatus": "extracted",
-      "promptText": "Grinding: always use ground coffee that is ______",
-      "sentenceBefore": "Grinding: always use ground coffee that is",
+      "promptText": "regularly Grinding: always use ground coffee that is ______ Remember that air causes the smell to fade",
+      "sentenceBefore": "regularly Grinding: always use ground coffee that is",
+      "sentenceAfter": "Remember that air causes the smell to fade",
       "groupPrompt": "Complete the notes below.",
       "notesContext": {
         "bulletPrefix": "•"
@@ -11543,8 +12191,9 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "questionType": "notes_completion",
       "groupId": "g_15_22",
       "extractionStatus": "extracted",
-      "promptText": "Too early reduces the ______",
-      "sentenceBefore": "Too early reduces the",
+      "promptText": "Making the coffeeKnow when to stop making the espressoToo early reduces the ______ Too late makes the coffee",
+      "sentenceBefore": "Making the coffeeKnow when to stop making the espressoToo early reduces the",
+      "sentenceAfter": "Too late makes the coffee",
       "groupPrompt": "Complete the notes below.",
       "notesContext": {
         "bulletPrefix": "•"
@@ -11565,8 +12214,9 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "questionType": "notes_completion",
       "groupId": "g_15_22",
       "extractionStatus": "extracted",
-      "promptText": "Talk to your customers: ask about the customers' ______",
-      "sentenceBefore": "Talk to your customers: ask about the customers'",
+      "promptText": "Giving good customer serviceTalk to your customers: ask about the customers' ______ Know something about the important",
+      "sentenceBefore": "Giving good customer serviceTalk to your customers: ask about the customers'",
+      "sentenceAfter": "Know something about the important",
       "groupPrompt": "Complete the notes below.",
       "notesContext": {
         "bulletPrefix": "•"
@@ -11588,9 +12238,9 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "questionType": "notes_completion",
       "groupId": "g_23_27",
       "extractionStatus": "extracted",
-      "promptText": "In small meetings, ask people for some ______ as they introduce themselves",
-      "sentenceBefore": "In small meetings, ask people for some",
-      "sentenceAfter": "as they introduce themselves",
+      "promptText": "Tips on running a meetingArrange seats according to the types of meeting and participants In small meetings, ask people for some ______ as they introduce themselves Make sure the",
+      "sentenceBefore": "Tips on running a meetingArrange seats according to the types of meeting and participants In small meetings, ask people for some",
+      "sentenceAfter": "as they introduce themselves Make sure the",
       "groupPrompt": "Complete the flow chart below.",
       "notesContext": {
         "bulletPrefix": "•"
@@ -11600,9 +12250,9 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "questionType": "notes_completion",
       "groupId": "g_23_27",
       "extractionStatus": "extracted",
-      "promptText": "Make sure the ______ is available to everyone.",
-      "sentenceBefore": "Make sure the",
-      "sentenceAfter": "is available to everyone.",
+      "promptText": "as they introduce themselves Make sure the ______ is available to everyone. Involve people in the discussion and solve any",
+      "sentenceBefore": "as they introduce themselves Make sure the",
+      "sentenceAfter": "is available to everyone. Involve people in the discussion and solve any",
       "groupPrompt": "Complete the flow chart below.",
       "notesContext": {
         "bulletPrefix": "•"
@@ -11612,9 +12262,9 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "questionType": "notes_completion",
       "groupId": "g_23_27",
       "extractionStatus": "extracted",
-      "promptText": "Involve people in the discussion and solve any ______ quickly if they arise",
-      "sentenceBefore": "Involve people in the discussion and solve any",
-      "sentenceAfter": "quickly if they arise",
+      "promptText": "is available to everyone. Involve people in the discussion and solve any ______ quickly if they arise Note action points and who is responsible for themAvoid",
+      "sentenceBefore": "is available to everyone. Involve people in the discussion and solve any",
+      "sentenceAfter": "quickly if they arise Note action points and who is responsible for themAvoid",
       "groupPrompt": "Complete the flow chart below.",
       "notesContext": {
         "bulletPrefix": "•"
@@ -11624,9 +12274,9 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "questionType": "notes_completion",
       "groupId": "g_23_27",
       "extractionStatus": "extracted",
-      "promptText": "Avoid ______ by involving a range of people in tasks",
-      "sentenceBefore": "Avoid",
-      "sentenceAfter": "by involving a range of people in tasks",
+      "promptText": "quickly if they arise Note action points and who is responsible for themAvoid ______ by involving a range of people in tasks Thank people for coming, and possibly have some kind of",
+      "sentenceBefore": "quickly if they arise Note action points and who is responsible for themAvoid",
+      "sentenceAfter": "by involving a range of people in tasks Thank people for coming, and possibly have some kind of",
       "groupPrompt": "Complete the flow chart below.",
       "notesContext": {
         "bulletPrefix": "•"
@@ -11636,8 +12286,8 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "questionType": "notes_completion",
       "groupId": "g_23_27",
       "extractionStatus": "extracted",
-      "promptText": "Thank people for coming, and possibly have some kind of ______ afterwards",
-      "sentenceBefore": "Thank people for coming, and possibly have some kind of",
+      "promptText": "by involving a range of people in tasks Thank people for coming, and possibly have some kind of ______ afterwards",
+      "sentenceBefore": "by involving a range of people in tasks Thank people for coming, and possibly have some kind of",
       "sentenceAfter": "afterwards",
       "groupPrompt": "Complete the flow chart below.",
       "notesContext": {
@@ -11652,7 +12302,40 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "referenceBox": {
         "title": "List of Headings",
         "type": "headings",
-        "items": []
+        "items": [
+          {
+            "label": "i",
+            "text": "The link between feathers and a wider international awareness"
+          },
+          {
+            "label": "ii",
+            "text": "An unsuitable decoration for military purposes"
+          },
+          {
+            "label": "iii",
+            "text": "A significant rise in the popularity of feathers"
+          },
+          {
+            "label": "iv",
+            "text": "Growing disapproval of the trapping of birds for their feathers"
+          },
+          {
+            "label": "v",
+            "text": "A new approach to researching the past"
+          },
+          {
+            "label": "vi",
+            "text": "Feathers as protection and as a symbol of sophistication"
+          },
+          {
+            "label": "vii",
+            "text": "An interesting relationship between the wearing of feathers and gender"
+          },
+          {
+            "label": "viii",
+            "text": "A reason for the continued use of feathers by soldiers"
+          }
+        ]
       }
     },
     "29": {
@@ -11663,7 +12346,40 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "referenceBox": {
         "title": "List of Headings",
         "type": "headings",
-        "items": []
+        "items": [
+          {
+            "label": "i",
+            "text": "The link between feathers and a wider international awareness"
+          },
+          {
+            "label": "ii",
+            "text": "An unsuitable decoration for military purposes"
+          },
+          {
+            "label": "iii",
+            "text": "A significant rise in the popularity of feathers"
+          },
+          {
+            "label": "iv",
+            "text": "Growing disapproval of the trapping of birds for their feathers"
+          },
+          {
+            "label": "v",
+            "text": "A new approach to researching the past"
+          },
+          {
+            "label": "vi",
+            "text": "Feathers as protection and as a symbol of sophistication"
+          },
+          {
+            "label": "vii",
+            "text": "An interesting relationship between the wearing of feathers and gender"
+          },
+          {
+            "label": "viii",
+            "text": "A reason for the continued use of feathers by soldiers"
+          }
+        ]
       }
     },
     "30": {
@@ -11674,7 +12390,40 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "referenceBox": {
         "title": "List of Headings",
         "type": "headings",
-        "items": []
+        "items": [
+          {
+            "label": "i",
+            "text": "The link between feathers and a wider international awareness"
+          },
+          {
+            "label": "ii",
+            "text": "An unsuitable decoration for military purposes"
+          },
+          {
+            "label": "iii",
+            "text": "A significant rise in the popularity of feathers"
+          },
+          {
+            "label": "iv",
+            "text": "Growing disapproval of the trapping of birds for their feathers"
+          },
+          {
+            "label": "v",
+            "text": "A new approach to researching the past"
+          },
+          {
+            "label": "vi",
+            "text": "Feathers as protection and as a symbol of sophistication"
+          },
+          {
+            "label": "vii",
+            "text": "An interesting relationship between the wearing of feathers and gender"
+          },
+          {
+            "label": "viii",
+            "text": "A reason for the continued use of feathers by soldiers"
+          }
+        ]
       }
     },
     "31": {
@@ -11685,7 +12434,40 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "referenceBox": {
         "title": "List of Headings",
         "type": "headings",
-        "items": []
+        "items": [
+          {
+            "label": "i",
+            "text": "The link between feathers and a wider international awareness"
+          },
+          {
+            "label": "ii",
+            "text": "An unsuitable decoration for military purposes"
+          },
+          {
+            "label": "iii",
+            "text": "A significant rise in the popularity of feathers"
+          },
+          {
+            "label": "iv",
+            "text": "Growing disapproval of the trapping of birds for their feathers"
+          },
+          {
+            "label": "v",
+            "text": "A new approach to researching the past"
+          },
+          {
+            "label": "vi",
+            "text": "Feathers as protection and as a symbol of sophistication"
+          },
+          {
+            "label": "vii",
+            "text": "An interesting relationship between the wearing of feathers and gender"
+          },
+          {
+            "label": "viii",
+            "text": "A reason for the continued use of feathers by soldiers"
+          }
+        ]
       }
     },
     "32": {
@@ -11696,7 +12478,40 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "referenceBox": {
         "title": "List of Headings",
         "type": "headings",
-        "items": []
+        "items": [
+          {
+            "label": "i",
+            "text": "The link between feathers and a wider international awareness"
+          },
+          {
+            "label": "ii",
+            "text": "An unsuitable decoration for military purposes"
+          },
+          {
+            "label": "iii",
+            "text": "A significant rise in the popularity of feathers"
+          },
+          {
+            "label": "iv",
+            "text": "Growing disapproval of the trapping of birds for their feathers"
+          },
+          {
+            "label": "v",
+            "text": "A new approach to researching the past"
+          },
+          {
+            "label": "vi",
+            "text": "Feathers as protection and as a symbol of sophistication"
+          },
+          {
+            "label": "vii",
+            "text": "An interesting relationship between the wearing of feathers and gender"
+          },
+          {
+            "label": "viii",
+            "text": "A reason for the continued use of feathers by soldiers"
+          }
+        ]
       }
     },
     "33": {
@@ -11707,7 +12522,40 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "referenceBox": {
         "title": "List of Headings",
         "type": "headings",
-        "items": []
+        "items": [
+          {
+            "label": "i",
+            "text": "The link between feathers and a wider international awareness"
+          },
+          {
+            "label": "ii",
+            "text": "An unsuitable decoration for military purposes"
+          },
+          {
+            "label": "iii",
+            "text": "A significant rise in the popularity of feathers"
+          },
+          {
+            "label": "iv",
+            "text": "Growing disapproval of the trapping of birds for their feathers"
+          },
+          {
+            "label": "v",
+            "text": "A new approach to researching the past"
+          },
+          {
+            "label": "vi",
+            "text": "Feathers as protection and as a symbol of sophistication"
+          },
+          {
+            "label": "vii",
+            "text": "An interesting relationship between the wearing of feathers and gender"
+          },
+          {
+            "label": "viii",
+            "text": "A reason for the continued use of feathers by soldiers"
+          }
+        ]
       }
     },
     "34": {
@@ -11990,9 +12838,9 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "questionType": "notes_completion",
       "groupId": "g_21_27",
       "extractionStatus": "extracted",
-      "promptText": "Try out a different morning ______ that will create a sense of well-being",
-      "sentenceBefore": "Try out a different morning",
-      "sentenceAfter": "that will create a sense of well-being",
+      "promptText": "The first dayBefore arriving at workTry out a different morning ______ that will create a sense of well-being Make sure your chosen outfit conforms to the company's",
+      "sentenceBefore": "The first dayBefore arriving at workTry out a different morning",
+      "sentenceAfter": "that will create a sense of well-being Make sure your chosen outfit conforms to the company's",
       "groupPrompt": "Complete the notes below.",
       "notesContext": {
         "bulletPrefix": "•"
@@ -12002,8 +12850,8 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "questionType": "notes_completion",
       "groupId": "g_21_27",
       "extractionStatus": "extracted",
-      "promptText": "Make sure your chosen outfit conforms to the company's ______",
-      "sentenceBefore": "Make sure your chosen outfit conforms to the company's",
+      "promptText": "that will create a sense of well-being Make sure your chosen outfit conforms to the company's ______",
+      "sentenceBefore": "that will create a sense of well-being Make sure your chosen outfit conforms to the company's",
       "groupPrompt": "Complete the notes below.",
       "notesContext": {
         "bulletPrefix": "•"
@@ -12013,9 +12861,9 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "questionType": "notes_completion",
       "groupId": "g_21_27",
       "extractionStatus": "extracted",
-      "promptText": "It will provide information on their ______ and the way they operate",
-      "sentenceBefore": "It will provide information on their",
-      "sentenceAfter": "and the way they operate",
+      "promptText": "If you eat with colleagues at midday: It will provide information on their ______ and the way they operate It may be wise to prepare some",
+      "sentenceBefore": "If you eat with colleagues at midday: It will provide information on their",
+      "sentenceAfter": "and the way they operate It may be wise to prepare some",
       "groupPrompt": "Complete the notes below.",
       "notesContext": {
         "bulletPrefix": "•"
@@ -12025,8 +12873,8 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "questionType": "notes_completion",
       "groupId": "g_21_27",
       "extractionStatus": "extracted",
-      "promptText": "It may be wise to prepare some ______ to help the interaction flow",
-      "sentenceBefore": "It may be wise to prepare some",
+      "promptText": "and the way they operate It may be wise to prepare some ______ to help the interaction flow",
+      "sentenceBefore": "and the way they operate It may be wise to prepare some",
       "sentenceAfter": "to help the interaction flow",
       "groupPrompt": "Complete the notes below.",
       "notesContext": {
@@ -12037,9 +12885,9 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "questionType": "notes_completion",
       "groupId": "g_21_27",
       "extractionStatus": "extracted",
-      "promptText": "Work out some ______ and how to go about fulfilling them",
-      "sentenceBefore": "Work out some",
-      "sentenceAfter": "and how to go about fulfilling them",
+      "promptText": "During the first few weeksWork out some ______ and how to go about fulfilling them Try to keep a completely",
+      "sentenceBefore": "During the first few weeksWork out some",
+      "sentenceAfter": "and how to go about fulfilling them Try to keep a completely",
       "groupPrompt": "Complete the notes below.",
       "notesContext": {
         "bulletPrefix": "•"
@@ -12049,9 +12897,9 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "questionType": "notes_completion",
       "groupId": "g_21_27",
       "extractionStatus": "extracted",
-      "promptText": "Try to keep a completely ______ as you settle into the post",
-      "sentenceBefore": "Try to keep a completely",
-      "sentenceAfter": "as you settle into the post",
+      "promptText": "and how to go about fulfilling them Try to keep a completely ______ as you settle into the post Avoid making proposals at",
+      "sentenceBefore": "and how to go about fulfilling them Try to keep a completely",
+      "sentenceAfter": "as you settle into the post Avoid making proposals at",
       "groupPrompt": "Complete the notes below.",
       "notesContext": {
         "bulletPrefix": "•"
@@ -12061,8 +12909,8 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "questionType": "notes_completion",
       "groupId": "g_21_27",
       "extractionStatus": "extracted",
-      "promptText": "Avoid making proposals at ______ too soon",
-      "sentenceBefore": "Avoid making proposals at",
+      "promptText": "as you settle into the post Avoid making proposals at ______ too soon",
+      "sentenceBefore": "as you settle into the post Avoid making proposals at",
       "sentenceAfter": "too soon",
       "groupPrompt": "Complete the notes below.",
       "notesContext": {
@@ -12198,36 +13046,29 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       ]
     },
     "32": {
-      "questionType": "multiple_choice_single",
-      "groupId": "g_28_32",
-      "extractionStatus": "missing",
-      "promptText": "",
-      "options": [
-        {
-          "value": "A",
-          "label": "A",
-          "text": "only unmarried women were allowed to play football.",
-          "sourceStatus": "extracted"
-        },
-        {
-          "value": "B",
-          "label": "B",
-          "text": "women's football was more common than men's football.",
-          "sourceStatus": "extracted"
-        },
-        {
-          "value": "C",
-          "label": "C",
-          "text": "women were sometimes forbidden to watch football matches.",
-          "sourceStatus": "extracted"
-        },
-        {
-          "value": "D",
-          "label": "D",
-          "text": "skill at football might be considered when choosing a wife.",
-          "sourceStatus": "extracted"
-        }
-      ]
+      "questionType": "matching_features",
+      "groupId": "g_32_37",
+      "extractionStatus": "extracted",
+      "promptText": "It felt threatened by the rise of women's football.",
+      "groupPrompt": "Look at the following statements (Questions 32-37) and the list of football organizations below.",
+      "referenceBox": {
+        "title": "List of Football",
+        "type": "features",
+        "items": [
+          {
+            "label": "B",
+            "text": "the Dick, Kerr's Ladies team"
+          },
+          {
+            "label": "C",
+            "text": "the Football Association (FA)"
+          },
+          {
+            "label": "D",
+            "text": "the Union of European Football Associations (UEFA)"
+          }
+        ]
+      }
     },
     "33": {
       "questionType": "matching_features",
@@ -12240,20 +13081,16 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
         "type": "features",
         "items": [
           {
-            "label": "C",
-            "text": "or"
-          },
-          {
-            "label": "D",
-            "text": "Write the correct letter, A, B,"
-          },
-          {
             "label": "B",
             "text": "the Dick, Kerr's Ladies team"
           },
           {
             "label": "C",
             "text": "the Football Association (FA)"
+          },
+          {
+            "label": "D",
+            "text": "the Union of European Football Associations (UEFA)"
           }
         ]
       }
@@ -12269,20 +13106,16 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
         "type": "features",
         "items": [
           {
-            "label": "C",
-            "text": "or"
-          },
-          {
-            "label": "D",
-            "text": "Write the correct letter, A, B,"
-          },
-          {
             "label": "B",
             "text": "the Dick, Kerr's Ladies team"
           },
           {
             "label": "C",
             "text": "the Football Association (FA)"
+          },
+          {
+            "label": "D",
+            "text": "the Union of European Football Associations (UEFA)"
           }
         ]
       }
@@ -12298,20 +13131,16 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
         "type": "features",
         "items": [
           {
-            "label": "C",
-            "text": "or"
-          },
-          {
-            "label": "D",
-            "text": "Write the correct letter, A, B,"
-          },
-          {
             "label": "B",
             "text": "the Dick, Kerr's Ladies team"
           },
           {
             "label": "C",
             "text": "the Football Association (FA)"
+          },
+          {
+            "label": "D",
+            "text": "the Union of European Football Associations (UEFA)"
           }
         ]
       }
@@ -12327,20 +13156,16 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
         "type": "features",
         "items": [
           {
-            "label": "C",
-            "text": "or"
-          },
-          {
-            "label": "D",
-            "text": "Write the correct letter, A, B,"
-          },
-          {
             "label": "B",
             "text": "the Dick, Kerr's Ladies team"
           },
           {
             "label": "C",
             "text": "the Football Association (FA)"
+          },
+          {
+            "label": "D",
+            "text": "the Union of European Football Associations (UEFA)"
           }
         ]
       }
@@ -12356,20 +13181,16 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
         "type": "features",
         "items": [
           {
-            "label": "C",
-            "text": "or"
-          },
-          {
-            "label": "D",
-            "text": "Write the correct letter, A, B,"
-          },
-          {
             "label": "B",
             "text": "the Dick, Kerr's Ladies team"
           },
           {
             "label": "C",
             "text": "the Football Association (FA)"
+          },
+          {
+            "label": "D",
+            "text": "the Union of European Football Associations (UEFA)"
           }
         ]
       }
@@ -12377,22 +13198,28 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
     "38": {
       "questionType": "summary_completion_text",
       "groupId": "g_38_40",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "At the end of 1921, women's football teams were forbidden to use the ______ of the Football Association, and were not allowed to have Football Association members as",
+      "sentenceBefore": "At the end of 1921, women's football teams were forbidden to use the",
+      "sentenceAfter": "of the Football Association, and were not allowed to have Football Association members as",
       "groupPrompt": "Complete the summary below."
     },
     "39": {
       "questionType": "summary_completion_text",
       "groupId": "g_38_40",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "of the Football Association, and were not allowed to have Football Association members as ______ The FA said that women's clubs did not give enough to charity, and that there had been mismanagement of funds. Female workers accused the FA of",
+      "sentenceBefore": "of the Football Association, and were not allowed to have Football Association members as",
+      "sentenceAfter": "The FA said that women's clubs did not give enough to charity, and that there had been mismanagement of funds. Female workers accused the FA of",
       "groupPrompt": "Complete the summary below."
     },
     "40": {
       "questionType": "summary_completion_text",
       "groupId": "g_38_40",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "The FA said that women's clubs did not give enough to charity, and that there had been mismanagement of funds. Female workers accused the FA of ______ against women, but the ban continued until 1971.",
+      "sentenceBefore": "The FA said that women's clubs did not give enough to charity, and that there had been mismanagement of funds. Female workers accused the FA of",
+      "sentenceAfter": "against women, but the ban continued until 1971.",
       "groupPrompt": "Complete the summary below."
     }
   },
@@ -12542,36 +13369,46 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
     "18": {
       "questionType": "summary_completion_text",
       "groupId": "g_18_22",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "The Roman stadiums of Europe have proved very versatile. The amphitheatre of Arles, for example, was converted first into a ______ , then into a residential area and finally into an arena where spectators could watch",
+      "sentenceBefore": "The Roman stadiums of Europe have proved very versatile. The amphitheatre of Arles, for example, was converted first into a",
+      "sentenceAfter": ", then into a residential area and finally into an arena where spectators could watch",
       "groupPrompt": "Complete the summary below."
     },
     "19": {
       "questionType": "summary_completion_text",
       "groupId": "g_18_22",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": ", then into a residential area and finally into an arena where spectators could watch ______ . Meanwhile, the arena in Verona, one of the oldest Roman amphitheatres, is famous today as a venue where",
+      "sentenceBefore": ", then into a residential area and finally into an arena where spectators could watch",
+      "sentenceAfter": ". Meanwhile, the arena in Verona, one of the oldest Roman amphitheatres, is famous today as a venue where",
       "groupPrompt": "Complete the summary below."
     },
     "20": {
       "questionType": "summary_completion_text",
       "groupId": "g_18_22",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": ". Meanwhile, the arena in Verona, one of the oldest Roman amphitheatres, is famous today as a venue where ______ is performed. The site of Lucca's amphitheatre has also been used for many purposes over the centuries, including the storage of",
+      "sentenceBefore": ". Meanwhile, the arena in Verona, one of the oldest Roman amphitheatres, is famous today as a venue where",
+      "sentenceAfter": "is performed. The site of Lucca's amphitheatre has also been used for many purposes over the centuries, including the storage of",
       "groupPrompt": "Complete the summary below."
     },
     "21": {
       "questionType": "summary_completion_text",
       "groupId": "g_18_22",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "is performed. The site of Lucca's amphitheatre has also been used for many purposes over the centuries, including the storage of ______ . It is now a market square with",
+      "sentenceBefore": "is performed. The site of Lucca's amphitheatre has also been used for many purposes over the centuries, including the storage of",
+      "sentenceAfter": ". It is now a market square with",
       "groupPrompt": "Complete the summary below."
     },
     "22": {
       "questionType": "summary_completion_text",
       "groupId": "g_18_22",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": ". It is now a market square with ______ and homes incorporated into the remains of the Roman amphitheatre.",
+      "sentenceBefore": ". It is now a market square with",
+      "sentenceAfter": "and homes incorporated into the remains of the Roman amphitheatre.",
       "groupPrompt": "Complete the summary below."
     },
     "23": {
@@ -12733,8 +13570,10 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
     "27": {
       "questionType": "summary_completion_bank",
       "groupId": "g_27_31",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary using the list of phrases, A-J, below.",
+      "extractionStatus": "extracted",
+      "promptText": "Charles II's father was executed by the Parliamentarian forces in 1649. Charles II then formed a ______ with the Scots, and in order to become King of Scots, he abandoned an important",
+      "sentenceBefore": "Charles II's father was executed by the Parliamentarian forces in 1649. Charles II then formed a",
+      "sentenceAfter": "with the Scots, and in order to become King of Scots, he abandoned an important",
       "groupPrompt": "Complete the summary using the list of phrases, A-J, below.",
       "referenceBox": {
         "title": "Word Bank",
@@ -12745,8 +13584,10 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
     "28": {
       "questionType": "summary_completion_bank",
       "groupId": "g_27_31",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary using the list of phrases, A-J, below.",
+      "extractionStatus": "extracted",
+      "promptText": "with the Scots, and in order to become King of Scots, he abandoned an important ______ that was held by his father and had contributed to his father's death. The opposing sides then met outside Worcester in 1651. The battle led to a",
+      "sentenceBefore": "with the Scots, and in order to become King of Scots, he abandoned an important",
+      "sentenceAfter": "that was held by his father and had contributed to his father's death. The opposing sides then met outside Worcester in 1651. The battle led to a",
       "groupPrompt": "Complete the summary using the list of phrases, A-J, below.",
       "referenceBox": {
         "title": "Word Bank",
@@ -12757,8 +13598,10 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
     "29": {
       "questionType": "summary_completion_bank",
       "groupId": "g_27_31",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary using the list of phrases, A-J, below.",
+      "extractionStatus": "extracted",
+      "promptText": "that was held by his father and had contributed to his father's death. The opposing sides then met outside Worcester in 1651. The battle led to a ______ for the Parliamentarians and Charles had to flee for his life. A",
+      "sentenceBefore": "that was held by his father and had contributed to his father's death. The opposing sides then met outside Worcester in 1651. The battle led to a",
+      "sentenceAfter": "for the Parliamentarians and Charles had to flee for his life. A",
       "groupPrompt": "Complete the summary using the list of phrases, A-J, below.",
       "referenceBox": {
         "title": "Word Bank",
@@ -12769,8 +13612,10 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
     "30": {
       "questionType": "summary_completion_bank",
       "groupId": "g_27_31",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary using the list of phrases, A-J, below.",
+      "extractionStatus": "extracted",
+      "promptText": "for the Parliamentarians and Charles had to flee for his life. A ______ was offered for Charles's capture, but after six weeks spent in hiding, he eventually managed to reach the",
+      "sentenceBefore": "for the Parliamentarians and Charles had to flee for his life. A",
+      "sentenceAfter": "was offered for Charles's capture, but after six weeks spent in hiding, he eventually managed to reach the",
       "groupPrompt": "Complete the summary using the list of phrases, A-J, below.",
       "referenceBox": {
         "title": "Word Bank",
@@ -12781,8 +13626,10 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
     "31": {
       "questionType": "summary_completion_bank",
       "groupId": "g_27_31",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary using the list of phrases, A-J, below.",
+      "extractionStatus": "extracted",
+      "promptText": "was offered for Charles's capture, but after six weeks spent in hiding, he eventually managed to reach the ______ of continental Europe.",
+      "sentenceBefore": "was offered for Charles's capture, but after six weeks spent in hiding, he eventually managed to reach the",
+      "sentenceAfter": "of continental Europe.",
       "groupPrompt": "Complete the summary using the list of phrases, A-J, below.",
       "referenceBox": {
         "title": "Word Bank",
@@ -12994,16 +13841,25 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
     "2": {
       "questionType": "notes_completion",
       "groupId": "g_1_5",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the notes below.",
-      "groupPrompt": "Complete the notes below."
+      "extractionStatus": "extracted",
+      "promptText": "teenagers went into the ______ and found a number of containers made of",
+      "sentenceBefore": "teenagers went into the",
+      "sentenceAfter": "and found a number of containers made of",
+      "groupPrompt": "Complete the notes below.",
+      "notesContext": {
+        "bulletPrefix": "•"
+      }
     },
     "3": {
       "questionType": "notes_completion",
       "groupId": "g_1_5",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the notes below.",
-      "groupPrompt": "Complete the notes below."
+      "extractionStatus": "extracted",
+      "promptText": "and found a number of containers made of ______",
+      "sentenceBefore": "and found a number of containers made of",
+      "groupPrompt": "Complete the notes below.",
+      "notesContext": {
+        "bulletPrefix": "•"
+      }
     },
     "4": {
       "questionType": "notes_completion",
@@ -13398,8 +14254,10 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
     "37": {
       "questionType": "summary_completion_bank",
       "groupId": "g_37_40",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary using the list of words, A-G, below.",
+      "extractionStatus": "extracted",
+      "promptText": "The traditional view of scientific discovery is that breakthroughs happen when a single great mind has sudden ______ . Although this can occur, it is not often the case. Advances are more likely to be the result of a longer process. In some cases, this process involves",
+      "sentenceBefore": "The traditional view of scientific discovery is that breakthroughs happen when a single great mind has sudden",
+      "sentenceAfter": ". Although this can occur, it is not often the case. Advances are more likely to be the result of a longer process. In some cases, this process involves",
       "groupPrompt": "Complete the summary using the list of words, A-G, below.",
       "referenceBox": {
         "title": "Word Bank",
@@ -13410,8 +14268,10 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
     "38": {
       "questionType": "summary_completion_bank",
       "groupId": "g_37_40",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary using the list of words, A-G, below.",
+      "extractionStatus": "extracted",
+      "promptText": ". Although this can occur, it is not often the case. Advances are more likely to be the result of a longer process. In some cases, this process involves ______ , such as Nicholson's theory about proto-elements. In others, simple necessity may provoke innovation, as with Westrope's decision to modify the position of his riding stirrups. There is also often an element of",
+      "sentenceBefore": ". Although this can occur, it is not often the case. Advances are more likely to be the result of a longer process. In some cases, this process involves",
+      "sentenceAfter": ", such as Nicholson's theory about proto-elements. In others, simple necessity may provoke innovation, as with Westrope's decision to modify the position of his riding stirrups. There is also often an element of",
       "groupPrompt": "Complete the summary using the list of words, A-G, below.",
       "referenceBox": {
         "title": "Word Bank",
@@ -13422,8 +14282,10 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
     "39": {
       "questionType": "summary_completion_bank",
       "groupId": "g_37_40",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary using the list of words, A-G, below.",
+      "extractionStatus": "extracted",
+      "promptText": ", such as Nicholson's theory about proto-elements. In others, simple necessity may provoke innovation, as with Westrope's decision to modify the position of his riding stirrups. There is also often an element of ______ , for example, the coincidence of ideas that led to the invention of the Post-It note. With both the Law of Natural Selection and the Law of Effect, there may be no clear",
+      "sentenceBefore": ", such as Nicholson's theory about proto-elements. In others, simple necessity may provoke innovation, as with Westrope's decision to modify the position of his riding stirrups. There is also often an element of",
+      "sentenceAfter": ", for example, the coincidence of ideas that led to the invention of the Post-It note. With both the Law of Natural Selection and the Law of Effect, there may be no clear",
       "groupPrompt": "Complete the summary using the list of words, A-G, below.",
       "referenceBox": {
         "title": "Word Bank",
@@ -13434,8 +14296,10 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
     "40": {
       "questionType": "summary_completion_bank",
       "groupId": "g_37_40",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary using the list of words, A-G, below.",
+      "extractionStatus": "extracted",
+      "promptText": ", for example, the coincidence of ideas that led to the invention of the Post-It note. With both the Law of Natural Selection and the Law of Effect, there may be no clear ______ involved, but merely a process of variation and selection.",
+      "sentenceBefore": ", for example, the coincidence of ideas that led to the invention of the Post-It note. With both the Law of Natural Selection and the Law of Effect, there may be no clear",
+      "sentenceAfter": "involved, but merely a process of variation and selection.",
       "groupPrompt": "Complete the summary using the list of words, A-G, below.",
       "referenceBox": {
         "title": "Word Bank",
@@ -13449,9 +14313,9 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "questionType": "notes_completion",
       "groupId": "g_1_5",
       "extractionStatus": "extracted",
-      "promptText": "ate an entirely ______ diet",
-      "sentenceBefore": "ate an entirely",
-      "sentenceAfter": "diet",
+      "promptText": "The thylacineAppearance and behaviour– looked rather like a dog– had a series of stripes along its body and tail– ate an entirely ______ diet – probably depended mainly on",
+      "sentenceBefore": "The thylacineAppearance and behaviour– looked rather like a dog– had a series of stripes along its body and tail– ate an entirely",
+      "sentenceAfter": "diet – probably depended mainly on",
       "groupPrompt": "Complete the notes below.",
       "notesContext": {
         "bulletPrefix": "•"
@@ -13461,9 +14325,9 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "questionType": "notes_completion",
       "groupId": "g_1_5",
       "extractionStatus": "extracted",
-      "promptText": "probably depended mainly on ______ when hunting",
-      "sentenceBefore": "probably depended mainly on",
-      "sentenceAfter": "when hunting",
+      "promptText": "diet – probably depended mainly on ______ when hunting – young spent first months of life inside its mother's",
+      "sentenceBefore": "diet – probably depended mainly on",
+      "sentenceAfter": "when hunting – young spent first months of life inside its mother's",
       "groupPrompt": "Complete the notes below.",
       "notesContext": {
         "bulletPrefix": "•"
@@ -13473,8 +14337,9 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "questionType": "notes_completion",
       "groupId": "g_1_5",
       "extractionStatus": "extracted",
-      "promptText": "young spent first months of life inside its mother's ______",
-      "sentenceBefore": "young spent first months of life inside its mother's",
+      "promptText": "when hunting – young spent first months of life inside its mother's ______ Decline and extinction– last evidence in mainland Australia is a 3,100-year-old",
+      "sentenceBefore": "when hunting – young spent first months of life inside its mother's",
+      "sentenceAfter": "Decline and extinction– last evidence in mainland Australia is a 3,100-year-old",
       "groupPrompt": "Complete the notes below.",
       "notesContext": {
         "bulletPrefix": "•"
@@ -13484,8 +14349,9 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "questionType": "notes_completion",
       "groupId": "g_1_5",
       "extractionStatus": "extracted",
-      "promptText": "last evidence in mainland Australia is a 3,100-year-old ______",
-      "sentenceBefore": "last evidence in mainland Australia is a 3,100-year-old",
+      "promptText": "Decline and extinction– last evidence in mainland Australia is a 3,100-year-old ______ probably went extinct in mainland Australia due to animals known as dingoes – reduction in",
+      "sentenceBefore": "Decline and extinction– last evidence in mainland Australia is a 3,100-year-old",
+      "sentenceAfter": "probably went extinct in mainland Australia due to animals known as dingoes – reduction in",
       "groupPrompt": "Complete the notes below.",
       "notesContext": {
         "bulletPrefix": "•"
@@ -13495,8 +14361,8 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "questionType": "notes_completion",
       "groupId": "g_1_5",
       "extractionStatus": "extracted",
-      "promptText": "reduction in ______ and available sources of food were partly responsible for decline in Tasmania",
-      "sentenceBefore": "reduction in",
+      "promptText": "probably went extinct in mainland Australia due to animals known as dingoes – reduction in ______ and available sources of food were partly responsible for decline in Tasmania",
+      "sentenceBefore": "probably went extinct in mainland Australia due to animals known as dingoes – reduction in",
       "sentenceAfter": "and available sources of food were partly responsible for decline in Tasmania",
       "groupPrompt": "Complete the notes below.",
       "notesContext": {
@@ -13913,8 +14779,10 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
     "36": {
       "questionType": "summary_completion_bank",
       "groupId": "g_36_40",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary using the list of phrases, A-J, below.",
+      "extractionStatus": "extracted",
+      "promptText": "In chapter seven, Barr indicates how the lack of bedrock close to the surface does not explain why skyscrapers are absent from ______ He points out that although the cost of foundations increases when bedrock is deep below the surface, this cannot be regarded as",
+      "sentenceBefore": "In chapter seven, Barr indicates how the lack of bedrock close to the surface does not explain why skyscrapers are absent from",
+      "sentenceAfter": "He points out that although the cost of foundations increases when bedrock is deep below the surface, this cannot be regarded as",
       "groupPrompt": "Complete the summary using the list of phrases, A-J, below.",
       "referenceBox": {
         "title": "Word Bank",
@@ -13925,8 +14793,10 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
     "37": {
       "questionType": "summary_completion_bank",
       "groupId": "g_36_40",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary using the list of phrases, A-J, below.",
+      "extractionStatus": "extracted",
+      "promptText": "He points out that although the cost of foundations increases when bedrock is deep below the surface, this cannot be regarded as ______ especially when compared to",
+      "sentenceBefore": "He points out that although the cost of foundations increases when bedrock is deep below the surface, this cannot be regarded as",
+      "sentenceAfter": "especially when compared to",
       "groupPrompt": "Complete the summary using the list of phrases, A-J, below.",
       "referenceBox": {
         "title": "Word Bank",
@@ -13937,8 +14807,10 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
     "38": {
       "questionType": "summary_completion_bank",
       "groupId": "g_36_40",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary using the list of phrases, A-J, below.",
+      "extractionStatus": "extracted",
+      "promptText": "especially when compared to ______ A particularly enjoyable part of the chapter was Barr's account of how foundations are built. He describes not only how",
+      "sentenceBefore": "especially when compared to",
+      "sentenceAfter": "A particularly enjoyable part of the chapter was Barr's account of how foundations are built. He describes not only how",
       "groupPrompt": "Complete the summary using the list of phrases, A-J, below.",
       "referenceBox": {
         "title": "Word Bank",
@@ -13949,8 +14821,10 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
     "39": {
       "questionType": "summary_completion_bank",
       "groupId": "g_36_40",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary using the list of phrases, A-J, below.",
+      "extractionStatus": "extracted",
+      "promptText": "A particularly enjoyable part of the chapter was Barr's account of how foundations are built. He describes not only how ______ are made possible by the use of caissons, but he also discusses their",
+      "sentenceBefore": "A particularly enjoyable part of the chapter was Barr's account of how foundations are built. He describes not only how",
+      "sentenceAfter": "are made possible by the use of caissons, but he also discusses their",
       "groupPrompt": "Complete the summary using the list of phrases, A-J, below.",
       "referenceBox": {
         "title": "Word Bank",
@@ -13961,8 +14835,10 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
     "40": {
       "questionType": "summary_completion_bank",
       "groupId": "g_36_40",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary using the list of phrases, A-J, below.",
+      "extractionStatus": "extracted",
+      "promptText": "are made possible by the use of caissons, but he also discusses their ______ . The chapter is well-researched but relatively easy to understand.",
+      "sentenceBefore": "are made possible by the use of caissons, but he also discusses their",
+      "sentenceAfter": ". The chapter is well-researched but relatively easy to understand.",
       "groupPrompt": "Complete the summary using the list of phrases, A-J, below.",
       "referenceBox": {
         "title": "Word Bank",
@@ -14018,54 +14894,57 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "questionType": "table_completion",
       "groupId": "g_7_13",
       "extractionStatus": "extracted",
-      "promptText": "ultrasonic recording to identify favourite feeding spots – DNA analysis of bat ______",
-      "sentenceBefore": "ultrasonic recording to identify favourite feeding spots – DNA analysis of bat",
+      "promptText": "The study carried out by Rocha's team Aim– to investigate the feeding habits of bats in farmland near the Ranomafana National Park Method– ultrasonic recording to identify favourite feeding spots – DNA analysis of bat ______ Findings– the bats– were most active in rice fields located on hills– ate pests of rice,",
+      "sentenceBefore": "The study carried out by Rocha's team Aim– to investigate the feeding habits of bats in farmland near the Ranomafana National Park Method– ultrasonic recording to identify favourite feeding spots – DNA analysis of bat",
+      "sentenceAfter": "Findings– the bats– were most active in rice fields located on hills– ate pests of rice,",
       "groupPrompt": "Complete the table below.",
       "tableContext": {
-        "cellText": "ultrasonic recording to identify favourite feeding spots – DNA analysis of bat"
+        "cellText": "The study carried out by Rocha's team Aim– to investigate the feeding habits of bats in farmland near the Ranomafana National Park Method– ultrasonic recording to identify favourite feeding spots – DNA analysis of bat"
       }
     },
     "8": {
       "questionType": "table_completion",
       "groupId": "g_7_13",
       "extractionStatus": "extracted",
-      "promptText": "ate pests of rice, ______ , sugarcane, nuts and fruit",
-      "sentenceBefore": "ate pests of rice,",
-      "sentenceAfter": ", sugarcane, nuts and fruit",
+      "promptText": "Findings– the bats– were most active in rice fields located on hills– ate pests of rice, ______ , sugarcane, nuts and fruit – prevent the spread of disease by eating",
+      "sentenceBefore": "Findings– the bats– were most active in rice fields located on hills– ate pests of rice,",
+      "sentenceAfter": ", sugarcane, nuts and fruit – prevent the spread of disease by eating",
       "groupPrompt": "Complete the table below.",
       "tableContext": {
-        "cellText": "ate pests of rice,"
+        "cellText": "Findings– the bats– were most active in rice fields located on hills– ate pests of rice,"
       }
     },
     "9": {
       "questionType": "table_completion",
       "groupId": "g_7_13",
       "extractionStatus": "extracted",
-      "promptText": "prevent the spread of disease by eating ______ and blackflies",
-      "sentenceBefore": "prevent the spread of disease by eating",
-      "sentenceAfter": "and blackflies",
+      "promptText": ", sugarcane, nuts and fruit – prevent the spread of disease by eating ______ and blackflies – local attitudes to bats are mixed:– they provide food rich in",
+      "sentenceBefore": ", sugarcane, nuts and fruit – prevent the spread of disease by eating",
+      "sentenceAfter": "and blackflies – local attitudes to bats are mixed:– they provide food rich in",
       "groupPrompt": "Complete the table below.",
       "tableContext": {
-        "cellText": "prevent the spread of disease by eating"
+        "cellText": ", sugarcane, nuts and fruit – prevent the spread of disease by eating"
       }
     },
     "10": {
       "questionType": "table_completion",
       "groupId": "g_7_13",
       "extractionStatus": "extracted",
-      "promptText": "they provide food rich in ______",
-      "sentenceBefore": "they provide food rich in",
+      "promptText": "and blackflies – local attitudes to bats are mixed:– they provide food rich in ______ the buildings where they roost become",
+      "sentenceBefore": "and blackflies – local attitudes to bats are mixed:– they provide food rich in",
+      "sentenceAfter": "the buildings where they roost become",
       "groupPrompt": "Complete the table below.",
       "tableContext": {
-        "cellText": "they provide food rich in"
+        "cellText": "and blackflies – local attitudes to bats are mixed:– they provide food rich in"
       }
     },
     "11": {
       "questionType": "table_completion",
       "groupId": "g_7_13",
       "extractionStatus": "extracted",
-      "promptText": "the buildings where they roost become ______",
+      "promptText": "the buildings where they roost become ______ they play an important role in local",
       "sentenceBefore": "the buildings where they roost become",
+      "sentenceAfter": "they play an important role in local",
       "groupPrompt": "Complete the table below.",
       "tableContext": {
         "cellText": "the buildings where they roost become"
@@ -14075,8 +14954,9 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "questionType": "table_completion",
       "groupId": "g_7_13",
       "extractionStatus": "extracted",
-      "promptText": "they play an important role in local ______",
+      "promptText": "they play an important role in local ______ Recommendation– farmers should provide special",
       "sentenceBefore": "they play an important role in local",
+      "sentenceAfter": "Recommendation– farmers should provide special",
       "groupPrompt": "Complete the table below.",
       "tableContext": {
         "cellText": "they play an important role in local"
@@ -14086,12 +14966,12 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "questionType": "table_completion",
       "groupId": "g_7_13",
       "extractionStatus": "extracted",
-      "promptText": "farmers should provide special ______ to support the bat population",
-      "sentenceBefore": "farmers should provide special",
+      "promptText": "Recommendation– farmers should provide special ______ to support the bat population",
+      "sentenceBefore": "Recommendation– farmers should provide special",
       "sentenceAfter": "to support the bat population",
       "groupPrompt": "Complete the table below.",
       "tableContext": {
-        "cellText": "farmers should provide special"
+        "cellText": "Recommendation– farmers should provide special"
       }
     },
     "14": {
@@ -14127,29 +15007,37 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
     "19": {
       "questionType": "summary_completion_text",
       "groupId": "g_19_22",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "The database that Ogilvie and her team has compiled sheds light on the lives of a range of individuals, as well as those of their ______ , over a 300-year period. For example, Ana Regina and Magdalena Riethmüllerin were reprimanded for reading while they should have been paying attention to a",
+      "sentenceBefore": "The database that Ogilvie and her team has compiled sheds light on the lives of a range of individuals, as well as those of their",
+      "sentenceAfter": ", over a 300-year period. For example, Ana Regina and Magdalena Riethmüllerin were reprimanded for reading while they should have been paying attention to a",
       "groupPrompt": "Complete the summary below."
     },
     "20": {
       "questionType": "summary_completion_text",
       "groupId": "g_19_22",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": ", over a 300-year period. For example, Ana Regina and Magdalena Riethmüllerin were reprimanded for reading while they should have been paying attention to a ______ .",
+      "sentenceBefore": ", over a 300-year period. For example, Ana Regina and Magdalena Riethmüllerin were reprimanded for reading while they should have been paying attention to a",
+      "sentenceAfter": ".",
       "groupPrompt": "Complete the summary below."
     },
     "21": {
       "questionType": "summary_completion_text",
       "groupId": "g_19_22",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "There was also Juliana Schweickherdt, who came to the notice of the weavers' guild in the year 1752 for breaking guild rules. As a punishment, she was later given a ______ . Cases like this illustrate how the guilds could prevent",
+      "sentenceBefore": "There was also Juliana Schweickherdt, who came to the notice of the weavers' guild in the year 1752 for breaking guild rules. As a punishment, she was later given a",
+      "sentenceAfter": ". Cases like this illustrate how the guilds could prevent",
       "groupPrompt": "Complete the summary below."
     },
     "22": {
       "questionType": "summary_completion_text",
       "groupId": "g_19_22",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": ". Cases like this illustrate how the guilds could prevent ______ and stop skilled people from working.",
+      "sentenceBefore": ". Cases like this illustrate how the guilds could prevent",
+      "sentenceAfter": "and stop skilled people from working.",
       "groupPrompt": "Complete the summary below."
     },
     "23": {
@@ -14375,29 +15263,37 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
     "37": {
       "questionType": "summary_completion_text",
       "groupId": "g_37_40",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below",
+      "extractionStatus": "extracted",
+      "promptText": "The researchers started by testing Gareyev's ______ ; for example, he was required to recall a string of",
+      "sentenceBefore": "The researchers started by testing Gareyev's",
+      "sentenceAfter": "; for example, he was required to recall a string of",
       "groupPrompt": "Complete the summary below"
     },
     "38": {
       "questionType": "summary_completion_text",
       "groupId": "g_37_40",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below",
+      "extractionStatus": "extracted",
+      "promptText": "; for example, he was required to recall a string of ______ in order and also in reverse order. Although his performance was normal, scans showed an unusual amount of",
+      "sentenceBefore": "; for example, he was required to recall a string of",
+      "sentenceAfter": "in order and also in reverse order. Although his performance was normal, scans showed an unusual amount of",
       "groupPrompt": "Complete the summary below"
     },
     "39": {
       "questionType": "summary_completion_text",
       "groupId": "g_37_40",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below",
+      "extractionStatus": "extracted",
+      "promptText": "in order and also in reverse order. Although his performance was normal, scans showed an unusual amount of ______ within the areas of Gareyev's brain that are concerned with directing attention. In addition, the scans raised the possibility of unusual strength in the parts of his brain that deal with",
+      "sentenceBefore": "in order and also in reverse order. Although his performance was normal, scans showed an unusual amount of",
+      "sentenceAfter": "within the areas of Gareyev's brain that are concerned with directing attention. In addition, the scans raised the possibility of unusual strength in the parts of his brain that deal with",
       "groupPrompt": "Complete the summary below"
     },
     "40": {
       "questionType": "summary_completion_text",
       "groupId": "g_37_40",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below",
+      "extractionStatus": "extracted",
+      "promptText": "within the areas of Gareyev's brain that are concerned with directing attention. In addition, the scans raised the possibility of unusual strength in the parts of his brain that deal with ______ input.",
+      "sentenceBefore": "within the areas of Gareyev's brain that are concerned with directing attention. In addition, the scans raised the possibility of unusual strength in the parts of his brain that deal with",
+      "sentenceAfter": "input.",
       "groupPrompt": "Complete the summary below"
     }
   },
@@ -14584,9 +15480,9 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "questionType": "notes_completion",
       "groupId": "g_21_27",
       "extractionStatus": "extracted",
-      "promptText": "keeping the minimum amount of necessary ______ and paperwork",
-      "sentenceBefore": "keeping the minimum amount of necessary",
-      "sentenceAfter": "and paperwork",
+      "promptText": "How to become more organised at work Maintaining order in the work area involves keeping the minimum amount of necessary ______ and paperwork restricting the number of personal",
+      "sentenceBefore": "How to become more organised at work Maintaining order in the work area involves keeping the minimum amount of necessary",
+      "sentenceAfter": "and paperwork restricting the number of personal",
       "groupPrompt": "Complete the notes below.",
       "notesContext": {
         "bulletPrefix": "•"
@@ -14596,9 +15492,9 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "questionType": "notes_completion",
       "groupId": "g_21_27",
       "extractionStatus": "extracted",
-      "promptText": "restricting the number of personal ______ on the work surface",
-      "sentenceBefore": "restricting the number of personal",
-      "sentenceAfter": "on the work surface",
+      "promptText": "and paperwork restricting the number of personal ______ on the work surface deciding on sensible",
+      "sentenceBefore": "and paperwork restricting the number of personal",
+      "sentenceAfter": "on the work surface deciding on sensible",
       "groupPrompt": "Complete the notes below.",
       "notesContext": {
         "bulletPrefix": "•"
@@ -14608,9 +15504,9 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "questionType": "notes_completion",
       "groupId": "g_21_27",
       "extractionStatus": "extracted",
-      "promptText": "deciding on sensible ______ for things that are needed regularly or hardly ever",
-      "sentenceBefore": "deciding on sensible",
-      "sentenceAfter": "for things that are needed regularly or hardly ever",
+      "promptText": "on the work surface deciding on sensible ______ for things that are needed regularly or hardly ever placing containers on the desk identified by",
+      "sentenceBefore": "on the work surface deciding on sensible",
+      "sentenceAfter": "for things that are needed regularly or hardly ever placing containers on the desk identified by",
       "groupPrompt": "Complete the notes below.",
       "notesContext": {
         "bulletPrefix": "•"
@@ -14620,9 +15516,9 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "questionType": "notes_completion",
       "groupId": "g_21_27",
       "extractionStatus": "extracted",
-      "promptText": "placing containers on the desk identified by ______ to organise on-going paperwork",
-      "sentenceBefore": "placing containers on the desk identified by",
-      "sentenceAfter": "to organise on-going paperwork",
+      "promptText": "for things that are needed regularly or hardly ever placing containers on the desk identified by ______ to organise on-going paperwork storing documents if there is an official",
+      "sentenceBefore": "for things that are needed regularly or hardly ever placing containers on the desk identified by",
+      "sentenceAfter": "to organise on-going paperwork storing documents if there is an official",
       "groupPrompt": "Complete the notes below.",
       "notesContext": {
         "bulletPrefix": "•"
@@ -14632,9 +15528,9 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "questionType": "notes_completion",
       "groupId": "g_21_27",
       "extractionStatus": "extracted",
-      "promptText": "storing documents if there is an official ______ to do so",
-      "sentenceBefore": "storing documents if there is an official",
-      "sentenceAfter": "to do so",
+      "promptText": "to organise on-going paperwork storing documents if there is an official ______ to do so Planning ahead is important because in general, it will improve the employee's",
+      "sentenceBefore": "to organise on-going paperwork storing documents if there is an official",
+      "sentenceAfter": "to do so Planning ahead is important because in general, it will improve the employee's",
       "groupPrompt": "Complete the notes below.",
       "notesContext": {
         "bulletPrefix": "•"
@@ -14644,9 +15540,9 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "questionType": "notes_completion",
       "groupId": "g_21_27",
       "extractionStatus": "extracted",
-      "promptText": "in general, it will improve the employee's ______ on work",
-      "sentenceBefore": "in general, it will improve the employee's",
-      "sentenceAfter": "on work",
+      "promptText": "to do so Planning ahead is important because in general, it will improve the employee's ______ on work thinking about the next day's work ensures important",
+      "sentenceBefore": "to do so Planning ahead is important because in general, it will improve the employee's",
+      "sentenceAfter": "on work thinking about the next day's work ensures important",
       "groupPrompt": "Complete the notes below.",
       "notesContext": {
         "bulletPrefix": "•"
@@ -14656,8 +15552,8 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "questionType": "notes_completion",
       "groupId": "g_21_27",
       "extractionStatus": "extracted",
-      "promptText": "thinking about the next day's work ensures important ______ are given due attention",
-      "sentenceBefore": "thinking about the next day's work ensures important",
+      "promptText": "on work thinking about the next day's work ensures important ______ are given due attention",
+      "sentenceBefore": "on work thinking about the next day's work ensures important",
       "sentenceAfter": "are given due attention",
       "groupPrompt": "Complete the notes below.",
       "notesContext": {
@@ -14672,7 +15568,40 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "referenceBox": {
         "title": "List of Headings",
         "type": "headings",
-        "items": []
+        "items": [
+          {
+            "label": "i",
+            "text": "A controversy over two versions of an invention"
+          },
+          {
+            "label": "ii",
+            "text": "The need to mine deeper for good quality coal"
+          },
+          {
+            "label": "iii",
+            "text": "Growing awareness of the need to improve conditions for miners"
+          },
+          {
+            "label": "iv",
+            "text": "A new danger caused by developments in mining"
+          },
+          {
+            "label": "v",
+            "text": "The impact of poor air quality in mines on miners' health"
+          },
+          {
+            "label": "vi",
+            "text": "Early attempts to provide lighting without flames"
+          },
+          {
+            "label": "vii",
+            "text": "A demand by miners for new technology"
+          },
+          {
+            "label": "viii",
+            "text": "A person whose work never received full recognition"
+          }
+        ]
       }
     },
     "29": {
@@ -14683,7 +15612,40 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "referenceBox": {
         "title": "List of Headings",
         "type": "headings",
-        "items": []
+        "items": [
+          {
+            "label": "i",
+            "text": "A controversy over two versions of an invention"
+          },
+          {
+            "label": "ii",
+            "text": "The need to mine deeper for good quality coal"
+          },
+          {
+            "label": "iii",
+            "text": "Growing awareness of the need to improve conditions for miners"
+          },
+          {
+            "label": "iv",
+            "text": "A new danger caused by developments in mining"
+          },
+          {
+            "label": "v",
+            "text": "The impact of poor air quality in mines on miners' health"
+          },
+          {
+            "label": "vi",
+            "text": "Early attempts to provide lighting without flames"
+          },
+          {
+            "label": "vii",
+            "text": "A demand by miners for new technology"
+          },
+          {
+            "label": "viii",
+            "text": "A person whose work never received full recognition"
+          }
+        ]
       }
     },
     "30": {
@@ -14694,7 +15656,40 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "referenceBox": {
         "title": "List of Headings",
         "type": "headings",
-        "items": []
+        "items": [
+          {
+            "label": "i",
+            "text": "A controversy over two versions of an invention"
+          },
+          {
+            "label": "ii",
+            "text": "The need to mine deeper for good quality coal"
+          },
+          {
+            "label": "iii",
+            "text": "Growing awareness of the need to improve conditions for miners"
+          },
+          {
+            "label": "iv",
+            "text": "A new danger caused by developments in mining"
+          },
+          {
+            "label": "v",
+            "text": "The impact of poor air quality in mines on miners' health"
+          },
+          {
+            "label": "vi",
+            "text": "Early attempts to provide lighting without flames"
+          },
+          {
+            "label": "vii",
+            "text": "A demand by miners for new technology"
+          },
+          {
+            "label": "viii",
+            "text": "A person whose work never received full recognition"
+          }
+        ]
       }
     },
     "31": {
@@ -14705,7 +15700,40 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "referenceBox": {
         "title": "List of Headings",
         "type": "headings",
-        "items": []
+        "items": [
+          {
+            "label": "i",
+            "text": "A controversy over two versions of an invention"
+          },
+          {
+            "label": "ii",
+            "text": "The need to mine deeper for good quality coal"
+          },
+          {
+            "label": "iii",
+            "text": "Growing awareness of the need to improve conditions for miners"
+          },
+          {
+            "label": "iv",
+            "text": "A new danger caused by developments in mining"
+          },
+          {
+            "label": "v",
+            "text": "The impact of poor air quality in mines on miners' health"
+          },
+          {
+            "label": "vi",
+            "text": "Early attempts to provide lighting without flames"
+          },
+          {
+            "label": "vii",
+            "text": "A demand by miners for new technology"
+          },
+          {
+            "label": "viii",
+            "text": "A person whose work never received full recognition"
+          }
+        ]
       }
     },
     "32": {
@@ -14716,35 +15744,76 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "referenceBox": {
         "title": "List of Headings",
         "type": "headings",
-        "items": []
+        "items": [
+          {
+            "label": "i",
+            "text": "A controversy over two versions of an invention"
+          },
+          {
+            "label": "ii",
+            "text": "The need to mine deeper for good quality coal"
+          },
+          {
+            "label": "iii",
+            "text": "Growing awareness of the need to improve conditions for miners"
+          },
+          {
+            "label": "iv",
+            "text": "A new danger caused by developments in mining"
+          },
+          {
+            "label": "v",
+            "text": "The impact of poor air quality in mines on miners' health"
+          },
+          {
+            "label": "vi",
+            "text": "Early attempts to provide lighting without flames"
+          },
+          {
+            "label": "vii",
+            "text": "A demand by miners for new technology"
+          },
+          {
+            "label": "viii",
+            "text": "A person whose work never received full recognition"
+          }
+        ]
       }
     },
     "33": {
       "questionType": "summary_completion_text",
       "groupId": "g_33_36",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "Coal mines in Europe only really developed from the 13th century. As they became deeper, the methods used for lighting them created a serious risk of ______ due to the presence of firedamp. One solution was to improve ventilation by separating the",
+      "sentenceBefore": "Coal mines in Europe only really developed from the 13th century. As they became deeper, the methods used for lighting them created a serious risk of",
+      "sentenceAfter": "due to the presence of firedamp. One solution was to improve ventilation by separating the",
       "groupPrompt": "Complete the summary below."
     },
     "34": {
       "questionType": "summary_completion_text",
       "groupId": "g_33_36",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "due to the presence of firedamp. One solution was to improve ventilation by separating the ______ into two parts. However, better lighting was also needed. One suggestion was to use a chemical found in the skins of fish, but this was found to be unsafe. Another possibility was a device which created",
+      "sentenceBefore": "due to the presence of firedamp. One solution was to improve ventilation by separating the",
+      "sentenceAfter": "into two parts. However, better lighting was also needed. One suggestion was to use a chemical found in the skins of fish, but this was found to be unsafe. Another possibility was a device which created",
       "groupPrompt": "Complete the summary below."
     },
     "35": {
       "questionType": "summary_completion_text",
       "groupId": "g_33_36",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "into two parts. However, better lighting was also needed. One suggestion was to use a chemical found in the skins of fish, but this was found to be unsafe. Another possibility was a device which created ______ , as it was believed these would not ignite the gas. However, this required additional",
+      "sentenceBefore": "into two parts. However, better lighting was also needed. One suggestion was to use a chemical found in the skins of fish, but this was found to be unsafe. Another possibility was a device which created",
+      "sentenceAfter": ", as it was believed these would not ignite the gas. However, this required additional",
       "groupPrompt": "Complete the summary below."
     },
     "36": {
       "questionType": "summary_completion_text",
       "groupId": "g_33_36",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": ", as it was believed these would not ignite the gas. However, this required additional ______ as well as maintenance and replacement, and it was also unsafe.",
+      "sentenceBefore": ", as it was believed these would not ignite the gas. However, this required additional",
+      "sentenceAfter": "as well as maintenance and replacement, and it was also unsafe.",
       "groupPrompt": "Complete the summary below."
     },
     "37": {
@@ -14979,8 +16048,9 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "questionType": "notes_completion",
       "groupId": "g_15_20",
       "extractionStatus": "extracted",
-      "promptText": "change in the user's ______",
-      "sentenceBefore": "change in the user's",
+      "promptText": "FurnitureDesk size should facilitatethe flexible arrangement of computer itemsthe easy use of a holder for documentschange in the user's ______ EnvironmentEmployers shouldmove, soundproof, or separate noisy equipment using",
+      "sentenceBefore": "FurnitureDesk size should facilitatethe flexible arrangement of computer itemsthe easy use of a holder for documentschange in the user's",
+      "sentenceAfter": "EnvironmentEmployers shouldmove, soundproof, or separate noisy equipment using",
       "groupPrompt": "Complete the notes below.",
       "notesContext": {
         "bulletPrefix": "•"
@@ -14990,8 +16060,9 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "questionType": "notes_completion",
       "groupId": "g_15_20",
       "extractionStatus": "extracted",
-      "promptText": "move, soundproof, or separate noisy equipment using ______",
-      "sentenceBefore": "move, soundproof, or separate noisy equipment using",
+      "promptText": "EnvironmentEmployers shouldmove, soundproof, or separate noisy equipment using ______ reduce glare from nearby",
+      "sentenceBefore": "EnvironmentEmployers shouldmove, soundproof, or separate noisy equipment using",
+      "sentenceAfter": "reduce glare from nearby",
       "groupPrompt": "Complete the notes below.",
       "notesContext": {
         "bulletPrefix": "•"
@@ -15001,9 +16072,9 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "questionType": "notes_completion",
       "groupId": "g_15_20",
       "extractionStatus": "extracted",
-      "promptText": "reduce glare from nearby ______ e.g., using adjustable blinds",
+      "promptText": "reduce glare from nearby ______ e.g., using adjustable blinds provide suitable lightingensure a comfortable temperaturecheck",
       "sentenceBefore": "reduce glare from nearby",
-      "sentenceAfter": "e.g., using adjustable blinds",
+      "sentenceAfter": "e.g., using adjustable blinds provide suitable lightingensure a comfortable temperaturecheck",
       "groupPrompt": "Complete the notes below.",
       "notesContext": {
         "bulletPrefix": "•"
@@ -15013,9 +16084,9 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "questionType": "notes_completion",
       "groupId": "g_15_20",
       "extractionStatus": "extracted",
-      "promptText": "check ______ from equipment",
-      "sentenceBefore": "check",
-      "sentenceAfter": "from equipment",
+      "promptText": "e.g., using adjustable blinds provide suitable lightingensure a comfortable temperaturecheck ______ from equipment check air flow and quality in working areaTasks and breaksEmployees should havea variety of tasks to choose froma fair workloadan input into task achievement and",
+      "sentenceBefore": "e.g., using adjustable blinds provide suitable lightingensure a comfortable temperaturecheck",
+      "sentenceAfter": "from equipment check air flow and quality in working areaTasks and breaksEmployees should havea variety of tasks to choose froma fair workloadan input into task achievement and",
       "groupPrompt": "Complete the notes below.",
       "notesContext": {
         "bulletPrefix": "•"
@@ -15025,8 +16096,9 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "questionType": "notes_completion",
       "groupId": "g_15_20",
       "extractionStatus": "extracted",
-      "promptText": "an input into task achievement and ______",
-      "sentenceBefore": "an input into task achievement and",
+      "promptText": "from equipment check air flow and quality in working areaTasks and breaksEmployees should havea variety of tasks to choose froma fair workloadan input into task achievement and ______ regular, short breaks, at times of their own",
+      "sentenceBefore": "from equipment check air flow and quality in working areaTasks and breaksEmployees should havea variety of tasks to choose froma fair workloadan input into task achievement and",
+      "sentenceAfter": "regular, short breaks, at times of their own",
       "groupPrompt": "Complete the notes below.",
       "notesContext": {
         "bulletPrefix": "•"
@@ -15036,8 +16108,9 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "questionType": "notes_completion",
       "groupId": "g_15_20",
       "extractionStatus": "extracted",
-      "promptText": "regular, short breaks, at times of their own ______",
+      "promptText": "regular, short breaks, at times of their own ______ breaks not located at their workstation",
       "sentenceBefore": "regular, short breaks, at times of their own",
+      "sentenceAfter": "breaks not located at their workstation",
       "groupPrompt": "Complete the notes below.",
       "notesContext": {
         "bulletPrefix": "•"
@@ -15267,29 +16340,37 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
     "37": {
       "questionType": "summary_completion_text",
       "groupId": "g_37_40",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "When first interviewed, Fosbury called his jumping style a ______ but he realised that this had not made an impression on the",
+      "sentenceBefore": "When first interviewed, Fosbury called his jumping style a",
+      "sentenceAfter": "but he realised that this had not made an impression on the",
       "groupPrompt": "Complete the summary below."
     },
     "38": {
       "questionType": "summary_completion_text",
       "groupId": "g_37_40",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "but he realised that this had not made an impression on the ______ . In his next interview, he used a name taken from the description given to a newspaper photo — and this was the name that everyone noted. He says the name was appropriate because his town is near a",
+      "sentenceBefore": "but he realised that this had not made an impression on the",
+      "sentenceAfter": ". In his next interview, he used a name taken from the description given to a newspaper photo — and this was the name that everyone noted. He says the name was appropriate because his town is near a",
       "groupPrompt": "Complete the summary below."
     },
     "39": {
       "questionType": "summary_completion_text",
       "groupId": "g_37_40",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": ". In his next interview, he used a name taken from the description given to a newspaper photo — and this was the name that everyone noted. He says the name was appropriate because his town is near a ______ and a",
+      "sentenceBefore": ". In his next interview, he used a name taken from the description given to a newspaper photo — and this was the name that everyone noted. He says the name was appropriate because his town is near a",
+      "sentenceAfter": "and a",
       "groupPrompt": "Complete the summary below."
     },
     "40": {
       "questionType": "summary_completion_text",
       "groupId": "g_37_40",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "and a ______ does a similar type of 'flopping' movement when brought to land.",
+      "sentenceBefore": "and a",
+      "sentenceAfter": "does a similar type of 'flopping' movement when brought to land.",
       "groupPrompt": "Complete the summary below."
     }
   },
@@ -15534,7 +16615,36 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "referenceBox": {
         "title": "List of Headings",
         "type": "headings",
-        "items": []
+        "items": [
+          {
+            "label": "i",
+            "text": "The extra time is worth it"
+          },
+          {
+            "label": "ii",
+            "text": "The preferred rhubarb for consumers"
+          },
+          {
+            "label": "iii",
+            "text": "Yorkshire's declining air quality"
+          },
+          {
+            "label": "iv",
+            "text": "Observing the selection process"
+          },
+          {
+            "label": "v",
+            "text": "Suggesting a possible beginning"
+          },
+          {
+            "label": "vi",
+            "text": "A long-standing family business"
+          },
+          {
+            "label": "vii",
+            "text": "The best region for forced rhubarb"
+          }
+        ]
       }
     },
     "29": {
@@ -15545,7 +16655,36 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "referenceBox": {
         "title": "List of Headings",
         "type": "headings",
-        "items": []
+        "items": [
+          {
+            "label": "i",
+            "text": "The extra time is worth it"
+          },
+          {
+            "label": "ii",
+            "text": "The preferred rhubarb for consumers"
+          },
+          {
+            "label": "iii",
+            "text": "Yorkshire's declining air quality"
+          },
+          {
+            "label": "iv",
+            "text": "Observing the selection process"
+          },
+          {
+            "label": "v",
+            "text": "Suggesting a possible beginning"
+          },
+          {
+            "label": "vi",
+            "text": "A long-standing family business"
+          },
+          {
+            "label": "vii",
+            "text": "The best region for forced rhubarb"
+          }
+        ]
       }
     },
     "30": {
@@ -15556,7 +16695,36 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "referenceBox": {
         "title": "List of Headings",
         "type": "headings",
-        "items": []
+        "items": [
+          {
+            "label": "i",
+            "text": "The extra time is worth it"
+          },
+          {
+            "label": "ii",
+            "text": "The preferred rhubarb for consumers"
+          },
+          {
+            "label": "iii",
+            "text": "Yorkshire's declining air quality"
+          },
+          {
+            "label": "iv",
+            "text": "Observing the selection process"
+          },
+          {
+            "label": "v",
+            "text": "Suggesting a possible beginning"
+          },
+          {
+            "label": "vi",
+            "text": "A long-standing family business"
+          },
+          {
+            "label": "vii",
+            "text": "The best region for forced rhubarb"
+          }
+        ]
       }
     },
     "31": {
@@ -15567,7 +16735,36 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "referenceBox": {
         "title": "List of Headings",
         "type": "headings",
-        "items": []
+        "items": [
+          {
+            "label": "i",
+            "text": "The extra time is worth it"
+          },
+          {
+            "label": "ii",
+            "text": "The preferred rhubarb for consumers"
+          },
+          {
+            "label": "iii",
+            "text": "Yorkshire's declining air quality"
+          },
+          {
+            "label": "iv",
+            "text": "Observing the selection process"
+          },
+          {
+            "label": "v",
+            "text": "Suggesting a possible beginning"
+          },
+          {
+            "label": "vi",
+            "text": "A long-standing family business"
+          },
+          {
+            "label": "vii",
+            "text": "The best region for forced rhubarb"
+          }
+        ]
       }
     },
     "32": {
@@ -15578,7 +16775,36 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "referenceBox": {
         "title": "List of Headings",
         "type": "headings",
-        "items": []
+        "items": [
+          {
+            "label": "i",
+            "text": "The extra time is worth it"
+          },
+          {
+            "label": "ii",
+            "text": "The preferred rhubarb for consumers"
+          },
+          {
+            "label": "iii",
+            "text": "Yorkshire's declining air quality"
+          },
+          {
+            "label": "iv",
+            "text": "Observing the selection process"
+          },
+          {
+            "label": "v",
+            "text": "Suggesting a possible beginning"
+          },
+          {
+            "label": "vi",
+            "text": "A long-standing family business"
+          },
+          {
+            "label": "vii",
+            "text": "The best region for forced rhubarb"
+          }
+        ]
       }
     },
     "33": {
@@ -15589,7 +16815,36 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "referenceBox": {
         "title": "List of Headings",
         "type": "headings",
-        "items": []
+        "items": [
+          {
+            "label": "i",
+            "text": "The extra time is worth it"
+          },
+          {
+            "label": "ii",
+            "text": "The preferred rhubarb for consumers"
+          },
+          {
+            "label": "iii",
+            "text": "Yorkshire's declining air quality"
+          },
+          {
+            "label": "iv",
+            "text": "Observing the selection process"
+          },
+          {
+            "label": "v",
+            "text": "Suggesting a possible beginning"
+          },
+          {
+            "label": "vi",
+            "text": "A long-standing family business"
+          },
+          {
+            "label": "vii",
+            "text": "The best region for forced rhubarb"
+          }
+        ]
       }
     },
     "34": {
@@ -15691,29 +16946,37 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
     "37": {
       "questionType": "summary_completion_text",
       "groupId": "g_37_40",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "During November, rhubarb crowns are removed from the soil and replanted in dark sheds that have plenty of heating. These conditions encourage such fast growth that the buds make a ______ sound as the pink stalks appear. The growing period lasts around three weeks. After that, the rhubarb can be picked by a group of people known as",
+      "sentenceBefore": "During November, rhubarb crowns are removed from the soil and replanted in dark sheds that have plenty of heating. These conditions encourage such fast growth that the buds make a",
+      "sentenceAfter": "sound as the pink stalks appear. The growing period lasts around three weeks. After that, the rhubarb can be picked by a group of people known as",
       "groupPrompt": "Complete the summary below."
     },
     "38": {
       "questionType": "summary_completion_text",
       "groupId": "g_37_40",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "sound as the pink stalks appear. The growing period lasts around three weeks. After that, the rhubarb can be picked by a group of people known as ______ . They use a",
+      "sentenceBefore": "sound as the pink stalks appear. The growing period lasts around three weeks. After that, the rhubarb can be picked by a group of people known as",
+      "sentenceAfter": ". They use a",
       "groupPrompt": "Complete the summary below."
     },
     "39": {
       "questionType": "summary_completion_text",
       "groupId": "g_37_40",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": ". They use a ______ to inspect the stems and to make sure they are as long as a human",
+      "sentenceBefore": ". They use a",
+      "sentenceAfter": "to inspect the stems and to make sure they are as long as a human",
       "groupPrompt": "Complete the summary below."
     },
     "40": {
       "questionType": "summary_completion_text",
       "groupId": "g_37_40",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "to inspect the stems and to make sure they are as long as a human ______ before handling them with expert skill.",
+      "sentenceBefore": "to inspect the stems and to make sure they are as long as a human",
+      "sentenceAfter": "before handling them with expert skill.",
       "groupPrompt": "Complete the summary below."
     }
   },
@@ -15876,98 +17139,99 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "questionType": "table_completion",
       "groupId": "g_22_27",
       "extractionStatus": "extracted",
-      "promptText": "Working underfloor in a ______ area Dealing with a wood product",
-      "sentenceBefore": "Working underfloor in a",
-      "sentenceAfter": "area Dealing with a wood product",
+      "promptText": "The work of plumbersType of plumberWork-related issuesSkills/Actions needed ResidentialWorking underfloor in a ______ area Dealing with a wood productPlan carefullyAlways use the appropriate",
+      "sentenceBefore": "The work of plumbersType of plumberWork-related issuesSkills/Actions needed ResidentialWorking underfloor in a",
+      "sentenceAfter": "area Dealing with a wood productPlan carefullyAlways use the appropriate",
       "groupPrompt": "Complete the table below.",
       "tableContext": {
-        "cellText": "Working underfloor in a"
+        "cellText": "The work of plumbersType of plumberWork-related issuesSkills/Actions needed ResidentialWorking underfloor in a"
       }
     },
     "23": {
       "questionType": "table_completion",
       "groupId": "g_22_27",
       "extractionStatus": "extracted",
-      "promptText": "Always use the appropriate ______ for each tool",
-      "sentenceBefore": "Always use the appropriate",
-      "sentenceAfter": "for each tool",
+      "promptText": "area Dealing with a wood productPlan carefullyAlways use the appropriate ______ for each tool Consider how different",
+      "sentenceBefore": "area Dealing with a wood productPlan carefullyAlways use the appropriate",
+      "sentenceAfter": "for each tool Consider how different",
       "groupPrompt": "Complete the table below.",
       "tableContext": {
-        "cellText": "Always use the appropriate"
-      },
-      "notesContext": {
-        "bulletPrefix": "•"
+        "cellText": "area Dealing with a wood productPlan carefullyAlways use the appropriate"
       }
     },
     "24": {
       "questionType": "table_completion",
       "groupId": "g_22_27",
       "extractionStatus": "extracted",
-      "promptText": "Consider how different ______ will be affected",
-      "sentenceBefore": "Consider how different",
-      "sentenceAfter": "will be affected",
+      "promptText": "for each tool Consider how different ______ will be affected CommercialWorking with advanced equipment designed for integrated systems Fully comprehend instructionsTake images of structures to locate important materials like",
+      "sentenceBefore": "for each tool Consider how different",
+      "sentenceAfter": "will be affected CommercialWorking with advanced equipment designed for integrated systems Fully comprehend instructionsTake images of structures to locate important materials like",
       "groupPrompt": "Complete the table below.",
       "tableContext": {
-        "cellText": "Consider how different"
-      },
-      "notesContext": {
-        "bulletPrefix": "•"
+        "cellText": "for each tool Consider how different"
       }
     },
     "25": {
       "questionType": "table_completion",
       "groupId": "g_22_27",
       "extractionStatus": "extracted",
-      "promptText": "Fully comprehend instructionsTake images of structures to locate important materials like ______",
-      "sentenceBefore": "Fully comprehend instructionsTake images of structures to locate important materials like",
+      "promptText": "will be affected CommercialWorking with advanced equipment designed for integrated systems Fully comprehend instructionsTake images of structures to locate important materials like ______ ServiceDiagnosing problems and their causesFully understanding something someone else installed, e.g., a shower unit Providing quick,",
+      "sentenceBefore": "will be affected CommercialWorking with advanced equipment designed for integrated systems Fully comprehend instructionsTake images of structures to locate important materials like",
+      "sentenceAfter": "ServiceDiagnosing problems and their causesFully understanding something someone else installed, e.g., a shower unit Providing quick,",
       "groupPrompt": "Complete the table below.",
       "tableContext": {
-        "cellText": "Fully comprehend instructionsTake images of structures to locate important materials like"
+        "cellText": "will be affected CommercialWorking with advanced equipment designed for integrated systems Fully comprehend instructionsTake images of structures to locate important materials like"
       }
     },
     "26": {
       "questionType": "table_completion",
       "groupId": "g_22_27",
       "extractionStatus": "extracted",
-      "promptText": "Diagnosing problems and their causesFully understanding something someone else installed, e.g., a shower unit Providing quick, ______ solutions",
-      "sentenceBefore": "Diagnosing problems and their causesFully understanding something someone else installed, e.g., a shower unit Providing quick,",
-      "sentenceAfter": "solutions",
+      "promptText": "ServiceDiagnosing problems and their causesFully understanding something someone else installed, e.g., a shower unit Providing quick, ______ solutions Deal well with people who have a lot of",
+      "sentenceBefore": "ServiceDiagnosing problems and their causesFully understanding something someone else installed, e.g., a shower unit Providing quick,",
+      "sentenceAfter": "solutions Deal well with people who have a lot of",
       "groupPrompt": "Complete the table below.",
       "tableContext": {
-        "cellText": "Diagnosing problems and their causesFully understanding something someone else installed, e.g., a shower unit Providing quick,"
+        "cellText": "ServiceDiagnosing problems and their causesFully understanding something someone else installed, e.g., a shower unit Providing quick,"
       }
     },
     "27": {
       "questionType": "table_completion",
       "groupId": "g_22_27",
       "extractionStatus": "extracted",
-      "promptText": "Deal well with people who have a lot of ______ or disruption as a result of their problems",
-      "sentenceBefore": "Deal well with people who have a lot of",
+      "promptText": "solutions Deal well with people who have a lot of ______ or disruption as a result of their problems",
+      "sentenceBefore": "solutions Deal well with people who have a lot of",
       "sentenceAfter": "or disruption as a result of their problems",
       "groupPrompt": "Complete the table below.",
       "tableContext": {
-        "cellText": "Deal well with people who have a lot of"
+        "cellText": "solutions Deal well with people who have a lot of"
       }
     },
     "28": {
       "questionType": "summary_completion_text",
       "groupId": "g_28_31",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "It was necessary to do some preparation before the 40 dormice could be released in Wensleydale. First, members of the PTES had to choose a suitable wooded area for them. Then ______ gave them a thorough check. The team divided the animals into",
+      "sentenceBefore": "It was necessary to do some preparation before the 40 dormice could be released in Wensleydale. First, members of the PTES had to choose a suitable wooded area for them. Then",
+      "sentenceAfter": "gave them a thorough check. The team divided the animals into",
       "groupPrompt": "Complete the summary below."
     },
     "29": {
       "questionType": "summary_completion_text",
       "groupId": "g_28_31",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "gave them a thorough check. The team divided the animals into ______ before introducing them to their temporary tree homes. These were boxes which were enclosed by cages. Initially, the dormice could not get out, but the team brought",
+      "sentenceBefore": "gave them a thorough check. The team divided the animals into",
+      "sentenceAfter": "before introducing them to their temporary tree homes. These were boxes which were enclosed by cages. Initially, the dormice could not get out, but the team brought",
       "groupPrompt": "Complete the summary below."
     },
     "30": {
       "questionType": "summary_completion_text",
       "groupId": "g_28_31",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "before introducing them to their temporary tree homes. These were boxes which were enclosed by cages. Initially, the dormice could not get out, but the team brought ______ on a regular basis.",
+      "sentenceBefore": "before introducing them to their temporary tree homes. These were boxes which were enclosed by cages. Initially, the dormice could not get out, but the team brought",
+      "sentenceAfter": "on a regular basis.",
       "groupPrompt": "Complete the summary below."
     },
     "31": {
@@ -16220,45 +17484,45 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "questionType": "table_completion",
       "groupId": "g_4_7",
       "extractionStatus": "extracted",
-      "promptText": "wide range of ______ used techniques pollute air",
-      "sentenceBefore": "wide range of",
-      "sentenceAfter": "used techniques pollute air",
+      "promptText": "Intensive farming versus aeroponic urban farming GrowthSelectionSaleIntensive farmingwide range of ______ used techniques pollute airquality not goodvarieties of fruit and vegetables chosen that can survive long",
+      "sentenceBefore": "Intensive farming versus aeroponic urban farming GrowthSelectionSaleIntensive farmingwide range of",
+      "sentenceAfter": "used techniques pollute airquality not goodvarieties of fruit and vegetables chosen that can survive long",
       "groupPrompt": "Complete the table below.",
       "tableContext": {
-        "cellText": "wide range of"
+        "cellText": "Intensive farming versus aeroponic urban farming GrowthSelectionSaleIntensive farmingwide range of"
       }
     },
     "5": {
       "questionType": "table_completion",
       "groupId": "g_4_7",
       "extractionStatus": "extracted",
-      "promptText": "quality not goodvarieties of fruit and vegetables chosen that can survive long ______",
-      "sentenceBefore": "quality not goodvarieties of fruit and vegetables chosen that can survive long",
+      "promptText": "used techniques pollute airquality not goodvarieties of fruit and vegetables chosen that can survive long ______",
+      "sentenceBefore": "used techniques pollute airquality not goodvarieties of fruit and vegetables chosen that can survive long",
       "groupPrompt": "Complete the table below.",
       "tableContext": {
-        "cellText": "quality not goodvarieties of fruit and vegetables chosen that can survive long"
+        "cellText": "used techniques pollute airquality not goodvarieties of fruit and vegetables chosen that can survive long"
       }
     },
     "6": {
       "questionType": "table_completion",
       "groupId": "g_4_7",
       "extractionStatus": "extracted",
-      "promptText": "______ receive very little of overall income",
-      "sentenceAfter": "receive very little of overall income",
+      "promptText": "______ receive very little of overall income Aeroponic urban farmingno soil usednutrients added to water, which is recycledproduce chosen because of its",
+      "sentenceAfter": "receive very little of overall income Aeroponic urban farmingno soil usednutrients added to water, which is recycledproduce chosen because of its",
       "groupPrompt": "Complete the table below.",
       "tableContext": {
-        "cellText": "______ receive very little of overall income"
+        "cellText": "______ receive very little of overall income Aeroponic urban farmingno soil usednutrients added to water, which is recycledproduce chosen because of its"
       }
     },
     "7": {
       "questionType": "table_completion",
       "groupId": "g_4_7",
       "extractionStatus": "extracted",
-      "promptText": "produce chosen because of its ______",
-      "sentenceBefore": "produce chosen because of its",
+      "promptText": "receive very little of overall income Aeroponic urban farmingno soil usednutrients added to water, which is recycledproduce chosen because of its ______",
+      "sentenceBefore": "receive very little of overall income Aeroponic urban farmingno soil usednutrients added to water, which is recycledproduce chosen because of its",
       "groupPrompt": "Complete the table below.",
       "tableContext": {
-        "cellText": "produce chosen because of its"
+        "cellText": "receive very little of overall income Aeroponic urban farmingno soil usednutrients added to water, which is recycledproduce chosen because of its"
       }
     },
     "8": {
@@ -16582,16 +17846,7 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "referenceBox": {
         "title": "List of Timber",
         "type": "features",
-        "items": [
-          {
-            "label": "B",
-            "text": "or"
-          },
-          {
-            "label": "C",
-            "text": "Write the correct letter, A,"
-          }
-        ]
+        "items": []
       }
     },
     "20": {
@@ -16623,16 +17878,7 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "referenceBox": {
         "title": "List of Timber",
         "type": "features",
-        "items": [
-          {
-            "label": "B",
-            "text": "or"
-          },
-          {
-            "label": "C",
-            "text": "Write the correct letter, A,"
-          }
-        ]
+        "items": []
       }
     },
     "21": {
@@ -16664,16 +17910,7 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "referenceBox": {
         "title": "List of Timber",
         "type": "features",
-        "items": [
-          {
-            "label": "B",
-            "text": "or"
-          },
-          {
-            "label": "C",
-            "text": "Write the correct letter, A,"
-          }
-        ]
+        "items": []
       }
     },
     "22": {
@@ -16944,22 +18181,28 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
     "32": {
       "questionType": "summary_completion_text",
       "groupId": "g_32_35",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "The committee gives advice on how the ______ of space can be achieved. The committee advises that when satellites are no longer active, any unused",
+      "sentenceBefore": "The committee gives advice on how the",
+      "sentenceAfter": "of space can be achieved. The committee advises that when satellites are no longer active, any unused",
       "groupPrompt": "Complete the summary below."
     },
     "33": {
       "questionType": "summary_completion_text",
       "groupId": "g_32_35",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "of space can be achieved. The committee advises that when satellites are no longer active, any unused ______ or pressurised material that could cause",
+      "sentenceBefore": "of space can be achieved. The committee advises that when satellites are no longer active, any unused",
+      "sentenceAfter": "or pressurised material that could cause",
       "groupPrompt": "Complete the summary below."
     },
     "34": {
       "questionType": "summary_completion_text",
       "groupId": "g_32_35",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "or pressurised material that could cause ______ should be removed.",
+      "sentenceBefore": "or pressurised material that could cause",
+      "sentenceAfter": "should be removed.",
       "groupPrompt": "Complete the summary below."
     },
     "35": {
@@ -17006,16 +18249,7 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "referenceBox": {
         "title": "List of People",
         "type": "features",
-        "items": [
-          {
-            "label": "C",
-            "text": "or"
-          },
-          {
-            "label": "D",
-            "text": "Write the correct letter, A, B,"
-          }
-        ]
+        "items": []
       }
     },
     "37": {
@@ -17053,16 +18287,7 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "referenceBox": {
         "title": "List of People",
         "type": "features",
-        "items": [
-          {
-            "label": "C",
-            "text": "or"
-          },
-          {
-            "label": "D",
-            "text": "Write the correct letter, A, B,"
-          }
-        ]
+        "items": []
       }
     },
     "38": {
@@ -17100,16 +18325,7 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "referenceBox": {
         "title": "List of People",
         "type": "features",
-        "items": [
-          {
-            "label": "C",
-            "text": "or"
-          },
-          {
-            "label": "D",
-            "text": "Write the correct letter, A, B,"
-          }
-        ]
+        "items": []
       }
     },
     "39": {
@@ -17147,16 +18363,7 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "referenceBox": {
         "title": "List of People",
         "type": "features",
-        "items": [
-          {
-            "label": "C",
-            "text": "or"
-          },
-          {
-            "label": "D",
-            "text": "Write the correct letter, A, B,"
-          }
-        ]
+        "items": []
       }
     },
     "40": {
@@ -17194,16 +18401,7 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "referenceBox": {
         "title": "List of People",
         "type": "features",
-        "items": [
-          {
-            "label": "C",
-            "text": "or"
-          },
-          {
-            "label": "D",
-            "text": "Write the correct letter, A, B,"
-          }
-        ]
+        "items": []
       }
     }
   },
@@ -17212,8 +18410,8 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "questionType": "notes_completion",
       "groupId": "g_1_8",
       "extractionStatus": "extracted",
-      "promptText": "the ditch and henge were dug, possibly using tools made from ______",
-      "sentenceBefore": "the ditch and henge were dug, possibly using tools made from",
+      "promptText": "StonehengeConstructionStage 1:the ditch and henge were dug, possibly using tools made from ______",
+      "sentenceBefore": "StonehengeConstructionStage 1:the ditch and henge were dug, possibly using tools made from",
       "groupPrompt": "Complete the notes below.",
       "notesContext": {
         "bulletPrefix": "•"
@@ -17223,8 +18421,8 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "questionType": "notes_completion",
       "groupId": "g_1_8",
       "extractionStatus": "extracted",
-      "promptText": "______ may have been arranged in deep pits inside the circle",
-      "sentenceAfter": "may have been arranged in deep pits inside the circle",
+      "promptText": "______ may have been arranged in deep pits inside the circle Stage 2:bluestones from the Preseli Hills were placed in standing position theories about the transportation of the bluestones: archaeological: builders used",
+      "sentenceAfter": "may have been arranged in deep pits inside the circle Stage 2:bluestones from the Preseli Hills were placed in standing position theories about the transportation of the bluestones: archaeological: builders used",
       "groupPrompt": "Complete the notes below.",
       "notesContext": {
         "bulletPrefix": "•"
@@ -17234,8 +18432,8 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "questionType": "notes_completion",
       "groupId": "g_1_8",
       "extractionStatus": "extracted",
-      "promptText": "builders used ______ to make sledges and rollers",
-      "sentenceBefore": "builders used",
+      "promptText": "may have been arranged in deep pits inside the circle Stage 2:bluestones from the Preseli Hills were placed in standing position theories about the transportation of the bluestones: archaeological: builders used ______ to make sledges and rollers",
+      "sentenceBefore": "may have been arranged in deep pits inside the circle Stage 2:bluestones from the Preseli Hills were placed in standing position theories about the transportation of the bluestones: archaeological: builders used",
       "sentenceAfter": "to make sledges and rollers",
       "groupPrompt": "Complete the notes below.",
       "notesContext": {
@@ -17246,8 +18444,9 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "questionType": "notes_completion",
       "groupId": "g_1_8",
       "extractionStatus": "extracted",
-      "promptText": "______ pulled them on giant baskets",
-      "sentenceAfter": "pulled them on giant baskets",
+      "promptText": "to make sledges and rollers ______ pulled them on giant baskets geological: they were brought from Wales by",
+      "sentenceBefore": "to make sledges and rollers",
+      "sentenceAfter": "pulled them on giant baskets geological: they were brought from Wales by",
       "groupPrompt": "Complete the notes below.",
       "notesContext": {
         "bulletPrefix": "•"
@@ -17257,8 +18456,9 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "questionType": "notes_completion",
       "groupId": "g_1_8",
       "extractionStatus": "extracted",
-      "promptText": "geological: they were brought from Wales by ______",
-      "sentenceBefore": "geological: they were brought from Wales by",
+      "promptText": "pulled them on giant baskets geological: they were brought from Wales by ______ Stage 3:sandstone slabs were arranged into an outer crescent or ring Buildersa theory arose in the 17th century that its builders were Celtic",
+      "sentenceBefore": "pulled them on giant baskets geological: they were brought from Wales by",
+      "sentenceAfter": "Stage 3:sandstone slabs were arranged into an outer crescent or ring Buildersa theory arose in the 17th century that its builders were Celtic",
       "groupPrompt": "Complete the notes below.",
       "notesContext": {
         "bulletPrefix": "•"
@@ -17268,8 +18468,9 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "questionType": "notes_completion",
       "groupId": "g_1_8",
       "extractionStatus": "extracted",
-      "promptText": "a theory arose in the 17th century that its builders were Celtic ______",
-      "sentenceBefore": "a theory arose in the 17th century that its builders were Celtic",
+      "promptText": "Stage 3:sandstone slabs were arranged into an outer crescent or ring Buildersa theory arose in the 17th century that its builders were Celtic ______ Purposemany experts agree it has been used as a",
+      "sentenceBefore": "Stage 3:sandstone slabs were arranged into an outer crescent or ring Buildersa theory arose in the 17th century that its builders were Celtic",
+      "sentenceAfter": "Purposemany experts agree it has been used as a",
       "groupPrompt": "Complete the notes below.",
       "notesContext": {
         "bulletPrefix": "•"
@@ -17279,9 +18480,9 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "questionType": "notes_completion",
       "groupId": "g_1_8",
       "extractionStatus": "extracted",
-      "promptText": "many experts agree it has been used as a ______ site",
-      "sentenceBefore": "many experts agree it has been used as a",
-      "sentenceAfter": "site",
+      "promptText": "Purposemany experts agree it has been used as a ______ site in the 1960s, it was suggested that it worked as a kind of",
+      "sentenceBefore": "Purposemany experts agree it has been used as a",
+      "sentenceAfter": "site in the 1960s, it was suggested that it worked as a kind of",
       "groupPrompt": "Complete the notes below.",
       "notesContext": {
         "bulletPrefix": "•"
@@ -17291,8 +18492,8 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "questionType": "notes_completion",
       "groupId": "g_1_8",
       "extractionStatus": "extracted",
-      "promptText": "in the 1960s, it was suggested that it worked as a kind of ______",
-      "sentenceBefore": "in the 1960s, it was suggested that it worked as a kind of",
+      "promptText": "site in the 1960s, it was suggested that it worked as a kind of ______",
+      "sentenceBefore": "site in the 1960s, it was suggested that it worked as a kind of",
       "groupPrompt": "Complete the notes below.",
       "notesContext": {
         "bulletPrefix": "•"
@@ -17556,8 +18757,10 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
     "24": {
       "questionType": "summary_completion_bank",
       "groupId": "g_24_26",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary using the list of phrases, A-F, below.",
+      "extractionStatus": "extracted",
+      "promptText": "AI currently has a limited role in the way ______ are allocated in the health service. The positive aspect of AI having a bigger role is that it would be more efficient and lead to patient benefits. However, such a change would result, for example, in certain",
+      "sentenceBefore": "AI currently has a limited role in the way",
+      "sentenceAfter": "are allocated in the health service. The positive aspect of AI having a bigger role is that it would be more efficient and lead to patient benefits. However, such a change would result, for example, in certain",
       "groupPrompt": "Complete the summary using the list of phrases, A-F, below.",
       "referenceBox": {
         "title": "Word Bank",
@@ -17568,8 +18771,10 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
     "25": {
       "questionType": "summary_completion_bank",
       "groupId": "g_24_26",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary using the list of phrases, A-F, below.",
+      "extractionStatus": "extracted",
+      "promptText": "are allocated in the health service. The positive aspect of AI having a bigger role is that it would be more efficient and lead to patient benefits. However, such a change would result, for example, in certain ______ not having their current level of",
+      "sentenceBefore": "are allocated in the health service. The positive aspect of AI having a bigger role is that it would be more efficient and lead to patient benefits. However, such a change would result, for example, in certain",
+      "sentenceAfter": "not having their current level of",
       "groupPrompt": "Complete the summary using the list of phrases, A-F, below.",
       "referenceBox": {
         "title": "Word Bank",
@@ -17580,8 +18785,10 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
     "26": {
       "questionType": "summary_completion_bank",
       "groupId": "g_24_26",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary using the list of phrases, A-F, below.",
+      "extractionStatus": "extracted",
+      "promptText": "not having their current level of ______ . It is therefore important that AI goals are appropriate so that discriminatory practices could be avoided.",
+      "sentenceBefore": "not having their current level of",
+      "sentenceAfter": ". It is therefore important that AI goals are appropriate so that discriminatory practices could be avoided.",
       "groupPrompt": "Complete the summary using the list of phrases, A-F, below.",
       "referenceBox": {
         "title": "Word Bank",
@@ -17641,50 +18848,64 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
     "34": {
       "questionType": "summary_completion_text",
       "groupId": "g_34_40",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "A collection of Leonardo da Vinci's paperwork reveals his design of a new city beside the Ticino River. This was to provide better ______ for trade and a less polluted environment. Although Leonardo da Vinci's city shared many of the ideals of his time, some of his innovations were considered unconventional in their design. They included features that can be seen in some tower blocks today, such as",
+      "sentenceBefore": "A collection of Leonardo da Vinci's paperwork reveals his design of a new city beside the Ticino River. This was to provide better",
+      "sentenceAfter": "for trade and a less polluted environment. Although Leonardo da Vinci's city shared many of the ideals of his time, some of his innovations were considered unconventional in their design. They included features that can be seen in some tower blocks today, such as",
       "groupPrompt": "Complete the summary below."
     },
     "35": {
       "questionType": "summary_completion_text",
       "groupId": "g_34_40",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "for trade and a less polluted environment. Although Leonardo da Vinci's city shared many of the ideals of his time, some of his innovations were considered unconventional in their design. They included features that can be seen in some tower blocks today, such as ______ on the exterior of a building.",
+      "sentenceBefore": "for trade and a less polluted environment. Although Leonardo da Vinci's city shared many of the ideals of his time, some of his innovations were considered unconventional in their design. They included features that can be seen in some tower blocks today, such as",
+      "sentenceAfter": "on the exterior of a building.",
       "groupPrompt": "Complete the summary below."
     },
     "36": {
       "questionType": "summary_completion_text",
       "groupId": "g_34_40",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "Leonardo da Vinci wasn't only an architect. His expertise in ______ was evident in his plans for artificial canals within his ideal city. He also believed that the width of streets should relate to the height of houses in case earthquakes occurred. The design of many cities in Italy today follows this",
+      "sentenceBefore": "Leonardo da Vinci wasn't only an architect. His expertise in",
+      "sentenceAfter": "was evident in his plans for artificial canals within his ideal city. He also believed that the width of streets should relate to the height of houses in case earthquakes occurred. The design of many cities in Italy today follows this",
       "groupPrompt": "Complete the summary below."
     },
     "37": {
       "questionType": "summary_completion_text",
       "groupId": "g_34_40",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "was evident in his plans for artificial canals within his ideal city. He also believed that the width of streets should relate to the height of houses in case earthquakes occurred. The design of many cities in Italy today follows this ______ .",
+      "sentenceBefore": "was evident in his plans for artificial canals within his ideal city. He also believed that the width of streets should relate to the height of houses in case earthquakes occurred. The design of many cities in Italy today follows this",
+      "sentenceAfter": ".",
       "groupPrompt": "Complete the summary below."
     },
     "38": {
       "questionType": "summary_completion_text",
       "groupId": "g_34_40",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "While some cities from ______ times have aspects that can also be found in Leonardo's designs, his ideas weren't put into practice until long after his death.",
+      "sentenceBefore": "While some cities from",
+      "sentenceAfter": "times have aspects that can also be found in Leonardo's designs, his ideas weren't put into practice until long after his death.",
       "groupPrompt": "Complete the summary below."
     },
     "39": {
       "questionType": "summary_completion_text",
       "groupId": "g_34_40",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "times have aspects that can also be found in Leonardo's designs, his ideas weren't put into practice until long after his death. ______ is one example of a city that was redesigned in the 19th century in the way that Leonardo had envisaged. His ideas are also relevant to today's world, where building",
+      "sentenceBefore": "times have aspects that can also be found in Leonardo's designs, his ideas weren't put into practice until long after his death.",
+      "sentenceAfter": "is one example of a city that was redesigned in the 19th century in the way that Leonardo had envisaged. His ideas are also relevant to today's world, where building",
       "groupPrompt": "Complete the summary below."
     },
     "40": {
       "questionType": "summary_completion_text",
       "groupId": "g_34_40",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "is one example of a city that was redesigned in the 19th century in the way that Leonardo had envisaged. His ideas are also relevant to today's world, where building ______ no longer seems to be the best approach.",
+      "sentenceBefore": "is one example of a city that was redesigned in the 19th century in the way that Leonardo had envisaged. His ideas are also relevant to today's world, where building",
+      "sentenceAfter": "no longer seems to be the best approach.",
       "groupPrompt": "Complete the summary below."
     }
   },
@@ -17716,29 +18937,37 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
     "5": {
       "questionType": "summary_completion_text",
       "groupId": "g_5_8",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "Wood is a traditional building material, but current environmental concerns are encouraging ______ to use wood in modern construction projects. Using wood, however, has its challenges. For example, as",
+      "sentenceBefore": "Wood is a traditional building material, but current environmental concerns are encouraging",
+      "sentenceAfter": "to use wood in modern construction projects. Using wood, however, has its challenges. For example, as",
       "groupPrompt": "Complete the summary below."
     },
     "6": {
       "questionType": "summary_completion_text",
       "groupId": "g_5_8",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "to use wood in modern construction projects. Using wood, however, has its challenges. For example, as ______ in the atmosphere enters wood, it increases in size. In addition, wood is prone to pests and the risk of fire is greater. However, wood can be turned into a better construction material if it is treated and combined with other materials. In one process,",
+      "sentenceBefore": "to use wood in modern construction projects. Using wood, however, has its challenges. For example, as",
+      "sentenceAfter": "in the atmosphere enters wood, it increases in size. In addition, wood is prone to pests and the risk of fire is greater. However, wood can be turned into a better construction material if it is treated and combined with other materials. In one process,",
       "groupPrompt": "Complete the summary below."
     },
     "7": {
       "questionType": "summary_completion_text",
       "groupId": "g_5_8",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "in the atmosphere enters wood, it increases in size. In addition, wood is prone to pests and the risk of fire is greater. However, wood can be turned into a better construction material if it is treated and combined with other materials. In one process, ______ of solid wood are glued together to create building blocks. These blocks are lighter than concrete and steel but equal them in strength. Experts say that wooden buildings are an improvement on those made of concrete and steel in terms of the",
+      "sentenceBefore": "in the atmosphere enters wood, it increases in size. In addition, wood is prone to pests and the risk of fire is greater. However, wood can be turned into a better construction material if it is treated and combined with other materials. In one process,",
+      "sentenceAfter": "of solid wood are glued together to create building blocks. These blocks are lighter than concrete and steel but equal them in strength. Experts say that wooden buildings are an improvement on those made of concrete and steel in terms of the",
       "groupPrompt": "Complete the summary below."
     },
     "8": {
       "questionType": "summary_completion_text",
       "groupId": "g_5_8",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "of solid wood are glued together to create building blocks. These blocks are lighter than concrete and steel but equal them in strength. Experts say that wooden buildings are an improvement on those made of concrete and steel in terms of the ______ with which they can be constructed and how much noise is generated by the process.",
+      "sentenceBefore": "of solid wood are glued together to create building blocks. These blocks are lighter than concrete and steel but equal them in strength. Experts say that wooden buildings are an improvement on those made of concrete and steel in terms of the",
+      "sentenceAfter": "with which they can be constructed and how much noise is generated by the process.",
       "groupPrompt": "Complete the summary below."
     },
     "9": {
@@ -17804,7 +19033,40 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "referenceBox": {
         "title": "List of Headings",
         "type": "headings",
-        "items": []
+        "items": [
+          {
+            "label": "i",
+            "text": "A period in cold conditions before the technology is assessed"
+          },
+          {
+            "label": "ii",
+            "text": "Marketing issues lead to failure"
+          },
+          {
+            "label": "iii",
+            "text": "Good and bad aspects of steam technology are passed on"
+          },
+          {
+            "label": "iv",
+            "text": "A possible solution to the issues of today"
+          },
+          {
+            "label": "v",
+            "text": "Further improvements lead to commercial orders"
+          },
+          {
+            "label": "vi",
+            "text": "Positive publicity at last for this quiet, clean, fast vehicle"
+          },
+          {
+            "label": "vii",
+            "text": "A disappointing outcome for customers"
+          },
+          {
+            "label": "viii",
+            "text": "A better option than the steam car arises"
+          }
+        ]
       }
     },
     "15": {
@@ -17815,7 +19077,40 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "referenceBox": {
         "title": "List of Headings",
         "type": "headings",
-        "items": []
+        "items": [
+          {
+            "label": "i",
+            "text": "A period in cold conditions before the technology is assessed"
+          },
+          {
+            "label": "ii",
+            "text": "Marketing issues lead to failure"
+          },
+          {
+            "label": "iii",
+            "text": "Good and bad aspects of steam technology are passed on"
+          },
+          {
+            "label": "iv",
+            "text": "A possible solution to the issues of today"
+          },
+          {
+            "label": "v",
+            "text": "Further improvements lead to commercial orders"
+          },
+          {
+            "label": "vi",
+            "text": "Positive publicity at last for this quiet, clean, fast vehicle"
+          },
+          {
+            "label": "vii",
+            "text": "A disappointing outcome for customers"
+          },
+          {
+            "label": "viii",
+            "text": "A better option than the steam car arises"
+          }
+        ]
       }
     },
     "16": {
@@ -17826,7 +19121,40 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "referenceBox": {
         "title": "List of Headings",
         "type": "headings",
-        "items": []
+        "items": [
+          {
+            "label": "i",
+            "text": "A period in cold conditions before the technology is assessed"
+          },
+          {
+            "label": "ii",
+            "text": "Marketing issues lead to failure"
+          },
+          {
+            "label": "iii",
+            "text": "Good and bad aspects of steam technology are passed on"
+          },
+          {
+            "label": "iv",
+            "text": "A possible solution to the issues of today"
+          },
+          {
+            "label": "v",
+            "text": "Further improvements lead to commercial orders"
+          },
+          {
+            "label": "vi",
+            "text": "Positive publicity at last for this quiet, clean, fast vehicle"
+          },
+          {
+            "label": "vii",
+            "text": "A disappointing outcome for customers"
+          },
+          {
+            "label": "viii",
+            "text": "A better option than the steam car arises"
+          }
+        ]
       }
     },
     "17": {
@@ -17837,7 +19165,40 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "referenceBox": {
         "title": "List of Headings",
         "type": "headings",
-        "items": []
+        "items": [
+          {
+            "label": "i",
+            "text": "A period in cold conditions before the technology is assessed"
+          },
+          {
+            "label": "ii",
+            "text": "Marketing issues lead to failure"
+          },
+          {
+            "label": "iii",
+            "text": "Good and bad aspects of steam technology are passed on"
+          },
+          {
+            "label": "iv",
+            "text": "A possible solution to the issues of today"
+          },
+          {
+            "label": "v",
+            "text": "Further improvements lead to commercial orders"
+          },
+          {
+            "label": "vi",
+            "text": "Positive publicity at last for this quiet, clean, fast vehicle"
+          },
+          {
+            "label": "vii",
+            "text": "A disappointing outcome for customers"
+          },
+          {
+            "label": "viii",
+            "text": "A better option than the steam car arises"
+          }
+        ]
       }
     },
     "18": {
@@ -17848,7 +19209,40 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "referenceBox": {
         "title": "List of Headings",
         "type": "headings",
-        "items": []
+        "items": [
+          {
+            "label": "i",
+            "text": "A period in cold conditions before the technology is assessed"
+          },
+          {
+            "label": "ii",
+            "text": "Marketing issues lead to failure"
+          },
+          {
+            "label": "iii",
+            "text": "Good and bad aspects of steam technology are passed on"
+          },
+          {
+            "label": "iv",
+            "text": "A possible solution to the issues of today"
+          },
+          {
+            "label": "v",
+            "text": "Further improvements lead to commercial orders"
+          },
+          {
+            "label": "vi",
+            "text": "Positive publicity at last for this quiet, clean, fast vehicle"
+          },
+          {
+            "label": "vii",
+            "text": "A disappointing outcome for customers"
+          },
+          {
+            "label": "viii",
+            "text": "A better option than the steam car arises"
+          }
+        ]
       }
     },
     "19": {
@@ -17859,7 +19253,40 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "referenceBox": {
         "title": "List of Headings",
         "type": "headings",
-        "items": []
+        "items": [
+          {
+            "label": "i",
+            "text": "A period in cold conditions before the technology is assessed"
+          },
+          {
+            "label": "ii",
+            "text": "Marketing issues lead to failure"
+          },
+          {
+            "label": "iii",
+            "text": "Good and bad aspects of steam technology are passed on"
+          },
+          {
+            "label": "iv",
+            "text": "A possible solution to the issues of today"
+          },
+          {
+            "label": "v",
+            "text": "Further improvements lead to commercial orders"
+          },
+          {
+            "label": "vi",
+            "text": "Positive publicity at last for this quiet, clean, fast vehicle"
+          },
+          {
+            "label": "vii",
+            "text": "A disappointing outcome for customers"
+          },
+          {
+            "label": "viii",
+            "text": "A better option than the steam car arises"
+          }
+        ]
       }
     },
     "20": {
@@ -17870,7 +19297,40 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "referenceBox": {
         "title": "List of Headings",
         "type": "headings",
-        "items": []
+        "items": [
+          {
+            "label": "i",
+            "text": "A period in cold conditions before the technology is assessed"
+          },
+          {
+            "label": "ii",
+            "text": "Marketing issues lead to failure"
+          },
+          {
+            "label": "iii",
+            "text": "Good and bad aspects of steam technology are passed on"
+          },
+          {
+            "label": "iv",
+            "text": "A possible solution to the issues of today"
+          },
+          {
+            "label": "v",
+            "text": "Further improvements lead to commercial orders"
+          },
+          {
+            "label": "vi",
+            "text": "Positive publicity at last for this quiet, clean, fast vehicle"
+          },
+          {
+            "label": "vii",
+            "text": "A disappointing outcome for customers"
+          },
+          {
+            "label": "viii",
+            "text": "A better option than the steam car arises"
+          }
+        ]
       }
     },
     "21": {
@@ -17990,15 +19450,19 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
     "25": {
       "questionType": "summary_completion_text",
       "groupId": "g_24_26",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "The steam car was too expensive for many people and its design was constantly being altered. Under ______ cars were produced before the company went out of business. However, even today, there are Model Es on the road in the US. They are straightforward to maintain, and they satisfy California's",
+      "sentenceBefore": "The steam car was too expensive for many people and its design was constantly being altered. Under",
+      "sentenceAfter": "cars were produced before the company went out of business. However, even today, there are Model Es on the road in the US. They are straightforward to maintain, and they satisfy California's",
       "groupPrompt": "Complete the summary below."
     },
     "26": {
       "questionType": "summary_completion_text",
       "groupId": "g_24_26",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "cars were produced before the company went out of business. However, even today, there are Model Es on the road in the US. They are straightforward to maintain, and they satisfy California's ______ emissions laws. Perhaps today's technology and materials would help us revive the steam car.",
+      "sentenceBefore": "cars were produced before the company went out of business. However, even today, there are Model Es on the road in the US. They are straightforward to maintain, and they satisfy California's",
+      "sentenceAfter": "emissions laws. Perhaps today's technology and materials would help us revive the steam car.",
       "groupPrompt": "Complete the summary below."
     },
     "27": {
@@ -18132,8 +19596,10 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
     "31": {
       "questionType": "summary_completion_bank",
       "groupId": "g_31_35",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary using the list of phrases, A-I, below.",
+      "extractionStatus": "extracted",
+      "promptText": "According to Professor John Hattie of the Melbourne Education Research Institute there is very little indication that streaming leads to ______ . He points out that, in schools which use streaming, the most significant impact is on those students placed in the",
+      "sentenceBefore": "According to Professor John Hattie of the Melbourne Education Research Institute there is very little indication that streaming leads to",
+      "sentenceAfter": ". He points out that, in schools which use streaming, the most significant impact is on those students placed in the",
       "groupPrompt": "Complete the summary using the list of phrases, A-I, below.",
       "referenceBox": {
         "title": "Word Bank",
@@ -18144,8 +19610,10 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
     "32": {
       "questionType": "summary_completion_bank",
       "groupId": "g_31_35",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary using the list of phrases, A-I, below.",
+      "extractionStatus": "extracted",
+      "promptText": ". He points out that, in schools which use streaming, the most significant impact is on those students placed in the ______ , especially where a large proportion of them have",
+      "sentenceBefore": ". He points out that, in schools which use streaming, the most significant impact is on those students placed in the",
+      "sentenceAfter": ", especially where a large proportion of them have",
       "groupPrompt": "Complete the summary using the list of phrases, A-I, below.",
       "referenceBox": {
         "title": "Word Bank",
@@ -18156,8 +19624,10 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
     "33": {
       "questionType": "summary_completion_bank",
       "groupId": "g_31_35",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary using the list of phrases, A-I, below.",
+      "extractionStatus": "extracted",
+      "promptText": ", especially where a large proportion of them have ______ . Meanwhile, for the",
+      "sentenceBefore": ", especially where a large proportion of them have",
+      "sentenceAfter": ". Meanwhile, for the",
       "groupPrompt": "Complete the summary using the list of phrases, A-I, below.",
       "referenceBox": {
         "title": "Word Bank",
@@ -18168,8 +19638,10 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
     "34": {
       "questionType": "summary_completion_bank",
       "groupId": "g_31_35",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary using the list of phrases, A-I, below.",
+      "extractionStatus": "extracted",
+      "promptText": ". Meanwhile, for the ______ , there appears to be only minimal advantage. A further issue is that teachers tend to have",
+      "sentenceBefore": ". Meanwhile, for the",
+      "sentenceAfter": ", there appears to be only minimal advantage. A further issue is that teachers tend to have",
       "groupPrompt": "Complete the summary using the list of phrases, A-I, below.",
       "referenceBox": {
         "title": "Word Bank",
@@ -18180,8 +19652,10 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
     "35": {
       "questionType": "summary_completion_bank",
       "groupId": "g_31_35",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary using the list of phrases, A-I, below.",
+      "extractionStatus": "extracted",
+      "promptText": ", there appears to be only minimal advantage. A further issue is that teachers tend to have ______ of students in streamed groups.",
+      "sentenceBefore": ", there appears to be only minimal advantage. A further issue is that teachers tend to have",
+      "sentenceAfter": "of students in streamed groups.",
       "groupPrompt": "Complete the summary using the list of phrases, A-I, below.",
       "referenceBox": {
         "title": "Word Bank",
@@ -18259,29 +19733,37 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
     "6": {
       "questionType": "summary_completion_text",
       "groupId": "g_6_9",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "City rooftops covered with greenery have many advantages. These include lessening the likelihood that floods will occur, reducing how much money is spent on ______ and creating environments that are suitable for wildlife. In many cases, they can also be used for producing",
+      "sentenceBefore": "City rooftops covered with greenery have many advantages. These include lessening the likelihood that floods will occur, reducing how much money is spent on",
+      "sentenceAfter": "and creating environments that are suitable for wildlife. In many cases, they can also be used for producing",
       "groupPrompt": "Complete the summary below."
     },
     "7": {
       "questionType": "summary_completion_text",
       "groupId": "g_6_9",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "and creating environments that are suitable for wildlife. In many cases, they can also be used for producing ______ .",
+      "sentenceBefore": "and creating environments that are suitable for wildlife. In many cases, they can also be used for producing",
+      "sentenceAfter": ".",
       "groupPrompt": "Complete the summary below."
     },
     "8": {
       "questionType": "summary_completion_text",
       "groupId": "g_6_9",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "There are also social benefits of green roofs. For example, the medical profession recommends ______ as an activity to help people cope with mental health issues. Studies have also shown that the availability of green spaces can prevent physical problems such as",
+      "sentenceBefore": "There are also social benefits of green roofs. For example, the medical profession recommends",
+      "sentenceAfter": "as an activity to help people cope with mental health issues. Studies have also shown that the availability of green spaces can prevent physical problems such as",
       "groupPrompt": "Complete the summary below."
     },
     "9": {
       "questionType": "summary_completion_text",
       "groupId": "g_6_9",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "as an activity to help people cope with mental health issues. Studies have also shown that the availability of green spaces can prevent physical problems such as ______ .",
+      "sentenceBefore": "as an activity to help people cope with mental health issues. Studies have also shown that the availability of green spaces can prevent physical problems such as",
+      "sentenceAfter": ".",
       "groupPrompt": "Complete the summary below."
     },
     "10": {
@@ -18667,8 +20149,10 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
     "31": {
       "questionType": "summary_completion_bank",
       "groupId": "g_31_36",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary using the list of phrases, A-J, below.",
+      "extractionStatus": "extracted",
+      "promptText": "One of the remarkable things about Wegener from a ______ is that although he proposed a theory of continental drift, he was not a geologist. His",
+      "sentenceBefore": "One of the remarkable things about Wegener from a",
+      "sentenceAfter": "is that although he proposed a theory of continental drift, he was not a geologist. His",
       "groupPrompt": "Complete the summary using the list of phrases, A-J, below.",
       "referenceBox": {
         "title": "Word Bank",
@@ -18679,8 +20163,10 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
     "32": {
       "questionType": "summary_completion_bank",
       "groupId": "g_31_36",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary using the list of phrases, A-J, below.",
+      "extractionStatus": "extracted",
+      "promptText": "is that although he proposed a theory of continental drift, he was not a geologist. His ______ were limited to atmospheric physics. However, at the time he proposed his theory of continental drift in 1912, he was already a person of",
+      "sentenceBefore": "is that although he proposed a theory of continental drift, he was not a geologist. His",
+      "sentenceAfter": "were limited to atmospheric physics. However, at the time he proposed his theory of continental drift in 1912, he was already a person of",
       "groupPrompt": "Complete the summary using the list of phrases, A-J, below.",
       "referenceBox": {
         "title": "Word Bank",
@@ -18691,8 +20177,10 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
     "33": {
       "questionType": "summary_completion_bank",
       "groupId": "g_31_36",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary using the list of phrases, A-J, below.",
+      "extractionStatus": "extracted",
+      "promptText": "were limited to atmospheric physics. However, at the time he proposed his theory of continental drift in 1912, he was already a person of ______ . Six years previously, there had been his",
+      "sentenceBefore": "were limited to atmospheric physics. However, at the time he proposed his theory of continental drift in 1912, he was already a person of",
+      "sentenceAfter": ". Six years previously, there had been his",
       "groupPrompt": "Complete the summary using the list of phrases, A-J, below.",
       "referenceBox": {
         "title": "Word Bank",
@@ -18703,8 +20191,10 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
     "34": {
       "questionType": "summary_completion_bank",
       "groupId": "g_31_36",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary using the list of phrases, A-J, below.",
+      "extractionStatus": "extracted",
+      "promptText": ". Six years previously, there had been his ______ of 52 hours in a hot-air balloon, followed by his well-publicised but",
+      "sentenceBefore": ". Six years previously, there had been his",
+      "sentenceAfter": "of 52 hours in a hot-air balloon, followed by his well-publicised but",
       "groupPrompt": "Complete the summary using the list of phrases, A-J, below.",
       "referenceBox": {
         "title": "Word Bank",
@@ -18715,8 +20205,10 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
     "35": {
       "questionType": "summary_completion_bank",
       "groupId": "g_31_36",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary using the list of phrases, A-J, below.",
+      "extractionStatus": "extracted",
+      "promptText": "of 52 hours in a hot-air balloon, followed by his well-publicised but ______ of Greenland's coast. With the publication of his textbook on thermodynamics, he had also come to the attention of a",
+      "sentenceBefore": "of 52 hours in a hot-air balloon, followed by his well-publicised but",
+      "sentenceAfter": "of Greenland's coast. With the publication of his textbook on thermodynamics, he had also come to the attention of a",
       "groupPrompt": "Complete the summary using the list of phrases, A-J, below.",
       "referenceBox": {
         "title": "Word Bank",
@@ -18727,8 +20219,10 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
     "36": {
       "questionType": "summary_completion_bank",
       "groupId": "g_31_36",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary using the list of phrases, A-J, below.",
+      "extractionStatus": "extracted",
+      "promptText": "of Greenland's coast. With the publication of his textbook on thermodynamics, he had also come to the attention of a ______ of German scientists.",
+      "sentenceBefore": "of Greenland's coast. With the publication of his textbook on thermodynamics, he had also come to the attention of a",
+      "sentenceAfter": "of German scientists.",
       "groupPrompt": "Complete the summary using the list of phrases, A-J, below.",
       "referenceBox": {
         "title": "Word Bank",
@@ -18961,9 +20455,9 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "questionType": "notes_completion",
       "groupId": "g_15_22",
       "extractionStatus": "extracted",
-      "promptText": "must be manufactured well, e.g., have a ______ on it",
-      "sentenceBefore": "must be manufactured well, e.g., have a",
-      "sentenceAfter": "on it",
+      "promptText": "Lifting equipmentmust be manufactured well, e.g., have a ______ on itmay need to undergo",
+      "sentenceBefore": "Lifting equipmentmust be manufactured well, e.g., have a",
+      "sentenceAfter": "on itmay need to undergo",
       "groupPrompt": "Complete the notes below.",
       "notesContext": {
         "bulletPrefix": "•"
@@ -18973,9 +20467,9 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "questionType": "notes_completion",
       "groupId": "g_15_22",
       "extractionStatus": "extracted",
-      "promptText": "may need to undergo ______ before use",
-      "sentenceBefore": "may need to undergo",
-      "sentenceAfter": "before use",
+      "promptText": "on itmay need to undergo ______ before usemay need a regular check by an",
+      "sentenceBefore": "on itmay need to undergo",
+      "sentenceAfter": "before usemay need a regular check by an",
       "groupPrompt": "Complete the notes below.",
       "notesContext": {
         "bulletPrefix": "•"
@@ -18985,8 +20479,9 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "questionType": "notes_completion",
       "groupId": "g_15_22",
       "extractionStatus": "extracted",
-      "promptText": "may need a regular check by an ______",
-      "sentenceBefore": "may need a regular check by an",
+      "promptText": "before usemay need a regular check by an ______ Lift plansrelevant to cranesused to establish and carry out",
+      "sentenceBefore": "before usemay need a regular check by an",
+      "sentenceAfter": "Lift plansrelevant to cranesused to establish and carry out",
       "groupPrompt": "Complete the notes below.",
       "notesContext": {
         "bulletPrefix": "•"
@@ -18996,9 +20491,9 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "questionType": "notes_completion",
       "groupId": "g_15_22",
       "extractionStatus": "extracted",
-      "promptText": "used to establish and carry out ______ for any risks",
-      "sentenceBefore": "used to establish and carry out",
-      "sentenceAfter": "for any risks",
+      "promptText": "Lift plansrelevant to cranesused to establish and carry out ______ for any risksa",
+      "sentenceBefore": "Lift plansrelevant to cranesused to establish and carry out",
+      "sentenceAfter": "for any risksa",
       "groupPrompt": "Complete the notes below.",
       "notesContext": {
         "bulletPrefix": "•"
@@ -19008,9 +20503,9 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "questionType": "notes_completion",
       "groupId": "g_15_22",
       "extractionStatus": "extracted",
-      "promptText": "a ______ can be consulted during a 'Tool Box Talk'",
-      "sentenceBefore": "a",
-      "sentenceAfter": "can be consulted during a 'Tool Box Talk'",
+      "promptText": "for any risksa ______ can be consulted during a 'Tool Box Talk'Preventing accidents with heavy loadsuse objects such as",
+      "sentenceBefore": "for any risksa",
+      "sentenceAfter": "can be consulted during a 'Tool Box Talk'Preventing accidents with heavy loadsuse objects such as",
       "groupPrompt": "Complete the notes below.",
       "notesContext": {
         "bulletPrefix": "•"
@@ -19020,9 +20515,9 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "questionType": "notes_completion",
       "groupId": "g_15_22",
       "extractionStatus": "extracted",
-      "promptText": "use objects such as ______ to make sure the load doesn't pass over anyone's head",
-      "sentenceBefore": "use objects such as",
-      "sentenceAfter": "to make sure the load doesn't pass over anyone's head",
+      "promptText": "can be consulted during a 'Tool Box Talk'Preventing accidents with heavy loadsuse objects such as ______ to make sure the load doesn't pass over anyone's headappoint a",
+      "sentenceBefore": "can be consulted during a 'Tool Box Talk'Preventing accidents with heavy loadsuse objects such as",
+      "sentenceAfter": "to make sure the load doesn't pass over anyone's headappoint a",
       "groupPrompt": "Complete the notes below.",
       "notesContext": {
         "bulletPrefix": "•"
@@ -19032,9 +20527,9 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "questionType": "notes_completion",
       "groupId": "g_15_22",
       "extractionStatus": "extracted",
-      "promptText": "appoint a ______ to give verbal directions to the crane driver",
-      "sentenceBefore": "appoint a",
-      "sentenceAfter": "to give verbal directions to the crane driver",
+      "promptText": "to make sure the load doesn't pass over anyone's headappoint a ______ to give verbal directions to the crane driverSecondary lifting equipment (chains, slings, etc.)more likely to cause",
+      "sentenceBefore": "to make sure the load doesn't pass over anyone's headappoint a",
+      "sentenceAfter": "to give verbal directions to the crane driverSecondary lifting equipment (chains, slings, etc.)more likely to cause",
       "groupPrompt": "Complete the notes below.",
       "notesContext": {
         "bulletPrefix": "•"
@@ -19044,8 +20539,8 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "questionType": "notes_completion",
       "groupId": "g_15_22",
       "extractionStatus": "extracted",
-      "promptText": "more likely to cause ______",
-      "sentenceBefore": "more likely to cause",
+      "promptText": "to give verbal directions to the crane driverSecondary lifting equipment (chains, slings, etc.)more likely to cause ______",
+      "sentenceBefore": "to give verbal directions to the crane driverSecondary lifting equipment (chains, slings, etc.)more likely to cause",
       "groupPrompt": "Complete the notes below.",
       "notesContext": {
         "bulletPrefix": "•"
@@ -19054,37 +20549,62 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
     "23": {
       "questionType": "table_completion",
       "groupId": "g_23_27",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the table below.",
-      "groupPrompt": "Complete the table below."
+      "extractionStatus": "extracted",
+      "promptText": "Strategies for dealing with customer complaintsStrategyYour approachThe customer...Stay calmRemember it is not a direct attack on you.Do not try to ______ the argument. usually had",
+      "sentenceBefore": "Strategies for dealing with customer complaintsStrategyYour approachThe customer...Stay calmRemember it is not a direct attack on you.Do not try to",
+      "sentenceAfter": "the argument. usually had",
+      "groupPrompt": "Complete the table below.",
+      "tableContext": {
+        "cellText": "Strategies for dealing with customer complaintsStrategyYour approachThe customer...Stay calmRemember it is not a direct attack on you.Do not try to"
+      }
     },
     "24": {
       "questionType": "table_completion",
       "groupId": "g_23_27",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the table below.",
-      "groupPrompt": "Complete the table below."
+      "extractionStatus": "extracted",
+      "promptText": "the argument. usually had ______ that were not fulfilled. Listen wellUse short phrases in reply.cannot recognise a",
+      "sentenceBefore": "the argument. usually had",
+      "sentenceAfter": "that were not fulfilled. Listen wellUse short phrases in reply.cannot recognise a",
+      "groupPrompt": "Complete the table below.",
+      "tableContext": {
+        "cellText": "the argument. usually had"
+      }
     },
     "25": {
       "questionType": "table_completion",
       "groupId": "g_23_27",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the table below.",
-      "groupPrompt": "Complete the table below."
+      "extractionStatus": "extracted",
+      "promptText": "that were not fulfilled. Listen wellUse short phrases in reply.cannot recognise a ______ until calm Get the factsAsk questions and begin a proper conversation.will start to trust you.Suggest actionBe sure of your company's",
+      "sentenceBefore": "that were not fulfilled. Listen wellUse short phrases in reply.cannot recognise a",
+      "sentenceAfter": "until calm Get the factsAsk questions and begin a proper conversation.will start to trust you.Suggest actionBe sure of your company's",
+      "groupPrompt": "Complete the table below.",
+      "tableContext": {
+        "cellText": "that were not fulfilled. Listen wellUse short phrases in reply.cannot recognise a"
+      }
     },
     "26": {
       "questionType": "table_completion",
       "groupId": "g_23_27",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the table below.",
-      "groupPrompt": "Complete the table below."
+      "extractionStatus": "extracted",
+      "promptText": "until calm Get the factsAsk questions and begin a proper conversation.will start to trust you.Suggest actionBe sure of your company's ______ on complaints. may well make a verbal",
+      "sentenceBefore": "until calm Get the factsAsk questions and begin a proper conversation.will start to trust you.Suggest actionBe sure of your company's",
+      "sentenceAfter": "on complaints. may well make a verbal",
+      "groupPrompt": "Complete the table below.",
+      "tableContext": {
+        "cellText": "until calm Get the factsAsk questions and begin a proper conversation.will start to trust you.Suggest actionBe sure of your company's"
+      }
     },
     "27": {
       "questionType": "table_completion",
       "groupId": "g_23_27",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the table below.",
-      "groupPrompt": "Complete the table below."
+      "extractionStatus": "extracted",
+      "promptText": "on complaints. may well make a verbal ______ in future.",
+      "sentenceBefore": "on complaints. may well make a verbal",
+      "sentenceAfter": "in future.",
+      "groupPrompt": "Complete the table below.",
+      "tableContext": {
+        "cellText": "on complaints. may well make a verbal"
+      }
     },
     "28": {
       "questionType": "matching_headings",
@@ -19094,7 +20614,40 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "referenceBox": {
         "title": "List of Headings",
         "type": "headings",
-        "items": []
+        "items": [
+          {
+            "label": "i",
+            "text": "An enterprise arising from success in other countries"
+          },
+          {
+            "label": "ii",
+            "text": "The hope that storks will inspire a range of emotions and actions"
+          },
+          {
+            "label": "iii",
+            "text": "Support from some organisations but not from others"
+          },
+          {
+            "label": "iv",
+            "text": "Finding new types of habitat"
+          },
+          {
+            "label": "v",
+            "text": "Opposition from the general public"
+          },
+          {
+            "label": "vi",
+            "text": "A sign of hope in difficult times"
+          },
+          {
+            "label": "vii",
+            "text": "Creatures which represent both joy and opposition"
+          },
+          {
+            "label": "viii",
+            "text": "Storks causing delight and the revival of public events"
+          }
+        ]
       }
     },
     "29": {
@@ -19105,7 +20658,40 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "referenceBox": {
         "title": "List of Headings",
         "type": "headings",
-        "items": []
+        "items": [
+          {
+            "label": "i",
+            "text": "An enterprise arising from success in other countries"
+          },
+          {
+            "label": "ii",
+            "text": "The hope that storks will inspire a range of emotions and actions"
+          },
+          {
+            "label": "iii",
+            "text": "Support from some organisations but not from others"
+          },
+          {
+            "label": "iv",
+            "text": "Finding new types of habitat"
+          },
+          {
+            "label": "v",
+            "text": "Opposition from the general public"
+          },
+          {
+            "label": "vi",
+            "text": "A sign of hope in difficult times"
+          },
+          {
+            "label": "vii",
+            "text": "Creatures which represent both joy and opposition"
+          },
+          {
+            "label": "viii",
+            "text": "Storks causing delight and the revival of public events"
+          }
+        ]
       }
     },
     "30": {
@@ -19116,7 +20702,40 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "referenceBox": {
         "title": "List of Headings",
         "type": "headings",
-        "items": []
+        "items": [
+          {
+            "label": "i",
+            "text": "An enterprise arising from success in other countries"
+          },
+          {
+            "label": "ii",
+            "text": "The hope that storks will inspire a range of emotions and actions"
+          },
+          {
+            "label": "iii",
+            "text": "Support from some organisations but not from others"
+          },
+          {
+            "label": "iv",
+            "text": "Finding new types of habitat"
+          },
+          {
+            "label": "v",
+            "text": "Opposition from the general public"
+          },
+          {
+            "label": "vi",
+            "text": "A sign of hope in difficult times"
+          },
+          {
+            "label": "vii",
+            "text": "Creatures which represent both joy and opposition"
+          },
+          {
+            "label": "viii",
+            "text": "Storks causing delight and the revival of public events"
+          }
+        ]
       }
     },
     "31": {
@@ -19127,7 +20746,40 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "referenceBox": {
         "title": "List of Headings",
         "type": "headings",
-        "items": []
+        "items": [
+          {
+            "label": "i",
+            "text": "An enterprise arising from success in other countries"
+          },
+          {
+            "label": "ii",
+            "text": "The hope that storks will inspire a range of emotions and actions"
+          },
+          {
+            "label": "iii",
+            "text": "Support from some organisations but not from others"
+          },
+          {
+            "label": "iv",
+            "text": "Finding new types of habitat"
+          },
+          {
+            "label": "v",
+            "text": "Opposition from the general public"
+          },
+          {
+            "label": "vi",
+            "text": "A sign of hope in difficult times"
+          },
+          {
+            "label": "vii",
+            "text": "Creatures which represent both joy and opposition"
+          },
+          {
+            "label": "viii",
+            "text": "Storks causing delight and the revival of public events"
+          }
+        ]
       }
     },
     "32": {
@@ -19138,7 +20790,40 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "referenceBox": {
         "title": "List of Headings",
         "type": "headings",
-        "items": []
+        "items": [
+          {
+            "label": "i",
+            "text": "An enterprise arising from success in other countries"
+          },
+          {
+            "label": "ii",
+            "text": "The hope that storks will inspire a range of emotions and actions"
+          },
+          {
+            "label": "iii",
+            "text": "Support from some organisations but not from others"
+          },
+          {
+            "label": "iv",
+            "text": "Finding new types of habitat"
+          },
+          {
+            "label": "v",
+            "text": "Opposition from the general public"
+          },
+          {
+            "label": "vi",
+            "text": "A sign of hope in difficult times"
+          },
+          {
+            "label": "vii",
+            "text": "Creatures which represent both joy and opposition"
+          },
+          {
+            "label": "viii",
+            "text": "Storks causing delight and the revival of public events"
+          }
+        ]
       }
     },
     "33": {
@@ -19149,35 +20834,76 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "referenceBox": {
         "title": "List of Headings",
         "type": "headings",
-        "items": []
+        "items": [
+          {
+            "label": "i",
+            "text": "An enterprise arising from success in other countries"
+          },
+          {
+            "label": "ii",
+            "text": "The hope that storks will inspire a range of emotions and actions"
+          },
+          {
+            "label": "iii",
+            "text": "Support from some organisations but not from others"
+          },
+          {
+            "label": "iv",
+            "text": "Finding new types of habitat"
+          },
+          {
+            "label": "v",
+            "text": "Opposition from the general public"
+          },
+          {
+            "label": "vi",
+            "text": "A sign of hope in difficult times"
+          },
+          {
+            "label": "vii",
+            "text": "Creatures which represent both joy and opposition"
+          },
+          {
+            "label": "viii",
+            "text": "Storks causing delight and the revival of public events"
+          }
+        ]
       }
     },
     "34": {
       "questionType": "summary_completion_text",
       "groupId": "g_34_37",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "Last spring, two white storks were observed nesting at Knepp Estate, putting ______ together high up in a large oak tree. The female laid three eggs, which unfortunately proved to be",
+      "sentenceBefore": "Last spring, two white storks were observed nesting at Knepp Estate, putting",
+      "sentenceAfter": "together high up in a large oak tree. The female laid three eggs, which unfortunately proved to be",
       "groupPrompt": "Complete the summary below."
     },
     "35": {
       "questionType": "summary_completion_text",
       "groupId": "g_34_37",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "together high up in a large oak tree. The female laid three eggs, which unfortunately proved to be ______ . However, this was not surprising for such young storks. Naturalists believe they are likely to breed successfully in the future.",
+      "sentenceBefore": "together high up in a large oak tree. The female laid three eggs, which unfortunately proved to be",
+      "sentenceAfter": ". However, this was not surprising for such young storks. Naturalists believe they are likely to breed successfully in the future.",
       "groupPrompt": "Complete the summary below."
     },
     "36": {
       "questionType": "summary_completion_text",
       "groupId": "g_34_37",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "These two storks were bred in ______ and, after arriving in the UK, were kept for several years together with a few fully mature storks and some fellow juveniles before being released at Knepp. It appears that other storks are developing a sense of",
+      "sentenceBefore": "These two storks were bred in",
+      "sentenceAfter": "and, after arriving in the UK, were kept for several years together with a few fully mature storks and some fellow juveniles before being released at Knepp. It appears that other storks are developing a sense of",
       "groupPrompt": "Complete the summary below."
     },
     "37": {
       "questionType": "summary_completion_text",
       "groupId": "g_34_37",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "and, after arriving in the UK, were kept for several years together with a few fully mature storks and some fellow juveniles before being released at Knepp. It appears that other storks are developing a sense of ______ to their new home. One left Knepp for a year, only to fly back to be with the group again.",
+      "sentenceBefore": "and, after arriving in the UK, were kept for several years together with a few fully mature storks and some fellow juveniles before being released at Knepp. It appears that other storks are developing a sense of",
+      "sentenceAfter": "to their new home. One left Knepp for a year, only to fly back to be with the group again.",
       "groupPrompt": "Complete the summary below."
     },
     "38": {
@@ -19391,8 +21117,9 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "questionType": "notes_completion",
       "groupId": "g_15_21",
       "extractionStatus": "extracted",
-      "promptText": "make healthier options available to replace ______",
-      "sentenceBefore": "make healthier options available to replace",
+      "promptText": "Dietmake healthier options available to replace ______ have healthy food at meetingsoffer",
+      "sentenceBefore": "Dietmake healthier options available to replace",
+      "sentenceAfter": "have healthy food at meetingsoffer",
       "groupPrompt": "Complete the notes below.",
       "notesContext": {
         "bulletPrefix": "•"
@@ -19402,9 +21129,9 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "questionType": "notes_completion",
       "groupId": "g_15_21",
       "extractionStatus": "extracted",
-      "promptText": "offer ______ at no cost",
-      "sentenceBefore": "offer",
-      "sentenceAfter": "at no cost",
+      "promptText": "have healthy food at meetingsoffer ______ at no cost provide a",
+      "sentenceBefore": "have healthy food at meetingsoffer",
+      "sentenceAfter": "at no cost provide a",
       "groupPrompt": "Complete the notes below.",
       "notesContext": {
         "bulletPrefix": "•"
@@ -19414,8 +21141,8 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "questionType": "notes_completion",
       "groupId": "g_15_21",
       "extractionStatus": "extracted",
-      "promptText": "provide a ______ for staff use",
-      "sentenceBefore": "provide a",
+      "promptText": "at no cost provide a ______ for staff use",
+      "sentenceBefore": "at no cost provide a",
       "sentenceAfter": "for staff use",
       "groupPrompt": "Complete the notes below.",
       "notesContext": {
@@ -19426,8 +21153,9 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "questionType": "notes_completion",
       "groupId": "g_15_21",
       "extractionStatus": "extracted",
-      "promptText": "provide somewhere for employees to leave their ______",
-      "sentenceBefore": "provide somewhere for employees to leave their",
+      "promptText": "Exerciseprovide somewhere for employees to leave their ______ provide",
+      "sentenceBefore": "Exerciseprovide somewhere for employees to leave their",
+      "sentenceAfter": "provide",
       "groupPrompt": "Complete the notes below.",
       "notesContext": {
         "bulletPrefix": "•"
@@ -19665,36 +21393,46 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
     "36": {
       "questionType": "summary_completion_text",
       "groupId": "g_36_40",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "Clothkits was started by a designer named Anne Kennedy. Her clothing company specialised in selling ______ with a pattern printed on it. This came with",
+      "sentenceBefore": "Clothkits was started by a designer named Anne Kennedy. Her clothing company specialised in selling",
+      "sentenceAfter": "with a pattern printed on it. This came with",
       "groupPrompt": "Complete the summary below."
     },
     "37": {
       "questionType": "summary_completion_text",
       "groupId": "g_36_40",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "with a pattern printed on it. This came with ______ , which meant that buyers were able to make their own garments.",
+      "sentenceBefore": "with a pattern printed on it. This came with",
+      "sentenceAfter": ", which meant that buyers were able to make their own garments.",
       "groupPrompt": "Complete the summary below."
     },
     "38": {
       "questionType": "summary_completion_text",
       "groupId": "g_36_40",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "The very first garment Anne Kennedy made was a multi-coloured striped dress with a ______ pattern. A",
+      "sentenceBefore": "The very first garment Anne Kennedy made was a multi-coloured striped dress with a",
+      "sentenceAfter": "pattern. A",
       "groupPrompt": "Complete the summary below."
     },
     "39": {
       "questionType": "summary_completion_text",
       "groupId": "g_36_40",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "pattern. A ______ article led to many orders for this from around the world. As the company grew, she increased her workforce, and also sold",
+      "sentenceBefore": "pattern. A",
+      "sentenceAfter": "article led to many orders for this from around the world. As the company grew, she increased her workforce, and also sold",
       "groupPrompt": "Complete the summary below."
     },
     "40": {
       "questionType": "summary_completion_text",
       "groupId": "g_36_40",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "article led to many orders for this from around the world. As the company grew, she increased her workforce, and also sold ______ as part of her business. She exhibited her designs using her children as models.",
+      "sentenceBefore": "article led to many orders for this from around the world. As the company grew, she increased her workforce, and also sold",
+      "sentenceAfter": "as part of her business. She exhibited her designs using her children as models.",
       "groupPrompt": "Complete the summary below."
     }
   },
@@ -19855,9 +21593,9 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "questionType": "notes_completion",
       "groupId": "g_21_27",
       "extractionStatus": "extracted",
-      "promptText": "items such as ______ do not create a tripping hazard",
-      "sentenceBefore": "items such as",
-      "sentenceAfter": "do not create a tripping hazard",
+      "promptText": "Making sure offices are safeTo prevent slips, trips, falls and collisions, ensure that boxes, files, etc. are correctly storeditems such as ______ do not create a tripping hazard workers do not use",
+      "sentenceBefore": "Making sure offices are safeTo prevent slips, trips, falls and collisions, ensure that boxes, files, etc. are correctly storeditems such as",
+      "sentenceAfter": "do not create a tripping hazard workers do not use",
       "groupPrompt": "Complete the notes below.",
       "notesContext": {
         "bulletPrefix": "•"
@@ -19867,8 +21605,8 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "questionType": "notes_completion",
       "groupId": "g_21_27",
       "extractionStatus": "extracted",
-      "promptText": "workers do not use ______ to reach high objects",
-      "sentenceBefore": "workers do not use",
+      "promptText": "do not create a tripping hazard workers do not use ______ to reach high objects",
+      "sentenceBefore": "do not create a tripping hazard workers do not use",
       "sentenceAfter": "to reach high objects",
       "groupPrompt": "Complete the notes below.",
       "notesContext": {
@@ -19879,8 +21617,9 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "questionType": "notes_completion",
       "groupId": "g_21_27",
       "extractionStatus": "extracted",
-      "promptText": "______ are fixed at corners",
-      "sentenceAfter": "are fixed at corners",
+      "promptText": "to reach high objects ______ are fixed at corners floors are covered by",
+      "sentenceBefore": "to reach high objects",
+      "sentenceAfter": "are fixed at corners floors are covered by",
       "groupPrompt": "Complete the notes below.",
       "notesContext": {
         "bulletPrefix": "•"
@@ -19890,9 +21629,9 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "questionType": "notes_completion",
       "groupId": "g_21_27",
       "extractionStatus": "extracted",
-      "promptText": "floors are covered by ______ , especially at entrances",
-      "sentenceBefore": "floors are covered by",
-      "sentenceAfter": ", especially at entrances",
+      "promptText": "are fixed at corners floors are covered by ______ , especially at entrances To prevent injuries caused by objects, ensure that",
+      "sentenceBefore": "are fixed at corners floors are covered by",
+      "sentenceAfter": ", especially at entrances To prevent injuries caused by objects, ensure that",
       "groupPrompt": "Complete the notes below.",
       "notesContext": {
         "bulletPrefix": "•"
@@ -19902,8 +21641,9 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "questionType": "notes_completion",
       "groupId": "g_21_27",
       "extractionStatus": "extracted",
-      "promptText": "______ in office furniture are kept closed",
-      "sentenceAfter": "in office furniture are kept closed",
+      "promptText": ", especially at entrances To prevent injuries caused by objects, ensure that ______ in office furniture are kept closed objects which are heavy are kept near the floorTo prevent injuries due to posture and repetitive movement, ensure that office furniture is",
+      "sentenceBefore": ", especially at entrances To prevent injuries caused by objects, ensure that",
+      "sentenceAfter": "in office furniture are kept closed objects which are heavy are kept near the floorTo prevent injuries due to posture and repetitive movement, ensure that office furniture is",
       "groupPrompt": "Complete the notes below.",
       "notesContext": {
         "bulletPrefix": "•"
@@ -19913,8 +21653,8 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "questionType": "notes_completion",
       "groupId": "g_21_27",
       "extractionStatus": "extracted",
-      "promptText": "office furniture is ______",
-      "sentenceBefore": "office furniture is",
+      "promptText": "in office furniture are kept closed objects which are heavy are kept near the floorTo prevent injuries due to posture and repetitive movement, ensure that office furniture is ______",
+      "sentenceBefore": "in office furniture are kept closed objects which are heavy are kept near the floorTo prevent injuries due to posture and repetitive movement, ensure that office furniture is",
       "groupPrompt": "Complete the notes below.",
       "notesContext": {
         "bulletPrefix": "•"
@@ -19924,8 +21664,8 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "questionType": "notes_completion",
       "groupId": "g_21_27",
       "extractionStatus": "extracted",
-      "promptText": "______ are provided for documents",
-      "sentenceAfter": "are provided for documents",
+      "promptText": "______ are provided for documents the mouse is placed next to the computer keyboard",
+      "sentenceAfter": "are provided for documents the mouse is placed next to the computer keyboard",
       "groupPrompt": "Complete the notes below.",
       "notesContext": {
         "bulletPrefix": "•"
@@ -20280,63 +22020,73 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "questionType": "table_completion",
       "groupId": "g_22_27",
       "extractionStatus": "extracted",
-      "promptText": "Slippery floor surfacesRemove solid spills such as grain immediately. Ensure all items of ______ have good grip.",
-      "sentenceBefore": "Slippery floor surfacesRemove solid spills such as grain immediately. Ensure all items of",
-      "sentenceAfter": "have good grip.",
+      "promptText": "Hazard Managing the hazard Slips and trips Slippery floor surfacesRemove solid spills such as grain immediately. Ensure all items of ______ have good grip. Hoses and pipesEnsure they are fitted to walls where possible. Highlight obstructions with brightly coloured tape. Overhead obstaclesEnsure they are covered with",
+      "sentenceBefore": "Hazard Managing the hazard Slips and trips Slippery floor surfacesRemove solid spills such as grain immediately. Ensure all items of",
+      "sentenceAfter": "have good grip. Hoses and pipesEnsure they are fitted to walls where possible. Highlight obstructions with brightly coloured tape. Overhead obstaclesEnsure they are covered with",
       "groupPrompt": "Complete the table below.",
       "tableContext": {
-        "cellText": "Slippery floor surfacesRemove solid spills such as grain immediately. Ensure all items of"
+        "cellText": "Hazard Managing the hazard Slips and trips Slippery floor surfacesRemove solid spills such as grain immediately. Ensure all items of"
       }
     },
     "23": {
       "questionType": "table_completion",
       "groupId": "g_22_27",
       "extractionStatus": "extracted",
-      "promptText": "Overhead obstaclesEnsure they are covered with ______ .",
-      "sentenceBefore": "Overhead obstaclesEnsure they are covered with",
-      "sentenceAfter": ".",
+      "promptText": "have good grip. Hoses and pipesEnsure they are fitted to walls where possible. Highlight obstructions with brightly coloured tape. Overhead obstaclesEnsure they are covered with ______ . Unsuitable stepsProvide good lighting and install",
+      "sentenceBefore": "have good grip. Hoses and pipesEnsure they are fitted to walls where possible. Highlight obstructions with brightly coloured tape. Overhead obstaclesEnsure they are covered with",
+      "sentenceAfter": ". Unsuitable stepsProvide good lighting and install",
       "groupPrompt": "Complete the table below.",
       "tableContext": {
-        "cellText": "Overhead obstaclesEnsure they are covered with"
+        "cellText": "have good grip. Hoses and pipesEnsure they are fitted to walls where possible. Highlight obstructions with brightly coloured tape. Overhead obstaclesEnsure they are covered with"
       }
     },
     "24": {
       "questionType": "table_completion",
       "groupId": "g_22_27",
       "extractionStatus": "extracted",
-      "promptText": "Unsuitable stepsProvide good lighting and install ______ .",
-      "sentenceBefore": "Unsuitable stepsProvide good lighting and install",
-      "sentenceAfter": ".",
+      "promptText": ". Unsuitable stepsProvide good lighting and install ______ . Lifting and carrying Transporting containers and calves Spread the weight evenly between both hands. Try to avoid moving containers by hand, and use equipment such as",
+      "sentenceBefore": ". Unsuitable stepsProvide good lighting and install",
+      "sentenceAfter": ". Lifting and carrying Transporting containers and calves Spread the weight evenly between both hands. Try to avoid moving containers by hand, and use equipment such as",
       "groupPrompt": "Complete the table below.",
       "tableContext": {
-        "cellText": "Unsuitable stepsProvide good lighting and install"
+        "cellText": ". Unsuitable stepsProvide good lighting and install"
       }
     },
     "25": {
       "questionType": "table_completion",
       "groupId": "g_22_27",
       "extractionStatus": "extracted",
-      "promptText": "Transporting containers and calves Spread the weight evenly between both hands. Try to avoid moving containers by hand, and use equipment such as ______ instead.",
-      "sentenceBefore": "Transporting containers and calves Spread the weight evenly between both hands. Try to avoid moving containers by hand, and use equipment such as",
-      "sentenceAfter": "instead.",
+      "promptText": ". Lifting and carrying Transporting containers and calves Spread the weight evenly between both hands. Try to avoid moving containers by hand, and use equipment such as ______ instead. Milking by handRepetitive handling of milking equipment Keep everything accessible so that employees don't need to bend or",
+      "sentenceBefore": ". Lifting and carrying Transporting containers and calves Spread the weight evenly between both hands. Try to avoid moving containers by hand, and use equipment such as",
+      "sentenceAfter": "instead. Milking by handRepetitive handling of milking equipment Keep everything accessible so that employees don't need to bend or",
       "groupPrompt": "Complete the table below.",
       "tableContext": {
-        "cellText": "Transporting containers and calves Spread the weight evenly between both hands. Try to avoid moving containers by hand, and use equipment such as"
+        "cellText": ". Lifting and carrying Transporting containers and calves Spread the weight evenly between both hands. Try to avoid moving containers by hand, and use equipment such as"
       }
     },
     "26": {
       "questionType": "table_completion",
       "groupId": "g_22_27",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the table below.",
-      "groupPrompt": "Complete the table below."
+      "extractionStatus": "extracted",
+      "promptText": "instead. Milking by handRepetitive handling of milking equipment Keep everything accessible so that employees don't need to bend or ______ .Introduce a system of",
+      "sentenceBefore": "instead. Milking by handRepetitive handling of milking equipment Keep everything accessible so that employees don't need to bend or",
+      "sentenceAfter": ".Introduce a system of",
+      "groupPrompt": "Complete the table below.",
+      "tableContext": {
+        "cellText": "instead. Milking by handRepetitive handling of milking equipment Keep everything accessible so that employees don't need to bend or"
+      }
     },
     "27": {
       "questionType": "table_completion",
       "groupId": "g_22_27",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the table below.",
-      "groupPrompt": "Complete the table below."
+      "extractionStatus": "extracted",
+      "promptText": ".Introduce a system of ______ to increase variety.",
+      "sentenceBefore": ".Introduce a system of",
+      "sentenceAfter": "to increase variety.",
+      "groupPrompt": "Complete the table below.",
+      "tableContext": {
+        "cellText": ".Introduce a system of"
+      }
     },
     "28": {
       "questionType": "matching_headings",
@@ -20346,7 +22096,40 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "referenceBox": {
         "title": "List of Headings",
         "type": "headings",
-        "items": []
+        "items": [
+          {
+            "label": "i",
+            "text": "How chance contributes to conditions being right"
+          },
+          {
+            "label": "ii",
+            "text": "Concern about the changing environment"
+          },
+          {
+            "label": "iii",
+            "text": "The process of photographing animals at night is getting easier"
+          },
+          {
+            "label": "iv",
+            "text": "How human developments are affecting wildlife"
+          },
+          {
+            "label": "v",
+            "text": "Photographing objects that can't be seen in detail"
+          },
+          {
+            "label": "vi",
+            "text": "A season that may seem unsuitable for photographers"
+          },
+          {
+            "label": "vii",
+            "text": "No longer too expensive"
+          },
+          {
+            "label": "viii",
+            "text": "A less ambitious approach"
+          }
+        ]
       }
     },
     "29": {
@@ -20357,7 +22140,40 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "referenceBox": {
         "title": "List of Headings",
         "type": "headings",
-        "items": []
+        "items": [
+          {
+            "label": "i",
+            "text": "How chance contributes to conditions being right"
+          },
+          {
+            "label": "ii",
+            "text": "Concern about the changing environment"
+          },
+          {
+            "label": "iii",
+            "text": "The process of photographing animals at night is getting easier"
+          },
+          {
+            "label": "iv",
+            "text": "How human developments are affecting wildlife"
+          },
+          {
+            "label": "v",
+            "text": "Photographing objects that can't be seen in detail"
+          },
+          {
+            "label": "vi",
+            "text": "A season that may seem unsuitable for photographers"
+          },
+          {
+            "label": "vii",
+            "text": "No longer too expensive"
+          },
+          {
+            "label": "viii",
+            "text": "A less ambitious approach"
+          }
+        ]
       }
     },
     "30": {
@@ -20368,7 +22184,40 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "referenceBox": {
         "title": "List of Headings",
         "type": "headings",
-        "items": []
+        "items": [
+          {
+            "label": "i",
+            "text": "How chance contributes to conditions being right"
+          },
+          {
+            "label": "ii",
+            "text": "Concern about the changing environment"
+          },
+          {
+            "label": "iii",
+            "text": "The process of photographing animals at night is getting easier"
+          },
+          {
+            "label": "iv",
+            "text": "How human developments are affecting wildlife"
+          },
+          {
+            "label": "v",
+            "text": "Photographing objects that can't be seen in detail"
+          },
+          {
+            "label": "vi",
+            "text": "A season that may seem unsuitable for photographers"
+          },
+          {
+            "label": "vii",
+            "text": "No longer too expensive"
+          },
+          {
+            "label": "viii",
+            "text": "A less ambitious approach"
+          }
+        ]
       }
     },
     "31": {
@@ -20379,7 +22228,40 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "referenceBox": {
         "title": "List of Headings",
         "type": "headings",
-        "items": []
+        "items": [
+          {
+            "label": "i",
+            "text": "How chance contributes to conditions being right"
+          },
+          {
+            "label": "ii",
+            "text": "Concern about the changing environment"
+          },
+          {
+            "label": "iii",
+            "text": "The process of photographing animals at night is getting easier"
+          },
+          {
+            "label": "iv",
+            "text": "How human developments are affecting wildlife"
+          },
+          {
+            "label": "v",
+            "text": "Photographing objects that can't be seen in detail"
+          },
+          {
+            "label": "vi",
+            "text": "A season that may seem unsuitable for photographers"
+          },
+          {
+            "label": "vii",
+            "text": "No longer too expensive"
+          },
+          {
+            "label": "viii",
+            "text": "A less ambitious approach"
+          }
+        ]
       }
     },
     "32": {
@@ -20390,7 +22272,40 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "referenceBox": {
         "title": "List of Headings",
         "type": "headings",
-        "items": []
+        "items": [
+          {
+            "label": "i",
+            "text": "How chance contributes to conditions being right"
+          },
+          {
+            "label": "ii",
+            "text": "Concern about the changing environment"
+          },
+          {
+            "label": "iii",
+            "text": "The process of photographing animals at night is getting easier"
+          },
+          {
+            "label": "iv",
+            "text": "How human developments are affecting wildlife"
+          },
+          {
+            "label": "v",
+            "text": "Photographing objects that can't be seen in detail"
+          },
+          {
+            "label": "vi",
+            "text": "A season that may seem unsuitable for photographers"
+          },
+          {
+            "label": "vii",
+            "text": "No longer too expensive"
+          },
+          {
+            "label": "viii",
+            "text": "A less ambitious approach"
+          }
+        ]
       }
     },
     "33": {
@@ -20401,7 +22316,40 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "referenceBox": {
         "title": "List of Headings",
         "type": "headings",
-        "items": []
+        "items": [
+          {
+            "label": "i",
+            "text": "How chance contributes to conditions being right"
+          },
+          {
+            "label": "ii",
+            "text": "Concern about the changing environment"
+          },
+          {
+            "label": "iii",
+            "text": "The process of photographing animals at night is getting easier"
+          },
+          {
+            "label": "iv",
+            "text": "How human developments are affecting wildlife"
+          },
+          {
+            "label": "v",
+            "text": "Photographing objects that can't be seen in detail"
+          },
+          {
+            "label": "vi",
+            "text": "A season that may seem unsuitable for photographers"
+          },
+          {
+            "label": "vii",
+            "text": "No longer too expensive"
+          },
+          {
+            "label": "viii",
+            "text": "A less ambitious approach"
+          }
+        ]
       }
     },
     "34": {
@@ -20412,7 +22360,40 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "referenceBox": {
         "title": "List of Headings",
         "type": "headings",
-        "items": []
+        "items": [
+          {
+            "label": "i",
+            "text": "How chance contributes to conditions being right"
+          },
+          {
+            "label": "ii",
+            "text": "Concern about the changing environment"
+          },
+          {
+            "label": "iii",
+            "text": "The process of photographing animals at night is getting easier"
+          },
+          {
+            "label": "iv",
+            "text": "How human developments are affecting wildlife"
+          },
+          {
+            "label": "v",
+            "text": "Photographing objects that can't be seen in detail"
+          },
+          {
+            "label": "vi",
+            "text": "A season that may seem unsuitable for photographers"
+          },
+          {
+            "label": "vii",
+            "text": "No longer too expensive"
+          },
+          {
+            "label": "viii",
+            "text": "A less ambitious approach"
+          }
+        ]
       }
     },
     "35": {
@@ -20524,9 +22505,9 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "questionType": "notes_completion",
       "groupId": "g_8_13",
       "extractionStatus": "extracted",
-      "promptText": "Mike and Bob Bryan made changes to the types of ______ used on their racket frames.",
-      "sentenceBefore": "Mike and Bob Bryan made changes to the types of",
-      "sentenceAfter": "used on their racket frames.",
+      "promptText": "The tennis racket and how it has changed Mike and Bob Bryan made changes to the types of ______ used on their racket frames. Players were not allowed to use the spaghetti-strung racket because of the amount of",
+      "sentenceBefore": "The tennis racket and how it has changed Mike and Bob Bryan made changes to the types of",
+      "sentenceAfter": "used on their racket frames. Players were not allowed to use the spaghetti-strung racket because of the amount of",
       "groupPrompt": "Complete the notes below.",
       "notesContext": {
         "bulletPrefix": "•"
@@ -20536,9 +22517,9 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "questionType": "notes_completion",
       "groupId": "g_8_13",
       "extractionStatus": "extracted",
-      "promptText": "Players were not allowed to use the spaghetti-strung racket because of the amount of ______ it created.",
-      "sentenceBefore": "Players were not allowed to use the spaghetti-strung racket because of the amount of",
-      "sentenceAfter": "it created.",
+      "promptText": "used on their racket frames. Players were not allowed to use the spaghetti-strung racket because of the amount of ______ it created. Changes to rackets can be regarded as being as important as players' diets or the",
+      "sentenceBefore": "used on their racket frames. Players were not allowed to use the spaghetti-strung racket because of the amount of",
+      "sentenceAfter": "it created. Changes to rackets can be regarded as being as important as players' diets or the",
       "groupPrompt": "Complete the notes below.",
       "notesContext": {
         "bulletPrefix": "•"
@@ -20548,9 +22529,9 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "questionType": "notes_completion",
       "groupId": "g_8_13",
       "extractionStatus": "extracted",
-      "promptText": "Changes to rackets can be regarded as being as important as players' diets or the ______ they do.",
-      "sentenceBefore": "Changes to rackets can be regarded as being as important as players' diets or the",
-      "sentenceAfter": "they do.",
+      "promptText": "it created. Changes to rackets can be regarded as being as important as players' diets or the ______ they do. All rackets used to have natural strings made from the",
+      "sentenceBefore": "it created. Changes to rackets can be regarded as being as important as players' diets or the",
+      "sentenceAfter": "they do. All rackets used to have natural strings made from the",
       "groupPrompt": "Complete the notes below.",
       "notesContext": {
         "bulletPrefix": "•"
@@ -20560,9 +22541,9 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "questionType": "notes_completion",
       "groupId": "g_8_13",
       "extractionStatus": "extracted",
-      "promptText": "All rackets used to have natural strings made from the ______ of animals.",
-      "sentenceBefore": "All rackets used to have natural strings made from the",
-      "sentenceAfter": "of animals.",
+      "promptText": "they do. All rackets used to have natural strings made from the ______ of animals. Pete Sampras had metal",
+      "sentenceBefore": "they do. All rackets used to have natural strings made from the",
+      "sentenceAfter": "of animals. Pete Sampras had metal",
       "groupPrompt": "Complete the notes below.",
       "notesContext": {
         "bulletPrefix": "•"
@@ -20572,9 +22553,9 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "questionType": "notes_completion",
       "groupId": "g_8_13",
       "extractionStatus": "extracted",
-      "promptText": "Pete Sampras had metal ______ put into the frames of his rackets.",
-      "sentenceBefore": "Pete Sampras had metal",
-      "sentenceAfter": "put into the frames of his rackets.",
+      "promptText": "of animals. Pete Sampras had metal ______ put into the frames of his rackets. Gonçalo Oliveira changed the",
+      "sentenceBefore": "of animals. Pete Sampras had metal",
+      "sentenceAfter": "put into the frames of his rackets. Gonçalo Oliveira changed the",
       "groupPrompt": "Complete the notes below.",
       "notesContext": {
         "bulletPrefix": "•"
@@ -20584,8 +22565,8 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "questionType": "notes_completion",
       "groupId": "g_8_13",
       "extractionStatus": "extracted",
-      "promptText": "Gonçalo Oliveira changed the ______ on his racket handles.",
-      "sentenceBefore": "Gonçalo Oliveira changed the",
+      "promptText": "put into the frames of his rackets. Gonçalo Oliveira changed the ______ on his racket handles.",
+      "sentenceBefore": "put into the frames of his rackets. Gonçalo Oliveira changed the",
       "sentenceAfter": "on his racket handles.",
       "groupPrompt": "Complete the notes below.",
       "notesContext": {
@@ -20793,22 +22774,28 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
     "24": {
       "questionType": "summary_completion_text",
       "groupId": "g_24_26",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "Piracy was an issue ancient Rome had to deal with, but it also brought some benefits for Rome. For example, pirates supplied slaves that were important for Rome's industries. However, attacks on vessels transporting ______ to Rome resulted in calls for",
+      "sentenceBefore": "Piracy was an issue ancient Rome had to deal with, but it also brought some benefits for Rome. For example, pirates supplied slaves that were important for Rome's industries. However, attacks on vessels transporting",
+      "sentenceAfter": "to Rome resulted in calls for",
       "groupPrompt": "Complete the summary below."
     },
     "25": {
       "questionType": "summary_completion_text",
       "groupId": "g_24_26",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "to Rome resulted in calls for ______ for the pirates responsible. Nevertheless, piracy continued, with some pirates demanding a",
+      "sentenceBefore": "to Rome resulted in calls for",
+      "sentenceAfter": "for the pirates responsible. Nevertheless, piracy continued, with some pirates demanding a",
       "groupPrompt": "Complete the summary below."
     },
     "26": {
       "questionType": "summary_completion_text",
       "groupId": "g_24_26",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "for the pirates responsible. Nevertheless, piracy continued, with some pirates demanding a ______ for the return of the Roman officials they captured.",
+      "sentenceBefore": "for the pirates responsible. Nevertheless, piracy continued, with some pirates demanding a",
+      "sentenceAfter": "for the return of the Roman officials they captured.",
       "groupPrompt": "Complete the summary below."
     },
     "27": {
@@ -20942,8 +22929,10 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
     "31": {
       "questionType": "summary_completion_bank",
       "groupId": "g_31_36",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary using the list of phrases, A–J, below.",
+      "extractionStatus": "extracted",
+      "promptText": "Although people have ______ to misinformation, there is debate about precisely how and when we label something as true or untrue. The philosophers Descartes and Spinoza had",
+      "sentenceBefore": "Although people have",
+      "sentenceAfter": "to misinformation, there is debate about precisely how and when we label something as true or untrue. The philosophers Descartes and Spinoza had",
       "groupPrompt": "Complete the summary using the list of phrases, A–J, below.",
       "referenceBox": {
         "title": "Word Bank",
@@ -20954,8 +22943,10 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
     "32": {
       "questionType": "summary_completion_bank",
       "groupId": "g_31_36",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary using the list of phrases, A–J, below.",
+      "extractionStatus": "extracted",
+      "promptText": "to misinformation, there is debate about precisely how and when we label something as true or untrue. The philosophers Descartes and Spinoza had ______ about how people engage with information. While Descartes believed that people accept or reject information after considering whether it is true or not, Spinoza argued that people accepted all information they encountered (and by default misinformation) and did not verify or reject it until afterwards. Moreover, Spinoza believed that a distinct",
+      "sentenceBefore": "to misinformation, there is debate about precisely how and when we label something as true or untrue. The philosophers Descartes and Spinoza had",
+      "sentenceAfter": "about how people engage with information. While Descartes believed that people accept or reject information after considering whether it is true or not, Spinoza argued that people accepted all information they encountered (and by default misinformation) and did not verify or reject it until afterwards. Moreover, Spinoza believed that a distinct",
       "groupPrompt": "Complete the summary using the list of phrases, A–J, below.",
       "referenceBox": {
         "title": "Word Bank",
@@ -20966,8 +22957,10 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
     "33": {
       "questionType": "summary_completion_bank",
       "groupId": "g_31_36",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary using the list of phrases, A–J, below.",
+      "extractionStatus": "extracted",
+      "promptText": "about how people engage with information. While Descartes believed that people accept or reject information after considering whether it is true or not, Spinoza argued that people accepted all information they encountered (and by default misinformation) and did not verify or reject it until afterwards. Moreover, Spinoza believed that a distinct ______ is involved in these stages. Recent research has provided",
+      "sentenceBefore": "about how people engage with information. While Descartes believed that people accept or reject information after considering whether it is true or not, Spinoza argued that people accepted all information they encountered (and by default misinformation) and did not verify or reject it until afterwards. Moreover, Spinoza believed that a distinct",
+      "sentenceAfter": "is involved in these stages. Recent research has provided",
       "groupPrompt": "Complete the summary using the list of phrases, A–J, below.",
       "referenceBox": {
         "title": "Word Bank",
@@ -20978,8 +22971,10 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
     "34": {
       "questionType": "summary_completion_bank",
       "groupId": "g_31_36",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary using the list of phrases, A–J, below.",
+      "extractionStatus": "extracted",
+      "promptText": "is involved in these stages. Recent research has provided ______ for Spinoza's theory and it would appear that people accept all encountered information as if it were true, even if this is for an extremely",
+      "sentenceBefore": "is involved in these stages. Recent research has provided",
+      "sentenceAfter": "for Spinoza's theory and it would appear that people accept all encountered information as if it were true, even if this is for an extremely",
       "groupPrompt": "Complete the summary using the list of phrases, A–J, below.",
       "referenceBox": {
         "title": "Word Bank",
@@ -20990,8 +22985,10 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
     "35": {
       "questionType": "summary_completion_bank",
       "groupId": "g_31_36",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary using the list of phrases, A–J, below.",
+      "extractionStatus": "extracted",
+      "promptText": "for Spinoza's theory and it would appear that people accept all encountered information as if it were true, even if this is for an extremely ______ , and do not label the information as true or false until later. This is consistent with the fact that the resources for scepticism and the resources for perceiving and encoding are in",
+      "sentenceBefore": "for Spinoza's theory and it would appear that people accept all encountered information as if it were true, even if this is for an extremely",
+      "sentenceAfter": ", and do not label the information as true or false until later. This is consistent with the fact that the resources for scepticism and the resources for perceiving and encoding are in",
       "groupPrompt": "Complete the summary using the list of phrases, A–J, below.",
       "referenceBox": {
         "title": "Word Bank",
@@ -21002,8 +22999,10 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
     "36": {
       "questionType": "summary_completion_bank",
       "groupId": "g_31_36",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary using the list of phrases, A–J, below.",
+      "extractionStatus": "extracted",
+      "promptText": ", and do not label the information as true or false until later. This is consistent with the fact that the resources for scepticism and the resources for perceiving and encoding are in ______ in the brain.",
+      "sentenceBefore": ", and do not label the information as true or false until later. This is consistent with the fact that the resources for scepticism and the resources for perceiving and encoding are in",
+      "sentenceAfter": "in the brain.",
       "groupPrompt": "Complete the summary using the list of phrases, A–J, below.",
       "referenceBox": {
         "title": "Word Bank",
@@ -21045,9 +23044,9 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "questionType": "notes_completion",
       "groupId": "g_1_7",
       "extractionStatus": "extracted",
-      "promptText": "In Watt and Boulton's steam engine, the movement of the ______ was linked to a gear system.",
-      "sentenceBefore": "In Watt and Boulton's steam engine, the movement of the",
-      "sentenceAfter": "was linked to a gear system.",
+      "promptText": "Britain's Industrial RevolutionSteam powerNewcomen's steam engine was used in mines to remove water. In Watt and Boulton's steam engine, the movement of the ______ was linked to a gear system. A greater supply of",
+      "sentenceBefore": "Britain's Industrial RevolutionSteam powerNewcomen's steam engine was used in mines to remove water. In Watt and Boulton's steam engine, the movement of the",
+      "sentenceAfter": "was linked to a gear system. A greater supply of",
       "groupPrompt": "Complete the notes below.",
       "notesContext": {
         "bulletPrefix": "•"
@@ -21057,9 +23056,9 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "questionType": "notes_completion",
       "groupId": "g_1_7",
       "extractionStatus": "extracted",
-      "promptText": "A greater supply of ______ was required to power steam engines.",
-      "sentenceBefore": "A greater supply of",
-      "sentenceAfter": "was required to power steam engines.",
+      "promptText": "was linked to a gear system. A greater supply of ______ was required to power steam engines. Textile industryBefore the Industrial Revolution, spinners and weavers worked at home and in",
+      "sentenceBefore": "was linked to a gear system. A greater supply of",
+      "sentenceAfter": "was required to power steam engines. Textile industryBefore the Industrial Revolution, spinners and weavers worked at home and in",
       "groupPrompt": "Complete the notes below.",
       "notesContext": {
         "bulletPrefix": "•"
@@ -21069,9 +23068,9 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "questionType": "notes_completion",
       "groupId": "g_1_7",
       "extractionStatus": "extracted",
-      "promptText": "Before the Industrial Revolution, spinners and weavers worked at home and in ______ .",
-      "sentenceBefore": "Before the Industrial Revolution, spinners and weavers worked at home and in",
-      "sentenceAfter": ".",
+      "promptText": "was required to power steam engines. Textile industryBefore the Industrial Revolution, spinners and weavers worked at home and in ______ . Not as much",
+      "sentenceBefore": "was required to power steam engines. Textile industryBefore the Industrial Revolution, spinners and weavers worked at home and in",
+      "sentenceAfter": ". Not as much",
       "groupPrompt": "Complete the notes below.",
       "notesContext": {
         "bulletPrefix": "•"
@@ -21081,9 +23080,9 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "questionType": "notes_completion",
       "groupId": "g_1_7",
       "extractionStatus": "extracted",
-      "promptText": "Not as much ______ was needed to produce cloth once the spinning jenny and power loom were invented.",
-      "sentenceBefore": "Not as much",
-      "sentenceAfter": "was needed to produce cloth once the spinning jenny and power loom were invented.",
+      "promptText": ". Not as much ______ was needed to produce cloth once the spinning jenny and power loom were invented. Iron industrySmelting of iron ore with coke resulted in material that was better",
+      "sentenceBefore": ". Not as much",
+      "sentenceAfter": "was needed to produce cloth once the spinning jenny and power loom were invented. Iron industrySmelting of iron ore with coke resulted in material that was better",
       "groupPrompt": "Complete the notes below.",
       "notesContext": {
         "bulletPrefix": "•"
@@ -21093,9 +23092,9 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "questionType": "notes_completion",
       "groupId": "g_1_7",
       "extractionStatus": "extracted",
-      "promptText": "Smelting of iron ore with coke resulted in material that was better ______ .",
-      "sentenceBefore": "Smelting of iron ore with coke resulted in material that was better",
-      "sentenceAfter": ".",
+      "promptText": "was needed to produce cloth once the spinning jenny and power loom were invented. Iron industrySmelting of iron ore with coke resulted in material that was better ______ . Demand for iron increased with the growth of the",
+      "sentenceBefore": "was needed to produce cloth once the spinning jenny and power loom were invented. Iron industrySmelting of iron ore with coke resulted in material that was better",
+      "sentenceAfter": ". Demand for iron increased with the growth of the",
       "groupPrompt": "Complete the notes below.",
       "notesContext": {
         "bulletPrefix": "•"
@@ -21105,9 +23104,9 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "questionType": "notes_completion",
       "groupId": "g_1_7",
       "extractionStatus": "extracted",
-      "promptText": "Demand for iron increased with the growth of the ______ .",
-      "sentenceBefore": "Demand for iron increased with the growth of the",
-      "sentenceAfter": ".",
+      "promptText": ". Demand for iron increased with the growth of the ______ . CommunicationsCooke and Wheatstone patented the first telegraphy system. The telegraphy system was used to prevent locomotives colliding. UrbanisationSmall towns turned into cities very quickly.The new cities were dirty, crowded and lacked sufficient",
+      "sentenceBefore": ". Demand for iron increased with the growth of the",
+      "sentenceAfter": ". CommunicationsCooke and Wheatstone patented the first telegraphy system. The telegraphy system was used to prevent locomotives colliding. UrbanisationSmall towns turned into cities very quickly.The new cities were dirty, crowded and lacked sufficient",
       "groupPrompt": "Complete the notes below.",
       "notesContext": {
         "bulletPrefix": "•"
@@ -21117,8 +23116,8 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "questionType": "notes_completion",
       "groupId": "g_1_7",
       "extractionStatus": "extracted",
-      "promptText": "The new cities were dirty, crowded and lacked sufficient ______ .",
-      "sentenceBefore": "The new cities were dirty, crowded and lacked sufficient",
+      "promptText": ". CommunicationsCooke and Wheatstone patented the first telegraphy system. The telegraphy system was used to prevent locomotives colliding. UrbanisationSmall towns turned into cities very quickly.The new cities were dirty, crowded and lacked sufficient ______ .",
+      "sentenceBefore": ". CommunicationsCooke and Wheatstone patented the first telegraphy system. The telegraphy system was used to prevent locomotives colliding. UrbanisationSmall towns turned into cities very quickly.The new cities were dirty, crowded and lacked sufficient",
       "sentenceAfter": ".",
       "groupPrompt": "Complete the notes below.",
       "notesContext": {
@@ -21396,8 +23395,10 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
     "27": {
       "questionType": "summary_completion_bank",
       "groupId": "g_27_32",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary using the list of phrases, A-K, below.",
+      "extractionStatus": "extracted",
+      "promptText": "Maryam Mirzakhani is regarded as ______ in the field of mathematics because she was the only female holder of the prestigious Fields Medal – a record that she retained at the time of her death. However, maths held little",
+      "sentenceBefore": "Maryam Mirzakhani is regarded as",
+      "sentenceAfter": "in the field of mathematics because she was the only female holder of the prestigious Fields Medal – a record that she retained at the time of her death. However, maths held little",
       "groupPrompt": "Complete the summary using the list of phrases, A-K, below.",
       "referenceBox": {
         "title": "Word Bank",
@@ -21408,8 +23409,10 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
     "28": {
       "questionType": "summary_completion_bank",
       "groupId": "g_27_32",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary using the list of phrases, A-K, below.",
+      "extractionStatus": "extracted",
+      "promptText": "in the field of mathematics because she was the only female holder of the prestigious Fields Medal – a record that she retained at the time of her death. However, maths held little ______ for her as a child and in fact her performance was below average until she was",
+      "sentenceBefore": "in the field of mathematics because she was the only female holder of the prestigious Fields Medal – a record that she retained at the time of her death. However, maths held little",
+      "sentenceAfter": "for her as a child and in fact her performance was below average until she was",
       "groupPrompt": "Complete the summary using the list of phrases, A-K, below.",
       "referenceBox": {
         "title": "Word Bank",
@@ -21420,8 +23423,10 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
     "29": {
       "questionType": "summary_completion_bank",
       "groupId": "g_27_32",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary using the list of phrases, A-K, below.",
+      "extractionStatus": "extracted",
+      "promptText": "for her as a child and in fact her performance was below average until she was ______ by a difficult puzzle that one of her siblings showed her.",
+      "sentenceBefore": "for her as a child and in fact her performance was below average until she was",
+      "sentenceAfter": "by a difficult puzzle that one of her siblings showed her.",
       "groupPrompt": "Complete the summary using the list of phrases, A-K, below.",
       "referenceBox": {
         "title": "Word Bank",
@@ -21432,8 +23437,10 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
     "30": {
       "questionType": "summary_completion_bank",
       "groupId": "g_27_32",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary using the list of phrases, A-K, below.",
+      "extractionStatus": "extracted",
+      "promptText": "Later, as a professional mathematician, she had an inquiring mind and proved herself to be ______ when things did not go smoothly. She said she got the greatest",
+      "sentenceBefore": "Later, as a professional mathematician, she had an inquiring mind and proved herself to be",
+      "sentenceAfter": "when things did not go smoothly. She said she got the greatest",
       "groupPrompt": "Complete the summary using the list of phrases, A-K, below.",
       "referenceBox": {
         "title": "Word Bank",
@@ -21444,8 +23451,10 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
     "31": {
       "questionType": "summary_completion_bank",
       "groupId": "g_27_32",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary using the list of phrases, A-K, below.",
+      "extractionStatus": "extracted",
+      "promptText": "when things did not go smoothly. She said she got the greatest ______ from making ground-breaking discoveries and in fact she was responsible for some extremely",
+      "sentenceBefore": "when things did not go smoothly. She said she got the greatest",
+      "sentenceAfter": "from making ground-breaking discoveries and in fact she was responsible for some extremely",
       "groupPrompt": "Complete the summary using the list of phrases, A-K, below.",
       "referenceBox": {
         "title": "Word Bank",
@@ -21456,8 +23465,10 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
     "32": {
       "questionType": "summary_completion_bank",
       "groupId": "g_27_32",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary using the list of phrases, A-K, below.",
+      "extractionStatus": "extracted",
+      "promptText": "from making ground-breaking discoveries and in fact she was responsible for some extremely ______ mathematical studies.",
+      "sentenceBefore": "from making ground-breaking discoveries and in fact she was responsible for some extremely",
+      "sentenceAfter": "mathematical studies.",
       "groupPrompt": "Complete the summary using the list of phrases, A-K, below.",
       "referenceBox": {
         "title": "Word Bank",
@@ -21651,9 +23662,9 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "questionType": "notes_completion",
       "groupId": "g_8_13",
       "extractionStatus": "extracted",
-      "promptText": "Excavations of rock shelters inside ______ near the village of Kelo revealed:",
-      "sentenceBefore": "Excavations of rock shelters inside",
-      "sentenceAfter": "near the village of Kelo revealed:",
+      "promptText": "Archaeological findings on ObiExcavations of rock shelters inside ______ near the village of Kelo revealed: axes from around 14,000 years ago, probably used to make canoes axes made out of",
+      "sentenceBefore": "Archaeological findings on ObiExcavations of rock shelters inside",
+      "sentenceAfter": "near the village of Kelo revealed: axes from around 14,000 years ago, probably used to make canoes axes made out of",
       "groupPrompt": "Complete the notes below.",
       "notesContext": {
         "bulletPrefix": "•"
@@ -21663,8 +23674,8 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "questionType": "notes_completion",
       "groupId": "g_8_13",
       "extractionStatus": "extracted",
-      "promptText": "axes made out of ______ , dating from around 11,700 years ago",
-      "sentenceBefore": "axes made out of",
+      "promptText": "near the village of Kelo revealed: axes from around 14,000 years ago, probably used to make canoes axes made out of ______ , dating from around 11,700 years ago",
+      "sentenceBefore": "near the village of Kelo revealed: axes from around 14,000 years ago, probably used to make canoes axes made out of",
       "sentenceAfter": ", dating from around 11,700 years ago",
       "groupPrompt": "Complete the notes below.",
       "notesContext": {
@@ -21675,8 +23686,9 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "questionType": "notes_completion",
       "groupId": "g_8_13",
       "extractionStatus": "extracted",
-      "promptText": "______ of an animal: evidence of what ancient islanders ate",
-      "sentenceAfter": "of an animal: evidence of what ancient islanders ate",
+      "promptText": ", dating from around 11,700 years ago ______ of an animal: evidence of what ancient islanders ate evidence of travel between islands:obsidian: a material that is not found naturally on Obi",
+      "sentenceBefore": ", dating from around 11,700 years ago",
+      "sentenceAfter": "of an animal: evidence of what ancient islanders ate evidence of travel between islands:obsidian: a material that is not found naturally on Obi",
       "groupPrompt": "Complete the notes below.",
       "notesContext": {
         "bulletPrefix": "•"
@@ -21686,8 +23698,9 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "questionType": "notes_completion",
       "groupId": "g_8_13",
       "extractionStatus": "extracted",
-      "promptText": "______ which resembled ones found on other islands.",
-      "sentenceAfter": "which resembled ones found on other islands.",
+      "promptText": "of an animal: evidence of what ancient islanders ate evidence of travel between islands:obsidian: a material that is not found naturally on Obi ______ which resembled ones found on other islands. It is thought that from 8,000 years ago, Obi islanders: may have switched from hunting to fishinghad",
+      "sentenceBefore": "of an animal: evidence of what ancient islanders ate evidence of travel between islands:obsidian: a material that is not found naturally on Obi",
+      "sentenceAfter": "which resembled ones found on other islands. It is thought that from 8,000 years ago, Obi islanders: may have switched from hunting to fishinghad",
       "groupPrompt": "Complete the notes below.",
       "notesContext": {
         "bulletPrefix": "•"
@@ -21697,9 +23710,9 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "questionType": "notes_completion",
       "groupId": "g_8_13",
       "extractionStatus": "extracted",
-      "promptText": "had ______ as well as items made out of metal",
-      "sentenceBefore": "had",
-      "sentenceAfter": "as well as items made out of metal",
+      "promptText": "which resembled ones found on other islands. It is thought that from 8,000 years ago, Obi islanders: may have switched from hunting to fishinghad ______ as well as items made out of metal probably took part in the production and sale of",
+      "sentenceBefore": "which resembled ones found on other islands. It is thought that from 8,000 years ago, Obi islanders: may have switched from hunting to fishinghad",
+      "sentenceAfter": "as well as items made out of metal probably took part in the production and sale of",
       "groupPrompt": "Complete the notes below.",
       "notesContext": {
         "bulletPrefix": "•"
@@ -21709,8 +23722,8 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "questionType": "notes_completion",
       "groupId": "g_8_13",
       "extractionStatus": "extracted",
-      "promptText": "probably took part in the production and sale of ______",
-      "sentenceBefore": "probably took part in the production and sale of",
+      "promptText": "as well as items made out of metal probably took part in the production and sale of ______",
+      "sentenceBefore": "as well as items made out of metal probably took part in the production and sale of",
       "groupPrompt": "Complete the notes below.",
       "notesContext": {
         "bulletPrefix": "•"
@@ -22091,8 +24104,9 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "questionType": "notes_completion",
       "groupId": "g_7_13",
       "extractionStatus": "extracted",
-      "promptText": "lives in large ______",
-      "sentenceBefore": "lives in large",
+      "promptText": "Butterflies in the UKThe Small Bluelives in large ______ first appears at the start of",
+      "sentenceBefore": "Butterflies in the UKThe Small Bluelives in large",
+      "sentenceAfter": "first appears at the start of",
       "groupPrompt": "Complete the notes below.",
       "notesContext": {
         "bulletPrefix": "•"
@@ -22102,8 +24116,9 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "questionType": "notes_completion",
       "groupId": "g_7_13",
       "extractionStatus": "extracted",
-      "promptText": "first appears at the start of ______",
+      "promptText": "first appears at the start of ______ completes more than one reproductive cycle per yearThe High Brown Fritillaryhas one reproductive cycleis considered to be more",
       "sentenceBefore": "first appears at the start of",
+      "sentenceAfter": "completes more than one reproductive cycle per yearThe High Brown Fritillaryhas one reproductive cycleis considered to be more",
       "groupPrompt": "Complete the notes below.",
       "notesContext": {
         "bulletPrefix": "•"
@@ -22113,9 +24128,9 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "questionType": "notes_completion",
       "groupId": "g_7_13",
       "extractionStatus": "extracted",
-      "promptText": "is considered to be more ______ than other species",
-      "sentenceBefore": "is considered to be more",
-      "sentenceAfter": "than other species",
+      "promptText": "completes more than one reproductive cycle per yearThe High Brown Fritillaryhas one reproductive cycleis considered to be more ______ than other species its caterpillars occupy a limited range of",
+      "sentenceBefore": "completes more than one reproductive cycle per yearThe High Brown Fritillaryhas one reproductive cycleis considered to be more",
+      "sentenceAfter": "than other species its caterpillars occupy a limited range of",
       "groupPrompt": "Complete the notes below.",
       "notesContext": {
         "bulletPrefix": "•"
@@ -22125,8 +24140,9 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "questionType": "notes_completion",
       "groupId": "g_7_13",
       "extractionStatus": "extracted",
-      "promptText": "its caterpillars occupy a limited range of ______",
-      "sentenceBefore": "its caterpillars occupy a limited range of",
+      "promptText": "than other species its caterpillars occupy a limited range of ______ The Silver-studded Blueis already able to reproduce twice a year in warm areas of",
+      "sentenceBefore": "than other species its caterpillars occupy a limited range of",
+      "sentenceAfter": "The Silver-studded Blueis already able to reproduce twice a year in warm areas of",
       "groupPrompt": "Complete the notes below.",
       "notesContext": {
         "bulletPrefix": "•"
@@ -22136,8 +24152,9 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "questionType": "notes_completion",
       "groupId": "g_7_13",
       "extractionStatus": "extracted",
-      "promptText": "is already able to reproduce twice a year in warm areas of ______",
-      "sentenceBefore": "is already able to reproduce twice a year in warm areas of",
+      "promptText": "The Silver-studded Blueis already able to reproduce twice a year in warm areas of ______ The White Admiralis found in",
+      "sentenceBefore": "The Silver-studded Blueis already able to reproduce twice a year in warm areas of",
+      "sentenceAfter": "The White Admiralis found in",
       "groupPrompt": "Complete the notes below.",
       "notesContext": {
         "bulletPrefix": "•"
@@ -22147,9 +24164,9 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "questionType": "notes_completion",
       "groupId": "g_7_13",
       "extractionStatus": "extracted",
-      "promptText": "is found in ______ areas of England",
-      "sentenceBefore": "is found in",
-      "sentenceAfter": "areas of England",
+      "promptText": "The White Admiralis found in ______ areas of England both climate change and the",
+      "sentenceBefore": "The White Admiralis found in",
+      "sentenceAfter": "areas of England both climate change and the",
       "groupPrompt": "Complete the notes below.",
       "notesContext": {
         "bulletPrefix": "•"
@@ -22159,8 +24176,8 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "questionType": "notes_completion",
       "groupId": "g_7_13",
       "extractionStatus": "extracted",
-      "promptText": "both climate change and the ______ of the caterpillar are possible reasons for decline",
-      "sentenceBefore": "both climate change and the",
+      "promptText": "areas of England both climate change and the ______ of the caterpillar are possible reasons for decline",
+      "sentenceBefore": "areas of England both climate change and the",
       "sentenceAfter": "of the caterpillar are possible reasons for decline",
       "groupPrompt": "Complete the notes below.",
       "notesContext": {
@@ -22285,15 +24302,19 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
     "25": {
       "questionType": "summary_completion_text",
       "groupId": "g_24_26",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "The extraction is often done by adapting the ______ that has already been used to work on land. The method of excavation involves removing the seawater from the slurry that is brought up to ships and returning it to the seabed. However, concerned groups strongly believe that",
+      "sentenceBefore": "The extraction is often done by adapting the",
+      "sentenceAfter": "that has already been used to work on land. The method of excavation involves removing the seawater from the slurry that is brought up to ships and returning it to the seabed. However, concerned groups strongly believe that",
       "groupPrompt": "Complete the summary below."
     },
     "26": {
       "questionType": "summary_completion_text",
       "groupId": "g_24_26",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "that has already been used to work on land. The method of excavation involves removing the seawater from the slurry that is brought up to ships and returning it to the seabed. However, concerned groups strongly believe that ______ is necessary due to the possible number of unidentified consequences.",
+      "sentenceBefore": "that has already been used to work on land. The method of excavation involves removing the seawater from the slurry that is brought up to ships and returning it to the seabed. However, concerned groups strongly believe that",
+      "sentenceAfter": "is necessary due to the possible number of unidentified consequences.",
       "groupPrompt": "Complete the summary below."
     },
     "27": {
@@ -22427,36 +24448,46 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
     "31": {
       "questionType": "summary_completion_text",
       "groupId": "g_31_35",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "Bruce Knauft's research shows that contemporary hunter-gatherer societies tend to exhibit a high level of ______ in all areas of life. In these cultures, distributing resources fairly among all members is a moral obligation. These societies also employ strategies to prevent differences in",
+      "sentenceBefore": "Bruce Knauft's research shows that contemporary hunter-gatherer societies tend to exhibit a high level of",
+      "sentenceAfter": "in all areas of life. In these cultures, distributing resources fairly among all members is a moral obligation. These societies also employ strategies to prevent differences in",
       "groupPrompt": "Complete the summary below."
     },
     "32": {
       "questionType": "summary_completion_text",
       "groupId": "g_31_35",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "in all areas of life. In these cultures, distributing resources fairly among all members is a moral obligation. These societies also employ strategies to prevent differences in ______ occurring: for example, the !Kung follow a custom whereby the credit for one person's success at",
+      "sentenceBefore": "in all areas of life. In these cultures, distributing resources fairly among all members is a moral obligation. These societies also employ strategies to prevent differences in",
+      "sentenceAfter": "occurring: for example, the !Kung follow a custom whereby the credit for one person's success at",
       "groupPrompt": "Complete the summary below."
     },
     "33": {
       "questionType": "summary_completion_text",
       "groupId": "g_31_35",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "occurring: for example, the !Kung follow a custom whereby the credit for one person's success at ______ is given to another member of the group. Individuals who behave in a",
+      "sentenceBefore": "occurring: for example, the !Kung follow a custom whereby the credit for one person's success at",
+      "sentenceAfter": "is given to another member of the group. Individuals who behave in a",
       "groupPrompt": "Complete the summary below."
     },
     "34": {
       "questionType": "summary_completion_text",
       "groupId": "g_31_35",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "is given to another member of the group. Individuals who behave in a ______ manner are punished by being excluded from the group, and women have a considerable amount of",
+      "sentenceBefore": "is given to another member of the group. Individuals who behave in a",
+      "sentenceAfter": "manner are punished by being excluded from the group, and women have a considerable amount of",
       "groupPrompt": "Complete the summary below."
     },
     "35": {
       "questionType": "summary_completion_text",
       "groupId": "g_31_35",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "manner are punished by being excluded from the group, and women have a considerable amount of ______ in choices regarding work and marriage.",
+      "sentenceBefore": "manner are punished by being excluded from the group, and women have a considerable amount of",
+      "sentenceAfter": "in choices regarding work and marriage.",
       "groupPrompt": "Complete the summary below."
     },
     "36": {
@@ -22884,44 +24915,74 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
     "22": {
       "questionType": "notes_completion",
       "groupId": "g_22_27",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the notes below. Choose ONE WORD ONLY from the text for each answer.",
-      "groupPrompt": "Complete the notes below. Choose ONE WORD ONLY from the text for each answer."
+      "extractionStatus": "extracted",
+      "promptText": "Avoid all ______ to resign in an angry way. Instead, follow this procedure:",
+      "sentenceBefore": "Avoid all",
+      "sentenceAfter": "to resign in an angry way. Instead, follow this procedure:",
+      "groupPrompt": "Complete the notes below. Choose ONE WORD ONLY from the text for each answer.",
+      "notesContext": {
+        "bulletPrefix": "•"
+      }
     },
     "23": {
       "questionType": "notes_completion",
       "groupId": "g_22_27",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the notes below. Choose ONE WORD ONLY from the text for each answer.",
-      "groupPrompt": "Complete the notes below. Choose ONE WORD ONLY from the text for each answer."
+      "extractionStatus": "extracted",
+      "promptText": "Arrange a meeting with the boss to: mention any projects which are underway and give ideas for their ______ . discuss how much notice you need to give before you go. request information on the type of",
+      "sentenceBefore": "Arrange a meeting with the boss to: mention any projects which are underway and give ideas for their",
+      "sentenceAfter": ". discuss how much notice you need to give before you go. request information on the type of",
+      "groupPrompt": "Complete the notes below. Choose ONE WORD ONLY from the text for each answer.",
+      "notesContext": {
+        "bulletPrefix": "•"
+      }
     },
     "24": {
       "questionType": "notes_completion",
       "groupId": "g_22_27",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the notes below. Choose ONE WORD ONLY from the text for each answer.",
-      "groupPrompt": "Complete the notes below. Choose ONE WORD ONLY from the text for each answer."
+      "extractionStatus": "extracted",
+      "promptText": ". discuss how much notice you need to give before you go. request information on the type of ______ you will receive.",
+      "sentenceBefore": ". discuss how much notice you need to give before you go. request information on the type of",
+      "sentenceAfter": "you will receive.",
+      "groupPrompt": "Complete the notes below. Choose ONE WORD ONLY from the text for each answer.",
+      "notesContext": {
+        "bulletPrefix": "•"
+      }
     },
     "25": {
       "questionType": "notes_completion",
       "groupId": "g_22_27",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the notes below. Choose ONE WORD ONLY from the text for each answer.",
-      "groupPrompt": "Complete the notes below. Choose ONE WORD ONLY from the text for each answer."
+      "extractionStatus": "extracted",
+      "promptText": "Steps you can take before you leave: Work to cause as little ______ as possible to the organisation. Make sure your successor has adequate guidance on the organisation's systems.",
+      "sentenceBefore": "Steps you can take before you leave: Work to cause as little",
+      "sentenceAfter": "as possible to the organisation. Make sure your successor has adequate guidance on the organisation's systems.",
+      "groupPrompt": "Complete the notes below. Choose ONE WORD ONLY from the text for each answer.",
+      "notesContext": {
+        "bulletPrefix": "•"
+      }
     },
     "26": {
       "questionType": "notes_completion",
       "groupId": "g_22_27",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the notes below. Choose ONE WORD ONLY from the text for each answer.",
-      "groupPrompt": "Complete the notes below. Choose ONE WORD ONLY from the text for each answer."
+      "extractionStatus": "extracted",
+      "promptText": "In the resignation letter:avoid mentioning any ______ in the organisation. show appreciation for aspects of the job, e.g., the chance to improve your",
+      "sentenceBefore": "In the resignation letter:avoid mentioning any",
+      "sentenceAfter": "in the organisation. show appreciation for aspects of the job, e.g., the chance to improve your",
+      "groupPrompt": "Complete the notes below. Choose ONE WORD ONLY from the text for each answer.",
+      "notesContext": {
+        "bulletPrefix": "•"
+      }
     },
     "27": {
       "questionType": "notes_completion",
       "groupId": "g_22_27",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the notes below. Choose ONE WORD ONLY from the text for each answer.",
-      "groupPrompt": "Complete the notes below. Choose ONE WORD ONLY from the text for each answer."
+      "extractionStatus": "extracted",
+      "promptText": "in the organisation. show appreciation for aspects of the job, e.g., the chance to improve your ______ .",
+      "sentenceBefore": "in the organisation. show appreciation for aspects of the job, e.g., the chance to improve your",
+      "sentenceAfter": ".",
+      "groupPrompt": "Complete the notes below. Choose ONE WORD ONLY from the text for each answer.",
+      "notesContext": {
+        "bulletPrefix": "•"
+      }
     },
     "28": {
       "questionType": "matching_headings",
@@ -22934,83 +24995,35 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
         "items": [
           {
             "label": "i",
-            "text": "ii"
+            "text": "Why emojis may have a short life"
+          },
+          {
+            "label": "ii",
+            "text": "Ways in which new emojis are designed and made available"
           },
           {
             "label": "iii",
-            "text": "iv"
+            "text": "How words and emojis both fulfil new needs in our society"
+          },
+          {
+            "label": "iv",
+            "text": "How emojis are regarded in different ways by different cultures"
           },
           {
             "label": "v",
-            "text": "vi"
+            "text": "The use of emojis in different fields and what this means for us"
+          },
+          {
+            "label": "vi",
+            "text": "The rapid spread of a new way of interacting"
           },
           {
             "label": "vii",
-            "text": "viii 29Section B"
+            "text": "How and where emojis were first invented"
           },
           {
-            "label": "i",
-            "text": "ii"
-          },
-          {
-            "label": "iii",
-            "text": "iv"
-          },
-          {
-            "label": "v",
-            "text": "vi"
-          },
-          {
-            "label": "vii",
-            "text": "viii 30Section C"
-          },
-          {
-            "label": "i",
-            "text": "ii"
-          },
-          {
-            "label": "iii",
-            "text": "iv"
-          },
-          {
-            "label": "v",
-            "text": "vi"
-          },
-          {
-            "label": "vii",
-            "text": "viii 31Section D"
-          },
-          {
-            "label": "i",
-            "text": "ii"
-          },
-          {
-            "label": "iii",
-            "text": "iv"
-          },
-          {
-            "label": "v",
-            "text": "vi"
-          },
-          {
-            "label": "vii",
-            "text": "viii 32Section E"
-          },
-          {
-            "label": "i",
-            "text": "ii"
-          },
-          {
-            "label": "iii",
-            "text": "iv"
-          },
-          {
-            "label": "v",
-            "text": "vi"
-          },
-          {
-            "label": "vii",
-            "text": "viii"
+            "label": "viii",
+            "text": "The value of emojis for making feelings clear"
           }
         ]
       }
@@ -23026,83 +25039,35 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
         "items": [
           {
             "label": "i",
-            "text": "ii"
+            "text": "Why emojis may have a short life"
+          },
+          {
+            "label": "ii",
+            "text": "Ways in which new emojis are designed and made available"
           },
           {
             "label": "iii",
-            "text": "iv"
+            "text": "How words and emojis both fulfil new needs in our society"
+          },
+          {
+            "label": "iv",
+            "text": "How emojis are regarded in different ways by different cultures"
           },
           {
             "label": "v",
-            "text": "vi"
+            "text": "The use of emojis in different fields and what this means for us"
+          },
+          {
+            "label": "vi",
+            "text": "The rapid spread of a new way of interacting"
           },
           {
             "label": "vii",
-            "text": "viii 29Section B"
+            "text": "How and where emojis were first invented"
           },
           {
-            "label": "i",
-            "text": "ii"
-          },
-          {
-            "label": "iii",
-            "text": "iv"
-          },
-          {
-            "label": "v",
-            "text": "vi"
-          },
-          {
-            "label": "vii",
-            "text": "viii 30Section C"
-          },
-          {
-            "label": "i",
-            "text": "ii"
-          },
-          {
-            "label": "iii",
-            "text": "iv"
-          },
-          {
-            "label": "v",
-            "text": "vi"
-          },
-          {
-            "label": "vii",
-            "text": "viii 31Section D"
-          },
-          {
-            "label": "i",
-            "text": "ii"
-          },
-          {
-            "label": "iii",
-            "text": "iv"
-          },
-          {
-            "label": "v",
-            "text": "vi"
-          },
-          {
-            "label": "vii",
-            "text": "viii 32Section E"
-          },
-          {
-            "label": "i",
-            "text": "ii"
-          },
-          {
-            "label": "iii",
-            "text": "iv"
-          },
-          {
-            "label": "v",
-            "text": "vi"
-          },
-          {
-            "label": "vii",
-            "text": "viii"
+            "label": "viii",
+            "text": "The value of emojis for making feelings clear"
           }
         ]
       }
@@ -23118,83 +25083,35 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
         "items": [
           {
             "label": "i",
-            "text": "ii"
+            "text": "Why emojis may have a short life"
+          },
+          {
+            "label": "ii",
+            "text": "Ways in which new emojis are designed and made available"
           },
           {
             "label": "iii",
-            "text": "iv"
+            "text": "How words and emojis both fulfil new needs in our society"
+          },
+          {
+            "label": "iv",
+            "text": "How emojis are regarded in different ways by different cultures"
           },
           {
             "label": "v",
-            "text": "vi"
+            "text": "The use of emojis in different fields and what this means for us"
+          },
+          {
+            "label": "vi",
+            "text": "The rapid spread of a new way of interacting"
           },
           {
             "label": "vii",
-            "text": "viii 29Section B"
+            "text": "How and where emojis were first invented"
           },
           {
-            "label": "i",
-            "text": "ii"
-          },
-          {
-            "label": "iii",
-            "text": "iv"
-          },
-          {
-            "label": "v",
-            "text": "vi"
-          },
-          {
-            "label": "vii",
-            "text": "viii 30Section C"
-          },
-          {
-            "label": "i",
-            "text": "ii"
-          },
-          {
-            "label": "iii",
-            "text": "iv"
-          },
-          {
-            "label": "v",
-            "text": "vi"
-          },
-          {
-            "label": "vii",
-            "text": "viii 31Section D"
-          },
-          {
-            "label": "i",
-            "text": "ii"
-          },
-          {
-            "label": "iii",
-            "text": "iv"
-          },
-          {
-            "label": "v",
-            "text": "vi"
-          },
-          {
-            "label": "vii",
-            "text": "viii 32Section E"
-          },
-          {
-            "label": "i",
-            "text": "ii"
-          },
-          {
-            "label": "iii",
-            "text": "iv"
-          },
-          {
-            "label": "v",
-            "text": "vi"
-          },
-          {
-            "label": "vii",
-            "text": "viii"
+            "label": "viii",
+            "text": "The value of emojis for making feelings clear"
           }
         ]
       }
@@ -23210,83 +25127,35 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
         "items": [
           {
             "label": "i",
-            "text": "ii"
+            "text": "Why emojis may have a short life"
+          },
+          {
+            "label": "ii",
+            "text": "Ways in which new emojis are designed and made available"
           },
           {
             "label": "iii",
-            "text": "iv"
+            "text": "How words and emojis both fulfil new needs in our society"
+          },
+          {
+            "label": "iv",
+            "text": "How emojis are regarded in different ways by different cultures"
           },
           {
             "label": "v",
-            "text": "vi"
+            "text": "The use of emojis in different fields and what this means for us"
+          },
+          {
+            "label": "vi",
+            "text": "The rapid spread of a new way of interacting"
           },
           {
             "label": "vii",
-            "text": "viii 29Section B"
+            "text": "How and where emojis were first invented"
           },
           {
-            "label": "i",
-            "text": "ii"
-          },
-          {
-            "label": "iii",
-            "text": "iv"
-          },
-          {
-            "label": "v",
-            "text": "vi"
-          },
-          {
-            "label": "vii",
-            "text": "viii 30Section C"
-          },
-          {
-            "label": "i",
-            "text": "ii"
-          },
-          {
-            "label": "iii",
-            "text": "iv"
-          },
-          {
-            "label": "v",
-            "text": "vi"
-          },
-          {
-            "label": "vii",
-            "text": "viii 31Section D"
-          },
-          {
-            "label": "i",
-            "text": "ii"
-          },
-          {
-            "label": "iii",
-            "text": "iv"
-          },
-          {
-            "label": "v",
-            "text": "vi"
-          },
-          {
-            "label": "vii",
-            "text": "viii 32Section E"
-          },
-          {
-            "label": "i",
-            "text": "ii"
-          },
-          {
-            "label": "iii",
-            "text": "iv"
-          },
-          {
-            "label": "v",
-            "text": "vi"
-          },
-          {
-            "label": "vii",
-            "text": "viii"
+            "label": "viii",
+            "text": "The value of emojis for making feelings clear"
           }
         ]
       }
@@ -23302,83 +25171,35 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
         "items": [
           {
             "label": "i",
-            "text": "ii"
+            "text": "Why emojis may have a short life"
+          },
+          {
+            "label": "ii",
+            "text": "Ways in which new emojis are designed and made available"
           },
           {
             "label": "iii",
-            "text": "iv"
+            "text": "How words and emojis both fulfil new needs in our society"
+          },
+          {
+            "label": "iv",
+            "text": "How emojis are regarded in different ways by different cultures"
           },
           {
             "label": "v",
-            "text": "vi"
+            "text": "The use of emojis in different fields and what this means for us"
+          },
+          {
+            "label": "vi",
+            "text": "The rapid spread of a new way of interacting"
           },
           {
             "label": "vii",
-            "text": "viii 29Section B"
+            "text": "How and where emojis were first invented"
           },
           {
-            "label": "i",
-            "text": "ii"
-          },
-          {
-            "label": "iii",
-            "text": "iv"
-          },
-          {
-            "label": "v",
-            "text": "vi"
-          },
-          {
-            "label": "vii",
-            "text": "viii 30Section C"
-          },
-          {
-            "label": "i",
-            "text": "ii"
-          },
-          {
-            "label": "iii",
-            "text": "iv"
-          },
-          {
-            "label": "v",
-            "text": "vi"
-          },
-          {
-            "label": "vii",
-            "text": "viii 31Section D"
-          },
-          {
-            "label": "i",
-            "text": "ii"
-          },
-          {
-            "label": "iii",
-            "text": "iv"
-          },
-          {
-            "label": "v",
-            "text": "vi"
-          },
-          {
-            "label": "vii",
-            "text": "viii 32Section E"
-          },
-          {
-            "label": "i",
-            "text": "ii"
-          },
-          {
-            "label": "iii",
-            "text": "iv"
-          },
-          {
-            "label": "v",
-            "text": "vi"
-          },
-          {
-            "label": "vii",
-            "text": "viii"
+            "label": "viii",
+            "text": "The value of emojis for making feelings clear"
           }
         ]
       }
@@ -23386,36 +25207,46 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
     "33": {
       "questionType": "summary_completion_text",
       "groupId": "g_33_37",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below. Choose ONE WORD ONLY from the text for each answer.",
+      "extractionStatus": "extracted",
+      "promptText": "It is probable that before long, an emoji such as the 'face with tears of joy' will seem ______ . This is of interest as it tells us about developments in",
+      "sentenceBefore": "It is probable that before long, an emoji such as the 'face with tears of joy' will seem",
+      "sentenceAfter": ". This is of interest as it tells us about developments in",
       "groupPrompt": "Complete the summary below. Choose ONE WORD ONLY from the text for each answer."
     },
     "34": {
       "questionType": "summary_completion_text",
       "groupId": "g_33_37",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below. Choose ONE WORD ONLY from the text for each answer.",
+      "extractionStatus": "extracted",
+      "promptText": ". This is of interest as it tells us about developments in ______ , providing an effective way to focus on both the",
+      "sentenceBefore": ". This is of interest as it tells us about developments in",
+      "sentenceAfter": ", providing an effective way to focus on both the",
       "groupPrompt": "Complete the summary below. Choose ONE WORD ONLY from the text for each answer."
     },
     "35": {
       "questionType": "summary_completion_text",
       "groupId": "g_33_37",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below. Choose ONE WORD ONLY from the text for each answer.",
+      "extractionStatus": "extracted",
+      "promptText": ", providing an effective way to focus on both the ______ and the future of human communication. Changes in language reflect changes in people's relationships. They reflect the ways in which the",
+      "sentenceBefore": ", providing an effective way to focus on both the",
+      "sentenceAfter": "and the future of human communication. Changes in language reflect changes in people's relationships. They reflect the ways in which the",
       "groupPrompt": "Complete the summary below. Choose ONE WORD ONLY from the text for each answer."
     },
     "36": {
       "questionType": "summary_completion_text",
       "groupId": "g_33_37",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below. Choose ONE WORD ONLY from the text for each answer.",
+      "extractionStatus": "extracted",
+      "promptText": "and the future of human communication. Changes in language reflect changes in people's relationships. They reflect the ways in which the ______ of groups and generations changes over time, and they allow new",
+      "sentenceBefore": "and the future of human communication. Changes in language reflect changes in people's relationships. They reflect the ways in which the",
+      "sentenceAfter": "of groups and generations changes over time, and they allow new",
       "groupPrompt": "Complete the summary below. Choose ONE WORD ONLY from the text for each answer."
     },
     "37": {
       "questionType": "summary_completion_text",
       "groupId": "g_33_37",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below. Choose ONE WORD ONLY from the text for each answer.",
+      "extractionStatus": "extracted",
+      "promptText": "of groups and generations changes over time, and they allow new ______ to be included. However, emojis are interesting as they are a system that expresses these ideas in a completely new way.",
+      "sentenceBefore": "of groups and generations changes over time, and they allow new",
+      "sentenceAfter": "to be included. However, emojis are interesting as they are a system that expresses these ideas in a completely new way.",
       "groupPrompt": "Complete the summary below. Choose ONE WORD ONLY from the text for each answer."
     },
     "38": {
@@ -24116,42 +25947,9 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
         }
       ],
       "referenceBox": {
-        "title": "List of people",
+        "title": "List of People",
         "type": "features",
-        "items": [
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "C",
-            "text": ""
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "C",
-            "text": ""
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "C",
-            "text": ""
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "C",
-            "text": "D"
-          }
-        ]
+        "items": []
       }
     },
     "33": {
@@ -24187,42 +25985,9 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
         }
       ],
       "referenceBox": {
-        "title": "List of people",
+        "title": "List of People",
         "type": "features",
-        "items": [
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "C",
-            "text": ""
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "C",
-            "text": ""
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "C",
-            "text": ""
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "C",
-            "text": "D"
-          }
-        ]
+        "items": []
       }
     },
     "34": {
@@ -24258,42 +26023,9 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
         }
       ],
       "referenceBox": {
-        "title": "List of people",
+        "title": "List of People",
         "type": "features",
-        "items": [
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "C",
-            "text": ""
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "C",
-            "text": ""
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "C",
-            "text": ""
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "C",
-            "text": "D"
-          }
-        ]
+        "items": []
       }
     },
     "35": {
@@ -24329,42 +26061,9 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
         }
       ],
       "referenceBox": {
-        "title": "List of people",
+        "title": "List of People",
         "type": "features",
-        "items": [
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "C",
-            "text": ""
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "C",
-            "text": ""
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "C",
-            "text": ""
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "C",
-            "text": "D"
-          }
-        ]
+        "items": []
       }
     },
     "36": {
@@ -24379,22 +26078,28 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
     "37": {
       "questionType": "summary_completion_text",
       "groupId": "g_36_39",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "According to Kim Roberts, 'Henry' aims to help people become more ______ as parents. In this way, they do not instruct children to do things, nor give them total freedom of choice as in a",
+      "sentenceBefore": "According to Kim Roberts, 'Henry' aims to help people become more",
+      "sentenceAfter": "as parents. In this way, they do not instruct children to do things, nor give them total freedom of choice as in a",
       "groupPrompt": "Complete the summary below."
     },
     "38": {
       "questionType": "summary_completion_text",
       "groupId": "g_36_39",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "as parents. In this way, they do not instruct children to do things, nor give them total freedom of choice as in a ______ parenting style. Instead, they allow children to make some decisions for themselves. This might be a choice of vegetable at the dinner table or a decision about where a",
+      "sentenceBefore": "as parents. In this way, they do not instruct children to do things, nor give them total freedom of choice as in a",
+      "sentenceAfter": "parenting style. Instead, they allow children to make some decisions for themselves. This might be a choice of vegetable at the dinner table or a decision about where a",
       "groupPrompt": "Complete the summary below."
     },
     "39": {
       "questionType": "summary_completion_text",
       "groupId": "g_36_39",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "parenting style. Instead, they allow children to make some decisions for themselves. This might be a choice of vegetable at the dinner table or a decision about where a ______ should be enjoyed in the evening.",
+      "sentenceBefore": "parenting style. Instead, they allow children to make some decisions for themselves. This might be a choice of vegetable at the dinner table or a decision about where a",
+      "sentenceAfter": "should be enjoyed in the evening.",
       "groupPrompt": "Complete the summary below."
     },
     "40": {
@@ -25240,29 +26945,37 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
     "37": {
       "questionType": "summary_completion_text",
       "groupId": "g_37_40",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "A blue pigment used to create artworks in Europe in the Middle Ages was derived from a stone called lapis lazuli. In medieval times, even ______ was not as valuable. Lapis lazuli could only be found in Afghanistan and a lot of",
+      "sentenceBefore": "A blue pigment used to create artworks in Europe in the Middle Ages was derived from a stone called lapis lazuli. In medieval times, even",
+      "sentenceAfter": "was not as valuable. Lapis lazuli could only be found in Afghanistan and a lot of",
       "groupPrompt": "Complete the summary below."
     },
     "38": {
       "questionType": "summary_completion_text",
       "groupId": "g_37_40",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "was not as valuable. Lapis lazuli could only be found in Afghanistan and a lot of ______ was needed to make the pigment from the stone.",
+      "sentenceBefore": "was not as valuable. Lapis lazuli could only be found in Afghanistan and a lot of",
+      "sentenceAfter": "was needed to make the pigment from the stone.",
       "groupPrompt": "Complete the summary below."
     },
     "39": {
       "questionType": "summary_completion_text",
       "groupId": "g_37_40",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "The procedure used to do this appeared much later in the manuals used by European artists and this suggests that the product came to their countries as an imported powder. Artists often had to make a ______ on their brushes using their mouths, which then enabled them to produce the fine features needed for",
+      "sentenceBefore": "The procedure used to do this appeared much later in the manuals used by European artists and this suggests that the product came to their countries as an imported powder. Artists often had to make a",
+      "sentenceAfter": "on their brushes using their mouths, which then enabled them to produce the fine features needed for",
       "groupPrompt": "Complete the summary below."
     },
     "40": {
       "questionType": "summary_completion_text",
       "groupId": "g_37_40",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "on their brushes using their mouths, which then enabled them to produce the fine features needed for ______ and books.",
+      "sentenceBefore": "on their brushes using their mouths, which then enabled them to produce the fine features needed for",
+      "sentenceAfter": "and books.",
       "groupPrompt": "Complete the summary below."
     }
   },
@@ -25459,22 +27172,28 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
     "28": {
       "questionType": "summary_completion_text",
       "groupId": "g_28_30",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "About ten years ago, the decision was taken to rewild the farmland at Knepp Castle. Now the ______ that used to be grown there has disappeared and the countryside is more like parts of",
+      "sentenceBefore": "About ten years ago, the decision was taken to rewild the farmland at Knepp Castle. Now the",
+      "sentenceAfter": "that used to be grown there has disappeared and the countryside is more like parts of",
       "groupPrompt": "Complete the summary below."
     },
     "29": {
       "questionType": "summary_completion_text",
       "groupId": "g_28_30",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "that used to be grown there has disappeared and the countryside is more like parts of ______ . The hedges surrounding the fields have been allowed to expand and deer can be seen running among the wild flowers. The estate hosts the largest number of",
+      "sentenceBefore": "that used to be grown there has disappeared and the countryside is more like parts of",
+      "sentenceAfter": ". The hedges surrounding the fields have been allowed to expand and deer can be seen running among the wild flowers. The estate hosts the largest number of",
       "groupPrompt": "Complete the summary below."
     },
     "30": {
       "questionType": "summary_completion_text",
       "groupId": "g_28_30",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": ". The hedges surrounding the fields have been allowed to expand and deer can be seen running among the wild flowers. The estate hosts the largest number of ______ of a particular species in the whole country and bird numbers are increasing. All these changes have happened remarkably quickly.",
+      "sentenceBefore": ". The hedges surrounding the fields have been allowed to expand and deer can be seen running among the wild flowers. The estate hosts the largest number of",
+      "sentenceAfter": "of a particular species in the whole country and bird numbers are increasing. All these changes have happened remarkably quickly.",
       "groupPrompt": "Complete the summary below."
     },
     "31": {
@@ -25866,28 +27585,8 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
             "text": "Karen Russell"
           },
           {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
             "label": "C",
-            "text": ""
+            "text": "Peter Bourne"
           }
         ]
       }
@@ -25927,28 +27626,8 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
             "text": "Karen Russell"
           },
           {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
             "label": "C",
-            "text": ""
+            "text": "Peter Bourne"
           }
         ]
       }
@@ -25988,28 +27667,8 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
             "text": "Karen Russell"
           },
           {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
             "label": "C",
-            "text": ""
+            "text": "Peter Bourne"
           }
         ]
       }
@@ -26049,28 +27708,8 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
             "text": "Karen Russell"
           },
           {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
             "label": "C",
-            "text": ""
+            "text": "Peter Bourne"
           }
         ]
       }
@@ -26110,28 +27749,8 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
             "text": "Karen Russell"
           },
           {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
             "label": "C",
-            "text": ""
+            "text": "Peter Bourne"
           }
         ]
       }
@@ -26139,22 +27758,28 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
     "24": {
       "questionType": "summary_completion_text",
       "groupId": "g_24_26",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "For hundreds of years, the only tree that was more popular in Britain than elm was ______ . Starting in the Bronze Age, many tools were made from elm and people also used it to make weapons. In the 18th century, it was grown to provide wood for boxes and",
+      "sentenceBefore": "For hundreds of years, the only tree that was more popular in Britain than elm was",
+      "sentenceAfter": ". Starting in the Bronze Age, many tools were made from elm and people also used it to make weapons. In the 18th century, it was grown to provide wood for boxes and",
       "groupPrompt": "Complete the summary below."
     },
     "25": {
       "questionType": "summary_completion_text",
       "groupId": "g_24_26",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": ". Starting in the Bronze Age, many tools were made from elm and people also used it to make weapons. In the 18th century, it was grown to provide wood for boxes and ______ . Due to its strength, elm was often used for mining equipment and the Cutty Sark's",
+      "sentenceBefore": ". Starting in the Bronze Age, many tools were made from elm and people also used it to make weapons. In the 18th century, it was grown to provide wood for boxes and",
+      "sentenceAfter": ". Due to its strength, elm was often used for mining equipment and the Cutty Sark's",
       "groupPrompt": "Complete the summary below."
     },
     "26": {
       "questionType": "summary_completion_text",
       "groupId": "g_24_26",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": ". Due to its strength, elm was often used for mining equipment and the Cutty Sark's ______ was also constructed from elm.",
+      "sentenceBefore": ". Due to its strength, elm was often used for mining equipment and the Cutty Sark's",
+      "sentenceAfter": "was also constructed from elm.",
       "groupPrompt": "Complete the summary below."
     },
     "27": {
@@ -26505,15 +28130,19 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
     "18": {
       "questionType": "summary_completion_text",
       "groupId": "g_17_22",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "But scientific studies suggest that procrastination is actually due to poor mood management. The tasks we are most likely to put off are those that could damage our self-esteem or cause us to feel ______ when we think about them. Research comparing chronic procrastinators with other people even found differences in the brain regions associated with regulating emotions and identifying",
+      "sentenceBefore": "But scientific studies suggest that procrastination is actually due to poor mood management. The tasks we are most likely to put off are those that could damage our self-esteem or cause us to feel",
+      "sentenceAfter": "when we think about them. Research comparing chronic procrastinators with other people even found differences in the brain regions associated with regulating emotions and identifying",
       "groupPrompt": "Complete the summary below."
     },
     "19": {
       "questionType": "summary_completion_text",
       "groupId": "g_17_22",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "when we think about them. Research comparing chronic procrastinators with other people even found differences in the brain regions associated with regulating emotions and identifying ______ .",
+      "sentenceBefore": "when we think about them. Research comparing chronic procrastinators with other people even found differences in the brain regions associated with regulating emotions and identifying",
+      "sentenceAfter": ".",
       "groupPrompt": "Complete the summary below."
     },
     "20": {
@@ -26546,8 +28175,8 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
     "23": {
       "questionType": "multiple_choice_multi",
       "groupId": "g_23_24",
-      "extractionStatus": "group_inherited",
-      "promptText": "Choose TWOletters, A–E.",
+      "extractionStatus": "extracted",
+      "promptText": "24Which TWO comparisons between employees who often procrastinate and those who do not are mentioned in the text?",
       "groupPrompt": "Choose TWOletters, A–E.",
       "options": [
         {
@@ -26624,8 +28253,8 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
     "25": {
       "questionType": "multiple_choice_multi",
       "groupId": "g_25_26",
-      "extractionStatus": "group_inherited",
-      "promptText": "Choose TWOletters, A–E.",
+      "extractionStatus": "extracted",
+      "promptText": "26Which TWO recommendations for getting out of a cycle of procrastination does the writer give?",
       "groupPrompt": "Choose TWOletters, A–E.",
       "options": [
         {
@@ -26744,8 +28373,10 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
     "33": {
       "questionType": "summary_completion_bank",
       "groupId": "g_33_37",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary using the list of phrases, A–H, below.",
+      "extractionStatus": "extracted",
+      "promptText": "Even after ABS was developed, MLB still wanted human umpires to shout out decisions as they had in their ______ . The umpire's job had, at one time, required a",
+      "sentenceBefore": "Even after ABS was developed, MLB still wanted human umpires to shout out decisions as they had in their",
+      "sentenceAfter": ". The umpire's job had, at one time, required a",
       "groupPrompt": "Complete the summary using the list of phrases, A–H, below.",
       "referenceBox": {
         "title": "Word Bank",
@@ -26756,8 +28387,10 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
     "34": {
       "questionType": "summary_completion_bank",
       "groupId": "g_33_37",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary using the list of phrases, A–H, below.",
+      "extractionStatus": "extracted",
+      "promptText": ". The umpire's job had, at one time, required a ______ about whether a ball was a strike. A ball is considered a strike when the batter does not hit it and it crosses through a",
+      "sentenceBefore": ". The umpire's job had, at one time, required a",
+      "sentenceAfter": "about whether a ball was a strike. A ball is considered a strike when the batter does not hit it and it crosses through a",
       "groupPrompt": "Complete the summary using the list of phrases, A–H, below.",
       "referenceBox": {
         "title": "Word Bank",
@@ -26768,8 +28401,10 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
     "35": {
       "questionType": "summary_completion_bank",
       "groupId": "g_33_37",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary using the list of phrases, A–H, below.",
+      "extractionStatus": "extracted",
+      "promptText": "about whether a ball was a strike. A ball is considered a strike when the batter does not hit it and it crosses through a ______ extending approximately from the batter's knee to his chest.",
+      "sentenceBefore": "about whether a ball was a strike. A ball is considered a strike when the batter does not hit it and it crosses through a",
+      "sentenceAfter": "extending approximately from the batter's knee to his chest.",
       "groupPrompt": "Complete the summary using the list of phrases, A–H, below.",
       "referenceBox": {
         "title": "Word Bank",
@@ -26780,8 +28415,10 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
     "36": {
       "questionType": "summary_completion_bank",
       "groupId": "g_33_37",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary using the list of phrases, A–H, below.",
+      "extractionStatus": "extracted",
+      "promptText": "In the past, ______ over strike calls were not uncommon, but today everyone accepts the complete ban on pushing or shoving the umpire. One difference, however, is that during the first game DeJesus used ABS, strike calls were met with",
+      "sentenceBefore": "In the past,",
+      "sentenceAfter": "over strike calls were not uncommon, but today everyone accepts the complete ban on pushing or shoving the umpire. One difference, however, is that during the first game DeJesus used ABS, strike calls were met with",
       "groupPrompt": "Complete the summary using the list of phrases, A–H, below.",
       "referenceBox": {
         "title": "Word Bank",
@@ -26792,8 +28429,10 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
     "37": {
       "questionType": "summary_completion_bank",
       "groupId": "g_33_37",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary using the list of phrases, A–H, below.",
+      "extractionStatus": "extracted",
+      "promptText": "over strike calls were not uncommon, but today everyone accepts the complete ban on pushing or shoving the umpire. One difference, however, is that during the first game DeJesus used ABS, strike calls were met with ______ .",
+      "sentenceBefore": "over strike calls were not uncommon, but today everyone accepts the complete ban on pushing or shoving the umpire. One difference, however, is that during the first game DeJesus used ABS, strike calls were met with",
+      "sentenceAfter": ".",
       "groupPrompt": "Complete the summary using the list of phrases, A–H, below.",
       "referenceBox": {
         "title": "Word Bank",
@@ -27057,6 +28696,10 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
           {
             "label": "vi",
             "text": "Promoting hope"
+          },
+          {
+            "label": "vii",
+            "text": "A warning of further trouble ahead"
           }
         ]
       }
@@ -27093,6 +28736,10 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
           {
             "label": "vi",
             "text": "Promoting hope"
+          },
+          {
+            "label": "vii",
+            "text": "A warning of further trouble ahead"
           }
         ]
       }
@@ -27129,6 +28776,10 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
           {
             "label": "vi",
             "text": "Promoting hope"
+          },
+          {
+            "label": "vii",
+            "text": "A warning of further trouble ahead"
           }
         ]
       }
@@ -27165,6 +28816,10 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
           {
             "label": "vi",
             "text": "Promoting hope"
+          },
+          {
+            "label": "vii",
+            "text": "A warning of further trouble ahead"
           }
         ]
       }
@@ -27201,6 +28856,10 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
           {
             "label": "vi",
             "text": "Promoting hope"
+          },
+          {
+            "label": "vii",
+            "text": "A warning of further trouble ahead"
           }
         ]
       }
@@ -27237,6 +28896,10 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
           {
             "label": "vi",
             "text": "Promoting hope"
+          },
+          {
+            "label": "vii",
+            "text": "A warning of further trouble ahead"
           }
         ]
       }
@@ -27455,43 +29118,11 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
         "items": [
           {
             "label": "B",
-            "text": "or"
-          },
-          {
-            "label": "B",
             "text": "Daniel Wolpert"
           },
           {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
             "label": "C",
-            "text": ""
+            "text": "Kathleen Richardson"
           }
         ]
       }
@@ -27527,43 +29158,11 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
         "items": [
           {
             "label": "B",
-            "text": "or"
-          },
-          {
-            "label": "B",
             "text": "Daniel Wolpert"
           },
           {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
             "label": "C",
-            "text": ""
+            "text": "Kathleen Richardson"
           }
         ]
       }
@@ -27599,43 +29198,11 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
         "items": [
           {
             "label": "B",
-            "text": "or"
-          },
-          {
-            "label": "B",
             "text": "Daniel Wolpert"
           },
           {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
             "label": "C",
-            "text": ""
+            "text": "Kathleen Richardson"
           }
         ]
       }
@@ -27671,43 +29238,11 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
         "items": [
           {
             "label": "B",
-            "text": "or"
-          },
-          {
-            "label": "B",
             "text": "Daniel Wolpert"
           },
           {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
             "label": "C",
-            "text": ""
+            "text": "Kathleen Richardson"
           }
         ]
       }
@@ -27743,43 +29278,11 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
         "items": [
           {
             "label": "B",
-            "text": "or"
-          },
-          {
-            "label": "B",
             "text": "Daniel Wolpert"
           },
           {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
             "label": "C",
-            "text": ""
+            "text": "Kathleen Richardson"
           }
         ]
       }
@@ -27815,43 +29318,11 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
         "items": [
           {
             "label": "B",
-            "text": "or"
-          },
-          {
-            "label": "B",
             "text": "Daniel Wolpert"
           },
           {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
             "label": "C",
-            "text": ""
+            "text": "Kathleen Richardson"
           }
         ]
       }
@@ -27887,43 +29358,11 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
         "items": [
           {
             "label": "B",
-            "text": "or"
-          },
-          {
-            "label": "B",
             "text": "Daniel Wolpert"
           },
           {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
             "label": "C",
-            "text": ""
+            "text": "Kathleen Richardson"
           }
         ]
       }
@@ -28405,40 +29844,8 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
             "text": "Raisa Chowdhury"
           },
           {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "C",
-            "text": "D"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "C",
-            "text": "D"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "C",
-            "text": "D"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "C",
-            "text": "D"
-          },
-          {
             "label": "E",
-            "text": ""
+            "text": "Greg Spotts"
           }
         ]
       }
@@ -28498,40 +29905,8 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
             "text": "Raisa Chowdhury"
           },
           {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "C",
-            "text": "D"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "C",
-            "text": "D"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "C",
-            "text": "D"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "C",
-            "text": "D"
-          },
-          {
             "label": "E",
-            "text": ""
+            "text": "Greg Spotts"
           }
         ]
       }
@@ -28591,40 +29966,8 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
             "text": "Raisa Chowdhury"
           },
           {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "C",
-            "text": "D"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "C",
-            "text": "D"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "C",
-            "text": "D"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "C",
-            "text": "D"
-          },
-          {
             "label": "E",
-            "text": ""
+            "text": "Greg Spotts"
           }
         ]
       }
@@ -28684,40 +30027,8 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
             "text": "Raisa Chowdhury"
           },
           {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "C",
-            "text": "D"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "C",
-            "text": "D"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "C",
-            "text": "D"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "C",
-            "text": "D"
-          },
-          {
             "label": "E",
-            "text": ""
+            "text": "Greg Spotts"
           }
         ]
       }
@@ -28807,48 +30118,8 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
             "text": "Julie Young"
           },
           {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "C",
-            "text": "D"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "C",
-            "text": "D"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "C",
-            "text": "D"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "C",
-            "text": "D"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "C",
-            "text": "D"
-          },
-          {
             "label": "E",
-            "text": ""
+            "text": "Bethany Smith"
           }
         ]
       }
@@ -28908,48 +30179,8 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
             "text": "Julie Young"
           },
           {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "C",
-            "text": "D"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "C",
-            "text": "D"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "C",
-            "text": "D"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "C",
-            "text": "D"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "C",
-            "text": "D"
-          },
-          {
             "label": "E",
-            "text": ""
+            "text": "Bethany Smith"
           }
         ]
       }
@@ -29009,48 +30240,8 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
             "text": "Julie Young"
           },
           {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "C",
-            "text": "D"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "C",
-            "text": "D"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "C",
-            "text": "D"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "C",
-            "text": "D"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "C",
-            "text": "D"
-          },
-          {
             "label": "E",
-            "text": ""
+            "text": "Bethany Smith"
           }
         ]
       }
@@ -29110,48 +30301,8 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
             "text": "Julie Young"
           },
           {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "C",
-            "text": "D"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "C",
-            "text": "D"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "C",
-            "text": "D"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "C",
-            "text": "D"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "C",
-            "text": "D"
-          },
-          {
             "label": "E",
-            "text": ""
+            "text": "Bethany Smith"
           }
         ]
       }
@@ -29211,48 +30362,8 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
             "text": "Julie Young"
           },
           {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "C",
-            "text": "D"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "C",
-            "text": "D"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "C",
-            "text": "D"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "C",
-            "text": "D"
-          },
-          {
-            "label": "A",
-            "text": "B"
-          },
-          {
-            "label": "C",
-            "text": "D"
-          },
-          {
             "label": "E",
-            "text": ""
+            "text": "Bethany Smith"
           }
         ]
       }
@@ -29260,29 +30371,37 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
     "37": {
       "questionType": "summary_completion_text",
       "groupId": "g_37_40",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "In Namibia, livestock guard dogs have been used to protect domestic animals from attacks by cheetahs. This has led to a rise in the deaths of other predators, particularly ______ . In addition, it has been suggested that the dogs could have",
+      "sentenceBefore": "In Namibia, livestock guard dogs have been used to protect domestic animals from attacks by cheetahs. This has led to a rise in the deaths of other predators, particularly",
+      "sentenceAfter": ". In addition, it has been suggested that the dogs could have",
       "groupPrompt": "Complete the summary below."
     },
     "38": {
       "questionType": "summary_completion_text",
       "groupId": "g_37_40",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": ". In addition, it has been suggested that the dogs could have ______ which may affect other species, and that they may reduce the amount of",
+      "sentenceBefore": ". In addition, it has been suggested that the dogs could have",
+      "sentenceAfter": "which may affect other species, and that they may reduce the amount of",
       "groupPrompt": "Complete the summary below."
     },
     "39": {
       "questionType": "summary_completion_text",
       "groupId": "g_37_40",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "which may affect other species, and that they may reduce the amount of ______ available to certain wild animals. On the other hand, these dogs may help birds by protecting their nests. These might otherwise be threatened by predators such as",
+      "sentenceBefore": "which may affect other species, and that they may reduce the amount of",
+      "sentenceAfter": "available to certain wild animals. On the other hand, these dogs may help birds by protecting their nests. These might otherwise be threatened by predators such as",
       "groupPrompt": "Complete the summary below."
     },
     "40": {
       "questionType": "summary_completion_text",
       "groupId": "g_37_40",
-      "extractionStatus": "group_inherited",
-      "promptText": "Complete the summary below.",
+      "extractionStatus": "extracted",
+      "promptText": "available to certain wild animals. On the other hand, these dogs may help birds by protecting their nests. These might otherwise be threatened by predators such as ______ .",
+      "sentenceBefore": "available to certain wild animals. On the other hand, these dogs may help birds by protecting their nests. These might otherwise be threatened by predators such as",
+      "sentenceAfter": ".",
       "groupPrompt": "Complete the summary below."
     }
   }

@@ -1,7 +1,7 @@
 "use client";
 
-import React from "react";
-import { Bookmark } from "lucide-react";
+import React, { useState } from "react";
+import { Bookmark, ChevronDown, ChevronUp, LayoutGrid } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface QuestionNavigatorProps {
@@ -12,6 +12,8 @@ interface QuestionNavigatorProps {
   checkedQuestions?: Record<number, { isCorrect: boolean; correctAnswer: string } | boolean>;
   currentQuestion: number | null;
   mode: "practice" | "exam";
+  isCollapsed?: boolean;
+  onToggleCollapse?: () => void;
   onNavigate: (num: number) => void;
 }
 
@@ -30,9 +32,9 @@ function getSections(testType: string): SectionDef[] {
     ];
   }
   return [
-    { name: "Passage 1", range: [1, 13] },
-    { name: "Passage 2", range: [14, 26] },
-    { name: "Passage 3", range: [27, 40] },
+    { name: "Passage 1", range: [1, 14] },
+    { name: "Passage 2", range: [15, 27] },
+    { name: "Passage 3", range: [28, 40] },
   ];
 }
 
@@ -44,6 +46,8 @@ export default function QuestionNavigator({
   checkedQuestions = {},
   currentQuestion,
   mode,
+  isCollapsed = false,
+  onToggleCollapse,
   onNavigate,
 }: QuestionNavigatorProps) {
   const sections = getSections(testType);
@@ -64,7 +68,7 @@ export default function QuestionNavigator({
       "w-9 h-9 rounded-xl text-xs font-mono font-extrabold border transition-all duration-150 flex items-center justify-center relative cursor-pointer shadow-2xs";
 
     if (isCurrent) {
-      base += " ring-4 ring-orange-500 ring-offset-2 border-orange-600 z-10";
+      base += " ring-2 ring-forest-ink ring-offset-1 border-forest-ink font-black scale-105 z-10";
     }
 
     if (isPracticeChecked) {
@@ -98,25 +102,48 @@ export default function QuestionNavigator({
     return count;
   };
 
+  const totalAnswered = questionNumbers.filter((n) => answers[n]?.trim()).length;
+
+  if (isCollapsed) {
+    return (
+      <div className="bg-white rounded-2xl border border-forest-ink/15 overflow-hidden shadow-sm p-3">
+        <button
+          type="button"
+          onClick={onToggleCollapse}
+          className="w-full flex items-center justify-between text-xs font-mono font-bold text-forest-ink hover:bg-forest-ink/5 p-2 rounded-xl transition-colors"
+          title="Expand Question Navigator"
+        >
+          <div className="flex items-center gap-2">
+            <LayoutGrid size={16} className="text-forest-ink/70" />
+            <span>Navigator ({totalAnswered}/40)</span>
+          </div>
+          <ChevronDown size={16} />
+        </button>
+      </div>
+    );
+  }
+
   return (
-    <div className="bg-white rounded-2xl border border-forest-ink/15 overflow-hidden shadow-sm">
+    <div className="bg-white rounded-2xl border border-forest-ink/15 overflow-hidden shadow-sm transition-all">
       {/* Header & Legend */}
       <div className="px-4 py-3 border-b border-forest-ink/10 bg-forest-ink/5 flex items-center justify-between">
-        <span className="text-[11px] font-mono font-bold uppercase tracking-widest text-forest-ink">
-          Question Navigator
-        </span>
-
-        {/* Legend */}
-        <div className="flex items-center gap-2 text-[10px] font-mono">
-          <div className="flex items-center gap-1">
-            <span className="w-2.5 h-2.5 rounded bg-emerald-500" />
-            <span className="text-forest-ink/60">Ans</span>
-          </div>
-          <div className="flex items-center gap-1">
-            <span className="w-2.5 h-2.5 rounded bg-purple-600" />
-            <span className="text-forest-ink/60">Bkmk</span>
-          </div>
+        <div className="flex items-center gap-2">
+          <span className="text-[11px] font-mono font-bold uppercase tracking-widest text-forest-ink">
+            Question Navigator
+          </span>
+          {onToggleCollapse && (
+            <button
+              type="button"
+              onClick={onToggleCollapse}
+              className="p-1 rounded-lg hover:bg-forest-ink/10 text-forest-ink/60 transition-colors"
+              title="Collapse Question Navigator"
+            >
+              <ChevronUp size={14} />
+            </button>
+          )}
         </div>
+
+
       </div>
 
       <div className="p-4 space-y-5">

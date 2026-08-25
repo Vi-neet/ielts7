@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import {
   VirtualQuestion,
   VirtualQuestionGroup,
@@ -12,7 +12,7 @@ import MultiChoiceRenderer from "./MultiChoiceRenderer";
 import TextInputRenderer from "./TextInputRenderer";
 import StructuredBlockRenderer from "./StructuredBlockRenderer";
 import PracticeFeedbackCard from "./PracticeFeedbackCard";
-import { Bookmark, ChevronLeft, ChevronRight, CheckCircle2 } from "lucide-react";
+import { Bookmark, ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
@@ -53,6 +53,17 @@ export default function QuestionWorkspace({
 }: QuestionWorkspaceProps) {
   const currentVal = answers[question.questionNumber] || "";
   const isPractice = mode === "practice";
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Enter" && isPractice && currentVal.trim() && !checkedState) {
+        e.preventDefault();
+        onCheckAnswer(question.questionNumber);
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [isPractice, currentVal, checkedState, question.questionNumber, onCheckAnswer]);
 
   return (
     <div className="space-y-6 max-w-2xl mx-auto pb-12">
@@ -139,10 +150,10 @@ export default function QuestionWorkspace({
           type="button"
           onClick={onPrevious}
           disabled={!canPrevious}
-          variant="outline"
-          className="h-11 px-5 rounded-xl border-forest-ink/20 font-semibold"
+          variant="forestOutline"
+          className="h-10 px-5 font-medium"
         >
-          <ChevronLeft size={16} className="mr-1" /> Previous
+          <ChevronLeft size={15} className="mr-0.5" /> Previous
         </Button>
 
         {isPractice && (
@@ -150,10 +161,10 @@ export default function QuestionWorkspace({
             type="button"
             onClick={() => onCheckAnswer(question.questionNumber)}
             disabled={!currentVal.trim()}
-            variant="forest"
-            className="h-11 px-6 rounded-xl font-semibold shadow-sm"
+            variant="forestOutline"
+            className="h-10 px-5 font-medium"
           >
-            <CheckCircle2 size={16} className="mr-1.5" /> Check Answer
+            Check Answer
           </Button>
         )}
 
@@ -162,9 +173,9 @@ export default function QuestionWorkspace({
           onClick={onNext}
           disabled={!canNext}
           variant="forest"
-          className="h-11 px-5 rounded-xl font-semibold shadow-sm"
+          className="h-10 px-5 font-medium"
         >
-          Next <ChevronRight size={16} className="ml-1" />
+          Next <ChevronRight size={15} className="ml-0.5" />
         </Button>
       </div>
     </div>

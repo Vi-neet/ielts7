@@ -86,8 +86,8 @@ function ExamReadyScreen({
         </div>
       </div>
 
-      {/* Duration pill */}
-      <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-forest-ink/5 border border-forest-ink/10 mb-6">
+      {/* Duration badge */}
+      <div className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-forest-ink/5 border border-forest-ink/10 mb-6">
         <Timer size={14} className="text-forest-ink/60" />
         <span className="text-sm font-semibold font-inter text-forest-ink">
           {formatDurationMinutes(durationMinutes)}

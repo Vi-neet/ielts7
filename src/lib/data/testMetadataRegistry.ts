@@ -197,7 +197,7 @@ export function getVirtualTestIndex(
       const start = qNums[0];
       const end = qNums[qNums.length - 1];
       const firstQData = testRegistry[start] || {};
-      const passage: 1 | 2 | 3 = start <= 13 ? 1 : start <= 26 ? 2 : 3;
+      const passage: 1 | 2 | 3 = start <= 14 ? 1 : start <= 27 ? 2 : 3;
       const type = firstQData.questionType || "unknown";
 
       const group: VirtualQuestionGroup = {
@@ -223,7 +223,6 @@ export function getVirtualTestIndex(
         promptText: "",
       };
 
-      const passage: 1 | 2 | 3 = q <= 13 ? 1 : q <= 26 ? 2 : 3;
       const type = qdata.questionType || "unknown";
       const defaultOptions = getOptionsForType(type, answerKey[q]);
 
@@ -231,6 +230,7 @@ export function getVirtualTestIndex(
       const qNumsInGroup = groupMap.get(qdata.groupId || "unmapped") || [q];
       const startGroupNum = qNumsInGroup[0];
       const endGroupNum = qNumsInGroup[qNumsInGroup.length - 1];
+      const passage: 1 | 2 | 3 = startGroupNum <= 14 ? 1 : startGroupNum <= 27 ? 2 : 3;
 
       questions[q] = {
         questionNumber: q,
