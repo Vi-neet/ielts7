@@ -3,9 +3,6 @@
 import { useRef, useState } from "react";
 import Image from "next/image";
 import { motion, useReducedMotion } from "framer-motion";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useGSAP } from "@gsap/react";
 import {
   ArrowRight,
   CheckCircle2,
@@ -21,44 +18,12 @@ import ProductPreview, { SkillType } from "./ProductPreview";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
-if (typeof window !== "undefined") {
-  gsap.registerPlugin(ScrollTrigger);
-}
-
 const HeroSection = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const previewRef = useRef<HTMLDivElement>(null);
   const prefersReducedMotion = useReducedMotion();
   const [activeSkill, setActiveSkill] = useState<SkillType>("listening");
-
-  useGSAP(() => {
-    if (!containerRef.current || prefersReducedMotion) return;
-
-    // Macro scroll storytelling: Push hero away as user scrolls
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: containerRef.current,
-        start: "top top",
-        end: "bottom top",
-        scrub: true,
-      },
-    });
-
-    tl.to(contentRef.current, {
-      y: -100,
-      opacity: 0.2,
-      ease: "none",
-    }, 0);
-
-    tl.to(previewRef.current, {
-      y: -50,
-      scale: 1.05,
-      rotateX: 5,
-      ease: "none",
-    }, 0);
-
-  }, { scope: containerRef });
 
   const skillPills: { id: SkillType; icon: any; label: string; href: string }[] = [
     { id: "reading", icon: BookOpen, label: "Reading", href: "/tests?module=reading" },
