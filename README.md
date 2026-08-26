@@ -1,36 +1,111 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# IELTS 7+ House
 
-## Getting Started
+An advanced IELTS preparation platform featuring full-length Academic & General Reading and Listening mock tests, detailed answer reviews, and score tracking.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## 🏗️ Architecture & Deployment Strategy
+
+IELTS 7+ House uses a strict **Two-Tier Dual-Cloud Deployment Strategy** separating Staging and Production environments.
+
+```text
+                                GITHUB REPOSITORY
+
+                       ┌────────────────────────────────┐
+                       │          main branch           │
+                       └───────────────┬────────────────┘
+                                       │
+                                   merge PR
+                                       │
+                                       ▼
+                         VERCEL PRODUCTION DEPLOYMENT
+                                       │
+                                       ▼
+                           https://ielts7plushouse.com/
+
+
+                       ┌────────────────────────────────┐
+                       │          stage branch          │
+                       └───────────────┬────────────────┘
+                                       │
+                              merge PR into stage
+                                       │
+                                       ▼
+                       CLOUDFLARE WORKERS AUTO-DEPLOY
+                             (GitHub Actions CI)
+                                       │
+                                       ▼
+               https://ielts7.varunsaxena5elc.workers.dev/
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Hosting Environments
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+| Environment | Hosting Platform | Branch | Live URL | Worker/App Name |
+| :--- | :--- | :--- | :--- | :--- |
+| **Production** | Vercel | `main` | [ielts7plushouse.com](https://ielts7plushouse.com/) | `ielts7` (Vercel Project) |
+| **Staging** | Cloudflare Workers + OpenNext | `stage` | [ielts7.varunsaxena5elc.workers.dev](https://ielts7.varunsaxena5elc.workers.dev/) | `ielts7` (Cloudflare Worker) |
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+> ⚠️ **IMPORTANT**: Firebase (`ielts7-48b25`) remains shared and completely untouched across environments. Production hosting on Vercel remains active and isolated from Cloudflare Staging.
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## 🔄 Developer Workflow
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. **Feature Development**: Create a feature branch off `stage` (e.g., `feature/reading-engine-update`).
+2. **Staging Deployment**: Create a Pull Request (PR) into `stage`.
+   - Once merged into `stage`, GitHub Actions automatically builds the OpenNext bundle (`npm run build:worker`) and deploys the Cloudflare Worker to `https://ielts7.varunsaxena5elc.workers.dev/`.
+3. **Staging QA**: Test and verify all features on the Cloudflare Staging environment.
+4. **Production Release**: Create a Pull Request from `stage` into `main`.
+   - Once merged into `main`, Vercel automatically deploys the updated build to production at `https://ielts7plushouse.com/`.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## 🔑 CI/CD GitHub Secrets Configuration
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+To enable automatic Cloudflare Workers deployment on merge to `stage`, configure the following GitHub Repository Secrets under **Settings > Secrets and variables > Actions**:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- `CLOUDFLARE_API_TOKEN`: Cloudflare API token with `Edit Workers` permissions.
+- `CLOUDFLARE_ACCOUNT_ID`: Cloudflare Account ID.
+
+---
+
+## 🛠️ Local Development & Build Commands
+
+### Prerequisites
+- Node.js 20+
+- npm
+
+### Development Commands
+
+```bash
+# Install dependencies
+npm install
+
+# Start local Next.js development server
+npm run dev
+
+# Run TypeScript type check
+node node_modules/typescript/bin/tsc --noEmit
+
+# Build local Next.js production app
+npm run build
+
+# Build OpenNext Cloudflare Worker bundle
+npm run build:worker
+
+# Preview local Worker build with Wrangler
+npm run preview:worker
+
+# Manually deploy to Cloudflare Worker Staging
+npm run deploy:worker
+```
+
+---
+
+## ⚡ Tech Stack
+
+- **Framework**: Next.js 15.3.1 (App Router, TypeScript, React 19)
+- **Staging Infrastructure**: Cloudflare Workers (`@opennextjs/cloudflare` 1.14.0, `wrangler` 4.126.0)
+- **Production Infrastructure**: Vercel
+- **Database & Auth**: Firebase Client SDK & Firebase Admin (`ielts7-48b25`)
+- **Styling**: Tailwind CSS v4, Lucide React icons, Framer Motion, GSAP
