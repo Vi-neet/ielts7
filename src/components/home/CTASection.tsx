@@ -116,7 +116,7 @@ const CTASection = () => {
                     asChild
                     className="w-full sm:w-auto px-8 py-6 bg-highlighter-yellow hover:bg-highlighter-yellow/90 text-forest-ink font-bold text-[16px] rounded-[8px] font-inter shadow-sm"
                   >
-                    <a href="/?section=practice-tests">
+                    <a href="/tests">
                       Start Practicing Now
                       <ArrowRight className="w-5 h-5 ml-2" />
                     </a>

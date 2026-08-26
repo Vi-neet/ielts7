@@ -37,6 +37,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import ProfileLoadingOverlay from "@/components/profile/ProfileLoadingOverlay";
 
 interface Attempt {
   id: string;
@@ -500,13 +501,8 @@ export default function ProfilePage() {
     setReviewResults(null);
   };
 
-  if (authLoading) {
-    return (
-      <div className="min-h-screen bg-cream-paper flex flex-col items-center justify-center p-4">
-        <Loader2 className="h-8 w-8 text-forest-ink animate-spin mb-2" />
-        <span className="text-forest-ink/65 font-inter text-sm">Authenticating...</span>
-      </div>
-    );
+  if (authLoading || (user && (loadingAttempts || loadingSubmissions))) {
+    return <ProfileLoadingOverlay />;
   }
 
   if (!user) return null;

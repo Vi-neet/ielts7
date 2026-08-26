@@ -86,9 +86,11 @@ export default function MultiChoiceRenderer({
                 >
                   {opt.label}
                 </span>
-                <span className="text-sm font-medium">
-                  {opt.text || opt.label}
-                </span>
+                {opt.text && opt.text !== opt.label && (
+                  <span className="text-sm font-medium">
+                    {opt.text}
+                  </span>
+                )}
               </div>
 
               <div

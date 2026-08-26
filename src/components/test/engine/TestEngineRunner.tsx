@@ -25,6 +25,8 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
+import ResultLoadingOverlay from "./ResultLoadingOverlay";
+
 interface TestEngineRunnerProps {
   testId: string;
   testType: string;
@@ -151,27 +153,19 @@ export default function TestEngineRunner({
   // ── 5. Engine Actions ──
   const setAnswer = (qNum: number, val: string) => {
     if (isSubmitted) return;
+    // Do not allow editing an answer if it has already been checked in Practice mode
+    if (checkedQuestions[qNum]) return;
     setAnswers((prev) => ({ ...prev, [qNum]: val }));
-
-    // Reset checked status if modified in practice mode
-    if (checkedQuestions[qNum]) {
-      setCheckedQuestions((prev) => {
-        const next = { ...prev };
-        delete next[qNum];
-        return next;
-      });
-    }
   };
 
   const handleMultiAnswerChange = (qNums: number[], selectedVals: string[]) => {
     if (isSubmitted) return;
+    // Do not allow editing if any question in multi group is checked
+    if (qNums.some((n) => checkedQuestions[n])) return;
     setAnswers((prev) => {
       const next = { ...prev };
       qNums.forEach((n, idx) => {
         next[n] = selectedVals[idx] || "";
-        if (checkedQuestions[n]) {
-          delete checkedQuestions[n];
-        }
       });
       return next;
     });
@@ -182,19 +176,36 @@ export default function TestEngineRunner({
   };
 
   const checkSingleAnswer = (qNum: number) => {
-    const studentAns = (answers[qNum] || "").trim().toLowerCase();
-    const correctVal = answerKey[qNum];
-    const acceptable = getAcceptableAnswers(correctVal);
+    const qObj = testIndex.questions[qNum];
+    const isMulti = qObj?.type === "multiple_choice_multi";
+    const qNumsToCheck = isMulti && qObj?.multiSelectQuestionNumbers
+      ? qObj.multiSelectQuestionNumbers
+      : [qNum];
 
-    const isCorrect =
-      studentAns !== "" && acceptable.some((opt) => opt === studentAns);
+    const allQuestionsInGroupCorrect = qNumsToCheck.every((n) => {
+      const studentAns = (answers[n] || "").trim().toLowerCase();
+      const acceptable = getAcceptableAnswers(answerKey[n]);
+      return studentAns !== "" && acceptable.includes(studentAns);
+    });
+
+    const updates: Record<number, { isCorrect: boolean; correctAnswer: string }> = {};
+    for (const n of qNumsToCheck) {
+      const studentAns = (answers[n] || "").trim().toLowerCase();
+      const correctVal = answerKey[n];
+      const acceptable = getAcceptableAnswers(correctVal);
+      const isCorrect = isMulti
+        ? allQuestionsInGroupCorrect
+        : studentAns !== "" && acceptable.includes(studentAns);
+
+      updates[n] = {
+        isCorrect,
+        correctAnswer: formatAnswer(correctVal),
+      };
+    }
 
     setCheckedQuestions((prev) => ({
       ...prev,
-      [qNum]: {
-        isCorrect,
-        correctAnswer: formatAnswer(correctVal),
-      },
+      ...updates,
     }));
   };
 
@@ -272,9 +283,42 @@ export default function TestEngineRunner({
       }
     }
 
-    setSubmitting(false);
-    // Redirect to persistent dedicated results page route
+    // Short minimum delay so the student sees the grading progress animation smoothly
+    await new Promise((resolve) => setTimeout(resolve, 800));
+
+    // Keep submitting as true so the loading overlay stays visible during route transition
     router.push(`/tests/${testType}/${testId}/results/${attemptId}`);
+  };
+
+  const handleNextQuestion = () => {
+    const qObj = testIndex.questions[currentQuestion];
+    if (qObj?.type === "multiple_choice_multi" && qObj.multiSelectQuestionNumbers) {
+      const maxNum = Math.max(...qObj.multiSelectQuestionNumbers);
+      setCurrentQuestion(Math.min(40, maxNum + 1));
+    } else {
+      setCurrentQuestion((q) => Math.min(40, q + 1));
+    }
+  };
+
+  const handlePreviousQuestion = () => {
+    const prevQNum = Math.max(1, currentQuestion - 1);
+    const prevQObj = testIndex.questions[prevQNum];
+    if (prevQObj?.type === "multiple_choice_multi" && prevQObj.multiSelectQuestionNumbers) {
+      const minNum = Math.min(...prevQObj.multiSelectQuestionNumbers);
+      setCurrentQuestion(minNum);
+    } else {
+      setCurrentQuestion(prevQNum);
+    }
+  };
+
+  const handleNavigateQuestion = (num: number) => {
+    const qObj = testIndex.questions[num];
+    if (qObj?.type === "multiple_choice_multi" && qObj.multiSelectQuestionNumbers) {
+      const minNum = Math.min(...qObj.multiSelectQuestionNumbers);
+      setCurrentQuestion(minNum);
+    } else {
+      setCurrentQuestion(num);
+    }
   };
 
   const activeQuestion = testIndex.questions[currentQuestion];
@@ -282,6 +326,13 @@ export default function TestEngineRunner({
     ? testIndex.groups.find((g) => g.groupId === activeQuestion.groupId) ||
       testIndex.groups[0]
     : testIndex.groups[0];
+
+  const activeMaxNum = activeQuestion?.type === "multiple_choice_multi" && activeQuestion.multiSelectQuestionNumbers
+    ? Math.max(...activeQuestion.multiSelectQuestionNumbers)
+    : currentQuestion;
+
+  const canNext = activeMaxNum < 40;
+  const canPrevious = currentQuestion > 1;
 
   return (
     <div className="min-h-screen flex flex-col bg-cream-paper">
@@ -323,10 +374,10 @@ export default function TestEngineRunner({
               onMultiAnswerChange={handleMultiAnswerChange}
               onToggleBookmark={toggleBookmark}
               onCheckAnswer={checkSingleAnswer}
-              onPrevious={() => setCurrentQuestion((q) => Math.max(1, q - 1))}
-              onNext={() => setCurrentQuestion((q) => Math.min(40, q + 1))}
-              canPrevious={currentQuestion > 1}
-              canNext={currentQuestion < 40}
+              onPrevious={handlePreviousQuestion}
+              onNext={handleNextQuestion}
+              canPrevious={canPrevious}
+              canNext={canNext}
             />
           ) : (
             <div className="p-8 text-center text-forest-ink/60">
@@ -347,7 +398,7 @@ export default function TestEngineRunner({
             mode={mode}
             isCollapsed={navigatorCollapsed}
             onToggleCollapse={() => setNavigatorCollapsed(!navigatorCollapsed)}
-            onNavigate={(num) => setCurrentQuestion(num)}
+            onNavigate={handleNavigateQuestion}
           />
         </div>
       </main>
@@ -435,6 +486,14 @@ export default function TestEngineRunner({
             </div>
           </div>
         </div>
+      )}
+
+      {/* Submitting Result Loading Overlay */}
+      {submitting && (
+        <ResultLoadingOverlay
+          title="Compiling & Grading Results"
+          subtitle="Please wait while we calculate your band score and generate your detailed performance report..."
+        />
       )}
     </div>
   );

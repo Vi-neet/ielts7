@@ -17,6 +17,11 @@ export function formatAnswer(answer: any): string {
   const answerStr = String(answer);
   if (!answerStr) return "";
   
+  // Handle single letter MCQ alternatives like "A/E" -> "A or E"
+  if (/^[A-Z]\s*\/\s*[A-Z]$/i.test(answerStr.trim())) {
+    return answerStr.trim().replace(/\s*\/\s*/g, " or ");
+  }
+
   // Handle multiple acceptable answers separated by OR or slash
   if (answerStr.includes(" OR ") || answerStr.includes("/")) {
     return answerStr.replace(" OR ", " / ");

@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import Image from "next/image";
 import { motion, useReducedMotion } from "framer-motion";
 import gsap from "gsap";
@@ -17,8 +17,9 @@ import {
 import { AmbientBackground } from "@/components/ui/AmbientBackground";
 import { FloatingShape } from "@/components/ui/FloatingShape";
 import { HighlightedText } from "./HighlightedText";
-import ProductPreview from "./ProductPreview";
+import ProductPreview, { SkillType } from "./ProductPreview";
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
@@ -29,6 +30,7 @@ const HeroSection = () => {
   const contentRef = useRef<HTMLDivElement>(null);
   const previewRef = useRef<HTMLDivElement>(null);
   const prefersReducedMotion = useReducedMotion();
+  const [activeSkill, setActiveSkill] = useState<SkillType>("listening");
 
   useGSAP(() => {
     if (!containerRef.current || prefersReducedMotion) return;
@@ -58,11 +60,11 @@ const HeroSection = () => {
 
   }, { scope: containerRef });
 
-  const skillPills = [
-    { icon: BookOpen, label: "Reading", href: "/?section=practice-tests&type=general_reading" },
-    { icon: Headphones, label: "Listening", href: "/?section=practice-tests&type=listening" },
-    { icon: PenTool, label: "Writing", href: "/resources#essays" },
-    { icon: MessageCircle, label: "Speaking", href: "#" },
+  const skillPills: { id: SkillType; icon: any; label: string; href: string }[] = [
+    { id: "reading", icon: BookOpen, label: "Reading", href: "/tests?module=reading" },
+    { id: "listening", icon: Headphones, label: "Listening", href: "/tests?module=listening" },
+    { id: "writing", icon: PenTool, label: "Writing", href: "/writing-review" },
+    { id: "speaking", icon: MessageCircle, label: "Speaking", href: "/tests" },
   ];
 
   return (
@@ -71,6 +73,22 @@ const HeroSection = () => {
       ref={containerRef}
     >
       <AmbientBackground variant="cream" />
+
+      {/* Dynamic Ambient Accent Glow behind hero */}
+      <motion.div
+        animate={{
+          backgroundColor:
+            activeSkill === "listening"
+              ? "rgba(15, 118, 110, 0.08)"
+              : activeSkill === "reading"
+              ? "rgba(224, 122, 95, 0.08)"
+              : activeSkill === "writing"
+              ? "rgba(147, 51, 234, 0.08)"
+              : "rgba(16, 185, 129, 0.08)",
+        }}
+        transition={{ duration: 0.6 }}
+        className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] rounded-full blur-3xl pointer-events-none -z-10"
+      />
 
       {/* Decorative SVG layers powered by GSAP Parallax */}
       <FloatingShape speed={0.8} float={true} className="top-24 right-[8%] hidden lg:block opacity-20">
@@ -121,7 +139,7 @@ const HeroSection = () => {
 
           <div className="flex flex-wrap items-center justify-center gap-3 mb-5">
             <Button asChild variant="forest" className="px-5 py-2.5 text-[15px] font-semibold font-inter shadow-md hover:shadow-lg transition-shadow">
-              <a href="/?section=practice-tests">
+              <a href="/tests">
                 Start Practicing
                 <ArrowRight className="w-4 h-4 ml-1" />
               </a>
@@ -140,19 +158,36 @@ const HeroSection = () => {
             ))}
           </div>
 
+          {/* Interactive Skill Selector Pills */}
           <div className="flex flex-wrap items-center justify-center gap-2 mb-12 md:mb-16">
-            {skillPills.map(({ icon: Icon, label, href }) => (
-              <motion.a
-                key={label}
-                href={href}
-                whileHover={prefersReducedMotion ? {} : { y: -2, scale: 1.02 }}
-                whileTap={prefersReducedMotion ? {} : { scale: 0.98 }}
-                className="flex items-center gap-2 px-3.5 py-2 rounded-full border border-pencil-gray/25 bg-white/70 text-[13px] font-medium text-forest-ink/70 hover:text-forest-ink hover:border-forest-ink/30 hover:bg-white hover:shadow-sm transition-all font-inter"
-              >
-                <Icon className="w-3.5 h-3.5" />
-                <span>{label}</span>
-              </motion.a>
-            ))}
+            {skillPills.map(({ id, icon: Icon, label, href }) => {
+              const isActive = activeSkill === id;
+              return (
+                <motion.a
+                  key={id}
+                  href={href}
+                  onMouseEnter={() => setActiveSkill(id)}
+                  onClick={(e) => {
+                    // Pre-select active skill tab
+                    setActiveSkill(id);
+                  }}
+                  whileHover={prefersReducedMotion ? {} : { y: -2, scale: 1.04 }}
+                  whileTap={prefersReducedMotion ? {} : { scale: 0.98 }}
+                  className={cn(
+                    "flex items-center gap-2 px-4 py-2 rounded-full border text-[13px] font-semibold transition-all font-inter shadow-xs cursor-pointer",
+                    isActive
+                      ? "bg-forest-ink text-white border-forest-ink shadow-md"
+                      : "bg-white/80 text-forest-ink/75 border-pencil-gray/25 hover:text-forest-ink hover:bg-white hover:border-forest-ink/30"
+                  )}
+                >
+                  <Icon className={cn("w-4 h-4", isActive ? "text-highlighter-yellow" : "text-forest-ink/60")} />
+                  <span>{label}</span>
+                  {isActive && (
+                    <span className="w-1.5 h-1.5 rounded-full bg-highlighter-yellow animate-pulse ml-0.5" />
+                  )}
+                </motion.a>
+              );
+            })}
           </div>
         </motion.div>
 
@@ -164,7 +199,7 @@ const HeroSection = () => {
           className="relative z-10 w-full"
         >
           <div className="absolute -inset-4 rounded-2xl pointer-events-none bg-[radial-gradient(ellipse_at_50%_60%,rgba(26,51,0,0.04)_0%,transparent_70%)]" />
-          <ProductPreview />
+          <ProductPreview activeSkill={activeSkill} />
         </motion.div>
       </div>
 

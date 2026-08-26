@@ -319,6 +319,56 @@ export function getVirtualTestIndex(
     });
   }
 
+  // ── DYNAMIC MULTI-SELECT PAIR POST-PROCESSING ──
+  // Automatically detect multi-select question pairs from answerKey (e.g. 17: "A/E", 18: "A/E")
+  for (let q = 1; q < 40; q++) {
+    const v1 = answerKey[q];
+    const v2 = answerKey[q + 1];
+    const s1 = (Array.isArray(v1) ? v1[0] : v1 || "").toString().trim().toUpperCase();
+    const s2 = (Array.isArray(v2) ? v2[0] : v2 || "").toString().trim().toUpperCase();
+
+    const m1 = s1.match(/^([A-Z])\s*\/\s*([A-Z])$/);
+    const m2 = s2.match(/^([A-Z])\s*\/\s*([A-Z])$/);
+
+    if (m1 && m2 && s1.replace(/\s+/g, "") === s2.replace(/\s+/g, "")) {
+      const pairNums = [q, q + 1];
+      const pairGroupId = `g_multi_${q}_${q + 1}`;
+      const passage: 1 | 2 | 3 = q <= 14 ? 1 : q <= 27 ? 2 : 3;
+
+      let group = groups.find((g) => g.range[0] <= q && g.range[1] >= q + 1);
+      if (!group) {
+        group = {
+          groupId: pairGroupId,
+          passageNumber: passage,
+          range: [q, q + 1],
+          title: `Questions ${q}-${q + 1}`,
+          instructions: "Choose TWO letters, A-E.",
+          type: "multiple_choice_multi",
+        };
+        groups.push(group);
+      } else {
+        group.instructions = "Choose TWO letters, A-E.";
+      }
+
+      for (const qNum of pairNums) {
+        questions[qNum] = {
+          questionNumber: qNum,
+          passageNumber: passage,
+          groupId: group.groupId,
+          type: "multiple_choice_multi",
+          extractionStatus: "extracted",
+          promptText: `Select TWO options for Questions ${q} and ${q + 1}:`,
+          groupPrompt: "Choose TWO letters, A-E.",
+          options: MCQ_5_OPTIONS,
+          multiSelectGroupId: group.groupId,
+          multiSelectQuestionNumbers: pairNums,
+          maxSelections: 2,
+        };
+      }
+      q++; // Skip second question in pair
+    }
+  }
+
   return {
     testId,
     totalQuestions: 40,

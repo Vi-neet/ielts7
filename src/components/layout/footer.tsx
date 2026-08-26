@@ -49,8 +49,8 @@ export const Footer = () => {
 
   const quickLinks = [
     { name: "About Us", href: "/about" },
-    { name: "Practice Tests", href: "/?section=practice-tests" },
-    { name: "Writing Evaluation", href: "/evaluation" },
+    { name: "Practice Tests", href: "/tests" },
+    { name: "Writing Evaluation", href: "/writing-review" },
     { name: "Free Resources", href: "/resources" },
   ];
 
@@ -174,7 +174,7 @@ export const Footer = () => {
             <h3 className="text-[15px] font-bold text-cream-paper uppercase tracking-wider font-roboto-mono">
               Contact Us
             </h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-6 gap-x-8">
               {contactInfo.map((info) => {
                 const Icon = info.icon;
                 return (
@@ -183,16 +183,18 @@ export const Footer = () => {
                     href={info.href}
                     target={info.href.startsWith("http") ? "_blank" : undefined}
                     rel={info.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                    className="group flex gap-4 p-4 rounded-[12px] bg-cream-paper/5 border border-cream-paper/10 hover:border-highlighter-yellow/30 hover:bg-cream-paper/10 transition-all duration-300"
+                    className="group flex items-start gap-3.5 transition-colors"
                   >
-                    <div className="w-10 h-10 rounded-full bg-forest-ink flex items-center justify-center shrink-0">
-                      <Icon className="w-4 h-4 text-cream-paper/80 group-hover:text-highlighter-yellow transition-colors" />
+                    <div className="w-8 h-8 rounded-lg bg-cream-paper/10 flex items-center justify-center shrink-0 mt-0.5 group-hover:bg-highlighter-yellow group-hover:text-forest-ink transition-colors duration-300">
+                      <Icon className="w-4 h-4 text-cream-paper/80 group-hover:text-forest-ink transition-colors duration-300" />
                     </div>
                     <div>
-                      <p className="text-[12px] text-cream-paper/50 font-roboto-mono uppercase tracking-wider mb-1">{info.label}</p>
-                      <p className="text-[14px] text-cream-paper/90 group-hover:text-cream-paper transition-colors font-medium">
+                      <span className="block text-[11px] text-cream-paper/50 font-roboto-mono uppercase tracking-wider mb-0.5">
+                        {info.label}
+                      </span>
+                      <span className="text-[14px] text-cream-paper/80 group-hover:text-highlighter-yellow transition-colors font-medium leading-relaxed block">
                         {info.text}
-                      </p>
+                      </span>
                     </div>
                   </a>
                 );

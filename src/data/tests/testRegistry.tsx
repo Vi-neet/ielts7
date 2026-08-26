@@ -1221,6 +1221,26 @@ const testCache: Record<string, Promise<TestContent>> = {};
 
 // Function to get a test by ID with caching
 export async function getTestById(id: string): Promise<TestContent> {
+  // Handle Listening tests dynamically via testService & listeningRegistry
+  if (id.includes("_ls_") || id.includes("_listening_")) {
+    if (!testCache[id]) {
+      testCache[id] = (async () => {
+        try {
+          const { fetchListeningTest } = await import("@/lib/testService");
+          const fbData = await fetchListeningTest(id);
+          if (fbData) {
+            return fbData;
+          }
+        } catch (e) {
+          console.warn(`Firestore listening fetch unfulfilled for ${id}:`, e);
+        }
+        const { getListeningTestContent } = await import("@/data/tests/listeningRegistry");
+        return getListeningTestContent(id);
+      })();
+    }
+    return testCache[id];
+  }
+
   if (!TestRegistry[id]) {
     throw new Error(`Test with id ${id} not found in the registry`);
   }

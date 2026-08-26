@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
 import gsap from "gsap";
@@ -40,22 +41,21 @@ export const PracticeTestsSection = () => {
   const contentRef = useRef<HTMLDivElement>(null);
   const prefersReducedMotion = useReducedMotion();
 
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const params = new URLSearchParams(window.location.search);
-      const typeParam = params.get("type");
+  const searchParams = useSearchParams();
+  const moduleParam = searchParams ? (searchParams.get("module") || searchParams.get("type")) : null;
 
-      if (
-        typeParam === "general_reading" ||
-        typeParam === "academic_reading" ||
-        typeParam === "listening"
-      ) {
-        setCurrentType(typeParam as TestType);
-        setLoading(true);
-        setTimeout(() => setLoading(false), 300);
+  useEffect(() => {
+    if (moduleParam) {
+      const normalized = moduleParam.toLowerCase();
+      if (normalized === "listening") {
+        setCurrentType("listening");
+      } else if (normalized === "academic_reading" || normalized === "academic-reading" || normalized === "academic") {
+        setCurrentType("academic_reading");
+      } else if (normalized === "reading" || normalized === "general_reading" || normalized === "general-reading" || normalized === "general") {
+        setCurrentType("general_reading");
       }
     }
-  }, []);
+  }, [moduleParam]);
 
   useGSAP(() => {
     if (!contentRef.current || prefersReducedMotion) return;

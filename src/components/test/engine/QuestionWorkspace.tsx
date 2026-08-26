@@ -53,17 +53,26 @@ export default function QuestionWorkspace({
 }: QuestionWorkspaceProps) {
   const currentVal = answers[question.questionNumber] || "";
   const isPractice = mode === "practice";
+  const isMultiAnswer = question.type === "multiple_choice_multi";
+  const qNums = question.multiSelectQuestionNumbers || [question.questionNumber];
+  const qNumberDisplay = isMultiAnswer && qNums.length > 1
+    ? `${qNums[0]}–${qNums[qNums.length - 1]}`
+    : `${question.questionNumber}`;
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Enter" && isPractice && currentVal.trim() && !checkedState) {
+      const activeEl = document.activeElement;
+      const isButtonOrInput = activeEl && (activeEl.tagName === "BUTTON" || activeEl.tagName === "INPUT");
+      
+      if (e.key === "Enter" && isPractice && (currentVal.trim() || isMultiAnswer) && !checkedState && !isButtonOrInput) {
         e.preventDefault();
+        e.stopPropagation();
         onCheckAnswer(question.questionNumber);
       }
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [isPractice, currentVal, checkedState, question.questionNumber, onCheckAnswer]);
+  }, [isPractice, currentVal, isMultiAnswer, checkedState, question.questionNumber, onCheckAnswer]);
 
   return (
     <div className="space-y-6 max-w-2xl mx-auto pb-12">
@@ -75,12 +84,14 @@ export default function QuestionWorkspace({
         {/* Header: Question Number & Bookmark */}
         <div className="flex items-center justify-between border-b border-forest-ink/10 pb-4">
           <div className="flex items-center gap-3">
-            <span className="w-10 h-10 rounded-xl bg-forest-ink text-white font-extrabold font-bricolage text-lg flex items-center justify-center shadow-sm">
-              {question.questionNumber}
+            <span className="h-10 px-3 rounded-xl bg-forest-ink text-white font-extrabold font-bricolage text-base flex items-center justify-center shadow-sm shrink-0">
+              {qNumberDisplay}
             </span>
             <div>
               <p className="text-[11px] font-mono tracking-wider text-forest-ink/50 uppercase">
-                Question {question.questionNumber} of {totalQuestions}
+                {isMultiAnswer && qNums.length > 1
+                  ? `Questions ${qNumberDisplay} of ${totalQuestions}`
+                  : `Question ${question.questionNumber} of ${totalQuestions}`}
               </p>
               <h4 className="text-sm font-bold text-forest-ink">
                 {group.title}
@@ -110,6 +121,7 @@ export default function QuestionWorkspace({
               question={question}
               answers={answers}
               onMultiChange={onMultiAnswerChange}
+              disabled={Boolean(checkedState)}
             />
           ) : question.type.includes("completion") || question.type === "short_answer" ? (
             question.contextLabel ? (
@@ -117,12 +129,14 @@ export default function QuestionWorkspace({
                 question={question}
                 value={currentVal}
                 onChange={(val) => onSetAnswer(question.questionNumber, val)}
+                disabled={Boolean(checkedState)}
               />
             ) : (
               <TextInputRenderer
                 question={question}
                 value={currentVal}
                 onChange={(val) => onSetAnswer(question.questionNumber, val)}
+                disabled={Boolean(checkedState)}
               />
             )
           ) : (
@@ -130,6 +144,7 @@ export default function QuestionWorkspace({
               question={question}
               value={currentVal}
               onChange={(val) => onSetAnswer(question.questionNumber, val)}
+              disabled={Boolean(checkedState)}
             />
           )}
         </div>
@@ -138,8 +153,26 @@ export default function QuestionWorkspace({
         {isPractice && checkedState && (
           <PracticeFeedbackCard
             isCorrect={checkedState.isCorrect}
-            studentAnswer={currentVal}
-            correctAnswer={checkedState.correctAnswer}
+            studentAnswer={
+              question.type === "multiple_choice_multi" && question.multiSelectQuestionNumbers
+                ? question.multiSelectQuestionNumbers
+                    .map((n) => answers[n])
+                    .filter(Boolean)
+                    .sort()
+                    .join(", ") || "(No answer)"
+                : currentVal
+            }
+            correctAnswer={
+              question.type === "multiple_choice_multi" && question.multiSelectQuestionNumbers
+                ? Array.from(
+                    new Set(
+                      question.multiSelectQuestionNumbers
+                        .map((n) => checkedState.correctAnswer)
+                        .flatMap((c) => c.split(/\s*or\s*|\s*\/\s*/i))
+                    )
+                  ).join(", ")
+                : checkedState.correctAnswer
+            }
           />
         )}
       </div>
@@ -160,11 +193,11 @@ export default function QuestionWorkspace({
           <Button
             type="button"
             onClick={() => onCheckAnswer(question.questionNumber)}
-            disabled={!currentVal.trim()}
+            disabled={!currentVal.trim() || Boolean(checkedState)}
             variant="forestOutline"
             className="h-10 px-5 font-medium"
           >
-            Check Answer
+            {checkedState ? "Answer Checked" : "Check Answer"}
           </Button>
         )}
 

@@ -1,38 +1,37 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, Suspense } from "react";
+import { useSearchParams, useRouter } from "next/navigation";
 import HeroSection from "@/components/home/HeroSection";
-import PracticeTestsSection from "@/components/home/PracticeTestsSection";
 import FeaturesSection from "@/components/home/FeaturesSection";
 import { TestimonialsSection } from "@/components/home/TestimonialsSection";
 import CTASection from "@/components/home/CTASection";
 
-const HomePage = () => {
-  const practiceTestsRef = useRef<HTMLDivElement>(null);
+function HomeContent() {
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const section = searchParams.get("section");
 
-  // Handle URL parameters for section scrolling
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      const params = new URLSearchParams(window.location.search);
-      const section = params.get("section");
-
-      if (section === "practice-tests" && practiceTestsRef.current) {
-        practiceTestsRef.current.scrollIntoView({ behavior: "smooth" });
-      }
+    if (section === "practice-tests") {
+      router.replace("/tests");
     }
-  }, []);
+  }, [section, router]);
 
   return (
     <main className="min-h-screen bg-cream-paper">
       <HeroSection />
-      <div ref={practiceTestsRef}>
-        <PracticeTestsSection />
-      </div>
       <FeaturesSection />
       <TestimonialsSection />
       <CTASection />
     </main>
   );
-};
+}
 
-export default HomePage;
+export default function HomePage() {
+  return (
+    <Suspense fallback={<main className="min-h-screen bg-cream-paper" />}>
+      <HomeContent />
+    </Suspense>
+  );
+}

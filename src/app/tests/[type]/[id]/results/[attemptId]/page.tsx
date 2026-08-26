@@ -13,6 +13,8 @@ import { Loader2, AlertTriangle, ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 
+import ResultLoadingOverlay from "@/components/test/engine/ResultLoadingOverlay";
+
 export default function TestResultPage() {
   const params = useParams();
   const router = useRouter();
@@ -134,12 +136,10 @@ export default function TestResultPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-cream-paper flex flex-col items-center justify-center p-4">
-        <Loader2 className="h-8 w-8 text-forest-ink animate-spin mb-2" />
-        <span className="text-forest-ink/65 font-inter text-sm font-semibold">
-          Loading test performance results...
-        </span>
-      </div>
+      <ResultLoadingOverlay
+        title="Loading Performance Results"
+        subtitle="Fetching attempt history and computing band scores..."
+      />
     );
   }
 
