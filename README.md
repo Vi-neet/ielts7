@@ -4,119 +4,76 @@ An advanced IELTS preparation platform featuring full-length Academic & General 
 
 ---
 
-## 🏗️ Architecture & Deployment Strategy
+## 🏗️ Target & Deployment Architecture
 
-IELTS 7+ House uses a **Single-Backend Dual-Stage Cloud Architecture** powered by Cloudflare Workers and OpenNext.
+IELTS 7+ House uses a modern Jamstack & Edge Serverless architecture powered by **Cloudflare Workers** with **OpenNext** for Next.js 15, backed by a single shared **Firebase** project (`ielts7-48b25`).
 
 ```text
                                 GITHUB REPOSITORY
-
+                                       │
                         Feature Branch (e.g. feature/reading-engine)
                                        │
                                    Pull Request
                                        │
                                        ▼
-                       ┌────────────────────────────────┐
-                       │          stage branch          │
-                       │   (Future Canonical: main)     │
-                       └───────────────┬────────────────┘
+                              Canonical Branch (main)
                                        │
-                              merge PR into stage
+                                 Push / Merge
                                        │
                                        ▼
-                      CLOUDFLARE WORKERS & FIREBASE CI/CD
-                             (GitHub Actions Workflow)
+                                GITHUB ACTIONS
+                           (.github/workflows/deploy.yml)
+                                       │
+                                       ▼
+                       CLOUDFLARE WORKERS & OPENNEXT
+                               (Worker: ielts7)
                                        │
                         ┌──────────────┴──────────────┐
                         │                             │
                         ▼                             ▼
-              Cloudflare Worker               Firebase Infrastructure
-              Staging Deployment               Security Rules & Indexes
-                        │                             │
-                        ▼                             ▼
-        https://ielts7.varunsaxena5elc        Firebase Project
+                Cloudflare Worker             Firebase Backend
+            https://ielts7.varun...          (Shared Data & Auth)
                  .workers.dev/                 `ielts7-48b25`
 ```
 
 ---
 
-## 📍 Current Deployment State
+## 📍 Environment & Deployment State
 
-| Parameter | Current Configuration |
+| Parameter | Configuration |
 | :--- | :--- |
-| **Active Staging Branch** | `stage` |
-| **Staging Live URL** | [https://ielts7.varunsaxena5elc.workers.dev/](https://ielts7.varunsaxena5elc.workers.dev/) |
+| **Canonical Branch** | `main` (Transitional: `stage` branch is currently used until renamed to `main`) |
+| **Current Live Worker URL** | [https://ielts7.varunsaxena5elc.workers.dev/](https://ielts7.varunsaxena5elc.workers.dev/) |
 | **Cloudflare Worker Name** | `ielts7` |
-| **Firebase Project ID** | `ielts7-48b25` (Shared single backend) |
-| **Automated Pipeline** | GitHub Actions (`.github/workflows/deploy-staging.yml`) |
-
----
-
-## 🗄️ Firebase Backend Architecture
-
-Firebase is an **external shared backend**, NOT a branch-specific environment.
-
-### Shared Infrastructure (`ielts7-48b25`)
-- **Firestore Database**: User documents, test attempts, writing submissions.
-- **Firebase Authentication**: User accounts, guest sessions, tokens.
-- **Firebase Storage**: Submitted essay documents & files.
-
-### Key Rules
-- **NO Staging Database**: There is no separate staging Firebase project. Both `stage` and future `main` use `ielts7-48b25`.
-- **Infrastructure vs. Application Data**:
-  - **Infrastructure Configuration** (`firestore.rules`, `storage.rules`, `firestore.indexes.json`) is stored in source control and automatically deployed to `ielts7-48b25` on push/merge to canonical deployment branches (`stage` / `main`) if `FIREBASE_TOKEN` is configured.
-  - **Application Data** (user accounts, Firestore documents, storage blobs) is **NEVER** modified by build scripts or CI/CD pipelines.
-
----
-
-## ⚡ What is Automatic vs. Manual
-
-### 🤖 Automatic (Triggered on PR merge / push to `stage` or `main`)
-1. **Application Build & Worker Deployment**:
-   - GitHub Actions checks out code, runs `npm run build:worker`, and deploys the generated OpenNext bundle to Cloudflare Worker `ielts7`.
-2. **Firebase Infrastructure Deployment**:
-   - If `FIREBASE_TOKEN` is provided in GitHub Secrets, GitHub Actions deploys `firestore.rules`, `storage.rules`, and `firestore.indexes.json` directly to project `ielts7-48b25`.
-
-### 🛑 What is NOT Automatic
-- **Application Data Modifications**: User accounts, attempt logs, and Firestore records are created strictly by end-user runtime activity.
-- **Arbitrary Feature Branch Deployments**: Pushing to unmerged feature branches (e.g. `feature/*`) does **NOT** deploy to Cloudflare or update Firebase rules.
-- **Production Domain Re-pointing**: Updating `ielts7plushouse.com` DNS remains a deliberate administrative action.
-
----
-
-## 🚀 Future Architecture Roadmap
-
-1. **Branch Consolidation**:
-   - The `stage` branch will be renamed to `main` and become the single canonical development & production branch.
-2. **Cloudflare Production Target**:
-   - Cloudflare Workers + OpenNext will become the primary production deployment target.
-   - The custom domain `ielts7plushouse.com` will be configured to route directly to the Cloudflare Worker.
-3. **Vercel Retirement**:
-   - Legacy Vercel hosting will be decommissioned once DNS is repointed to Cloudflare.
-4. **CI/CD Alignment**:
-   - The deployment workflow in `.github/workflows/deploy-staging.yml` already includes `main` in its branch trigger list, ensuring zero downtime or re-configuration during the transition.
+| **Production Custom Domain** | `https://ielts7plushouse.com/` (DNS migration to Cloudflare is managed separately) |
+| **Firebase Project ID** | `ielts7-48b25` (Single shared backend) |
+| **Automated Deployment Pipeline** | GitHub Actions (`.github/workflows/deploy.yml`) |
 
 ---
 
 ## 🛠️ Local Development & Build Commands
 
-### Local Development Setup
+### Prerequisites
+- Node.js 20 LTS
+- npm 10+
+
+### Setup & Local Server
 
 ```bash
-# Install dependencies
-npm install
+# Clean install dependencies
+npm ci
 
-# Start local Next.js development server
+# Start Next.js development server
 npm run dev
 
-# Run TypeScript type validation
-node node_modules/typescript/bin/tsc --noEmit
+# Run TypeScript type validation (zero emit)
+npx tsc --noEmit
 
-# Build local Next.js production app
+# Standard Next.js production build
 npm run build
 ```
 
-### Cloudflare Worker Commands
+### Cloudflare Worker Commands (OpenNext & Wrangler)
 
 ```bash
 # Build OpenNext Cloudflare Worker bundle (.open-next/ worker)
@@ -125,23 +82,88 @@ npm run build:worker
 # Preview local Worker build with Wrangler
 npm run preview:worker
 
-# Manually deploy Worker to Cloudflare Staging
+# Manually deploy Worker to Cloudflare (requires local Wrangler authentication)
 npm run deploy:worker
-```
-
-### Firebase Infrastructure Commands
-
-```bash
-# Deploy security rules & indexes manually (requires firebase login or FIREBASE_TOKEN)
-npm run deploy:firebase
 ```
 
 ---
 
-## 📚 Summary of Command Differences
+## 🌿 Git & Deployment Workflow
 
-| Action | Command | Purpose |
+### Intended Development Lifecycle
+
+1. **Feature Development**: Create a feature branch off `main` (e.g. `feature/my-feature`).
+2. **Pull Request (PR)**: Open a PR against `main` for code review and standard build validation checks.
+3. **Merge & Deployment**: Merging the PR into `main` automatically triggers GitHub Actions (`.github/workflows/deploy.yml`).
+4. **Cloudflare Worker Deployment**: GitHub Actions compiles the app using OpenNext (`npm run build:worker`) and deploys the bundle to Cloudflare Worker `ielts7`.
+
+> [!NOTE]
+> During the transition period before `stage` is renamed to `main`, both `main` and `stage` branches are configured in the workflow trigger. Pushing to feature branches will **NOT** trigger production Cloudflare deployments.
+
+---
+
+## 🗄️ Firebase Backend (`ielts7-48b25`)
+
+Firebase serves as the **single external backend** for data and authentication across all deployment instances.
+
+### Services Used
+- **Firebase Authentication**: User identity, guest access tokens, session persistence.
+- **Firestore Database**: User attempts, mock test answers, writing essay submissions.
+- **Firebase Storage**: Submitted essay documents & attachments.
+
+### Rules & Infrastructure Deployment
+
+- **Single Environment Rule**: There is **NO** separate staging Firebase project or database. Both development, preview, and production instances connect to `ielts7-48b25`.
+- **Manual / CLI Deployment**: Infrastructure files (`firestore.rules`, `storage.rules`, `firestore.indexes.json`) can be deployed using the Firebase CLI:
+  ```bash
+  npm run deploy:firebase
+  ```
+  *(Requires local `firebase login` or GCP Application Default Credentials / `FIREBASE_TOKEN`).*
+- **Application Data Safety**: Application data (Firestore documents, user accounts, storage files) is created exclusively at runtime by user activity and is **NEVER** modified or wiped by CI/CD build scripts.
+
+---
+
+## 🔑 Required GitHub Secrets
+
+To enable automated deployment via GitHub Actions, the following repository secrets must be configured in **GitHub Repo Settings -> Secrets and variables -> Actions**:
+
+| Secret Name | Description | Required For |
 | :--- | :--- | :--- |
-| **App Code Deployment** | `npm run deploy:worker` | Compiles Next.js app via OpenNext and deploys Worker bundle to Cloudflare |
-| **Firebase Infra Deployment** | `npm run deploy:firebase` | Uploads `firestore.rules`, `storage.rules`, & `firestore.indexes.json` to `ielts7-48b25` |
-| **Modifying Firebase Data** | *(Runtime Only)* | Executed by application users at runtime via Firebase Client / Admin SDK |
+| `CLOUDFLARE_API_TOKEN` | Cloudflare API Token with `Workers: Edit` and `Account Analytics: Read` permissions | Cloudflare Worker deployment |
+| `CLOUDFLARE_ACCOUNT_ID` | Your Cloudflare Account ID string | Cloudflare Worker deployment |
+| `FIREBASE_TOKEN` *(Optional)* | Legacy CI token for automated Firebase rules deployment | `.github/workflows/deploy-firebase.yml` |
+
+> [!IMPORTANT]
+> Never commit raw secret tokens into source control or configuration files.
+
+---
+
+## 🌐 Production Domain & Vercel Decommissioning
+
+- The legacy Vercel deployment path and Android 8 redirects have been completely removed from application code (`src/middleware.ts` and `src/app/layout.tsx`).
+- The production domain **`ielts7plushouse.com`** is currently active and its DNS transition to Cloudflare Workers is handled as a separate administrative step.
+- No Vercel deployment dependencies, middleware redirects, or Vercel build scripts exist in the canonical deployment pipeline.
+
+---
+
+## 🔍 Troubleshooting Guide
+
+### 1. Wrangler Authentication Error / Missing Cloudflare Secrets
+- **Symptom**: `wrangler deploy` fails in GitHub Actions or locally with `Authentication Error: Invalid API Token` or `Account ID required`.
+- **Fix**: Verify `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID` are set in GitHub Repository Secrets. Locally, run `npx wrangler login` or set `CLOUDFLARE_API_TOKEN` in your environment.
+
+### 2. Failed OpenNext Build (`npm run build:worker`)
+- **Symptom**: `opennextjs-cloudflare build` fails during page generation or asset bundling.
+- **Fix**: Run `npx tsc --noEmit` locally to identify TypeScript errors. Ensure Node.js version is 20 LTS (`node -v`). Clean `.next` and `.open-next` folders before rebuilding.
+
+### 3. Firebase CLI Authentication Error
+- **Symptom**: `firebase deploy` fails with `HTTP 401 Unauthorized` or token deprecation warnings.
+- **Fix**: Firebase considers `FIREBASE_TOKEN` legacy and recommends Application Default Credentials (ADC) or Workload Identity Federation. For local deployments, run `npx firebase login`.
+
+### 4. Broken Static Assets on Worker Deployment
+- **Symptom**: CSS/JS assets return 404 on the Cloudflare Worker URL.
+- **Fix**: Ensure `wrangler.jsonc` contains `"assets": { "directory": ".open-next/assets", "binding": "ASSETS" }` and `open-next.config.ts` defines `defineCloudflareConfig()`.
+
+### 5. Cloudflare Worker Runtime Errors
+- **Symptom**: Worker returns HTTP 500 error page.
+- **Fix**: Run `npx wrangler tail` to stream real-time console logs from the active Cloudflare Worker execution.
