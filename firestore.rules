@@ -39,5 +39,10 @@ service cloud.firestore {
         );
       allow update, delete: if false;
     }
+
+    // Public read-only access for listening test material
+    match /{collectionId}/{docId} {
+      allow read: if collectionId.matches('cambridge_[0-9]+_listening');
+    }
   }
 }

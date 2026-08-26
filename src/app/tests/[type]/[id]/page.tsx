@@ -8,49 +8,21 @@ import TestPageClient from "@/components/test/TestPageClient";
 // Get test data directly without API for server component
 async function getTestData(id: string): Promise<TestContent> {
   try {
-    // For listening tests, fetch from Firebase
+    // For listening tests, fetch real data & audio URLs from Firestore (ielts7-48b25)
     if (id.includes("_ls_") || id.includes("_listening_")) {
-      const idParts = id.split("_");
-      let year = "";
-      let testNumber = "";
-
-      const cambridgeMatch = idParts.find((part) => part.startsWith("cambridge"));
-      if (cambridgeMatch) year = cambridgeMatch.replace("cambridge", "");
-
-      const testMatch = idParts.find((part) => part.startsWith("test"));
-      if (testMatch) testNumber = testMatch.replace("test", "");
-
-      if (!year || !testNumber) {
-        throw new Error(`Invalid listening test id format: ${id}`);
+      try {
+        const { fetchListeningTest } = await import("@/lib/testService");
+        const fbData = await fetchListeningTest(id);
+        if (fbData && fbData.passages) {
+          return fbData;
+        }
+      } catch (e) {
+        console.warn(`Firestore listening fetch unfulfilled for ${id}:`, e);
       }
-
-      const type = "listening";
-      const collectionId = `cambridge_${year}_${type}`;
-      const querySnapshot = await getDocs(collection(db, collectionId));
-
-      if (querySnapshot.empty) {
-        throw new Error(`No listening tests found for Cambridge ${year}`);
-      }
-
-      const doc = querySnapshot.docs[0];
-      const data = doc.data();
-
-      const testKey = `test_${testNumber}`;
-      const questionKey = `question_${testNumber}`;
-      const answerKey = `answer_${testNumber}`;
-
-      if (!data[testKey] || !data[questionKey]) {
-        throw new Error(
-          `Test ${testNumber} not found in Cambridge ${year} listening tests`
-        );
-      }
-
-      return {
-        passages: data[testKey], // Audio URL for listening tests
-        questions: data[questionKey],
-        answers: data[answerKey] || {},
-      };
+      const { getListeningTestContent } = await import("@/data/tests/listeningRegistry");
+      return getListeningTestContent(id);
     }
+
 
     // For Reading tests, load dynamically using the test registry
     const { getTestById } = await import("@/data/tests/testRegistry");

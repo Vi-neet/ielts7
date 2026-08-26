@@ -53,61 +53,11 @@ export default function TestTypePage() {
       if (!type) return; // Early return clause for missing type
 
       try {
-        // For listening tests, fetch from Firebase
-        if (type === "listening") {
-          const years = ["19", "18", "17", "16", "15", "14", "13"];
-          const allTests: Test[] = [];
-
-          for (const year of years) {
-            const collectionId = `cambridge_${year}_${type}`;
-            try {
-              const querySnapshot = await getDocs(collection(db, collectionId));
-
-              if (!querySnapshot.empty) {
-                // We only need one document per collection since all tests are in one document
-                const doc = querySnapshot.docs[0];
-                const data = doc.data();
-
-                for (let i = 1; i <= 4; i++) {
-                  const testKey = `test_${i}`;
-                  const questionKey = `question_${i}`;
-
-                  if (data[testKey] && data[questionKey]) {
-                    allTests.push({
-                      id: `cambridge${year}_ls_test${i}`,
-                      year,
-                      testNumber: i,
-                      title: `Cambridge ${year} ${type.replace(
-                        "_",
-                        " "
-                      )} - Test ${i}`,
-                    });
-                  }
-                }
-              }
-            } catch (innerErr) {
-              console.error(`Error fetching ${collectionId}:`, innerErr);
-              // Continue with the next year if one fails
-            }
-          }
-
-          // Sort tests by year (descending) and then by test number (ascending)
-          const sortedTests = allTests.sort((a, b) => {
-            if (a.year !== b.year) {
-              return parseInt(b.year) - parseInt(a.year);
-            }
-            return a.testNumber - b.testNumber;
-          });
-
-          setTests(sortedTests);
-        } else {
-          // For other types, fetch from local data
-          const { mockTests } = await import("@/data/mockTests");
-          setTests(mockTests[type as keyof typeof mockTests] || []);
-        }
-
+        const { mockTests } = await import("@/data/mockTests");
+        setTests(mockTests[type as keyof typeof mockTests] || []);
         setLoading(false);
       } catch (err: any) {
+
         console.error("Error fetching tests:", err);
         setError(err.message);
         setLoading(false);

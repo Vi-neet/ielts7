@@ -174,7 +174,12 @@ export function getVirtualTestIndex(
   testId: string,
   answerKey: Record<number, string | string[]>
 ): VirtualTestIndex {
-  const testRegistry = questionContentRegistry[testId];
+  let testRegistry = questionContentRegistry[testId];
+
+  if (!testRegistry && (testId.includes("_ls_") || testId.includes("_listening_"))) {
+    const { generateListeningQuestions } = require("@/data/tests/listeningRegistry");
+    testRegistry = generateListeningQuestions(testId, testId);
+  }
 
   const groups: VirtualQuestionGroup[] = [];
   const questions: Record<number, VirtualQuestion> = {};
@@ -255,16 +260,24 @@ export function getVirtualTestIndex(
     }
   } else {
     // ── ISOLATED NON-AST FALLBACK BRANCH (For non-reading / external tests) ──
-    const groupRanges: { range: [number, number]; passage: 1 | 2 | 3 }[] = [
-      { range: [1, 7], passage: 1 },
-      { range: [8, 13], passage: 1 },
-      { range: [14, 19], passage: 2 },
-      { range: [20, 23], passage: 2 },
-      { range: [24, 26], passage: 2 },
-      { range: [27, 31], passage: 3 },
-      { range: [32, 37], passage: 3 },
-      { range: [38, 40], passage: 3 },
-    ];
+    const isListeningTest = testId.includes("_ls_") || testId.includes("_listening_");
+    const groupRanges: { range: [number, number]; passage: 1 | 2 | 3 }[] = isListeningTest
+      ? [
+          { range: [1, 10], passage: 1 },
+          { range: [11, 20], passage: 2 },
+          { range: [21, 30], passage: 3 },
+          { range: [31, 40], passage: 3 },
+        ]
+      : [
+          { range: [1, 7], passage: 1 },
+          { range: [8, 13], passage: 1 },
+          { range: [14, 19], passage: 2 },
+          { range: [20, 23], passage: 2 },
+          { range: [24, 26], passage: 2 },
+          { range: [27, 31], passage: 3 },
+          { range: [32, 37], passage: 3 },
+          { range: [38, 40], passage: 3 },
+        ];
 
     groupRanges.forEach(({ range, passage }) => {
       const [start, end] = range;

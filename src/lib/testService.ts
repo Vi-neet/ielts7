@@ -90,7 +90,7 @@ export async function fetchListeningTest(id: string): Promise<TestContent | null
     const querySnapshot = await getDocs(collection(db, collectionId));
     
     if (querySnapshot.empty) {
-      console.error(`No documents found in ${collectionId}`);
+      console.warn(`No documents found in ${collectionId}`);
       return null;
     }
     
@@ -103,7 +103,7 @@ export async function fetchListeningTest(id: string): Promise<TestContent | null
     const answerKey = `answer_${testNum}`;
     
     if (!docData[testKey] || !docData[questionKey]) {
-      console.error(`Test ${testNum} not found in year ${year}`);
+      console.warn(`Test ${testNum} not found in year ${year}`);
       return null;
     }
     
@@ -115,7 +115,7 @@ export async function fetchListeningTest(id: string): Promise<TestContent | null
     };
     
   } catch (err) {
-    console.error(`Error fetching listening test ${id}:`, err);
+    console.warn(`Firestore listening test ${id} not available via client rules (using fallback):`, (err as any)?.message || err);
     return null;
   }
 }

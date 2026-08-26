@@ -302,6 +302,7 @@ export default function TestEngineRunner({
         {/* Left: Collapsible Passage Viewer */}
         <PassageViewer
           passages={passages}
+          testType={testType}
           passageCollapsed={passageCollapsed}
           onToggleCollapse={() => setPassageCollapsed(!passageCollapsed)}
           activePassageNumber={activeQuestion?.passageNumber || 1}
