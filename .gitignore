@@ -47,3 +47,6 @@ docs/
 .wrangler/
 .dev.vars
 
+# firebase
+.firebase/
+
