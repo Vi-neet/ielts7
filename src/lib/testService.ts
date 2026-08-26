@@ -1,5 +1,3 @@
-import { db } from "./firebase";
-import { collection, getDocs, DocumentData } from "firebase/firestore";
 import { TestContent, TestMetadata } from "./types";
 
 interface FetchedTest {
@@ -12,9 +10,35 @@ interface FetchedTest {
   answers: Record<string, string> | null;
 }
 
+const FIREBASE_PROJECT_ID = process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID || "ielts7-48b25";
+
 /**
- * Fetch listening tests from Firebase following the collection structure:
- * Collection: cambridge_[year]_listening (e.g., cambridge_19_listening)
+ * Helper to parse Firestore REST API field values into plain JS values
+ */
+function parseFirestoreField(field: any): any {
+  if (!field) return null;
+  if (field.stringValue !== undefined) return field.stringValue;
+  if (field.integerValue !== undefined) return parseInt(field.integerValue, 10);
+  if (field.doubleValue !== undefined) return parseFloat(field.doubleValue);
+  if (field.booleanValue !== undefined) return field.booleanValue;
+  if (field.mapValue !== undefined) {
+    const res: Record<string, any> = {};
+    const fields = field.mapValue?.fields || {};
+    for (const key of Object.keys(fields)) {
+      res[key] = parseFirestoreField(fields[key]);
+    }
+    return res;
+  }
+  if (field.arrayValue !== undefined) {
+    const values = field.arrayValue?.values || [];
+    return values.map((v: any) => parseFirestoreField(v));
+  }
+  return null;
+}
+
+/**
+ * Fetch listening tests from Firebase via REST API:
+ * Collection: cambridge_[year]_listening (e.g., cambridge_20_listening)
  * Document: Single document containing all tests for that year
  * Format: {
  *   test_1: "audio_url",
@@ -24,47 +48,51 @@ interface FetchedTest {
  */
 export async function fetchListeningTests(): Promise<FetchedTest[]> {
   try {
-    const years = ["19", "18", "17", "16", "15", "14", "13"];
+    const years = ["20", "19", "18", "17", "16", "15", "14", "13"];
     const allTests: FetchedTest[] = [];
-    const type = "listening";
 
     for (const year of years) {
-      const collectionId = `cambridge_${year}_${type}`;
+      const collectionId = `cambridge_${year}_listening`;
+      const url = `https://firestore.googleapis.com/v1/projects/${FIREBASE_PROJECT_ID}/databases/(default)/documents/${collectionId}`;
+
       try {
-        const querySnapshot = await getDocs(collection(db, collectionId));
-        
-        if (!querySnapshot.empty) {
-          // We only need one document per collection since all tests are in one document
-          const doc = querySnapshot.docs[0];
-          const data = doc.data();
-          
-          for (let i = 1; i <= 4; i++) {
-            const testKey = `test_${i}`;
-            const questionKey = `question_${i}`;
-            const answerKey = `answer_${i}`;
-            
-            if (data[testKey] && data[questionKey]) {
-              allTests.push({
-                id: doc.id,
-                year,
-                testNumber: i,
-                title: `Cambridge ${year} Listening - Test ${i}`,
-                test: data[testKey],
-                questions: data[questionKey],
-                answers: data[answerKey] || null, // Include answers, default to null if not present
-              });
-            }
+        const res = await fetch(url);
+        if (!res.ok) continue;
+
+        const data = await res.json();
+        const doc = data.documents?.[0];
+        if (!doc || !doc.fields) continue;
+
+        const fields = doc.fields;
+        for (let i = 1; i <= 4; i++) {
+          const testKey = `test_${i}`;
+          const questionKey = `question_${i}`;
+          const answerKey = `answer_${i}`;
+
+          const audioUrl = parseFirestoreField(fields[testKey]);
+          const questions = parseFirestoreField(fields[questionKey]);
+          const answers = parseFirestoreField(fields[answerKey]);
+
+          if (audioUrl) {
+            allTests.push({
+              id: doc.name?.split("/").pop() || `cambridge${year}_ls`,
+              year,
+              testNumber: i,
+              title: `Cambridge ${year} Listening - Test ${i}`,
+              test: audioUrl,
+              questions: questions || "",
+              answers: typeof answers === "object" ? answers : null,
+            });
           }
         }
       } catch (innerErr) {
-        console.error(`Error fetching ${collectionId}:`, innerErr);
-        // Continue with the next year if one fails
+        console.error(`Error fetching ${collectionId} via REST:`, innerErr);
       }
     }
 
     return allTests.sort((a, b) => {
       if (a.year !== b.year) {
-        return parseInt(b.year) - parseInt(a.year);
+        return parseInt(b.year, 10) - parseInt(a.year, 10);
       }
       return a.testNumber - b.testNumber;
     });
@@ -75,47 +103,55 @@ export async function fetchListeningTests(): Promise<FetchedTest[]> {
 }
 
 /**
- * Fetch a specific listening test by ID (e.g., cambridge19_ls_test1)
+ * Fetch a specific listening test by ID (e.g., cambridge20_ls_test1)
+ * Uses Firestore REST API via global fetch for Cloudflare Worker runtime compatibility.
  */
 export async function fetchListeningTest(id: string): Promise<TestContent | null> {
   try {
-    // Parse the test ID to extract year and test number
     const match = id.match(/cambridge(\d+)_ls_test(\d+)/);
     if (!match) return null;
-    
+
     const year = match[1];
-    const testNum = parseInt(match[2]);
-    
+    const testNum = parseInt(match[2], 10);
+
     const collectionId = `cambridge_${year}_listening`;
-    const querySnapshot = await getDocs(collection(db, collectionId));
-    
-    if (querySnapshot.empty) {
-      console.warn(`No documents found in ${collectionId}`);
+    const url = `https://firestore.googleapis.com/v1/projects/${FIREBASE_PROJECT_ID}/databases/(default)/documents/${collectionId}`;
+
+    const res = await fetch(url);
+    if (!res.ok) {
+      console.warn(`Firestore REST API returned ${res.status} for ${collectionId}`);
       return null;
     }
-    
-    // Get the first document, assuming one document per collection
-    const docData = querySnapshot.docs[0].data();
-    
-    // Get test properties using the keys
+
+    const data = await res.json();
+    const doc = data.documents?.[0];
+    if (!doc || !doc.fields) {
+      console.warn(`No document or fields found in ${collectionId}`);
+      return null;
+    }
+
+    const fields = doc.fields;
     const testKey = `test_${testNum}`;
     const questionKey = `question_${testNum}`;
     const answerKey = `answer_${testNum}`;
-    
-    if (!docData[testKey] || !docData[questionKey]) {
-      console.warn(`Test ${testNum} not found in year ${year}`);
+
+    const audioUrl = parseFirestoreField(fields[testKey]);
+    const questions = parseFirestoreField(fields[questionKey]) || "";
+    const answers = parseFirestoreField(fields[answerKey]) || {};
+
+    if (!audioUrl) {
+      console.warn(`Audio URL (${testKey}) not found in ${collectionId}`);
       return null;
     }
-    
-    // Return in the format expected by the TestContent interface
+
     return {
-      passages: docData[testKey], // Audio URL for listening tests
-      questions: docData[questionKey],
-      answers: docData[answerKey] || {},
+      passages: audioUrl,
+      questions: questions,
+      answers: typeof answers === "object" ? answers : {},
     };
-    
+
   } catch (err) {
-    console.warn(`Firestore listening test ${id} not available via client rules (using fallback):`, (err as any)?.message || err);
+    console.warn(`Firestore REST listening test fetch failed for ${id}:`, (err as any)?.message || err);
     return null;
   }
 }
@@ -129,8 +165,9 @@ export function convertToTestMetadata(tests: FetchedTest[]): TestMetadata[] {
     year: test.year,
     testNumber: test.testNumber,
     title: test.title,
-    difficulty: ["Easy", "Medium", "Hard"][Math.floor(Math.random() * 3)], // Random difficulty for now
+    difficulty: ["Easy", "Medium", "Hard"][Math.floor(Math.random() * 3)],
     estimatedTime: "40 min",
-    completions: Math.floor(Math.random() * 3000) + 1000, // Random completion count for now
+    completions: Math.floor(Math.random() * 3000) + 1000,
   }));
 }
+
