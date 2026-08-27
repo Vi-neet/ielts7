@@ -6,7 +6,7 @@ import { CheckCircle2, XCircle, Sparkles, ArrowLeft, ArrowRight, Bookmark } from
 import { cn } from "@/lib/utils";
 import SingleQuestionRenderer from "./SingleQuestionRenderer";
 import MultiChoiceRenderer from "./MultiChoiceRenderer";
-import FillBlankRenderer from "./FillBlankRenderer";
+import TextInputRenderer from "./TextInputRenderer";
 import PracticeFeedbackCard from "./PracticeFeedbackCard";
 
 interface GroupQuestionWorkspaceProps {
@@ -178,25 +178,23 @@ export default function GroupQuestionWorkspace({
                 <MultiChoiceRenderer
                   question={qObj}
                   answers={answers}
-                  onChange={(selectedValues) =>
-                    onMultiAnswerChange(qObj.multiSelectQuestionNumbers || [qNum], selectedValues)
-                  }
+                  onMultiChange={onMultiAnswerChange}
                   disabled={Boolean(checked)}
                 />
               ) : qObj.type.includes("completion") ||
                 qObj.type === "sentence_completion" ||
                 qObj.type === "short_answer" ? (
-                <FillBlankRenderer
+                <TextInputRenderer
                   question={qObj}
                   value={currentVal}
-                  onChange={(val) => onSetAnswer(qNum, val)}
+                  onChange={(val: string) => onSetAnswer(qNum, val)}
                   disabled={Boolean(checked)}
                 />
               ) : (
                 <SingleQuestionRenderer
                   question={qObj}
                   value={currentVal}
-                  onChange={(val) => onSetAnswer(qNum, val)}
+                  onChange={(val: string) => onSetAnswer(qNum, val)}
                   disabled={Boolean(checked)}
                 />
               )}

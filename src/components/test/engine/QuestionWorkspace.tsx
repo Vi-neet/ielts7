@@ -9,7 +9,7 @@ import {
 import GroupContextBanner from "./GroupContextBanner";
 import SingleQuestionRenderer from "./SingleQuestionRenderer";
 import MultiChoiceRenderer from "./MultiChoiceRenderer";
-import FillBlankRenderer from "./FillBlankRenderer";
+import TextInputRenderer from "./TextInputRenderer";
 import PracticeFeedbackCard from "./PracticeFeedbackCard";
 import GroupQuestionWorkspace from "./GroupQuestionWorkspace";
 import { Bookmark, LayoutGrid, FileText } from "lucide-react";
@@ -196,23 +196,23 @@ export default function QuestionWorkspace({
                 <MultiChoiceRenderer
                   question={question}
                   answers={answers}
-                  onChange={(selectedVals) => onMultiAnswerChange(qNums, selectedVals)}
+                  onMultiChange={onMultiAnswerChange}
                   disabled={Boolean(checkedState)}
                 />
               ) : question.type.includes("completion") ||
                 question.type === "sentence_completion" ||
                 question.type === "short_answer" ? (
-                <FillBlankRenderer
+                <TextInputRenderer
                   question={question}
                   value={currentVal}
-                  onChange={(val) => onSetAnswer(question.questionNumber, val)}
+                  onChange={(val: string) => onSetAnswer(question.questionNumber, val)}
                   disabled={Boolean(checkedState)}
                 />
               ) : (
                 <SingleQuestionRenderer
                   question={question}
                   value={currentVal}
-                  onChange={(val) => onSetAnswer(question.questionNumber, val)}
+                  onChange={(val: string) => onSetAnswer(question.questionNumber, val)}
                   disabled={Boolean(checkedState)}
                 />
               )}
@@ -296,26 +296,6 @@ export default function QuestionWorkspace({
           </div>
         </>
       )}
-    </div>
-  );
-}
-            variant="forestOutline"
-            className="h-10 px-5 font-medium"
-          >
-            {checkedState ? "Answer Checked" : "Check Answer"}
-          </Button>
-        )}
-
-        <Button
-          type="button"
-          onClick={onNext}
-          disabled={!canNext}
-          variant="forest"
-          className="h-10 px-5 font-medium"
-        >
-          Next <ChevronRight size={15} className="ml-0.5" />
-        </Button>
-      </div>
     </div>
   );
 }
