@@ -21,6 +21,7 @@ import {
   RotateCcw,
   Loader2,
   ClipboardList,
+  Save,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -101,6 +102,7 @@ export default function TestEngineRunner({
   const [dbError, setDbError] = useState<string | null>(null);
   const [showSubmitConfirmModal, setShowSubmitConfirmModal] = useState(false);
   const [showRestartConfirmModal, setShowRestartConfirmModal] = useState(false);
+  const [showExitConfirmModal, setShowExitConfirmModal] = useState(false);
   const [resultsTab, setResultsTab] = useState<"summary" | "review">("summary");
   const [reviewFilter, setReviewFilter] = useState<"all" | "correct" | "incorrect" | "unanswered">("all");
 
@@ -115,6 +117,79 @@ export default function TestEngineRunner({
   const autoSubmitCalledRef = useRef(false);
 
   const router = useRouter();
+
+  const sessionKey = `ielts7_session_${testId}`;
+
+  // Restore session state on initial load if present
+  useEffect(() => {
+    try {
+      const cached = localStorage.getItem(sessionKey);
+      if (cached) {
+        const data = JSON.parse(cached);
+        if (data && Date.now() - (data.updatedAt || 0) < 24 * 60 * 60 * 1000) {
+          if (data.answers && Object.keys(data.answers).length > 0) {
+            setAnswers(data.answers);
+          }
+          if (data.bookmarks) setBookmarks(data.bookmarks);
+          if (data.checkedQuestions) setCheckedQuestions(data.checkedQuestions);
+          if (data.currentQuestion) setCurrentQuestion(data.currentQuestion);
+          if (mode === "exam" && typeof data.timeRemaining === "number" && data.timeRemaining > 0) {
+            setTimeRemaining(data.timeRemaining);
+          }
+        }
+      }
+    } catch {
+      // Storage read error ignored
+    }
+  }, [sessionKey, mode]);
+
+  // Persist active session state to localStorage
+  useEffect(() => {
+    if (isSubmitted) return;
+    try {
+      if (Object.keys(answers).length > 0 || Object.keys(bookmarks).length > 0) {
+        const payload = {
+          testId,
+          testType,
+          testName,
+          mode,
+          answers,
+          bookmarks,
+          checkedQuestions,
+          currentQuestion,
+          timeRemaining,
+          updatedAt: Date.now(),
+        };
+        localStorage.setItem(sessionKey, JSON.stringify(payload));
+      }
+    } catch {
+      // Storage quota error ignored
+    }
+  }, [testId, testType, testName, mode, answers, bookmarks, checkedQuestions, currentQuestion, timeRemaining, isSubmitted, sessionKey]);
+
+  // Warn user on browser reload / tab close if answers exist
+  useEffect(() => {
+    const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+      if (!isSubmitted && Object.keys(answers).length > 0) {
+        e.preventDefault();
+        e.returnValue = "";
+      }
+    };
+    window.addEventListener("beforeunload", handleBeforeUnload);
+    return () => window.removeEventListener("beforeunload", handleBeforeUnload);
+  }, [isSubmitted, answers]);
+
+  const handleExitTest = (savePractice: boolean = false) => {
+    if (!savePractice) {
+      localStorage.removeItem(sessionKey);
+    }
+    setShowExitConfirmModal(false);
+    if (savePractice && mode === "practice") {
+      router.push("/profile");
+    } else {
+      router.push(`/tests/${testType}`);
+    }
+  };
 
   const questionNumbers = Array.from({ length: 40 }, (_, i) => i + 1);
   const answeredCount = questionNumbers.filter((n) => answers[n]?.trim()).length;
@@ -210,6 +285,7 @@ export default function TestEngineRunner({
   };
 
   const handleRestartTest = () => {
+    localStorage.removeItem(sessionKey);
     setAnswers({});
     setCheckedQuestions({});
     setBookmarks({});
@@ -227,6 +303,7 @@ export default function TestEngineRunner({
       return;
     }
 
+    localStorage.removeItem(sessionKey);
     setShowSubmitConfirmModal(false);
     setSubmitting(true);
 
@@ -388,11 +465,43 @@ export default function TestEngineRunner({
     ? Math.max(...activeQuestion.multiSelectQuestionNumbers)
     : currentQuestion;
 
+  // Split pane resizing state
+  const [passageWidthPercent, setPassageWidthPercent] = useState<number>(45);
+  const [isResizing, setIsResizing] = useState<boolean>(false);
+
+  const handleMouseDownResizer = (e: React.MouseEvent) => {
+    e.preventDefault();
+    setIsResizing(true);
+  };
+
+  useEffect(() => {
+    if (!isResizing) return;
+
+    const handleMouseMove = (e: MouseEvent) => {
+      const containerWidth = window.innerWidth;
+      if (containerWidth <= 768) return;
+      const newPercent = (e.clientX / containerWidth) * 100;
+      const clamped = Math.min(Math.max(newPercent, 25), 65);
+      setPassageWidthPercent(clamped);
+    };
+
+    const handleMouseUp = () => {
+      setIsResizing(false);
+    };
+
+    window.addEventListener("mousemove", handleMouseMove);
+    window.addEventListener("mouseup", handleMouseUp);
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("mouseup", handleMouseUp);
+    };
+  }, [isResizing]);
+
   const canNext = activeMaxNum < 40;
   const canPrevious = currentQuestion > 1;
 
   return (
-    <div className="min-h-screen flex flex-col bg-cream-paper">
+    <div className="fixed inset-0 z-50 flex flex-col bg-cream-paper overflow-hidden select-none animate-in fade-in duration-200">
       {/* Test Header */}
       <TestHeader
         testName={testName}
@@ -403,21 +512,46 @@ export default function TestEngineRunner({
         timeRemaining={timeRemaining}
         onSubmitClick={() => setShowSubmitConfirmModal(true)}
         onRestartClick={() => setShowRestartConfirmModal(true)}
+        onBackClick={() => setShowExitConfirmModal(true)}
       />
 
-      {/* Main Workspace Layout (Passage & Navigator are Sticky) */}
-      <main className="flex-1 container mx-auto max-w-7xl px-4 py-6 flex flex-col md:flex-row items-start gap-6">
+      {/* Main Workspace Layout (Full-Height Distraction-Free Canvas) */}
+      <main className="flex-1 w-full px-4 py-4 flex flex-col md:flex-row items-stretch gap-4 overflow-hidden select-text">
         {/* Left: Collapsible Passage Viewer */}
-        <PassageViewer
-          passages={passages}
-          testType={testType}
-          passageCollapsed={passageCollapsed}
-          onToggleCollapse={() => setPassageCollapsed(!passageCollapsed)}
-          activePassageNumber={activeQuestion?.passageNumber || 1}
-        />
+        <div
+          style={{
+            width: passageCollapsed ? undefined : `${passageWidthPercent}%`,
+          }}
+          className={cn(
+            "hidden md:flex flex-col h-full shrink-0 transition-all duration-150",
+            passageCollapsed ? "w-14" : ""
+          )}
+        >
+          <PassageViewer
+            passages={passages}
+            testType={testType}
+            passageCollapsed={passageCollapsed}
+            onToggleCollapse={() => setPassageCollapsed(!passageCollapsed)}
+            activePassageNumber={activeQuestion?.passageNumber || 1}
+          />
+        </div>
 
-        {/* Middle: Question Workspace (Group or Single View) */}
-        <div className="flex-1 w-full min-w-0">
+        {/* Vertical Split-Pane Resizer Handle */}
+        {!passageCollapsed && (
+          <div
+            onMouseDown={handleMouseDownResizer}
+            className={cn(
+              "hidden md:flex items-center justify-center w-3 hover:w-3 cursor-col-resize group shrink-0 transition-colors py-8",
+              isResizing ? "bg-forest-ink/20 rounded-full" : "hover:bg-forest-ink/10 rounded-full"
+            )}
+            title="Drag to resize passage and question panels"
+          >
+            <div className="w-1 h-8 rounded-full bg-forest-ink/30 group-hover:bg-forest-ink/60 transition-colors" />
+          </div>
+        )}
+
+        {/* Middle: Question Workspace (Scrollable Panel) */}
+        <div className="flex-1 h-full overflow-y-auto pr-1">
           {activeQuestion && activeGroup ? (
             <QuestionWorkspace
               question={activeQuestion}
@@ -451,8 +585,8 @@ export default function TestEngineRunner({
           )}
         </div>
 
-        {/* Right: Persistent Question Navigator (Sticky) */}
-        <div className={cn("hidden lg:block shrink-0 sticky top-20 max-h-[calc(100vh-100px)] overflow-y-auto transition-all duration-300", navigatorCollapsed ? "w-60" : "w-72")}>
+        {/* Right: Persistent Question Navigator (Scrollable Panel) */}
+        <div className={cn("hidden lg:block h-full shrink-0 overflow-y-auto transition-all duration-300", navigatorCollapsed ? "w-60" : "w-72")}>
           <QuestionNavigator
             testType={testType}
             questionNumbers={questionNumbers}
@@ -547,6 +681,62 @@ export default function TestEngineRunner({
               >
                 <RotateCcw size={15} className="mr-1.5" />
                 Yes, Restart Test
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Confirmation Modal before Exit */}
+      {showExitConfirmModal && (
+        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-white rounded-3xl p-6 max-w-md w-full border border-forest-ink/15 shadow-2xl space-y-4 animate-in zoom-in-95 duration-150">
+            <div className="flex items-center gap-3">
+              <div className="w-11 h-11 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center shrink-0">
+                <AlertTriangle size={22} className="text-amber-600" />
+              </div>
+              <div>
+                <h3 className="text-lg font-extrabold font-bricolage text-forest-ink">
+                  {mode === "exam" ? "Exit Exam Session?" : "Leave Practice Session?"}
+                </h3>
+                <p className="text-xs font-mono text-amber-800 uppercase tracking-wider font-semibold">
+                  {mode === "exam" ? "Progress will be lost" : "Save or Discard Progress"}
+                </p>
+              </div>
+            </div>
+
+            <p className="text-sm text-forest-ink/80 leading-relaxed font-inter">
+              {mode === "exam"
+                ? `You have answered ${answeredCount} of 40 questions. Leaving the exam now will cancel your timed session and your unsubmitted answers will be lost.`
+                : `You have answered ${answeredCount} of 40 questions. You can save your progress to your profile and resume anytime, or exit without saving.`}
+            </p>
+
+            <div className="flex flex-col gap-2.5 pt-2">
+              {mode === "practice" && (
+                <Button
+                  type="button"
+                  onClick={() => handleExitTest(true)}
+                  className="w-full h-11 bg-forest-ink hover:bg-forest-ink/90 text-white font-semibold shadow-2xs flex items-center justify-center gap-2"
+                >
+                  <Save size={16} /> Save Progress & Go to Profile
+                </Button>
+              )}
+
+              <Button
+                type="button"
+                onClick={() => handleExitTest(false)}
+                className="w-full h-10 bg-rose-600 hover:bg-rose-700 text-white font-semibold shadow-2xs"
+              >
+                {mode === "exam" ? "Exit & Cancel Exam" : "Exit Without Saving"}
+              </Button>
+
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => setShowExitConfirmModal(false)}
+                className="w-full h-10 border-forest-ink/20 font-semibold"
+              >
+                Continue {mode === "exam" ? "Exam" : "Practice"}
               </Button>
             </div>
           </div>
