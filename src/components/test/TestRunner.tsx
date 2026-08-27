@@ -267,6 +267,24 @@ export default function TestRunner({
   const [checkedQuestions, setCheckedQuestions] = useState<Record<number, boolean>>({});
   const [currentQuestion, setCurrentQuestion] = useState<number | null>(null);
 
+  // ── Dark mode state ──
+  const [isDarkMode, setIsDarkMode] = useState<boolean>(() => {
+    if (typeof window !== "undefined") {
+      return localStorage.getItem("ielts7_test_dark_mode") === "true";
+    }
+    return false;
+  });
+
+  const toggleDarkMode = () => {
+    setIsDarkMode((prev) => {
+      const next = !prev;
+      if (typeof window !== "undefined") {
+        localStorage.setItem("ielts7_test_dark_mode", String(next));
+      }
+      return next;
+    });
+  };
+
   // ── Reading layout state ──
   const [passageCollapsed, setPassageCollapsed] = useState(false);
 
@@ -1089,7 +1107,7 @@ export default function TestRunner({
 
   return (
     <AnswerContext.Provider value={{ answers, setAnswer, disabled: isSubmitted, isSubmitted }}>
-      <div className="min-h-screen bg-cream-paper flex flex-col">
+      <div className={cn("min-h-screen flex flex-col transition-colors duration-200", isDarkMode ? "dark-test-mode bg-[#121c0e] text-[#e8efe2]" : "bg-cream-paper text-forest-ink")}>
         {/* Sticky test header */}
         <TestHeader
           testName={testName}
@@ -1098,6 +1116,8 @@ export default function TestRunner({
           timeRemaining={timeRemaining}
           answeredCount={answeredCount}
           totalQuestions={totalQuestions}
+          isDarkMode={isDarkMode}
+          onToggleDarkMode={toggleDarkMode}
         />
 
         {/* Main content */}
