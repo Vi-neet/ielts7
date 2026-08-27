@@ -10,7 +10,6 @@ import {
   CheckCircle2,
   Play,
   Pause,
-  Sparkles,
   Volume2,
   Mic,
   Award,
@@ -99,7 +98,7 @@ export default function ProductPreview({ activeSkill = "listening" }: ProductPre
 
           <div className="flex items-center gap-3">
             <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-forest-ink/5 text-xs font-mono font-bold text-forest-ink">
-              <Sparkles size={13} className="text-forest-ink" /> IELTS 7+ Prep
+              <Award size={13} className="text-forest-ink" /> IELTS 7+ Prep
             </div>
           </div>
         </div>
@@ -246,7 +245,7 @@ export default function ProductPreview({ activeSkill = "listening" }: ProductPre
                     </h4>
                   </div>
                   <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-purple-900 text-white font-mono text-xs font-bold shrink-0">
-                    <Sparkles size={14} className="text-highlighter-yellow" /> Task 2 Review
+                    <PenTool size={14} className="text-highlighter-yellow" /> Task 2 Review
                   </div>
                 </div>
 

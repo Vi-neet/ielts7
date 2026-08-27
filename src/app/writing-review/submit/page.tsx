@@ -11,7 +11,7 @@ import {
   CheckCircle2,
   AlertTriangle,
   Loader2,
-  Sparkles,
+  FileText,
 } from "lucide-react";
 import Link from "next/link";
 import { motion } from "framer-motion";
@@ -195,7 +195,7 @@ export default function SubmitEssayPage() {
             <div className="bg-whisper-gray/50 border-b border-pencil-gray/10 px-6 md:px-8 py-5 flex items-center justify-between">
               <div>
                 <h1 className="text-xl font-extrabold text-forest-ink font-bricolage tracking-tight flex items-center gap-2">
-                  <Sparkles className="w-4 h-4" />
+                  <FileText className="w-4 h-4" />
                   Submit Your Essay
                 </h1>
                 <p className="text-[11px] text-forest-ink/50 mt-0.5 font-mono uppercase tracking-wide">

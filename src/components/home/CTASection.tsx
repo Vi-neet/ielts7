@@ -5,7 +5,7 @@ import { motion, useReducedMotion } from "framer-motion";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
-import { ArrowRight, CheckCircle2, Award, Sparkles } from "lucide-react";
+import { ArrowRight, CheckCircle2, Award } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { FloatingShape } from "@/components/ui/FloatingShape";
 

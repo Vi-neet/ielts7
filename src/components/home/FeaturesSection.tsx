@@ -18,7 +18,6 @@ import {
   Headphones,
   Laptop,
   Route,
-  Sparkles,
   Users,
   Award,
 } from "lucide-react";
@@ -230,7 +229,7 @@ export const FeaturesSection = () => {
       <div className="container mx-auto px-6 max-w-6xl relative z-10">
         <SectionHeader
           eyebrowText="How we help you achieve Band 7+"
-          eyebrowIcon={<Sparkles className="w-3.5 h-3.5" />}
+          eyebrowIcon={<Award className="w-3.5 h-3.5" />}
           title="Everything you need to succeed"
           description="A complete ecosystem of tools, tests, and resources built specifically for ambitious IELTS candidates."
           className="mb-14"

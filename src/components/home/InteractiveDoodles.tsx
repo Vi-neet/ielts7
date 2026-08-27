@@ -160,7 +160,7 @@ export function InteractiveDoodles({ className }: InteractiveDoodlesProps) {
         </svg>
       </motion.div>
 
-      {/* Doodle 5: Trio Sparkles Top Center Left */}
+      {/* Doodle 5: Star Top Center Left */}
       <motion.div
         style={{ x: m5X, y: m5Y }}
         className="absolute top-[80px] left-[20%] xl:left-[23%] hidden lg:block pointer-events-auto group cursor-pointer"
@@ -168,8 +168,7 @@ export function InteractiveDoodles({ className }: InteractiveDoodlesProps) {
         transition={{ type: "spring", stiffness: 260 }}
       >
         <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M20 4 L22 16 L34 18 L22 20 L20 32 L18 20 L6 18 L18 16 Z" stroke="#1a3300" strokeWidth="1.5" className="fill-highlighter-yellow/40 group-hover:fill-highlighter-yellow transition-colors" />
-          <path d="M32 26 L33 32 L39 33 L33 34 L32 40 L31 34 L25 33 L31 32 Z" stroke="#1a3300" strokeWidth="1.2" className="fill-sticky-note-mint/50 group-hover:fill-sticky-note-mint transition-colors" />
+          <polygon points="20,4 25,15 36,17 28,25 30,36 20,30 10,36 12,25 4,17 15,15" stroke="#1a3300" strokeWidth="1.5" className="fill-highlighter-yellow/40 group-hover:fill-highlighter-yellow transition-colors" />
         </svg>
       </motion.div>
 

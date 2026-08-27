@@ -18,7 +18,7 @@ import {
   ChevronRight,
   ChevronLeft,
   Loader2,
-  Sparkles,
+  Award,
   ClipboardList,
   AlertTriangle,
   RotateCcw,
@@ -926,7 +926,7 @@ export default function TestRunner({
             <div className="bg-white rounded-2xl shadow-sm border border-pencil-gray/20 p-6 flex items-center justify-between col-span-2">
               <div className="space-y-1">
                 <h2 className="text-xl font-bold font-bricolage text-forest-ink flex items-center gap-2">
-                  <Sparkles className="text-forest-ink h-5 w-5" /> Completed Successfully!
+                  <Award className="text-forest-ink h-5 w-5" /> Completed Successfully!
                 </h2>
                 <p className="text-forest-ink/60 text-xs font-mono uppercase mt-1">
                   {testTypeLabel} • {completionDate}
