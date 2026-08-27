@@ -170,14 +170,22 @@ export default function QuestionNavigator({
                   <button
                     key={num}
                     type="button"
-                    onClick={() => onNavigate(num)}
+                    onClick={() => {
+                      onNavigate(num);
+                      setTimeout(() => {
+                        const el = document.getElementById(`question-card-${num}`);
+                        if (el) {
+                          el.scrollIntoView({ behavior: "smooth", block: "center" });
+                        }
+                      }, 50);
+                    }}
                     className={getBadgeStyle(num)}
                     aria-label={`Question ${num}`}
                   >
                     {num}
                     {bookmarks[num] && (
-                      <span className="absolute -top-1 -right-1 w-3.5 h-3.5 bg-purple-600 text-white rounded-full flex items-center justify-center shadow-2xs border border-white">
-                        <Bookmark size={8} className="fill-white" />
+                      <span className="absolute -top-1 -right-1 w-3.5 h-3.5 bg-highlighter-yellow text-forest-ink font-bold rounded-full flex items-center justify-center shadow-2xs border border-forest-ink/20">
+                        <Bookmark size={8} className="fill-forest-ink" />
                       </span>
                     )}
                   </button>

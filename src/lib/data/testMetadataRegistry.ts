@@ -62,13 +62,26 @@ const LETTER_OPTIONS_AG: VirtualOption[] = [
 /**
  * Returns clean options for a question based on type and answer key value.
  */
+/**
+ * Returns clean options for a question based on type and answer key value.
+ */
 function getOptionsForType(
   type: QuestionType,
-  answerVal?: string | string[]
+  answerVal?: string | string[],
+  refBoxItems?: { label: string; text?: string }[]
 ): VirtualOption[] | undefined {
   if (type === "true_false_not_given") return TFNG_OPTIONS;
   if (type === "yes_no_not_given") return YNNG_OPTIONS;
-  if (type === "matching_headings") return ROMAN_HEADINGS_OPTIONS;
+  if (type === "matching_headings") {
+    if (refBoxItems && refBoxItems.length > 0) {
+      return refBoxItems.map((item) => ({
+        value: item.label,
+        label: item.label,
+        text: item.text ? `${item.label} ${item.text}` : item.label,
+      }));
+    }
+    return ROMAN_HEADINGS_OPTIONS;
+  }
 
   if (
     type === "multiple_choice_single" ||
@@ -229,12 +242,15 @@ export function getVirtualTestIndex(
       };
 
       const type = qdata.questionType || "unknown";
-      const defaultOptions = getOptionsForType(type, answerKey[q]);
-
-      const isMultiAnswer = type === "multiple_choice_multi";
       const qNumsInGroup = groupMap.get(qdata.groupId || "unmapped") || [q];
       const startGroupNum = qNumsInGroup[0];
       const endGroupNum = qNumsInGroup[qNumsInGroup.length - 1];
+
+      const groupRefBox = testRegistry[startGroupNum]?.referenceBox;
+      const refBoxItems = qdata.referenceBox?.items || groupRefBox?.items;
+      const defaultOptions = getOptionsForType(type, answerKey[q], refBoxItems);
+
+      const isMultiAnswer = type === "multiple_choice_multi";
       const passage: 1 | 2 | 3 = startGroupNum <= 14 ? 1 : startGroupNum <= 27 ? 2 : 3;
 
       questions[q] = {
@@ -247,7 +263,8 @@ export function getVirtualTestIndex(
         sentenceBefore: qdata.sentenceBefore,
         sentenceAfter: qdata.sentenceAfter,
         contextHeader: qdata.contextHeader,
-        referenceBox: qdata.referenceBox,
+        // Notice: referenceBox is attached at Group level to avoid duplicate rendering inside individual question cards
+        referenceBox: undefined,
         groupPrompt: qdata.groupPrompt,
         options: (qdata.options && qdata.options.length > 0) ? qdata.options : defaultOptions,
         tableContext: qdata.tableContext,

@@ -12,7 +12,7 @@ import { VirtualTestIndex, TestEngineMode } from "@/lib/types/testEngine";
 import TestHeader from "../TestHeader";
 import QuestionNavigator from "../QuestionNavigator";
 import PassageViewer from "./PassageViewer";
-import QuestionWorkspace from "./QuestionWorkspace";
+import QuestionWorkspace, { ViewMode } from "./QuestionWorkspace";
 import { Button } from "@/components/ui/button";
 import {
   CheckCircle2,
@@ -93,6 +93,7 @@ export default function TestEngineRunner({
   const [checkedQuestions, setCheckedQuestions] = useState<
     Record<number, { isCorrect: boolean; correctAnswer: string }>
   >({});
+  const [viewMode, setViewMode] = useState<ViewMode>("group");
 
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
@@ -327,6 +328,63 @@ export default function TestEngineRunner({
       testIndex.groups[0]
     : testIndex.groups[0];
 
+  const activeGroupQuestions = activeGroup
+    ? Array.from(
+        { length: activeGroup.range[1] - activeGroup.range[0] + 1 },
+        (_, i) => activeGroup.range[0] + i
+      ).map((qNum) => testIndex.questions[qNum]).filter(Boolean)
+    : [activeQuestion];
+
+  const currentGroupIndex = testIndex.groups.findIndex((g) => g.groupId === activeGroup?.groupId);
+
+  const handleCheckGroupAnswers = (qNums: number[]) => {
+    const updates: Record<number, { isCorrect: boolean; correctAnswer: string }> = {};
+    for (const qNum of qNums) {
+      const qObj = testIndex.questions[qNum];
+      const isMulti = qObj?.type === "multiple_choice_multi";
+      const qNumsToCheck = isMulti && qObj?.multiSelectQuestionNumbers
+        ? qObj.multiSelectQuestionNumbers
+        : [qNum];
+
+      const allQuestionsInMultiCorrect = qNumsToCheck.every((n) => {
+        const studentAns = (answers[n] || "").trim().toLowerCase();
+        const acceptable = getAcceptableAnswers(answerKey[n]);
+        return studentAns !== "" && acceptable.includes(studentAns);
+      });
+
+      const studentAns = (answers[qNum] || "").trim().toLowerCase();
+      const correctVal = answerKey[qNum];
+      const acceptable = getAcceptableAnswers(correctVal);
+      const isCorrect = isMulti
+        ? allQuestionsInMultiCorrect
+        : studentAns !== "" && acceptable.includes(studentAns);
+
+      updates[qNum] = {
+        isCorrect,
+        correctAnswer: formatAnswer(correctVal),
+      };
+    }
+
+    setCheckedQuestions((prev) => ({
+      ...prev,
+      ...updates,
+    }));
+  };
+
+  const handleNextGroup = () => {
+    if (currentGroupIndex < testIndex.groups.length - 1) {
+      const nextGroup = testIndex.groups[currentGroupIndex + 1];
+      setCurrentQuestion(nextGroup.range[0]);
+    }
+  };
+
+  const handlePreviousGroup = () => {
+    if (currentGroupIndex > 0) {
+      const prevGroup = testIndex.groups[currentGroupIndex - 1];
+      setCurrentQuestion(prevGroup.range[0]);
+    }
+  };
+
   const activeMaxNum = activeQuestion?.type === "multiple_choice_multi" && activeQuestion.multiSelectQuestionNumbers
     ? Math.max(...activeQuestion.multiSelectQuestionNumbers)
     : currentQuestion;
@@ -359,25 +417,33 @@ export default function TestEngineRunner({
           activePassageNumber={activeQuestion?.passageNumber || 1}
         />
 
-        {/* Middle: Question Workspace (One Question at a Time) */}
+        {/* Middle: Question Workspace (Group or Single View) */}
         <div className="flex-1">
           {activeQuestion && activeGroup ? (
             <QuestionWorkspace
               question={activeQuestion}
               group={activeGroup}
+              groupQuestions={activeGroupQuestions}
               totalQuestions={40}
               answers={answers}
-              isBookmarked={Boolean(bookmarks[currentQuestion])}
-              checkedState={checkedQuestions[currentQuestion]}
+              bookmarks={bookmarks}
+              checkedQuestions={checkedQuestions}
               mode={mode}
+              viewMode={viewMode}
+              onToggleViewMode={setViewMode}
               onSetAnswer={setAnswer}
               onMultiAnswerChange={handleMultiAnswerChange}
               onToggleBookmark={toggleBookmark}
               onCheckAnswer={checkSingleAnswer}
+              onCheckGroupAnswers={handleCheckGroupAnswers}
               onPrevious={handlePreviousQuestion}
               onNext={handleNextQuestion}
+              onPreviousGroup={handlePreviousGroup}
+              onNextGroup={handleNextGroup}
               canPrevious={canPrevious}
               canNext={canNext}
+              canPreviousGroup={currentGroupIndex > 0}
+              canNextGroup={currentGroupIndex < testIndex.groups.length - 1}
             />
           ) : (
             <div className="p-8 text-center text-forest-ink/60">
