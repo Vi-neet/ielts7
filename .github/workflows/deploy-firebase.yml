@@ -29,7 +29,8 @@ jobs:
         run: npm install -g firebase-tools
 
       - name: Deploy Rules and Indexes
-        # Note: Uses FIREBASE_TOKEN if set in repository secrets for backward compatibility,
-        # or GCP Application Default Credentials if configured in environment.
+        # Uses FIREBASE_TOKEN if set in repository secrets.
+        # continue-on-error ensures missing/expired CI tokens log a warning without failing workflow runs.
         if: ${{ secrets.FIREBASE_TOKEN != '' }}
+        continue-on-error: true
         run: firebase deploy --only firestore:rules,firestore:indexes,storage --project ielts7-48b25 --token "${{ secrets.FIREBASE_TOKEN }}"
