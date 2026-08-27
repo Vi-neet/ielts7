@@ -18,7 +18,8 @@ export default function SingleQuestionRenderer({
   disabled = false,
 }: SingleQuestionRendererProps) {
   const options = question.options || [];
-  const refBox = question.referenceBox;
+  const isHeading = question.type?.includes("heading");
+  const refBox = isHeading ? undefined : question.referenceBox;
 
   return (
     <div className="space-y-4">

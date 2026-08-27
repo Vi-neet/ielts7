@@ -109,15 +109,26 @@ export default function GroupQuestionWorkspace({
           </div>
         </div>
 
-        {/* Group Instructions */}
-        {group.instructions && (
-          <div className="bg-[#fcfaf5] rounded-2xl p-4 border border-forest-ink/10 text-sm font-medium font-inter text-forest-ink leading-relaxed">
-            {group.instructions}
+        {/* Group Instructions & Word Limit Requirement */}
+        {(group.instructions || group.wordLimit) && (
+          <div className="bg-[#fcfaf5] rounded-2xl p-4 border border-forest-ink/10 space-y-3">
+            {group.instructions && (
+              <p className="text-sm font-medium font-inter text-forest-ink leading-relaxed">
+                {group.instructions}
+              </p>
+            )}
+
+            {group.wordLimit && (
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-xl text-xs font-bold font-mono bg-amber-500/10 text-amber-950 border border-amber-500/20">
+                <span className="w-2 h-2 rounded-full bg-amber-600 animate-pulse shrink-0" />
+                <span>Requirement: {group.wordLimit}</span>
+              </div>
+            )}
           </div>
         )}
 
         {/* Shared Reference Box (List of Headings / Features / Word Bank) */}
-        {group.referenceBox && (
+        {group.referenceBox && !group.type?.includes("heading") && (
           <div className="p-4 rounded-2xl bg-amber-500/5 border border-amber-500/20 space-y-3">
             <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-amber-950 flex items-center gap-2">
               <span className="w-2 h-2 rounded-full bg-amber-600 animate-pulse" />
@@ -165,35 +176,35 @@ export default function GroupQuestionWorkspace({
               {/* Card Accordion Dropdown Header */}
               <div
                 onClick={() => toggleQuestionExpand(qNum)}
-                className="w-full px-5 py-4 flex items-center justify-between gap-4 cursor-pointer hover:bg-forest-ink/5 transition-colors select-none"
+                className="w-full px-5 py-4 flex items-start justify-between gap-4 cursor-pointer hover:bg-forest-ink/5 transition-colors select-none"
               >
-                <div className="flex items-center gap-3 min-w-0">
+                <div className="flex items-start gap-3 flex-1 min-w-0">
                   <span
                     className={cn(
-                      "w-8 h-8 rounded-xl font-extrabold font-bricolage text-sm flex items-center justify-center shadow-2xs shrink-0",
+                      "min-w-[28px] h-7 px-2.5 rounded-lg font-bold font-inter text-xs flex items-center justify-center shrink-0 border select-none mt-0.5 shadow-2xs",
                       checked
                         ? checked.isCorrect
-                          ? "bg-emerald-700 text-white"
-                          : "bg-rose-600 text-white"
-                        : "bg-forest-ink text-white"
+                          ? "bg-emerald-700 text-white border-emerald-800"
+                          : "bg-rose-600 text-white border-rose-700"
+                        : "bg-forest-ink text-white border-forest-ink"
                     )}
                   >
                     {qNum}
                   </span>
 
-                  <p className="text-sm font-semibold text-forest-ink truncate">
+                  <p className="text-sm font-semibold text-forest-ink font-inter leading-relaxed flex-1 min-w-0">
                     {qObj.promptText || `Question ${qNum}`}
                   </p>
                 </div>
 
-                <div className="flex items-center gap-2.5 shrink-0">
+                <div className="flex items-center gap-2.5 shrink-0 mt-0.5">
                   {/* Status Badge */}
                   {currentVal.trim() ? (
-                    <span className="px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-800 text-[11px] font-mono font-bold border border-emerald-300">
-                      Answered: {currentVal.length > 12 ? `${currentVal.slice(0, 12)}...` : currentVal}
+                    <span className="px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-800 text-[11px] font-mono font-bold border border-emerald-300 whitespace-nowrap">
+                      Answered
                     </span>
                   ) : (
-                    <span className="px-2.5 py-1 rounded-full bg-slate-100 text-slate-600 text-[11px] font-mono font-medium border border-slate-200">
+                    <span className="px-2.5 py-1 rounded-full bg-slate-100 text-slate-600 text-[11px] font-mono font-medium border border-slate-200 whitespace-nowrap">
                       Unanswered
                     </span>
                   )}
@@ -243,6 +254,7 @@ export default function GroupQuestionWorkspace({
                       value={currentVal}
                       onChange={(val: string) => onSetAnswer(qNum, val)}
                       disabled={Boolean(checked)}
+                      compactInputOnly={true}
                     />
                   ) : (
                     <SingleQuestionRenderer
@@ -269,17 +281,17 @@ export default function GroupQuestionWorkspace({
       </div>
 
       {/* 3. Group Action Footer (Practice Mode Check & Section Navigation) */}
-      <div className="bg-white rounded-3xl border border-forest-ink/15 p-6 shadow-sm space-y-5">
-        {/* Practice Mode Check Button */}
+      <div className="bg-white rounded-3xl border border-forest-ink/15 p-5 shadow-sm space-y-4">
+        {/* Practice Mode Check Box */}
         {isPractice && (
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-forest-ink/10 pb-5">
-            <div className="flex-1 min-w-0 space-y-1">
-              <p className="text-sm font-extrabold text-forest-ink font-bricolage leading-snug">
+          <div className="bg-[#fcfaf5] rounded-2xl p-5 border border-forest-ink/10 space-y-4">
+            <div className="space-y-1">
+              <h4 className="text-base font-extrabold text-forest-ink font-bricolage leading-snug">
                 {isGroupChecked
                   ? `Section Evaluated: ${correctCount} / ${qNums.length} Correct`
                   : `Evaluate Section Answers (Questions ${startNum}–${endNum})`}
-              </p>
-              <p className="text-xs font-mono text-forest-ink/60">
+              </h4>
+              <p className="text-xs font-inter font-medium text-forest-ink/65 leading-relaxed">
                 {isGroupChecked
                   ? "Answers checked against official IELTS key."
                   : "Check all responses in this section before moving forward."}
@@ -291,7 +303,7 @@ export default function GroupQuestionWorkspace({
               disabled={isGroupChecked}
               onClick={handleCheckGroup}
               className={cn(
-                "px-6 py-3 rounded-2xl font-bold font-inter text-xs transition-all shadow-xs shrink-0 flex items-center justify-center gap-2 whitespace-nowrap w-full sm:w-auto",
+                "w-full py-3 rounded-2xl font-bold font-inter text-xs transition-all shadow-xs flex items-center justify-center gap-2",
                 isGroupChecked
                   ? "bg-emerald-100 text-emerald-900 border border-emerald-300 cursor-default"
                   : "bg-forest-ink text-white hover:bg-forest-ink/90 active:scale-98"
@@ -312,41 +324,43 @@ export default function GroupQuestionWorkspace({
           </div>
         )}
 
-        {/* Section Navigation Buttons */}
-        <div className="flex items-center justify-between gap-3 pt-1">
-          <button
-            type="button"
-            disabled={!canPreviousGroup}
-            onClick={onPreviousGroup}
-            className={cn(
-              "px-5 py-3 rounded-2xl font-bold font-inter text-xs flex items-center justify-center gap-2 border transition-all whitespace-nowrap",
-              canPreviousGroup
-                ? "bg-white text-forest-ink border-forest-ink/20 hover:border-forest-ink hover:bg-forest-ink/5 shadow-2xs"
-                : "bg-gray-100 text-gray-400 border-gray-200 cursor-not-allowed opacity-50"
-            )}
-          >
-            <ArrowLeft size={15} className="shrink-0" />
-            <span>Previous Section</span>
-          </button>
+        {/* Section Navigation Buttons (Full-Width Flex-1 Grid Layout) */}
+        <div className="space-y-2 pt-1 w-full">
+          <div className="flex items-center justify-between gap-3 w-full">
+            <button
+              type="button"
+              disabled={!canPreviousGroup}
+              onClick={onPreviousGroup}
+              className={cn(
+                "flex-1 py-3 px-3 rounded-2xl font-bold font-inter text-xs flex items-center justify-center gap-1.5 border transition-all",
+                canPreviousGroup
+                  ? "bg-white text-forest-ink border-forest-ink/20 hover:border-forest-ink hover:bg-forest-ink/5 shadow-2xs"
+                  : "bg-gray-100 text-gray-400 border-gray-200 cursor-not-allowed opacity-50"
+              )}
+            >
+              <ArrowLeft size={14} className="shrink-0" />
+              <span className="truncate">Previous Section</span>
+            </button>
 
-          <span className="text-xs font-mono font-extrabold text-forest-ink/70 shrink-0 whitespace-nowrap hidden sm:inline">
-            Questions {startNum}–{endNum}
-          </span>
+            <button
+              type="button"
+              disabled={!canNextGroup}
+              onClick={onNextGroup}
+              className={cn(
+                "flex-1 py-3 px-3 rounded-2xl font-bold font-inter text-xs flex items-center justify-center gap-1.5 border transition-all",
+                canNextGroup
+                  ? "bg-forest-ink text-white border-forest-ink hover:bg-forest-ink/90 shadow-2xs"
+                  : "bg-gray-100 text-gray-400 border-gray-200 cursor-not-allowed opacity-50"
+              )}
+            >
+              <span className="truncate">Next Section</span>
+              <ArrowRight size={14} className="shrink-0" />
+            </button>
+          </div>
 
-          <button
-            type="button"
-            disabled={!canNextGroup}
-            onClick={onNextGroup}
-            className={cn(
-              "px-5 py-3 rounded-2xl font-bold font-inter text-xs flex items-center justify-center gap-2 border transition-all whitespace-nowrap",
-              canNextGroup
-                ? "bg-forest-ink text-white border-forest-ink hover:bg-forest-ink/90 shadow-2xs"
-                : "bg-gray-100 text-gray-400 border-gray-200 cursor-not-allowed opacity-50"
-            )}
-          >
-            <span>Next Section</span>
-            <ArrowRight size={15} className="shrink-0" />
-          </button>
+          <p className="text-[11px] font-mono font-bold text-center text-forest-ink/60 uppercase tracking-wider pt-0.5">
+            Questions {startNum}–{endNum} of {totalQuestions}
+          </p>
         </div>
       </div>
     </div>

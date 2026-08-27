@@ -217,6 +217,7 @@ export function getVirtualTestIndex(
       const firstQData = testRegistry[start] || {};
       const passage: 1 | 2 | 3 = start <= 14 ? 1 : start <= 27 ? 2 : 3;
       const type = firstQData.questionType || "unknown";
+      const isHeadingType = type.includes("heading");
 
       const group: VirtualQuestionGroup = {
         groupId,
@@ -226,7 +227,7 @@ export function getVirtualTestIndex(
         instructions: firstQData.groupPrompt || getDefaultInstruction(type, [start, end]),
         wordLimit: type.includes("completion") || type === "short_answer" ? "Choose ONE WORD ONLY" : undefined,
         type,
-        referenceBox: firstQData.referenceBox,
+        referenceBox: isHeadingType ? undefined : firstQData.referenceBox,
         groupContextText: firstQData.groupPrompt,
       };
       groups.push(group);
@@ -242,6 +243,7 @@ export function getVirtualTestIndex(
       };
 
       const type = qdata.questionType || "unknown";
+      const isHeadingType = type.includes("heading");
       const qNumsInGroup = groupMap.get(qdata.groupId || "unmapped") || [q];
       const startGroupNum = qNumsInGroup[0];
       const endGroupNum = qNumsInGroup[qNumsInGroup.length - 1];
@@ -258,13 +260,13 @@ export function getVirtualTestIndex(
         passageNumber: passage,
         groupId: qdata.groupId || "unmapped",
         type,
+        referenceBox: undefined,
         extractionStatus: qdata.extractionStatus || "missing",
         promptText: qdata.promptText || "",
         sentenceBefore: qdata.sentenceBefore,
         sentenceAfter: qdata.sentenceAfter,
         contextHeader: qdata.contextHeader,
         // Notice: referenceBox is attached at Group level to avoid duplicate rendering inside individual question cards
-        referenceBox: undefined,
         groupPrompt: qdata.groupPrompt,
         options: (qdata.options && qdata.options.length > 0) ? qdata.options : defaultOptions,
         tableContext: qdata.tableContext,

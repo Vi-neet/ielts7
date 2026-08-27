@@ -14,36 +14,24 @@ export default function GroupContextBanner({ group }: GroupContextBannerProps) {
 
   return (
     <div className="bg-white rounded-2xl border border-forest-ink/15 p-5 shadow-sm space-y-4">
-      {/* Group Title & Passage Indicator */}
-      <div className="flex items-center justify-between border-b border-forest-ink/10 pb-3">
-        <div className="flex items-center gap-2.5">
-          <div className="w-8 h-8 rounded-lg bg-forest-ink/5 border border-forest-ink/10 flex items-center justify-center shrink-0">
-            <BookOpen size={16} className="text-forest-ink" />
-          </div>
-          <div>
-            <h3 className="text-base font-extrabold font-bricolage text-forest-ink">
-              {group.title}
-            </h3>
-            <p className="text-[11px] font-mono tracking-wider text-forest-ink/50 uppercase">
-              Passage {group.passageNumber} Context
-            </p>
-          </div>
-        </div>
+      {/* Instructions & Word Limit Requirement */}
+      <div className="space-y-3">
+        {group.instructions && (
+          <p className="text-sm font-medium text-forest-ink/80 leading-relaxed">
+            {group.instructions}
+          </p>
+        )}
 
         {group.wordLimit && (
-          <span className="px-3 py-1 rounded-xl text-xs font-semibold bg-amber-50 text-amber-900 border border-amber-200">
-            {group.wordLimit}
-          </span>
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl text-xs font-bold font-mono bg-amber-500/10 text-amber-950 border border-amber-500/20 shadow-2xs">
+            <span className="w-2 h-2 rounded-full bg-amber-600 animate-pulse shrink-0" />
+            <span>Requirement: {group.wordLimit}</span>
+          </div>
         )}
       </div>
 
-      {/* Instructions */}
-      <p className="text-sm font-medium text-forest-ink/80 leading-relaxed">
-        {group.instructions}
-      </p>
-
       {/* Reference Box (Headings / Features / Word Bank) if present */}
-      {group.referenceBox && (
+      {group.referenceBox && !group.type?.includes("heading") && (
         <div className="mt-3 rounded-xl border border-forest-ink/15 bg-cream-paper overflow-hidden">
           <button
             type="button"
