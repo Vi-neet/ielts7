@@ -19,7 +19,6 @@ import {
   XCircle,
   AlertTriangle,
   RotateCcw,
-  Sparkles,
   Loader2,
   ClipboardList,
 } from "lucide-react";

@@ -2,7 +2,7 @@
 
 import React from "react";
 import { VirtualQuestion, VirtualQuestionGroup } from "@/lib/types/testEngine";
-import { CheckCircle2, XCircle, Sparkles, ArrowLeft, ArrowRight, Bookmark } from "lucide-react";
+import { CheckCircle2, Layers, Bookmark, ArrowLeft, ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import SingleQuestionRenderer from "./SingleQuestionRenderer";
 import MultiChoiceRenderer from "./MultiChoiceRenderer";
@@ -62,25 +62,22 @@ export default function GroupQuestionWorkspace({
 
   return (
     <div className="space-y-6 max-w-3xl mx-auto pb-16">
-      {/* 1. Group Header & Instructions Banner (docs/DESIGN.md) */}
+      {/* 1. Group Header & Instructions Banner (Clean & Non-Redundant) */}
       <div className="bg-white rounded-3xl border border-forest-ink/15 p-6 shadow-sm space-y-4">
         <div className="flex flex-wrap items-center justify-between gap-3 border-b border-forest-ink/10 pb-4">
           <div className="flex items-center gap-3">
-            <span className="h-10 px-3.5 rounded-2xl bg-forest-ink text-white font-extrabold font-bricolage text-base flex items-center justify-center shadow-xs shrink-0">
+            <span className="h-10 px-4 rounded-2xl bg-forest-ink text-white font-extrabold font-bricolage text-base flex items-center justify-center shadow-xs shrink-0">
               Questions {startNum}–{endNum}
             </span>
             <div>
-              <p className="text-[11px] font-mono tracking-wider text-forest-ink/50 uppercase">
-                Section Group • Questions {startNum} to {endNum} of {totalQuestions}
+              <p className="text-xs font-mono font-bold tracking-wider text-forest-ink/60 uppercase">
+                Passage {group.passageNumber} • {qNums.length} Questions
               </p>
-              <h3 className="text-base font-extrabold font-bricolage text-forest-ink leading-tight">
-                {group.title}
-              </h3>
             </div>
           </div>
 
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-forest-ink/5 border border-forest-ink/10 text-xs font-mono font-bold text-forest-ink">
-            <Sparkles size={13} className="text-forest-ink/70" /> Category View
+            <Layers size={13} className="text-forest-ink/70" /> Category View
           </div>
         </div>
 
@@ -248,7 +245,7 @@ export default function GroupQuestionWorkspace({
                 </>
               ) : (
                 <>
-                  <Sparkles size={15} className="text-highlighter-yellow" />
+                  <CheckCircle2 size={15} className="text-highlighter-yellow" />
                   Check Section Answers
                 </>
               )}
