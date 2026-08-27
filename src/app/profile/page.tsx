@@ -217,6 +217,43 @@ export default function ProfilePage() {
   const [reviewLoading, setReviewLoading] = useState(false);
   const [reviewResults, setReviewResults] = useState<GradeResult | null>(null);
 
+  // Saved Practice Sessions State
+  interface SavedSession {
+    testId: string;
+    testType: string;
+    testName: string;
+    mode: "practice" | "exam";
+    answers: Record<number, string>;
+    updatedAt: number;
+  }
+  const [savedSessions, setSavedSessions] = useState<SavedSession[]>([]);
+
+  useEffect(() => {
+    try {
+      const list: SavedSession[] = [];
+      for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i);
+        if (key && key.startsWith("ielts7_session_")) {
+          const raw = localStorage.getItem(key);
+          if (raw) {
+            const data = JSON.parse(raw);
+            if (data && data.mode === "practice" && data.answers && Object.keys(data.answers).length > 0) {
+              list.push(data);
+            }
+          }
+        }
+      }
+      setSavedSessions(list.sort((a, b) => (b.updatedAt || 0) - (a.updatedAt || 0)));
+    } catch {
+      // Ignore storage errors
+    }
+  }, []);
+
+  const handleDiscardSession = (testId: string) => {
+    localStorage.removeItem(`ielts7_session_${testId}`);
+    setSavedSessions((prev) => prev.filter((s) => s.testId !== testId));
+  };
+
   // Authenticated route protection
   useEffect(() => {
     if (!authLoading && !user) {
@@ -583,6 +620,78 @@ export default function ProfilePage() {
                 </span>
               </div>
             </div>
+
+            {/* Saved Practice Sessions (Resume Later) */}
+            {savedSessions.length > 0 && (
+              <div className="bg-white rounded-2xl p-6 border border-forest-ink/15 shadow-sm space-y-4 animate-in fade-in duration-200">
+                <div className="flex items-center justify-between border-b border-forest-ink/10 pb-4">
+                  <div className="flex items-center gap-2.5">
+                    <div className="w-10 h-10 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-700 shrink-0">
+                      <Clock size={20} />
+                    </div>
+                    <div>
+                      <h3 className="text-base font-extrabold font-bricolage text-forest-ink">
+                        Saved Practice Sessions ({savedSessions.length})
+                      </h3>
+                      <p className="text-xs text-forest-ink/60 font-inter">
+                        Resume your practice tests anytime right where you left off.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {savedSessions.map((session) => {
+                    const answered = Object.values(session.answers || {}).filter((v) => v?.trim()).length;
+                    return (
+                      <div
+                        key={session.testId}
+                        className="p-4 rounded-2xl bg-cream-paper/70 border border-forest-ink/10 hover:border-forest-ink/20 transition-all flex flex-col justify-between space-y-3"
+                      >
+                        <div className="flex items-start justify-between gap-3">
+                          <div>
+                            <span className="px-2.5 py-0.5 rounded-full bg-forest-ink/10 text-forest-ink text-[10px] font-mono font-bold uppercase tracking-wider">
+                              {formatTestType(session.testType)}
+                            </span>
+                            <h4 className="text-sm font-bold font-bricolage text-forest-ink mt-1.5">
+                              {session.testName || formatTestName(session.testId)}
+                            </h4>
+                            <p className="text-xs font-mono text-forest-ink/60 mt-0.5">
+                              {answered} / 40 Questions Answered
+                            </p>
+                          </div>
+
+                          <button
+                            type="button"
+                            onClick={() => handleDiscardSession(session.testId)}
+                            className="p-1.5 rounded-xl text-forest-ink/40 hover:text-rose-600 hover:bg-rose-50 transition-colors"
+                            title="Discard practice draft"
+                          >
+                            <X size={16} />
+                          </button>
+                        </div>
+
+                        <div className="pt-2 border-t border-forest-ink/10 flex items-center justify-between">
+                          <span className="text-[11px] font-mono text-forest-ink/50">
+                            {new Date(session.updatedAt).toLocaleDateString(undefined, {
+                              month: "short",
+                              day: "numeric",
+                            })}
+                          </span>
+
+                          <Link
+                            href={`/tests/${session.testType}/${session.testId}`}
+                            className="px-4 py-1.5 rounded-xl bg-forest-ink hover:bg-forest-ink/90 text-white text-xs font-mono font-bold flex items-center gap-1.5 shadow-2xs transition-all active:scale-95"
+                          >
+                            Resume Practice <ArrowRight size={13} />
+                          </Link>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
 
             {/* Empty State vs Dashboard Contents */}
             {!hasAttempts ? (

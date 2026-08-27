@@ -15,6 +15,7 @@ interface TestHeaderProps {
   totalQuestions: number;
   onSubmitClick?: () => void;
   onRestartClick?: () => void;
+  onBackClick?: () => void;
 }
 
 const typeLabel: Record<string, string> = {
@@ -58,6 +59,7 @@ export default function TestHeader({
   totalQuestions,
   onSubmitClick,
   onRestartClick,
+  onBackClick,
 }: TestHeaderProps) {
   const typeDisplay = typeLabel[testType] || testType.replace(/_/g, " ");
   const isListening = testType === "listening";
@@ -70,14 +72,26 @@ export default function TestHeader({
 
         {/* Left: Back + Test identity */}
         <div className="flex items-center gap-3 min-w-0">
-          <Link
-            href={testDirHref}
-            className="shrink-0 flex items-center gap-1.5 text-xs font-inter text-forest-ink/50 hover:text-forest-ink transition-colors"
-            aria-label="Back to all tests"
-          >
-            <ArrowLeft size={14} />
-            <span className="hidden sm:inline">Tests</span>
-          </Link>
+          {onBackClick ? (
+            <button
+              type="button"
+              onClick={onBackClick}
+              className="shrink-0 flex items-center gap-1.5 text-xs font-inter text-forest-ink hover:text-forest-ink transition-colors font-semibold bg-forest-ink/5 hover:bg-forest-ink/10 px-2.5 py-1 rounded-lg border border-forest-ink/15"
+              aria-label="Back to all tests"
+            >
+              <ArrowLeft size={14} />
+              <span>Back</span>
+            </button>
+          ) : (
+            <Link
+              href={testDirHref}
+              className="shrink-0 flex items-center gap-1.5 text-xs font-inter text-forest-ink/50 hover:text-forest-ink transition-colors"
+              aria-label="Back to all tests"
+            >
+              <ArrowLeft size={14} />
+              <span className="hidden sm:inline">Tests</span>
+            </Link>
+          )}
 
           <span className="text-pencil-gray/40 hidden sm:inline" aria-hidden>·</span>
 

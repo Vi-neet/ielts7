@@ -9,6 +9,7 @@ interface SingleQuestionRendererProps {
   value: string;
   onChange: (val: string) => void;
   disabled?: boolean;
+  hidePrompt?: boolean;
 }
 
 export default function SingleQuestionRenderer({
@@ -16,9 +17,11 @@ export default function SingleQuestionRenderer({
   value,
   onChange,
   disabled = false,
+  hidePrompt = false,
 }: SingleQuestionRendererProps) {
   const options = question.options || [];
-  const refBox = question.referenceBox;
+  const isHeading = question.type?.includes("heading");
+  const refBox = isHeading ? undefined : question.referenceBox;
 
   return (
     <div className="space-y-4">
@@ -42,7 +45,7 @@ export default function SingleQuestionRenderer({
       )}
 
       {/* Main Question Prompt */}
-      {question.promptText && (
+      {question.promptText && !hidePrompt && (
         <p className="text-base font-semibold text-forest-ink">
           {question.promptText}
         </p>

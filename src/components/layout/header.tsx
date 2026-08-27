@@ -59,6 +59,7 @@ const Header = () => {
 
   const navItems = [
     { name: "Home", path: "/" },
+    { name: "Practice", path: "/tests" },
     { name: "About Us", path: "/about" },
     { name: "Writing Review", path: "/writing-review" },
     { name: "Free Resources", path: "/resources" },

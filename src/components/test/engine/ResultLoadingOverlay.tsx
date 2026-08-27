@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Loader2, Sparkles, CheckCircle2 } from "lucide-react";
+import { Loader2, CheckCircle2 } from "lucide-react";
 
 interface ResultLoadingOverlayProps {
   title?: string;
@@ -42,7 +42,7 @@ export default function ResultLoadingOverlay({
         {/* Header */}
         <div className="space-y-2">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-forest-ink/5 border border-forest-ink/10 text-[11px] font-mono font-bold uppercase tracking-wider text-forest-ink">
-            <Sparkles size={13} className="text-forest-ink/70" /> IELTS 7+ Evaluator
+            <CheckCircle2 size={13} className="text-forest-ink/70" /> IELTS 7+ Evaluator
           </div>
           <h2 className="text-2xl font-extrabold font-bricolage text-forest-ink leading-tight">
             {title}

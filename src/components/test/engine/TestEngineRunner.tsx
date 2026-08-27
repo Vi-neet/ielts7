@@ -12,16 +12,16 @@ import { VirtualTestIndex, TestEngineMode } from "@/lib/types/testEngine";
 import TestHeader from "../TestHeader";
 import QuestionNavigator from "../QuestionNavigator";
 import PassageViewer from "./PassageViewer";
-import QuestionWorkspace from "./QuestionWorkspace";
+import QuestionWorkspace, { ViewMode } from "./QuestionWorkspace";
 import { Button } from "@/components/ui/button";
 import {
   CheckCircle2,
   XCircle,
   AlertTriangle,
   RotateCcw,
-  Sparkles,
   Loader2,
   ClipboardList,
+  Save,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -93,6 +93,7 @@ export default function TestEngineRunner({
   const [checkedQuestions, setCheckedQuestions] = useState<
     Record<number, { isCorrect: boolean; correctAnswer: string }>
   >({});
+  const [viewMode, setViewMode] = useState<ViewMode>("group");
 
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
@@ -101,6 +102,8 @@ export default function TestEngineRunner({
   const [dbError, setDbError] = useState<string | null>(null);
   const [showSubmitConfirmModal, setShowSubmitConfirmModal] = useState(false);
   const [showRestartConfirmModal, setShowRestartConfirmModal] = useState(false);
+  const [showExitConfirmModal, setShowExitConfirmModal] = useState(false);
+  const [redirectingMessage, setRedirectingMessage] = useState<string | null>(null);
   const [resultsTab, setResultsTab] = useState<"summary" | "review">("summary");
   const [reviewFilter, setReviewFilter] = useState<"all" | "correct" | "incorrect" | "unanswered">("all");
 
@@ -115,6 +118,86 @@ export default function TestEngineRunner({
   const autoSubmitCalledRef = useRef(false);
 
   const router = useRouter();
+
+  const sessionKey = `ielts7_session_${testId}`;
+
+  // Restore session state on initial load if present
+  useEffect(() => {
+    try {
+      const cached = localStorage.getItem(sessionKey);
+      if (cached) {
+        const data = JSON.parse(cached);
+        if (data && Date.now() - (data.updatedAt || 0) < 24 * 60 * 60 * 1000) {
+          if (data.answers && Object.keys(data.answers).length > 0) {
+            setAnswers(data.answers);
+          }
+          if (data.bookmarks) setBookmarks(data.bookmarks);
+          if (data.checkedQuestions) setCheckedQuestions(data.checkedQuestions);
+          if (data.currentQuestion) setCurrentQuestion(data.currentQuestion);
+          if (mode === "exam" && typeof data.timeRemaining === "number" && data.timeRemaining > 0) {
+            setTimeRemaining(data.timeRemaining);
+          }
+        }
+      }
+    } catch {
+      // Storage read error ignored
+    }
+  }, [sessionKey, mode]);
+
+  // Persist active session state to localStorage
+  useEffect(() => {
+    if (isSubmitted) return;
+    try {
+      if (Object.keys(answers).length > 0 || Object.keys(bookmarks).length > 0) {
+        const payload = {
+          testId,
+          testType,
+          testName,
+          mode,
+          answers,
+          bookmarks,
+          checkedQuestions,
+          currentQuestion,
+          timeRemaining,
+          updatedAt: Date.now(),
+        };
+        localStorage.setItem(sessionKey, JSON.stringify(payload));
+      }
+    } catch {
+      // Storage quota error ignored
+    }
+  }, [testId, testType, testName, mode, answers, bookmarks, checkedQuestions, currentQuestion, timeRemaining, isSubmitted, sessionKey]);
+
+  // Warn user on browser reload / tab close if answers exist
+  useEffect(() => {
+    const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+      if (!isSubmitted && Object.keys(answers).length > 0) {
+        e.preventDefault();
+        e.returnValue = "";
+      }
+    };
+    window.addEventListener("beforeunload", handleBeforeUnload);
+    return () => window.removeEventListener("beforeunload", handleBeforeUnload);
+  }, [isSubmitted, answers]);
+
+  const handleExitTest = (savePractice: boolean = false) => {
+    if (!savePractice) {
+      localStorage.removeItem(sessionKey);
+    }
+    setShowExitConfirmModal(false);
+
+    if (savePractice && mode === "practice") {
+      setRedirectingMessage("Saving progress & redirecting to profile...");
+      setTimeout(() => {
+        router.push("/profile");
+      }, 100);
+    } else {
+      setRedirectingMessage("Redirecting to test catalog...");
+      setTimeout(() => {
+        router.push(`/tests?module=${testType}`);
+      }, 100);
+    }
+  };
 
   const questionNumbers = Array.from({ length: 40 }, (_, i) => i + 1);
   const answeredCount = questionNumbers.filter((n) => answers[n]?.trim()).length;
@@ -210,6 +293,7 @@ export default function TestEngineRunner({
   };
 
   const handleRestartTest = () => {
+    localStorage.removeItem(sessionKey);
     setAnswers({});
     setCheckedQuestions({});
     setBookmarks({});
@@ -227,6 +311,7 @@ export default function TestEngineRunner({
       return;
     }
 
+    localStorage.removeItem(sessionKey);
     setShowSubmitConfirmModal(false);
     setSubmitting(true);
 
@@ -327,15 +412,104 @@ export default function TestEngineRunner({
       testIndex.groups[0]
     : testIndex.groups[0];
 
+  const activeGroupQuestions = activeGroup
+    ? Array.from(
+        { length: activeGroup.range[1] - activeGroup.range[0] + 1 },
+        (_, i) => activeGroup.range[0] + i
+      ).map((qNum) => testIndex.questions[qNum]).filter(Boolean)
+    : [activeQuestion];
+
+  const currentGroupIndex = testIndex.groups.findIndex((g) => g.groupId === activeGroup?.groupId);
+
+  const handleCheckGroupAnswers = (qNums: number[]) => {
+    const updates: Record<number, { isCorrect: boolean; correctAnswer: string }> = {};
+    for (const qNum of qNums) {
+      const qObj = testIndex.questions[qNum];
+      const isMulti = qObj?.type === "multiple_choice_multi";
+      const qNumsToCheck = isMulti && qObj?.multiSelectQuestionNumbers
+        ? qObj.multiSelectQuestionNumbers
+        : [qNum];
+
+      const allQuestionsInMultiCorrect = qNumsToCheck.every((n) => {
+        const studentAns = (answers[n] || "").trim().toLowerCase();
+        const acceptable = getAcceptableAnswers(answerKey[n]);
+        return studentAns !== "" && acceptable.includes(studentAns);
+      });
+
+      const studentAns = (answers[qNum] || "").trim().toLowerCase();
+      const correctVal = answerKey[qNum];
+      const acceptable = getAcceptableAnswers(correctVal);
+      const isCorrect = isMulti
+        ? allQuestionsInMultiCorrect
+        : studentAns !== "" && acceptable.includes(studentAns);
+
+      updates[qNum] = {
+        isCorrect,
+        correctAnswer: formatAnswer(correctVal),
+      };
+    }
+
+    setCheckedQuestions((prev) => ({
+      ...prev,
+      ...updates,
+    }));
+  };
+
+  const handleNextGroup = () => {
+    if (currentGroupIndex < testIndex.groups.length - 1) {
+      const nextGroup = testIndex.groups[currentGroupIndex + 1];
+      setCurrentQuestion(nextGroup.range[0]);
+    }
+  };
+
+  const handlePreviousGroup = () => {
+    if (currentGroupIndex > 0) {
+      const prevGroup = testIndex.groups[currentGroupIndex - 1];
+      setCurrentQuestion(prevGroup.range[0]);
+    }
+  };
+
   const activeMaxNum = activeQuestion?.type === "multiple_choice_multi" && activeQuestion.multiSelectQuestionNumbers
     ? Math.max(...activeQuestion.multiSelectQuestionNumbers)
     : currentQuestion;
+
+  // Split pane resizing state
+  const [passageWidthPercent, setPassageWidthPercent] = useState<number>(45);
+  const [isResizing, setIsResizing] = useState<boolean>(false);
+
+  const handleMouseDownResizer = (e: React.MouseEvent) => {
+    e.preventDefault();
+    setIsResizing(true);
+  };
+
+  useEffect(() => {
+    if (!isResizing) return;
+
+    const handleMouseMove = (e: MouseEvent) => {
+      const containerWidth = window.innerWidth;
+      if (containerWidth <= 768) return;
+      const newPercent = (e.clientX / containerWidth) * 100;
+      const clamped = Math.min(Math.max(newPercent, 25), 65);
+      setPassageWidthPercent(clamped);
+    };
+
+    const handleMouseUp = () => {
+      setIsResizing(false);
+    };
+
+    window.addEventListener("mousemove", handleMouseMove);
+    window.addEventListener("mouseup", handleMouseUp);
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("mouseup", handleMouseUp);
+    };
+  }, [isResizing]);
 
   const canNext = activeMaxNum < 40;
   const canPrevious = currentQuestion > 1;
 
   return (
-    <div className="min-h-screen flex flex-col bg-cream-paper">
+    <div className="fixed inset-0 z-50 flex flex-col bg-cream-paper overflow-hidden select-none animate-in fade-in duration-200">
       {/* Test Header */}
       <TestHeader
         testName={testName}
@@ -346,38 +520,71 @@ export default function TestEngineRunner({
         timeRemaining={timeRemaining}
         onSubmitClick={() => setShowSubmitConfirmModal(true)}
         onRestartClick={() => setShowRestartConfirmModal(true)}
+        onBackClick={() => setShowExitConfirmModal(true)}
       />
 
-      {/* Main Workspace Layout */}
-      <main className="flex-1 container mx-auto max-w-7xl px-4 py-6 flex flex-col md:flex-row gap-6">
+      {/* Main Workspace Layout (Full-Height Distraction-Free Canvas) */}
+      <main className="flex-1 w-full px-4 py-4 flex flex-col md:flex-row items-stretch gap-4 overflow-hidden select-text">
         {/* Left: Collapsible Passage Viewer */}
-        <PassageViewer
-          passages={passages}
-          testType={testType}
-          passageCollapsed={passageCollapsed}
-          onToggleCollapse={() => setPassageCollapsed(!passageCollapsed)}
-          activePassageNumber={activeQuestion?.passageNumber || 1}
-        />
+        <div
+          style={{
+            width: passageCollapsed ? undefined : `${passageWidthPercent}%`,
+          }}
+          className={cn(
+            "hidden md:flex flex-col h-full shrink-0 transition-all duration-150",
+            passageCollapsed ? "w-14" : ""
+          )}
+        >
+          <PassageViewer
+            passages={passages}
+            testType={testType}
+            passageCollapsed={passageCollapsed}
+            onToggleCollapse={() => setPassageCollapsed(!passageCollapsed)}
+            activePassageNumber={activeQuestion?.passageNumber || 1}
+          />
+        </div>
 
-        {/* Middle: Question Workspace (One Question at a Time) */}
-        <div className="flex-1">
+        {/* Vertical Split-Pane Resizer Handle */}
+        {!passageCollapsed && (
+          <div
+            onMouseDown={handleMouseDownResizer}
+            className={cn(
+              "hidden md:flex items-center justify-center w-3 hover:w-3 cursor-col-resize group shrink-0 transition-colors py-8",
+              isResizing ? "bg-forest-ink/20 rounded-full" : "hover:bg-forest-ink/10 rounded-full"
+            )}
+            title="Drag to resize passage and question panels"
+          >
+            <div className="w-1 h-8 rounded-full bg-forest-ink/30 group-hover:bg-forest-ink/60 transition-colors" />
+          </div>
+        )}
+
+        {/* Middle: Question Workspace (Scrollable Panel) */}
+        <div className="flex-1 h-full overflow-y-auto pr-1">
           {activeQuestion && activeGroup ? (
             <QuestionWorkspace
               question={activeQuestion}
               group={activeGroup}
+              groupQuestions={activeGroupQuestions}
               totalQuestions={40}
               answers={answers}
-              isBookmarked={Boolean(bookmarks[currentQuestion])}
-              checkedState={checkedQuestions[currentQuestion]}
+              bookmarks={bookmarks}
+              checkedQuestions={checkedQuestions}
               mode={mode}
+              viewMode={viewMode}
+              onToggleViewMode={setViewMode}
               onSetAnswer={setAnswer}
               onMultiAnswerChange={handleMultiAnswerChange}
               onToggleBookmark={toggleBookmark}
               onCheckAnswer={checkSingleAnswer}
+              onCheckGroupAnswers={handleCheckGroupAnswers}
               onPrevious={handlePreviousQuestion}
               onNext={handleNextQuestion}
+              onPreviousGroup={handlePreviousGroup}
+              onNextGroup={handleNextGroup}
               canPrevious={canPrevious}
               canNext={canNext}
+              canPreviousGroup={currentGroupIndex > 0}
+              canNextGroup={currentGroupIndex < testIndex.groups.length - 1}
             />
           ) : (
             <div className="p-8 text-center text-forest-ink/60">
@@ -386,8 +593,8 @@ export default function TestEngineRunner({
           )}
         </div>
 
-        {/* Right: Persistent Question Navigator */}
-        <div className={cn("hidden lg:block shrink-0 transition-all duration-300", navigatorCollapsed ? "w-60" : "w-72")}>
+        {/* Right: Persistent Question Navigator (Scrollable Panel) */}
+        <div className={cn("hidden lg:block h-full shrink-0 overflow-y-auto transition-all duration-300", navigatorCollapsed ? "w-60" : "w-72")}>
           <QuestionNavigator
             testType={testType}
             questionNumbers={questionNumbers}
@@ -488,12 +695,85 @@ export default function TestEngineRunner({
         </div>
       )}
 
+      {/* Confirmation Modal before Exit */}
+      {showExitConfirmModal && (
+        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-white rounded-3xl p-6 max-w-md w-full border border-forest-ink/15 shadow-2xl space-y-4 animate-in zoom-in-95 duration-150">
+            <div className="flex items-center gap-3">
+              <div className="w-11 h-11 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center shrink-0">
+                <AlertTriangle size={22} className="text-amber-600" />
+              </div>
+              <div>
+                <h3 className="text-lg font-extrabold font-bricolage text-forest-ink">
+                  {mode === "exam" ? "Exit Exam Session?" : "Leave Practice Session?"}
+                </h3>
+                <p className="text-xs font-mono text-amber-800 uppercase tracking-wider font-semibold">
+                  {mode === "exam" ? "Progress will be lost" : "Save or Discard Progress"}
+                </p>
+              </div>
+            </div>
+
+            <p className="text-sm text-forest-ink/80 leading-relaxed font-inter">
+              {mode === "exam"
+                ? `You have answered ${answeredCount} of 40 questions. Leaving the exam now will cancel your timed session and your unsubmitted answers will be lost.`
+                : `You have answered ${answeredCount} of 40 questions. You can save your progress to your profile and resume anytime, or exit without saving.`}
+            </p>
+
+            <div className="flex flex-col gap-2.5 pt-2">
+              {mode === "practice" && (
+                <Button
+                  type="button"
+                  onClick={() => handleExitTest(true)}
+                  className="w-full h-11 bg-forest-ink hover:bg-forest-ink/90 text-white font-semibold shadow-2xs flex items-center justify-center gap-2"
+                >
+                  <Save size={16} /> Save Progress & Go to Profile
+                </Button>
+              )}
+
+              <Button
+                type="button"
+                onClick={() => handleExitTest(false)}
+                className="w-full h-10 bg-rose-600 hover:bg-rose-700 text-white font-semibold shadow-2xs"
+              >
+                {mode === "exam" ? "Exit & Cancel Exam" : "Exit Without Saving"}
+              </Button>
+
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => setShowExitConfirmModal(false)}
+                className="w-full h-10 border-forest-ink/20 font-semibold"
+              >
+                Continue {mode === "exam" ? "Exam" : "Practice"}
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Submitting Result Loading Overlay */}
       {submitting && (
         <ResultLoadingOverlay
           title="Compiling & Grading Results"
           subtitle="Please wait while we calculate your band score and generate your detailed performance report..."
         />
+      )}
+
+      {/* Redirecting / Saving Progress Buffering Overlay */}
+      {redirectingMessage && (
+        <div className="fixed inset-0 z-50 bg-cream-paper/95 backdrop-blur-md flex flex-col items-center justify-center p-8 animate-in fade-in duration-200">
+          <div className="bg-white rounded-3xl p-8 max-w-sm w-full border border-forest-ink/15 shadow-2xl text-center space-y-4">
+            <div className="w-12 h-12 border-4 border-forest-ink/20 border-t-forest-ink rounded-full animate-spin mx-auto" />
+            <div>
+              <h3 className="text-lg font-extrabold font-bricolage text-forest-ink">
+                Please Wait...
+              </h3>
+              <p className="text-xs font-mono font-bold text-forest-ink/75 mt-1">
+                {redirectingMessage}
+              </p>
+            </div>
+          </div>
+        </div>
       )}
     </div>
   );
