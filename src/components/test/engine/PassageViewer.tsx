@@ -39,11 +39,6 @@ export default function PassageViewer({
   const audioRef = useRef<HTMLAudioElement>(null);
   const [playbackSpeed, setPlaybackSpeed] = useState<number>(1.0);
 
-  // Passage Search State
-  const [showSearch, setShowSearch] = useState(false);
-  const [searchQuery, setSearchQuery] = useState("");
-  const [matchCount, setMatchCount] = useState(0);
-
   // Text Selection Highlighting State
   const passageContainerRef = useRef<HTMLDivElement>(null);
   const [hasSelection, setHasSelection] = useState(false);
@@ -57,34 +52,6 @@ export default function PassageViewer({
         passages.endsWith(".ogg") ||
         passages.endsWith(".wav") ||
         passages.includes("/sounds/")));
-
-  // Highlight search matches in HTML string while preserving HTML tags
-  const getHighlightedPassageHtml = (htmlContent: string, query: string) => {
-    if (!query || !query.trim()) return htmlContent;
-
-    const escapedQuery = query.trim().replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-    const regex = new RegExp(`(${escapedQuery})`, "gi");
-
-    return htmlContent.replace(/(<[^>]+>)|([^<]+)/g, (match, isTag, textContent) => {
-      if (isTag) return isTag;
-      return textContent.replace(
-        regex,
-        '<mark class="bg-amber-300 text-amber-950 font-bold px-0.5 rounded search-match">$1</mark>'
-      );
-    });
-  };
-
-  useEffect(() => {
-    if (!searchQuery.trim() || !passageContainerRef.current) {
-      setMatchCount(0);
-      return;
-    }
-    const matches = passageContainerRef.current.querySelectorAll("mark.search-match");
-    setMatchCount(matches.length);
-    if (matches.length > 0) {
-      matches[0].scrollIntoView({ behavior: "smooth", block: "center" });
-    }
-  }, [searchQuery]);
 
   // Handle Audio Speed Change
   const handleSpeedChange = (speed: number) => {
@@ -116,31 +83,37 @@ export default function PassageViewer({
 
   const applyHighlight = () => {
     const sel = window.getSelection();
-    if (!sel || sel.rangeCount === 0) return;
-    const range = sel.getRangeAt(0);
-
-    const mark = document.createElement("mark");
-    mark.className =
-      "bg-highlighter-yellow/60 text-forest-ink font-semibold rounded px-0.5 shadow-2xs transition-colors";
-    mark.title = "Highlighted text";
+    if (!sel || sel.rangeCount === 0 || sel.isCollapsed) return;
 
     try {
-      range.surroundContents(mark);
+      const range = sel.getRangeAt(0);
+      const selectedText = sel.toString();
+      if (!selectedText.trim()) return;
+
+      const mark = document.createElement("mark");
+      mark.className =
+        "bg-highlighter-yellow/90 text-forest-ink font-semibold rounded px-0.5 shadow-2xs user-highlight";
+
+      if (range.startContainer === range.endContainer && range.startContainer.nodeType === Node.TEXT_NODE) {
+        range.surroundContents(mark);
+      } else {
+        const contents = range.extractContents();
+        mark.appendChild(contents);
+        range.insertNode(mark);
+      }
+
       setHighlightCount((prev) => prev + 1);
       sel.removeAllRanges();
       setHasSelection(false);
-    } catch {
-      // Handle cross-node selections gracefully
-      const highlightedText = sel.toString();
-      if (highlightedText && passageContainerRef.current) {
-        setHasSelection(false);
-      }
+    } catch (err) {
+      console.warn("Could not highlight selection:", err);
+      setHasSelection(false);
     }
   };
 
   const clearHighlights = () => {
     if (!passageContainerRef.current) return;
-    const marks = passageContainerRef.current.querySelectorAll("mark");
+    const marks = passageContainerRef.current.querySelectorAll("mark.user-highlight, mark:not(.search-match)");
     marks.forEach((mark) => {
       const parent = mark.parentNode;
       if (parent) {
@@ -240,20 +213,25 @@ export default function PassageViewer({
     }
 
     if (typeof passages === "string") {
-      const finalHtml = searchQuery.trim()
-        ? getHighlightedPassageHtml(passages, searchQuery)
-        : passages;
-
       return (
         <div
           ref={passageContainerRef}
           onMouseUp={handleMouseUpPassage}
-          dangerouslySetInnerHTML={{ __html: finalHtml }}
+          className="passage-content-body font-inter text-forest-ink text-sm md:text-base leading-relaxed space-y-4 select-text"
+          dangerouslySetInnerHTML={{ __html: passages }}
         />
       );
     }
 
-    return passages;
+    return (
+      <div
+        ref={passageContainerRef}
+        onMouseUp={handleMouseUpPassage}
+        className="passage-content-body font-inter text-forest-ink text-sm md:text-base leading-relaxed space-y-4 select-text"
+      >
+        {passages}
+      </div>
+    );
   };
 
   return (
@@ -349,20 +327,6 @@ export default function PassageViewer({
                         <X size={12} /> Clear ({highlightCount})
                       </button>
                     )}
-
-                    {/* Find in Passage Toggle */}
-                    <button
-                      type="button"
-                      onClick={() => setShowSearch(!showSearch)}
-                      className={cn(
-                        "px-3 py-1 rounded-full text-xs font-mono font-bold border transition-colors flex items-center gap-1.5",
-                        showSearch
-                          ? "bg-forest-ink text-white border-forest-ink"
-                          : "bg-white text-forest-ink border-forest-ink/15 hover:bg-forest-ink/5"
-                      )}
-                    >
-                      <Search size={13} /> Search
-                    </button>
                   </>
                 )}
 
@@ -378,38 +342,6 @@ export default function PassageViewer({
                 </Button>
               </div>
             </div>
-
-            {/* Find in Passage Search Sub-bar */}
-            {!isAudioPassage && showSearch && (
-              <div className="px-5 py-2.5 bg-amber-500/10 border-b border-forest-ink/10 flex items-center justify-between gap-3 shrink-0 animate-in slide-in-from-top-1 duration-150">
-                <div className="flex items-center gap-2 flex-1">
-                  <Search size={14} className="text-amber-950 shrink-0" />
-                  <input
-                    type="text"
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    placeholder="Type word to find in passage..."
-                    className="w-full bg-white px-3 py-1 rounded-xl text-xs font-inter border border-amber-900/20 focus:outline-none focus:ring-1 focus:ring-amber-800"
-                    autoFocus
-                  />
-                </div>
-
-                {searchQuery.trim() && (
-                  <div className="flex items-center gap-2 shrink-0">
-                    <span className="text-xs font-mono font-bold text-amber-950 bg-amber-200/80 px-2 py-0.5 rounded-lg border border-amber-400/50">
-                      {matchCount} {matchCount === 1 ? "match" : "matches"}
-                    </span>
-                    <button
-                      type="button"
-                      onClick={() => setSearchQuery("")}
-                      className="text-xs font-mono font-bold text-amber-950 hover:underline shrink-0"
-                    >
-                      Clear
-                    </button>
-                  </div>
-                )}
-              </div>
-            )}
 
             {/* Passage Scrollable Content Body */}
             <div className="p-6 overflow-y-auto flex-1 space-y-4 font-inter text-forest-ink leading-relaxed text-sm">

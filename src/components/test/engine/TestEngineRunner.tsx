@@ -103,6 +103,7 @@ export default function TestEngineRunner({
   const [showSubmitConfirmModal, setShowSubmitConfirmModal] = useState(false);
   const [showRestartConfirmModal, setShowRestartConfirmModal] = useState(false);
   const [showExitConfirmModal, setShowExitConfirmModal] = useState(false);
+  const [redirectingMessage, setRedirectingMessage] = useState<string | null>(null);
   const [resultsTab, setResultsTab] = useState<"summary" | "review">("summary");
   const [reviewFilter, setReviewFilter] = useState<"all" | "correct" | "incorrect" | "unanswered">("all");
 
@@ -184,10 +185,17 @@ export default function TestEngineRunner({
       localStorage.removeItem(sessionKey);
     }
     setShowExitConfirmModal(false);
+
     if (savePractice && mode === "practice") {
-      router.push("/profile");
+      setRedirectingMessage("Saving progress & redirecting to profile...");
+      setTimeout(() => {
+        router.push("/profile");
+      }, 100);
     } else {
-      router.push(`/tests/${testType}`);
+      setRedirectingMessage("Redirecting to test catalog...");
+      setTimeout(() => {
+        router.push(`/tests?module=${testType}`);
+      }, 100);
     }
   };
 
@@ -749,6 +757,23 @@ export default function TestEngineRunner({
           title="Compiling & Grading Results"
           subtitle="Please wait while we calculate your band score and generate your detailed performance report..."
         />
+      )}
+
+      {/* Redirecting / Saving Progress Buffering Overlay */}
+      {redirectingMessage && (
+        <div className="fixed inset-0 z-50 bg-cream-paper/95 backdrop-blur-md flex flex-col items-center justify-center p-8 animate-in fade-in duration-200">
+          <div className="bg-white rounded-3xl p-8 max-w-sm w-full border border-forest-ink/15 shadow-2xl text-center space-y-4">
+            <div className="w-12 h-12 border-4 border-forest-ink/20 border-t-forest-ink rounded-full animate-spin mx-auto" />
+            <div>
+              <h3 className="text-lg font-extrabold font-bricolage text-forest-ink">
+                Please Wait...
+              </h3>
+              <p className="text-xs font-mono font-bold text-forest-ink/75 mt-1">
+                {redirectingMessage}
+              </p>
+            </div>
+          </div>
+        </div>
       )}
     </div>
   );

@@ -134,6 +134,7 @@ export default function QuestionWorkspace({
 
       {viewMode === "group" ? (
         <GroupQuestionWorkspace
+          activeQuestionNumber={question.questionNumber}
           group={group}
           groupQuestions={groupQuestions}
           totalQuestions={totalQuestions}

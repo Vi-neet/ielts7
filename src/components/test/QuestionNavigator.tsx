@@ -55,7 +55,6 @@ export default function QuestionNavigator({
   const getBadgeStyle = (num: number) => {
     const isCurrent = num === currentQuestion;
     const isAns = Boolean(answers[num]?.trim());
-    const isBkmk = Boolean(bookmarks[num]);
     const checked = checkedQuestions[num];
 
     const isPracticeChecked =
@@ -68,30 +67,22 @@ export default function QuestionNavigator({
       "w-9 h-9 rounded-xl text-xs font-mono font-extrabold border transition-all duration-150 flex items-center justify-center relative cursor-pointer shadow-2xs";
 
     if (isCurrent) {
-      base += " ring-2 ring-forest-ink ring-offset-1 border-forest-ink font-black scale-105 z-10";
+      base += " ring-2 ring-forest-ink ring-offset-2 font-black scale-105 z-10";
     }
 
     if (isPracticeChecked) {
       if (isCorrect) {
-        return `${base} bg-emerald-100 text-emerald-900 border-emerald-500 font-extrabold`;
+        return `${base} bg-emerald-600 text-white border-emerald-700 font-extrabold`;
       }
-      return `${base} bg-rose-100 text-rose-900 border-rose-400 font-extrabold`;
-    }
-
-    if (isBkmk && isAns) {
-      return `${base} bg-emerald-600 text-white border-emerald-700`;
-    }
-
-    if (isBkmk) {
-      return `${base} bg-purple-600 text-white border-purple-700`;
+      return `${base} bg-rose-600 text-white border-rose-700 font-extrabold`;
     }
 
     if (isAns) {
-      return `${base} bg-emerald-500 text-white border-emerald-600`;
+      return `${base} bg-forest-ink text-white border-forest-ink font-extrabold`;
     }
 
     // Unanswered
-    return `${base} bg-slate-100 text-slate-700 border-slate-300 hover:bg-slate-200`;
+    return `${base} bg-white text-forest-ink/70 border-pencil-gray/40 hover:bg-forest-ink/5 hover:border-forest-ink/30 font-bold`;
   };
 
   const answeredCount = (range: [number, number]) => {
@@ -126,8 +117,8 @@ export default function QuestionNavigator({
   return (
     <div className="bg-white rounded-2xl border border-forest-ink/15 overflow-hidden shadow-sm transition-all">
       {/* Header & Legend */}
-      <div className="px-4 py-3 border-b border-forest-ink/10 bg-forest-ink/5 flex items-center justify-between">
-        <div className="flex items-center gap-2">
+      <div className="px-4 py-3 border-b border-forest-ink/10 bg-forest-ink/5 space-y-2">
+        <div className="flex items-center justify-between">
           <span className="text-[11px] font-mono font-bold uppercase tracking-widest text-forest-ink">
             Question Navigator
           </span>
@@ -143,7 +134,18 @@ export default function QuestionNavigator({
           )}
         </div>
 
-
+        {/* Official Status Legend */}
+        <div className="flex items-center justify-between text-[10px] font-mono font-bold text-forest-ink/70 pt-1 border-t border-forest-ink/10">
+          <span className="flex items-center gap-1">
+            <span className="w-2.5 h-2.5 rounded-sm bg-forest-ink inline-block" /> Answered
+          </span>
+          <span className="flex items-center gap-1">
+            <span className="w-2.5 h-2.5 rounded-sm bg-white border border-pencil-gray/40 inline-block" /> Blank
+          </span>
+          <span className="flex items-center gap-1">
+            <Bookmark size={10} className="fill-forest-ink text-forest-ink" /> Flagged
+          </span>
+        </div>
       </div>
 
       <div className="p-4 space-y-5">
