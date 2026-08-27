@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { VirtualQuestion, VirtualQuestionGroup } from "@/lib/types/testEngine";
-import { CheckCircle2, Layers, Bookmark, ArrowLeft, ArrowRight, ChevronDown, ChevronUp, ChevronsUpDown } from "lucide-react";
+import { CheckCircle2, Bookmark, ArrowLeft, ArrowRight, ChevronDown, ChevronUp, ChevronsUpDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 import SingleQuestionRenderer from "./SingleQuestionRenderer";
 import MultiChoiceRenderer from "./MultiChoiceRenderer";
@@ -101,14 +101,11 @@ export default function GroupQuestionWorkspace({
             <button
               type="button"
               onClick={toggleAllExpanded}
-              className="px-3 py-1 rounded-full bg-forest-ink/5 border border-forest-ink/10 text-xs font-mono font-bold text-forest-ink hover:bg-forest-ink/10 transition-colors flex items-center gap-1.5"
+              className="px-3.5 py-1.5 rounded-full bg-forest-ink/5 border border-forest-ink/10 text-xs font-mono font-bold text-forest-ink hover:bg-forest-ink/10 transition-colors flex items-center gap-1.5"
             >
               <ChevronsUpDown size={13} />
               {isAllExpanded ? "Collapse All" : "Expand All"}
             </button>
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-forest-ink/5 border border-forest-ink/10 text-xs font-mono font-bold text-forest-ink">
-              <Layers size={13} className="text-forest-ink/70" /> Category View
-            </div>
           </div>
         </div>
 
