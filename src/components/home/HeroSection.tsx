@@ -13,6 +13,8 @@ import {
 } from "lucide-react";
 import { AmbientBackground } from "@/components/ui/AmbientBackground";
 import { FloatingShape } from "@/components/ui/FloatingShape";
+import { InteractiveGridSpotlight } from "./InteractiveGridSpotlight";
+import { InteractiveDoodles } from "./InteractiveDoodles";
 import { HighlightedText } from "./HighlightedText";
 import ProductPreview, { SkillType } from "./ProductPreview";
 import { Button } from "@/components/ui/button";
@@ -38,6 +40,8 @@ const HeroSection = () => {
       ref={containerRef}
     >
       <AmbientBackground variant="cream" />
+      <InteractiveGridSpotlight />
+      <InteractiveDoodles />
 
       {/* Dynamic Ambient Accent Glow behind hero */}
       <motion.div
