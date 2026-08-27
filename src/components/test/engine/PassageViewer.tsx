@@ -79,10 +79,10 @@ export default function PassageViewer({
 
   return (
     <>
-      {/* Desktop Collapsible Passage Side Panel */}
+      {/* Desktop Collapsible Sticky Passage Side Panel */}
       <div
         className={cn(
-          "hidden md:flex flex-col bg-white rounded-2xl border border-forest-ink/15 shadow-sm transition-all duration-300 overflow-hidden",
+          "hidden md:flex flex-col sticky top-20 max-h-[calc(100vh-100px)] bg-white rounded-2xl border border-forest-ink/15 shadow-sm transition-all duration-300 overflow-hidden",
           passageCollapsed
             ? "w-14 shrink-0 bg-gradient-to-b from-forest-ink/5 via-cream-paper to-forest-ink/5 cursor-pointer hover:border-forest-ink/30 group"
             : "w-[45%] shrink-0"

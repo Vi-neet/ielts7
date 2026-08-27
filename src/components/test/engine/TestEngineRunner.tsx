@@ -405,8 +405,8 @@ export default function TestEngineRunner({
         onRestartClick={() => setShowRestartConfirmModal(true)}
       />
 
-      {/* Main Workspace Layout */}
-      <main className="flex-1 container mx-auto max-w-7xl px-4 py-6 flex flex-col md:flex-row gap-6">
+      {/* Main Workspace Layout (Passage & Navigator are Sticky) */}
+      <main className="flex-1 container mx-auto max-w-7xl px-4 py-6 flex flex-col md:flex-row items-start gap-6">
         {/* Left: Collapsible Passage Viewer */}
         <PassageViewer
           passages={passages}
@@ -417,7 +417,7 @@ export default function TestEngineRunner({
         />
 
         {/* Middle: Question Workspace (Group or Single View) */}
-        <div className="flex-1">
+        <div className="flex-1 w-full min-w-0">
           {activeQuestion && activeGroup ? (
             <QuestionWorkspace
               question={activeQuestion}
@@ -451,8 +451,8 @@ export default function TestEngineRunner({
           )}
         </div>
 
-        {/* Right: Persistent Question Navigator */}
-        <div className={cn("hidden lg:block shrink-0 transition-all duration-300", navigatorCollapsed ? "w-60" : "w-72")}>
+        {/* Right: Persistent Question Navigator (Sticky) */}
+        <div className={cn("hidden lg:block shrink-0 sticky top-20 max-h-[calc(100vh-100px)] overflow-y-auto transition-all duration-300", navigatorCollapsed ? "w-60" : "w-72")}>
           <QuestionNavigator
             testType={testType}
             questionNumbers={questionNumbers}

@@ -1,8 +1,6 @@
-"use client";
-
-import React from "react";
+import React, { useState } from "react";
 import { VirtualQuestion, VirtualQuestionGroup } from "@/lib/types/testEngine";
-import { CheckCircle2, Layers, Bookmark, ArrowLeft, ArrowRight } from "lucide-react";
+import { CheckCircle2, Layers, Bookmark, ArrowLeft, ArrowRight, ChevronDown, ChevronUp, ChevronsUpDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 import SingleQuestionRenderer from "./SingleQuestionRenderer";
 import MultiChoiceRenderer from "./MultiChoiceRenderer";
@@ -48,6 +46,29 @@ export default function GroupQuestionWorkspace({
   const [startNum, endNum] = group.range;
   const qNums = groupQuestions.map((q) => q.questionNumber);
 
+  // Accordion state: map of qNum -> boolean (expanded)
+  const [expandedMap, setExpandedMap] = useState<Record<number, boolean>>({});
+
+  const isQuestionExpanded = (qNum: number) => expandedMap[qNum] !== false;
+
+  const toggleQuestionExpand = (qNum: number) => {
+    setExpandedMap((prev) => ({
+      ...prev,
+      [qNum]: !isQuestionExpanded(qNum),
+    }));
+  };
+
+  const isAllExpanded = qNums.every((n) => isQuestionExpanded(n));
+
+  const toggleAllExpanded = () => {
+    const nextState = !isAllExpanded;
+    const newMap: Record<number, boolean> = {};
+    qNums.forEach((n) => {
+      newMap[n] = nextState;
+    });
+    setExpandedMap(newMap);
+  };
+
   // Check if all questions in group are checked
   const isGroupChecked = qNums.every((n) => Boolean(checkedQuestions[n]));
 
@@ -76,8 +97,18 @@ export default function GroupQuestionWorkspace({
             </div>
           </div>
 
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-forest-ink/5 border border-forest-ink/10 text-xs font-mono font-bold text-forest-ink">
-            <Layers size={13} className="text-forest-ink/70" /> Category View
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              onClick={toggleAllExpanded}
+              className="px-3 py-1 rounded-full bg-forest-ink/5 border border-forest-ink/10 text-xs font-mono font-bold text-forest-ink hover:bg-forest-ink/10 transition-colors flex items-center gap-1.5"
+            >
+              <ChevronsUpDown size={13} />
+              {isAllExpanded ? "Collapse All" : "Expand All"}
+            </button>
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-forest-ink/5 border border-forest-ink/10 text-xs font-mono font-bold text-forest-ink">
+              <Layers size={13} className="text-forest-ink/70" /> Category View
+            </div>
           </div>
         </div>
 
@@ -112,20 +143,21 @@ export default function GroupQuestionWorkspace({
         )}
       </div>
 
-      {/* 2. Vertical Question Stack */}
-      <div className="space-y-6">
+      {/* 2. Vertical Question Stack (Collapsible Accordion Cards) */}
+      <div className="space-y-4">
         {groupQuestions.map((qObj) => {
           const qNum = qObj.questionNumber;
           const currentVal = answers[qNum] || "";
           const checked = checkedQuestions[qNum];
           const isBookmarked = Boolean(bookmarks[qNum]);
+          const isExpanded = isQuestionExpanded(qNum);
 
           return (
             <div
               key={qNum}
               id={`question-card-${qNum}`}
               className={cn(
-                "bg-white rounded-3xl border p-6 shadow-xs space-y-5 transition-all duration-200",
+                "bg-white rounded-3xl border transition-all duration-200 overflow-hidden shadow-xs",
                 checked
                   ? checked.isCorrect
                     ? "border-emerald-300 bg-emerald-50/20"
@@ -133,12 +165,15 @@ export default function GroupQuestionWorkspace({
                   : "border-forest-ink/15 hover:border-forest-ink/30"
               )}
             >
-              {/* Card Header: Q Number & Bookmark */}
-              <div className="flex items-center justify-between border-b border-forest-ink/10 pb-3.5">
-                <div className="flex items-center gap-3">
+              {/* Card Accordion Dropdown Header */}
+              <div
+                onClick={() => toggleQuestionExpand(qNum)}
+                className="w-full px-5 py-4 flex items-center justify-between gap-4 cursor-pointer hover:bg-forest-ink/5 transition-colors select-none"
+              >
+                <div className="flex items-center gap-3 min-w-0">
                   <span
                     className={cn(
-                      "w-9 h-9 rounded-xl font-extrabold font-bricolage text-base flex items-center justify-center shadow-xs shrink-0",
+                      "w-8 h-8 rounded-xl font-extrabold font-bricolage text-sm flex items-center justify-center shadow-2xs shrink-0",
                       checked
                         ? checked.isCorrect
                           ? "bg-emerald-700 text-white"
@@ -148,61 +183,88 @@ export default function GroupQuestionWorkspace({
                   >
                     {qNum}
                   </span>
-                  <div>
-                    <p className="text-[11px] font-mono tracking-wider text-forest-ink/50 uppercase">
-                      Question {qNum}
-                    </p>
-                  </div>
+
+                  <p className="text-sm font-semibold text-forest-ink truncate">
+                    {qObj.promptText || `Question ${qNum}`}
+                  </p>
                 </div>
 
-                <button
-                  type="button"
-                  onClick={() => onToggleBookmark(qNum)}
-                  className={cn(
-                    "px-3 py-1.5 rounded-xl text-xs font-semibold flex items-center gap-1.5 border transition-all",
-                    isBookmarked
-                      ? "bg-highlighter-yellow text-forest-ink border-forest-ink/30 font-bold shadow-xs"
-                      : "bg-white text-forest-ink/70 border-forest-ink/15 hover:border-forest-ink/30 hover:bg-forest-ink/5"
+                <div className="flex items-center gap-2.5 shrink-0">
+                  {/* Status Badge */}
+                  {currentVal.trim() ? (
+                    <span className="px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-800 text-[11px] font-mono font-bold border border-emerald-300">
+                      Answered: {currentVal.length > 12 ? `${currentVal.slice(0, 12)}...` : currentVal}
+                    </span>
+                  ) : (
+                    <span className="px-2.5 py-1 rounded-full bg-slate-100 text-slate-600 text-[11px] font-mono font-medium border border-slate-200">
+                      Unanswered
+                    </span>
                   )}
-                >
-                  <Bookmark size={13} className={isBookmarked ? "fill-forest-ink" : ""} />
-                  {isBookmarked ? "Bookmarked" : "Bookmark"}
-                </button>
+
+                  {/* Dropdown Chevron Indicator */}
+                  <div className="p-1 rounded-lg bg-forest-ink/5 text-forest-ink/70">
+                    {isExpanded ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
+                  </div>
+                </div>
               </div>
 
-              {/* Question Renderer Body */}
-              {qObj.type === "multiple_choice_multi" ? (
-                <MultiChoiceRenderer
-                  question={qObj}
-                  answers={answers}
-                  onMultiChange={onMultiAnswerChange}
-                  disabled={Boolean(checked)}
-                />
-              ) : qObj.type.includes("completion") ||
-                qObj.type === "sentence_completion" ||
-                qObj.type === "short_answer" ? (
-                <TextInputRenderer
-                  question={qObj}
-                  value={currentVal}
-                  onChange={(val: string) => onSetAnswer(qNum, val)}
-                  disabled={Boolean(checked)}
-                />
-              ) : (
-                <SingleQuestionRenderer
-                  question={qObj}
-                  value={currentVal}
-                  onChange={(val: string) => onSetAnswer(qNum, val)}
-                  disabled={Boolean(checked)}
-                />
-              )}
+              {/* Card Body (Visible when expanded) */}
+              {isExpanded && (
+                <div className="px-6 pb-6 pt-2 border-t border-forest-ink/10 space-y-5">
+                  <div className="flex items-center justify-end pt-1">
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        onToggleBookmark(qNum);
+                      }}
+                      className={cn(
+                        "px-3 py-1.5 rounded-xl text-xs font-semibold flex items-center gap-1.5 border transition-all",
+                        isBookmarked
+                          ? "bg-highlighter-yellow text-forest-ink border-forest-ink/30 font-bold shadow-xs"
+                          : "bg-white text-forest-ink/70 border-forest-ink/15 hover:border-forest-ink/30 hover:bg-forest-ink/5"
+                      )}
+                    >
+                      <Bookmark size={13} className={isBookmarked ? "fill-forest-ink" : ""} />
+                      {isBookmarked ? "Bookmarked" : "Bookmark"}
+                    </button>
+                  </div>
 
-              {/* Practice Feedback for individual question */}
-              {isPractice && checked && (
-                <PracticeFeedbackCard
-                  isCorrect={checked.isCorrect}
-                  studentAnswer={currentVal}
-                  correctAnswer={checked.correctAnswer}
-                />
+                  {/* Question Renderer Body */}
+                  {qObj.type === "multiple_choice_multi" ? (
+                    <MultiChoiceRenderer
+                      question={qObj}
+                      answers={answers}
+                      onMultiChange={onMultiAnswerChange}
+                      disabled={Boolean(checked)}
+                    />
+                  ) : qObj.type.includes("completion") ||
+                    qObj.type === "sentence_completion" ||
+                    qObj.type === "short_answer" ? (
+                    <TextInputRenderer
+                      question={qObj}
+                      value={currentVal}
+                      onChange={(val: string) => onSetAnswer(qNum, val)}
+                      disabled={Boolean(checked)}
+                    />
+                  ) : (
+                    <SingleQuestionRenderer
+                      question={qObj}
+                      value={currentVal}
+                      onChange={(val: string) => onSetAnswer(qNum, val)}
+                      disabled={Boolean(checked)}
+                    />
+                  )}
+
+                  {/* Practice Feedback for individual question */}
+                  {isPractice && checked && (
+                    <PracticeFeedbackCard
+                      isCorrect={checked.isCorrect}
+                      studentAnswer={currentVal}
+                      correctAnswer={checked.correctAnswer}
+                    />
+                  )}
+                </div>
               )}
             </div>
           );
