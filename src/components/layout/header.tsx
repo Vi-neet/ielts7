@@ -53,6 +53,10 @@ const Header = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  if (pathname === "/login" || pathname === "/signup") {
+    return null;
+  }
+
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };

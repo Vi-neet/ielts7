@@ -10,7 +10,6 @@ import {
   CheckCircle2,
   Play,
   Pause,
-  Sparkles,
   Volume2,
   Mic,
   Award,
@@ -41,12 +40,12 @@ export default function ProductPreview({ activeSkill = "listening" }: ProductPre
           <Award className="w-4 h-4 text-highlighter-yellow" />
           <span className="font-bricolage font-bold tracking-wide">
             {activeSkill === "listening"
-              ? "Listening: Band 8.5"
+              ? "Listening Practice"
               : activeSkill === "reading"
-              ? "Reading: Band 8.0"
+              ? "Reading Passage"
               : activeSkill === "writing"
-              ? "AI Evaluation: Band 8.0"
-              : "Speaking: Band 8.0"}
+              ? "Writing Review"
+              : "Speaking Simulator"}
           </span>
         </motion.div>
       </AnimatePresence>
@@ -99,7 +98,7 @@ export default function ProductPreview({ activeSkill = "listening" }: ProductPre
 
           <div className="flex items-center gap-3">
             <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-forest-ink/5 text-xs font-mono font-bold text-forest-ink">
-              <Sparkles size={13} className="text-forest-ink" /> IELTS 7+ Prep
+              <Award size={13} className="text-forest-ink" /> IELTS 7+ Prep
             </div>
           </div>
         </div>
@@ -239,14 +238,14 @@ export default function ProductPreview({ activeSkill = "listening" }: ProductPre
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 bg-purple-50 border border-purple-200 rounded-2xl p-4">
                   <div className="space-y-1">
                     <span className="text-xs font-mono font-bold text-purple-900 uppercase tracking-wider">
-                      AI Band Evaluator Breakdown
+                      Writing Feedback & Analysis
                     </span>
                     <h4 className="text-base font-extrabold font-bricolage text-purple-950">
-                      Overall Score: Band 8.0 — Excellent Cohesion & Range
+                      Task 2 Essay Review — Cohesion & Vocabulary Focus
                     </h4>
                   </div>
                   <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-purple-900 text-white font-mono text-xs font-bold shrink-0">
-                    <Sparkles size={14} className="text-highlighter-yellow" /> Band 8.0 Verified
+                    <PenTool size={14} className="text-highlighter-yellow" /> Task 2 Review
                   </div>
                 </div>
 
@@ -259,15 +258,15 @@ export default function ProductPreview({ activeSkill = "listening" }: ProductPre
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                   <div className="p-3 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-950 text-xs">
                     <span className="font-mono font-bold block mb-0.5">✦ Lexical Resource</span>
-                    <span className="font-bold text-sm">Band 8.5</span> (Advanced vocabulary)
+                    Advanced vocabulary & collocations
                   </div>
                   <div className="p-3 rounded-xl bg-purple-50 border border-purple-200 text-purple-950 text-xs">
                     <span className="font-mono font-bold block mb-0.5">✦ Coherence & Cohesion</span>
-                    <span className="font-bold text-sm">Band 8.0</span> (Fluent transitions)
+                    Fluent paragraph transitions
                   </div>
                   <div className="p-3 rounded-xl bg-amber-50 border border-amber-200 text-amber-950 text-xs">
                     <span className="font-mono font-bold block mb-0.5">✦ Grammar Accuracy</span>
-                    <span className="font-bold text-sm">Band 8.0</span> (Complex clauses)
+                    Complex clause structures
                   </div>
                 </div>
               </div>

@@ -6,6 +6,7 @@ import Footer from "@/components/layout/footer";
 import { PaperTexture } from "@/components/ui/PaperTexture";
 import { ScrollProgress } from "@/components/ui/ScrollProgress";
 import { AuthProvider } from "@/lib/AuthContext";
+import OnboardingModal from "@/components/auth/OnboardingModal";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -70,6 +71,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} ${bricolage.variable} ${inter.variable} ${robotoMono.variable} antialiased`}
       >
         <AuthProvider>
+          <OnboardingModal />
           <PaperTexture />
           <ScrollProgress />
           <Header />

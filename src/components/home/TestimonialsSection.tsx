@@ -1,12 +1,13 @@
 "use client";
 
 import { useState, useRef } from "react";
-import { motion, useReducedMotion, AnimatePresence } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
-import { MessageSquareQuote, ChevronLeft, ChevronRight, Star, Quote } from "lucide-react";
+import { MessageSquareQuote, Star, Award, CheckCircle2, ArrowRight } from "lucide-react";
 import { SectionHeader } from "./SectionHeader";
+import { HighlightedText } from "./HighlightedText";
 import { cn } from "@/lib/utils";
 import { testimonials } from "@/data/testimonials";
 
@@ -14,152 +15,198 @@ if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
 }
 
+const testimonialDetails = [
+  {
+    badgeText: "Band 6.5 -> 7.5 Overall",
+    colorClass: "bg-sticky-note-mint/40 border-forest-ink/20 text-forest-ink",
+    highlightWord: "target band score of 7.5",
+    rotation: "rotate-[-1.5deg]",
+    tag: "Academic Module",
+  },
+  {
+    badgeText: "Medical License: Band 7.5",
+    colorClass: "bg-sticky-note-teal/40 border-forest-ink/20 text-forest-ink",
+    highlightWord: "7.5 overall",
+    rotation: "rotate-[1deg]",
+    tag: "Professional License",
+  },
+  {
+    badgeText: "Writing: Band 6.5 -> 8.0",
+    colorClass: "bg-highlighter-yellow/50 border-forest-ink/25 text-forest-ink",
+    highlightWord: "improved from a 6.5 to an 8",
+    rotation: "rotate-[-2deg]",
+    tag: "Writing Intensive",
+  },
+  {
+    badgeText: "Speaking: Band 7.0",
+    colorClass: "bg-sticky-note-blush/40 border-forest-ink/20 text-forest-ink",
+    highlightWord: "score a 7 in the speaking section",
+    rotation: "rotate-[1.5deg]",
+    tag: "Speaking Simulator",
+  },
+  {
+    badgeText: "First Attempt: Band 8.0",
+    colorClass: "bg-sticky-note-mint/40 border-forest-ink/20 text-forest-ink",
+    highlightWord: "achieved my dream score",
+    rotation: "rotate-[-1deg]",
+    tag: "First Attempt",
+  },
+];
+
 export const TestimonialsSection = () => {
-  const [activeIndex, setActiveIndex] = useState(0);
+  const [filter, setFilter] = useState<"all" | "featured">("featured");
   const prefersReducedMotion = useReducedMotion();
   const sectionRef = useRef<HTMLDivElement>(null);
-  const quoteMarkRef = useRef<SVGSVGElement>(null);
 
-  useGSAP(() => {
-    if (!sectionRef.current || prefersReducedMotion) return;
-
-    // Subtle parallax on the giant quote mark
-    gsap.to(quoteMarkRef.current, {
-      yPercent: -20,
-      ease: "none",
-      scrollTrigger: {
-        trigger: sectionRef.current,
-        start: "top bottom",
-        end: "bottom top",
-        scrub: true,
-      },
-    });
-
-  }, { scope: sectionRef });
-
-  const nextTestimonial = () => {
-    setActiveIndex((prev) => (prev + 1) % testimonials.length);
-  };
-
-  const prevTestimonial = () => {
-    setActiveIndex((prev) => (prev === 0 ? testimonials.length - 1 : prev - 1));
-  };
-
-  const goToTestimonial = (index: number) => {
-    setActiveIndex(index);
-  };
+  const displayedTestimonials = filter === "featured" ? testimonials.slice(0, 3) : testimonials;
 
   return (
     <section className="py-24 bg-cream-paper relative overflow-hidden" ref={sectionRef}>
-      
-      {/* Oversized background quote mark */}
-      <div className="absolute top-1/2 left-1/4 -translate-x-1/2 -translate-y-1/2 pointer-events-none z-0">
-        <Quote 
-          ref={quoteMarkRef}
-          className="w-[400px] h-[400px] text-forest-ink/[0.03] rotate-12"
-          strokeWidth={0.5}
-        />
-      </div>
+      {/* Subtle Background Elements */}
+      <div className="absolute top-1/3 right-0 w-96 h-96 bg-highlighter-yellow/10 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-10 left-0 w-96 h-96 bg-sticky-note-teal/10 rounded-full blur-3xl pointer-events-none" />
 
       <div className="container mx-auto px-6 max-w-6xl relative z-10">
-        
         <SectionHeader
-          eyebrowText="Student Success"
+          eyebrowText="Student Success Stories"
           eyebrowIcon={<MessageSquareQuote className="w-3.5 h-3.5" />}
-          title="Don't just take our word for it"
-          description=""
-          className="mb-16"
+          title="Real Students, Real Band 7+ Results"
+          description="Read how IELTS candidates transformed their scores for university admissions, medical licensing, and global opportunities."
+          className="mb-12"
         />
 
-        <div className="max-w-4xl mx-auto relative">
-          <div className="relative min-h-[400px] md:min-h-[300px] flex items-center justify-center">
-            <AnimatePresence mode="wait" custom={activeIndex}>
+        {/* Filter Pill Selector */}
+        <div className="flex justify-center mb-12">
+          <div className="inline-flex bg-white border border-pencil-gray/25 rounded-full p-1 shadow-xs">
+            <button
+              onClick={() => setFilter("featured")}
+              className={cn(
+                "px-5 py-2 rounded-full text-xs font-bold font-inter transition-all cursor-pointer",
+                filter === "featured"
+                  ? "bg-forest-ink text-white shadow-sm"
+                  : "text-forest-ink/70 hover:text-forest-ink"
+              )}
+            >
+              Featured Highlights
+            </button>
+            <button
+              onClick={() => setFilter("all")}
+              className={cn(
+                "px-5 py-2 rounded-full text-xs font-bold font-inter transition-all cursor-pointer",
+                filter === "all"
+                  ? "bg-forest-ink text-white shadow-sm"
+                  : "text-forest-ink/70 hover:text-forest-ink"
+              )}
+            >
+              All Reviews ({testimonials.length})
+            </button>
+          </div>
+        </div>
+
+        {/* Bento Grid Showcase */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+          {displayedTestimonials.map((item, idx) => {
+            const detail = testimonialDetails[idx % testimonialDetails.length];
+            const isFeaturedCard = idx === 1 && filter === "featured";
+
+            // Render content with marker highlight styling on key phrases
+            const parts = item.content.split(detail.highlightWord);
+
+            return (
               <motion.div
-                key={activeIndex}
-                custom={activeIndex}
-                initial={{ opacity: 0, x: prefersReducedMotion ? 0 : 40, filter: "blur(4px)" }}
-                animate={{ opacity: 1, x: 0, filter: "blur(0px)" }}
-                exit={{ opacity: 0, x: prefersReducedMotion ? 0 : -40, filter: "blur(4px)" }}
-                transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-                className="w-full bg-white rounded-3xl p-8 md:p-12 border border-pencil-gray/20 shadow-[var(--shadow-card)]"
+                key={item.id}
+                initial={{ opacity: 0, y: prefersReducedMotion ? 0 : 25 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-40px" }}
+                transition={{ duration: 0.5, delay: idx * 0.1, ease: [0.22, 1, 0.36, 1] }}
+                whileHover={
+                  prefersReducedMotion
+                    ? {}
+                    : { y: -6, scale: 1.02, boxShadow: "0 20px 40px -15px rgba(26,51,0,0.12)" }
+                }
+                className={cn(
+                  "relative p-7 rounded-2xl bg-white border font-inter flex flex-col justify-between transition-all duration-300 group cursor-pointer",
+                  detail.rotation,
+                  isFeaturedCard
+                    ? "border-forest-ink/40 shadow-md ring-1 ring-forest-ink/10 bg-gradient-to-b from-white to-[#fcfaf5]"
+                    : "border-pencil-gray/20 shadow-xs hover:border-forest-ink/30"
+                )}
               >
-                <div className="flex flex-col md:flex-row gap-8 md:gap-12 items-center md:items-start">
-                  
-                  {/* Avatar / Score */}
-                  <div className="flex-shrink-0 flex flex-col items-center">
-                    <div className="w-20 h-20 rounded-full bg-sticky-note-mint/30 flex items-center justify-center border-2 border-white shadow-md mb-4 text-forest-ink font-bricolage text-2xl font-bold uppercase overflow-hidden">
-                      {testimonials[activeIndex].name.charAt(0)}
-                    </div>
-                    <div className="inline-flex flex-col items-center px-3 py-1.5 rounded-xl bg-forest-ink/5 border border-forest-ink/10">
-                      <span className="text-[11px] font-roboto-mono text-forest-ink/60 uppercase tracking-wider mb-0.5">Rating</span>
-                      <span className="font-bricolage font-bold text-forest-ink text-lg leading-none">{testimonials[activeIndex].rating}/5</span>
-                    </div>
+                {/* Hand-drawn Tape Accent at Top */}
+                <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-16 h-4 bg-[#e5e1d3]/80 rounded-xs border border-pencil-gray/20 shadow-2xs rotate-[-1deg] pointer-events-none" />
+
+                <div>
+                  {/* Top Badge & Tag Header */}
+                  <div className="flex items-center justify-between gap-2 mb-5">
+                    <span className={cn("inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold font-bricolage border", detail.colorClass)}>
+                      <Award className="w-3.5 h-3.5" />
+                      <span>{detail.badgeText}</span>
+                    </span>
+                    <span className="text-[11px] font-mono font-semibold text-pencil-gray uppercase tracking-wider">
+                      {detail.tag}
+                    </span>
                   </div>
 
-                  {/* Quote */}
-                  <div className="flex-1 text-center md:text-left">
-                    <div className="flex justify-center md:justify-start gap-1 mb-4">
-                      {[...Array(5)].map((_, i) => (
-                        <motion.div
-                          key={i}
-                          initial={{ opacity: 0, scale: 0 }}
-                          animate={{ opacity: 1, scale: 1 }}
-                          transition={{ delay: i * 0.05 + 0.3 }}
-                        >
-                          <Star className="w-4 h-4 fill-highlighter-yellow text-highlighter-yellow" />
-                        </motion.div>
-                      ))}
-                    </div>
-                    
-                    <h4 className="text-xl md:text-2xl font-inter font-medium text-forest-ink leading-relaxed mb-6">
-                      "{testimonials[activeIndex].content}"
-                    </h4>
-
-                    <motion.div 
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.5, duration: 0.4 }}
-                    >
-                      <p className="font-semibold text-forest-ink font-inter">{testimonials[activeIndex].name}</p>
-                      <p className="text-sm text-forest-ink/60 font-inter">{testimonials[activeIndex].role}</p>
-                    </motion.div>
+                  {/* Star Rating */}
+                  <div className="flex items-center gap-1 mb-4">
+                    {[...Array(5)].map((_, i) => (
+                      <Star
+                        key={i}
+                        className={cn(
+                          "w-4 h-4",
+                          i < item.rating
+                            ? "fill-highlighter-yellow text-highlighter-yellow"
+                            : "text-pencil-gray/30"
+                        )}
+                      />
+                    ))}
                   </div>
+
+                  {/* Quote text with marker highlight */}
+                  <p className="text-[15px] leading-relaxed text-forest-ink/85 font-inter mb-6">
+                    {parts[0]}
+                    {parts.length > 1 && (
+                      <HighlightedText className="font-semibold text-forest-ink">
+                        {detail.highlightWord}
+                      </HighlightedText>
+                    )}
+                    {parts[1]}
+                  </p>
+                </div>
+
+                {/* Footer Student Meta */}
+                <div className="pt-4 border-t border-pencil-gray/15 flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-full bg-forest-ink/5 border border-forest-ink/15 text-forest-ink font-bricolage text-base font-extrabold flex items-center justify-center">
+                      {item.name.charAt(0)}
+                    </div>
+                    <div className="flex flex-col">
+                      <span className="text-sm font-bold text-forest-ink leading-tight">
+                        {item.name}
+                      </span>
+                      <span className="text-xs text-forest-ink/60 font-inter">
+                        {item.role}
+                      </span>
+                    </div>
+                  </div>
+                  <CheckCircle2 className="w-4 h-4 text-sticky-note-mint shrink-0" />
                 </div>
               </motion.div>
-            </AnimatePresence>
-          </div>
+            );
+          })}
+        </div>
 
-          {/* Controls */}
-          <div className="flex items-center justify-center gap-4 mt-8">
-            <button
-              onClick={prevTestimonial}
-              className="w-10 h-10 rounded-full border border-pencil-gray/30 flex items-center justify-center text-forest-ink hover:bg-forest-ink hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-forest-ink/20"
-              aria-label="Previous testimonial"
+        {/* CTA Footer Banner inside Testimonials */}
+        <div className="mt-16 flex items-center justify-center">
+          <div className="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-white border border-forest-ink/15 shadow-xs font-inter text-xs md:text-sm text-forest-ink">
+            <span className="font-bold">Ready to write your own Band 7+ success story?</span>
+            <a
+              href="/tests"
+              className="inline-flex items-center font-bold text-forest-ink hover:underline gap-1 group"
             >
-              <ChevronLeft className="w-5 h-5" />
-            </button>
-            
-            <div className="flex gap-2 mx-4">
-              {testimonials.map((_, idx) => (
-                <button
-                  key={idx}
-                  onClick={() => goToTestimonial(idx)}
-                  className={cn(
-                    "w-2 h-2 rounded-full transition-all duration-300",
-                    activeIndex === idx ? "bg-forest-ink w-6" : "bg-pencil-gray/40 hover:bg-pencil-gray/60"
-                  )}
-                  aria-label={`Go to testimonial ${idx + 1}`}
-                />
-              ))}
-            </div>
-
-            <button
-              onClick={nextTestimonial}
-              className="w-10 h-10 rounded-full border border-pencil-gray/30 flex items-center justify-center text-forest-ink hover:bg-forest-ink hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-forest-ink/20"
-              aria-label="Next testimonial"
-            >
-              <ChevronRight className="w-5 h-5" />
-            </button>
+              Start Free Practice
+              <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+            </a>
           </div>
         </div>
       </div>

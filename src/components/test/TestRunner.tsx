@@ -18,7 +18,7 @@ import {
   ChevronRight,
   ChevronLeft,
   Loader2,
-  Sparkles,
+  Award,
   ClipboardList,
   AlertTriangle,
   RotateCcw,
@@ -266,6 +266,24 @@ export default function TestRunner({
   // Map of question number → whether it was correct (undefined = not yet checked)
   const [checkedQuestions, setCheckedQuestions] = useState<Record<number, boolean>>({});
   const [currentQuestion, setCurrentQuestion] = useState<number | null>(null);
+
+  // ── Dark mode state ──
+  const [isDarkMode, setIsDarkMode] = useState<boolean>(() => {
+    if (typeof window !== "undefined") {
+      return localStorage.getItem("ielts7_test_dark_mode") === "true";
+    }
+    return false;
+  });
+
+  const toggleDarkMode = () => {
+    setIsDarkMode((prev) => {
+      const next = !prev;
+      if (typeof window !== "undefined") {
+        localStorage.setItem("ielts7_test_dark_mode", String(next));
+      }
+      return next;
+    });
+  };
 
   // ── Reading layout state ──
   const [passageCollapsed, setPassageCollapsed] = useState(false);
@@ -908,7 +926,7 @@ export default function TestRunner({
             <div className="bg-white rounded-2xl shadow-sm border border-pencil-gray/20 p-6 flex items-center justify-between col-span-2">
               <div className="space-y-1">
                 <h2 className="text-xl font-bold font-bricolage text-forest-ink flex items-center gap-2">
-                  <Sparkles className="text-forest-ink h-5 w-5" /> Completed Successfully!
+                  <Award className="text-forest-ink h-5 w-5" /> Completed Successfully!
                 </h2>
                 <p className="text-forest-ink/60 text-xs font-mono uppercase mt-1">
                   {testTypeLabel} • {completionDate}
@@ -1089,7 +1107,7 @@ export default function TestRunner({
 
   return (
     <AnswerContext.Provider value={{ answers, setAnswer, disabled: isSubmitted, isSubmitted }}>
-      <div className="min-h-screen bg-cream-paper flex flex-col">
+      <div className={cn("min-h-screen flex flex-col transition-colors duration-200", isDarkMode ? "dark-test-mode bg-[#121c0e] text-[#e8efe2]" : "bg-cream-paper text-forest-ink")}>
         {/* Sticky test header */}
         <TestHeader
           testName={testName}
@@ -1098,6 +1116,8 @@ export default function TestRunner({
           timeRemaining={timeRemaining}
           answeredCount={answeredCount}
           totalQuestions={totalQuestions}
+          isDarkMode={isDarkMode}
+          onToggleDarkMode={toggleDarkMode}
         />
 
         {/* Main content */}

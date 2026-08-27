@@ -10,8 +10,7 @@ import {
   BadgeCheck,
   BookOpen,
   Globe,
-  MessageSquareQuote,
-  Sparkles
+  MessageSquareQuote
 } from "lucide-react";
 import Image from "next/image";
 import {

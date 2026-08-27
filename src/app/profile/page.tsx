@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import { useAuth } from "@/lib/AuthContext";
 import { useRouter } from "next/navigation";
 import { db, logOut } from "@/lib/firebase";
-import { collection, query, where, orderBy, getDocs } from "firebase/firestore";
+import { collection, query, where, orderBy, getDocs, doc, getDoc, setDoc } from "firebase/firestore";
 import { gradeAttempt, GradeResult, formatAnswer } from "@/lib/scoring";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -25,15 +25,18 @@ import {
   X,
   CheckCircle2,
   XCircle,
-  Sparkles,
+  CheckCircle,
+  TrendingUp,
+  Sliders,
+  ChevronDown,
+  Shield,
   User,
   Lock,
   LogOut,
   AlertCircle,
-  CheckCircle,
-  TrendingUp,
-  Sliders,
-  ChevronDown
+  Target,
+  Globe,
+  GraduationCap
 } from "lucide-react";
 import Link from "next/link";
 import { motion } from "framer-motion";
@@ -200,6 +203,18 @@ export default function ProfilePage() {
   const [nameSuccess, setNameSuccess] = useState(false);
   const [nameError, setNameError] = useState("");
 
+  // Candidate IELTS Demographics States
+  const [gender, setGender] = useState("");
+  const [targetModule, setTargetModule] = useState("academic");
+  const [targetBand, setTargetBand] = useState("7.0");
+  const [targetDate, setTargetDate] = useState("");
+  const [primaryPurpose, setPrimaryPurpose] = useState("university");
+  const [nativeLanguage, setNativeLanguage] = useState("");
+  const [country, setCountry] = useState("");
+  const [savingDemo, setSavingDemo] = useState(false);
+  const [demoSuccess, setDemoSuccess] = useState(false);
+  const [demoError, setDemoError] = useState("");
+
   // Google account linking states
   const [linkingGoogle, setLinkingGoogle] = useState(false);
   const [linkSuccess, setLinkSuccess] = useState(false);
@@ -262,6 +277,30 @@ export default function ProfilePage() {
       setNameInput(user.displayName || "");
     }
   }, [user, authLoading, router]);
+
+  // Fetch IELTS Candidate Demographics from Firestore
+  useEffect(() => {
+    if (!user) return;
+    const fetchUserData = async () => {
+      try {
+        const userRef = doc(db, "users", user.uid);
+        const userSnap = await getDoc(userRef);
+        if (userSnap.exists()) {
+          const data = userSnap.data();
+          if (data.gender) setGender(data.gender);
+          if (data.targetModule) setTargetModule(data.targetModule);
+          if (data.targetBand) setTargetBand(data.targetBand);
+          if (data.targetDate) setTargetDate(data.targetDate);
+          if (data.primaryPurpose) setPrimaryPurpose(data.primaryPurpose);
+          if (data.nativeLanguage) setNativeLanguage(data.nativeLanguage);
+          if (data.country) setCountry(data.country);
+        }
+      } catch (err) {
+        console.error("Failed to load user demographics:", err);
+      }
+    };
+    fetchUserData();
+  }, [user]);
 
   // Fetch attempts from Firestore
   useEffect(() => {
@@ -416,6 +455,40 @@ export default function ProfilePage() {
       setNameError(err.message || "Failed to update profile name");
     } finally {
       setUpdatingName(false);
+    }
+  };
+
+  // Handle candidate demographics update
+  const handleSaveDemographics = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!user) return;
+    setSavingDemo(true);
+    setDemoError("");
+    setDemoSuccess(false);
+
+    try {
+      const userRef = doc(db, "users", user.uid);
+      await setDoc(
+        userRef,
+        {
+          gender,
+          targetModule,
+          targetBand,
+          targetDate,
+          primaryPurpose,
+          nativeLanguage,
+          country,
+          updatedAt: new Date().toISOString(),
+        },
+        { merge: true }
+      );
+      setDemoSuccess(true);
+      setTimeout(() => setDemoSuccess(false), 3000);
+    } catch (err: any) {
+      console.error("Failed to save candidate demographics:", err);
+      setDemoError("Failed to save profile details.");
+    } finally {
+      setSavingDemo(false);
     }
   };
 
@@ -594,232 +667,162 @@ export default function ProfilePage() {
   const targetY = paddingTop + graphHeight - ((7.0 - minY) / (maxY - minY)) * graphHeight;
 
   return (
-    <div className="min-h-screen bg-cream-paper pt-12 pb-20 px-4 md:px-8">
-      <div className="container mx-auto max-w-6xl">
+    <div className="min-h-screen bg-[#faf9f5] text-forest-ink pt-8 pb-24 px-4 sm:px-6 lg:px-8 font-inter">
+      <div className="max-w-6xl mx-auto space-y-8">
 
-        {/* Dynamic Layout Wrapper */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          
-          {/* Main Dashboard Column */}
-          <div className="lg:col-span-2 space-y-8">
-            
-            {/* Dashboard Header Summary */}
-            <div className="bg-white rounded-2xl shadow-sm border border-pencil-gray/20 p-6 md:p-8 flex flex-col sm:flex-row items-center justify-between gap-4">
-              <div>
-                <h1 className="text-3xl font-extrabold font-bricolage text-forest-ink tracking-tight flex items-center gap-2">
-                  <Sparkles className="text-forest-ink h-7 w-7" /> Student Dashboard
-                </h1>
-                <p className="text-forest-ink/65 text-sm font-inter mt-1">
-                  Analyze your performance trends, key metrics, and path to Band 7.
-                </p>
+        {/* ── 1. Restored Signature Dark Forest Ink Hero Banner ── */}
+        <div className="relative bg-forest-ink text-white rounded-3xl p-6 sm:p-8 shadow-md overflow-hidden">
+          {/* Graph Paper Grid Watermark SVG */}
+          <div className="absolute inset-0 opacity-[0.07] bg-[linear-gradient(to_right,#ffffff_1px,transparent_1px),linear-gradient(to_bottom,#ffffff_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none" />
+
+          <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+            {/* Candidate Identity */}
+            <div className="flex items-center gap-5">
+              <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-white/10 text-white flex items-center justify-center font-bricolage font-bold text-2xl sm:text-3xl border border-white/20 shadow-xs overflow-hidden shrink-0">
+                {user.photoURL ? (
+                  <img src={user.photoURL} alt="Profile" className="w-full h-full object-cover" />
+                ) : (
+                  user.email?.[0].toUpperCase() || "U"
+                )}
               </div>
-              <div className="flex items-center gap-4 bg-whisper-gray px-4 py-2.5 rounded-full border border-pencil-gray/10 shrink-0">
-                <History className="text-forest-ink h-5 w-5" />
-                <span className="font-inter text-forest-ink/80 text-sm font-medium">
-                  Attempts: <strong className="text-forest-ink font-bold">{attempts.length}</strong>
-                </span>
+              <div className="space-y-0.5">
+                <h1 className="text-2xl sm:text-3xl font-extrabold font-bricolage text-white tracking-tight">
+                  {user.displayName || "Practice Candidate"}
+                </h1>
+                <p className="text-white/60 text-xs font-mono">
+                  {user.email}
+                </p>
               </div>
             </div>
 
-            {/* Saved Practice Sessions (Resume Later) */}
-            {savedSessions.length > 0 && (
-              <div className="bg-white rounded-2xl p-6 border border-forest-ink/15 shadow-sm space-y-4 animate-in fade-in duration-200">
-                <div className="flex items-center justify-between border-b border-forest-ink/10 pb-4">
-                  <div className="flex items-center gap-2.5">
-                    <div className="w-10 h-10 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-700 shrink-0">
-                      <Clock size={20} />
-                    </div>
-                    <div>
-                      <h3 className="text-base font-extrabold font-bricolage text-forest-ink">
-                        Saved Practice Sessions ({savedSessions.length})
-                      </h3>
-                      <p className="text-xs text-forest-ink/60 font-inter">
-                        Resume your practice tests anytime right where you left off.
-                      </p>
-                    </div>
-                  </div>
+            {/* Quick Stat Summary Bar & Logout Button */}
+            <div className="flex flex-wrap items-center gap-4 w-full md:w-auto justify-between md:justify-end">
+              <div className="flex items-center gap-4 bg-white/10 px-5 py-2.5 rounded-2xl border border-white/15 backdrop-blur-xs text-xs font-mono">
+                <div>
+                  <span className="text-white/50 block text-[9px] uppercase tracking-wider">Tests</span>
+                  <strong className="text-white font-bold text-base">{attempts.length}</strong>
                 </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {savedSessions.map((session) => {
-                    const answered = Object.values(session.answers || {}).filter((v) => v?.trim()).length;
-                    return (
-                      <div
-                        key={session.testId}
-                        className="p-4 rounded-2xl bg-cream-paper/70 border border-forest-ink/10 hover:border-forest-ink/20 transition-all flex flex-col justify-between space-y-3"
-                      >
-                        <div className="flex items-start justify-between gap-3">
-                          <div>
-                            <span className="px-2.5 py-0.5 rounded-full bg-forest-ink/10 text-forest-ink text-[10px] font-mono font-bold uppercase tracking-wider">
-                              {formatTestType(session.testType)}
-                            </span>
-                            <h4 className="text-sm font-bold font-bricolage text-forest-ink mt-1.5">
-                              {session.testName || formatTestName(session.testId)}
-                            </h4>
-                            <p className="text-xs font-mono text-forest-ink/60 mt-0.5">
-                              {answered} / 40 Questions Answered
-                            </p>
-                          </div>
-
-                          <button
-                            type="button"
-                            onClick={() => handleDiscardSession(session.testId)}
-                            className="p-1.5 rounded-xl text-forest-ink/40 hover:text-rose-600 hover:bg-rose-50 transition-colors"
-                            title="Discard practice draft"
-                          >
-                            <X size={16} />
-                          </button>
-                        </div>
-
-                        <div className="pt-2 border-t border-forest-ink/10 flex items-center justify-between">
-                          <span className="text-[11px] font-mono text-forest-ink/50">
-                            {new Date(session.updatedAt).toLocaleDateString(undefined, {
-                              month: "short",
-                              day: "numeric",
-                            })}
-                          </span>
-
-                          <Link
-                            href={`/tests/${session.testType}/${session.testId}`}
-                            className="px-4 py-1.5 rounded-xl bg-forest-ink hover:bg-forest-ink/90 text-white text-xs font-mono font-bold flex items-center gap-1.5 shadow-2xs transition-all active:scale-95"
-                          >
-                            Resume Practice <ArrowRight size={13} />
-                          </Link>
-                        </div>
-                      </div>
-                    );
-                  })}
+                <div className="w-px h-6 bg-white/15" />
+                <div>
+                  <span className="text-white/50 block text-[9px] uppercase tracking-wider">Best</span>
+                  <strong className="text-highlighter-yellow font-bold text-base">{bestBand}</strong>
+                </div>
+                <div className="w-px h-6 bg-white/15" />
+                <div>
+                  <span className="text-white/50 block text-[9px] uppercase tracking-wider">Target</span>
+                  <strong className="text-white font-bold text-base">7.0+</strong>
                 </div>
               </div>
-            )}
 
-            {/* Empty State vs Dashboard Contents */}
+              <Button
+                onClick={handleLogoutClick}
+                variant="outline"
+                size="sm"
+                className="h-10 px-4 rounded-2xl border-white/20 bg-white/10 text-white hover:bg-white hover:text-forest-ink font-semibold font-inter shadow-2xs transition-colors cursor-pointer flex items-center gap-1.5"
+              >
+                <LogOut size={15} />
+                <span>Log Out</span>
+              </Button>
+            </div>
+          </div>
+        </div>
+
+        {/* ── 2. Bento Metrics & Target Benchmark Row (Full-Width) ── */}
+        {hasAttempts && (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {/* Metric 1: Tests Completed */}
+            <div className="bg-white rounded-3xl border border-forest-ink/10 p-5 shadow-sm flex flex-col justify-between min-h-[110px]">
+              <span className="text-xs font-mono uppercase tracking-wider text-forest-ink/50">Completed</span>
+              <span className="text-3xl font-extrabold font-bricolage text-forest-ink mt-2">{attempts.length}</span>
+              <span className="text-[11px] text-forest-ink/50">Scored exams taken</span>
+            </div>
+
+            {/* Metric 2: Best Band Score */}
+            <div className="bg-white rounded-3xl border border-emerald-200/80 bg-emerald-50/20 p-5 shadow-sm flex flex-col justify-between min-h-[110px]">
+              <span className="text-xs font-mono uppercase tracking-wider text-emerald-800 font-semibold">Best Band</span>
+              <span className="text-3xl font-extrabold font-bricolage text-emerald-700 mt-2">{bestBand}</span>
+              <span className="text-[11px] text-emerald-700/70">Highest score achieved</span>
+            </div>
+
+            {/* Metric 3: Average Band Score */}
+            <div className="bg-white rounded-3xl border border-forest-ink/10 p-5 shadow-sm flex flex-col justify-between min-h-[110px]">
+              <span className="text-xs font-mono uppercase tracking-wider text-forest-ink/50">Average Band</span>
+              <span className="text-3xl font-extrabold font-bricolage text-forest-ink mt-2">{averageBand}</span>
+              <span className="text-[11px] text-forest-ink/50">Standard IELTS mean</span>
+            </div>
+
+            {/* Metric 4: Target Progress Bar */}
+            <div className="bg-white rounded-3xl border border-forest-ink/10 p-5 shadow-sm flex flex-col justify-between min-h-[110px]">
+              <div className="flex justify-between items-center text-xs font-semibold">
+                <span className="text-forest-ink font-mono uppercase tracking-wider text-forest-ink/50">Band 7.0 Progress</span>
+                <span className="font-mono text-forest-ink font-bold">{band7Percentage}%</span>
+              </div>
+              <div className="h-2.5 w-full bg-forest-ink/10 rounded-full overflow-hidden my-2">
+                <motion.div
+                  className="h-full bg-forest-ink rounded-full"
+                  initial={{ width: 0 }}
+                  animate={{ width: `${band7Percentage}%` }}
+                  transition={{ duration: 0.8, ease: "easeOut" }}
+                />
+              </div>
+              <span className="text-[11px] text-forest-ink/50">Target Band 7.0 Goal</span>
+            </div>
+          </div>
+        )}
+
+        {/* ── 3. Arrangement 1: 2-Column Split Workspace ── */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+          {/* Main Left Column (65%): Performance Trend -> Saved Drafts -> History -> Writing */}
+          <div className="lg:col-span-2 space-y-8">
+
+            {/* Empty State vs Performance Trend */}
             {!hasAttempts ? (
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4 }}
-                className="bg-white rounded-2xl shadow-sm border border-pencil-gray/25 p-12 text-center flex flex-col items-center justify-center py-20"
+                className="bg-white rounded-3xl border border-forest-ink/10 p-12 text-center flex flex-col items-center justify-center py-16 shadow-sm"
               >
-                <div className="w-16 h-16 rounded-full bg-sticky-note-blush/30 flex items-center justify-center mb-6 border border-pencil-gray/10">
-                  <BookOpen className="text-forest-ink h-8 w-8" />
+                <div className="w-16 h-16 rounded-2xl bg-sticky-note-mint/30 flex items-center justify-center mb-5 border border-forest-ink/10 text-forest-ink">
+                  <BookOpen size={30} />
                 </div>
-                <h2 className="text-2xl font-extrabold font-bricolage text-forest-ink mb-3">
-                  Your progress starts here.
+                <h2 className="text-2xl font-bold font-bricolage text-forest-ink mb-2">
+                  No Test Results Recorded Yet
                 </h2>
-                <p className="text-forest-ink/75 font-inter text-sm mb-8 max-w-md leading-relaxed">
-                  You haven&apos;t taken any scored practice tests yet. Completing a reading or listening test will populate your dashboard metrics, band charts, and detailed skills breakdown.
+                <p className="text-forest-ink/70 text-sm max-w-md mb-8 leading-relaxed">
+                  Take your first Cambridge Reading or Listening exam to automatically populate your band score metrics, progress trends, and detailed review feedback.
                 </p>
-                <div className="flex flex-col sm:flex-row gap-4 w-full justify-center">
+                <div className="flex flex-col sm:flex-row gap-4">
                   <Link href="/tests/academic_reading">
-                    <Button variant="forest" className="h-11 px-8 cursor-pointer font-semibold shadow-xs">
-                      Take Reading Test
+                    <Button variant="forest" className="h-11 px-6 font-semibold shadow-xs cursor-pointer">
+                      Start Reading Test
                     </Button>
                   </Link>
                   <Link href="/tests/listening">
-                    <Button variant="forestOutline" className="h-11 px-8 cursor-pointer font-semibold shadow-xs">
-                      Take Listening Test
+                    <Button variant="forestOutline" className="h-11 px-6 font-semibold shadow-xs cursor-pointer">
+                      Start Listening Test
                     </Button>
                   </Link>
                 </div>
               </motion.div>
             ) : (
               <>
-                {/* 1. Progress Overview Cards */}
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                  {/* Card 1: Tests Completed */}
-                  <motion.div
-                    initial={{ opacity: 0, y: 8 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.3, delay: 0.05 }}
-                    className="bg-[#c2f0fc] border border-[#a0e1f3] rounded-2xl p-5 text-forest-ink flex flex-col justify-between min-h-[120px] shadow-xs"
-                  >
-                    <span className="text-xs font-mono uppercase tracking-wider text-forest-ink/60">Completed</span>
-                    <span className="text-4xl font-extrabold font-bricolage mt-2">{attempts.length}</span>
-                    <span className="text-[10px] font-inter text-forest-ink/50 mt-1">Total scored tests</span>
-                  </motion.div>
-
-                  {/* Card 2: Best Band */}
-                  <motion.div
-                    initial={{ opacity: 0, y: 8 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.3, delay: 0.1 }}
-                    className="bg-[#d8f3dc] border border-[#b7e4c7] rounded-2xl p-5 text-forest-ink flex flex-col justify-between min-h-[120px] shadow-xs"
-                  >
-                    <span className="text-xs font-mono uppercase tracking-wider text-forest-ink/60">Best Band</span>
-                    <span className="text-4xl font-extrabold font-bricolage mt-2">{bestBand}</span>
-                    <span className="text-[10px] font-inter text-forest-ink/50 mt-1">Highest calculated</span>
-                  </motion.div>
-
-                  {/* Card 3: Average Band */}
-                  <motion.div
-                    initial={{ opacity: 0, y: 8 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.3, delay: 0.15 }}
-                    className="bg-[#fcd2c2] border border-[#f8b195] rounded-2xl p-5 text-forest-ink flex flex-col justify-between min-h-[120px] shadow-xs"
-                  >
-                    <span className="text-xs font-mono uppercase tracking-wider text-forest-ink/60">Average Band</span>
-                    <span className="text-4xl font-extrabold font-bricolage mt-2">{averageBand}</span>
-                    <span className="text-[10px] font-inter text-forest-ink/50 mt-1">Overall standard mean</span>
-                  </motion.div>
-
-                  {/* Card 4: Latest Band */}
-                  <motion.div
-                    initial={{ opacity: 0, y: 8 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.3, delay: 0.2 }}
-                    className="bg-[#c2f0fc] border border-[#a0e1f3] rounded-2xl p-5 text-forest-ink flex flex-col justify-between min-h-[120px] shadow-xs"
-                  >
-                    <span className="text-xs font-mono uppercase tracking-wider text-forest-ink/60">Latest Band</span>
-                    <span className="text-4xl font-extrabold font-bricolage mt-2">{latestBand}</span>
-                    <span className="text-[10px] font-inter text-forest-ink/50 mt-1">Most recent attempt</span>
-                  </motion.div>
-                </div>
-
-                {/* Target Progress Bar */}
-                <motion.div
-                  initial={{ opacity: 0, y: 8 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="bg-white rounded-2xl p-6 border border-pencil-gray/20 shadow-xs"
-                >
-                  <div className="flex justify-between items-center text-sm font-mono text-forest-ink/60">
-                    <span className="font-semibold">Target Band 7.0 Progress</span>
-                    <span className="font-bold text-forest-ink">{band7Percentage}%</span>
-                  </div>
-                  <div className="h-3 w-full bg-whisper-gray rounded-full overflow-hidden border border-pencil-gray/5 mt-2">
-                    <motion.div
-                      className="h-full bg-forest-ink rounded-full"
-                      initial={{ width: 0 }}
-                      animate={{ width: `${band7Percentage}%` }}
-                      transition={{ duration: 0.8, ease: "easeOut" }}
-                    />
-                  </div>
-                  <p className="text-xs text-forest-ink/50 font-inter mt-2">
-                    Calculated based on your highest score of <strong>{bestBand} Band</strong>. You are closer to the IELTS benchmark target.
-                  </p>
-                </motion.div>
-
-                {/* 2. Performance Over Time Chart */}
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.4, delay: 0.1 }}
-                  className="bg-white rounded-2xl p-6 md:p-8 border border-pencil-gray/20 shadow-xs"
-                >
-                  <div className="flex items-center justify-between mb-6">
+                {/* Performance Trend Chart */}
+                <div className="bg-white rounded-3xl border border-forest-ink/10 p-6 sm:p-8 shadow-sm space-y-6">
+                  <div className="flex items-center justify-between">
                     <div>
-                      <h2 className="text-xl font-bold font-bricolage text-forest-ink flex items-center gap-2">
-                        <TrendingUp className="h-5 w-5" /> Performance Trend
+                      <h2 className="text-lg font-bold font-bricolage text-forest-ink flex items-center gap-2">
+                        <TrendingUp size={20} className="text-forest-ink/70" /> Performance Trend
                       </h2>
-                      <p className="text-xs text-forest-ink/50 mt-0.5">Scored calculated band levels over your test attempts history.</p>
+                      <p className="text-xs text-forest-ink/60 mt-0.5">Calculated band score progression over your test attempt history.</p>
                     </div>
                   </div>
 
                   {/* SVG Chart */}
-                  <div className="w-full overflow-x-auto scrollbar-thin">
+                  <div className="w-full overflow-x-auto">
                     <svg
                       viewBox={`0 0 ${chartWidth} ${chartHeight}`}
-                      className="w-full min-w-[450px] overflow-visible bg-cream-paper rounded-xl border border-pencil-gray/10"
+                      className="w-full min-w-[450px] overflow-visible bg-[#faf9f5] rounded-2xl border border-forest-ink/10"
                     >
                       {/* Grid Lines */}
                       {Array.from({ length: 6 }).map((_, idx) => {
@@ -832,15 +835,15 @@ export default function ProfilePage() {
                               y1={y}
                               x2={chartWidth - paddingRight}
                               y2={y}
-                              stroke="#e4e4e0"
+                              stroke="#e2e1d7"
                               strokeWidth={1}
-                              strokeDasharray="2 2"
+                              strokeDasharray="3 3"
                             />
                             <text
                               x={paddingLeft - 8}
                               y={y + 3}
                               textAnchor="end"
-                              fill="#132b1d"
+                              fill="#1a3300"
                               className="text-[9px] font-mono opacity-50"
                             >
                               {bandVal.toFixed(1)}
@@ -855,24 +858,25 @@ export default function ProfilePage() {
                         y1={targetY}
                         x2={chartWidth - paddingRight}
                         y2={targetY}
-                        stroke="#e2f150"
-                        strokeWidth={2}
+                        stroke="#cb5521"
+                        strokeWidth={1.5}
+                        strokeDasharray="4 2"
                       />
                       <text
                         x={chartWidth - paddingRight - 6}
                         y={targetY - 5}
                         textAnchor="end"
-                        fill="#132b1d"
+                        fill="#cb5521"
                         className="text-[9px] font-bold font-mono"
                       >
-                        Band 7.0 Target
+                        Target 7.0
                       </text>
 
                       {/* Graph Path */}
                       <path
                         d={pathD}
                         fill="none"
-                        stroke="#132b1d"
+                        stroke="#1a3300"
                         strokeWidth={2.5}
                         strokeLinecap="round"
                         strokeLinejoin="round"
@@ -885,16 +889,15 @@ export default function ProfilePage() {
                             cx={p.x}
                             cy={p.y}
                             r={4}
-                            fill="#fbfbf8"
-                            stroke="#132b1d"
+                            fill="#ffffff"
+                            stroke="#1a3300"
                             strokeWidth={2}
-                            className="cursor-pointer hover:r-6 transition-all duration-200"
                           />
                           <text
                             x={p.x}
                             y={p.y - 8}
                             textAnchor="middle"
-                            fill="#132b1d"
+                            fill="#1a3300"
                             className="text-[9px] font-bold font-mono"
                           >
                             {p.band.toFixed(1)}
@@ -918,7 +921,7 @@ export default function ProfilePage() {
                             x={p.x}
                             y={chartHeight - 10}
                             textAnchor="middle"
-                            fill="#132b1d"
+                            fill="#1a3300"
                             className="text-[8px] font-mono opacity-50"
                           >
                             {dateStr}
@@ -927,175 +930,169 @@ export default function ProfilePage() {
                       })}
                     </svg>
                   </div>
-                </motion.div>
-
-                {/* 3. Skill Breakdown comparing Listening vs Reading */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  
-                  {/* Skill Card 1: Listening */}
-                  <motion.div
-                    initial={{ opacity: 0, x: -10 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.4 }}
-                    className="bg-[#c2f0fc] border border-[#a0e1f3] rounded-2xl p-6 md:p-8 flex flex-col justify-between shadow-xs"
-                  >
-                    <div>
-                      <h3 className="text-xl font-bold font-bricolage text-forest-ink mb-2">Listening Skills</h3>
-                      <p className="text-xs text-forest-ink/60 mb-6">Metrics covering all taken IELTS Listening audio practice tests.</p>
-                      
-                      <div className="grid grid-cols-3 gap-4 border-t border-forest-ink/10 pt-4 font-inter text-forest-ink">
-                        <div>
-                          <span className="text-[10px] font-mono uppercase tracking-wider opacity-60">Attempts</span>
-                          <div className="text-xl font-bold font-mono mt-1">{listeningStats.attemptsCount}</div>
-                        </div>
-                        <div>
-                          <span className="text-[10px] font-mono uppercase tracking-wider opacity-60">Avg Band</span>
-                          <div className="text-xl font-bold font-mono mt-1">{listeningStats.averageBand}</div>
-                        </div>
-                        <div>
-                          <span className="text-[10px] font-mono uppercase tracking-wider opacity-60">Best Band</span>
-                          <div className="text-xl font-bold font-mono mt-1">{listeningStats.bestBand}</div>
-                        </div>
-                      </div>
-                    </div>
-                  </motion.div>
-
-                  {/* Skill Card 2: Reading */}
-                  <motion.div
-                    initial={{ opacity: 0, x: 10 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.4 }}
-                    className="bg-[#d8f3dc] border border-[#b7e4c7] rounded-2xl p-6 md:p-8 flex flex-col justify-between shadow-xs"
-                  >
-                    <div>
-                      <h3 className="text-xl font-bold font-bricolage text-forest-ink mb-2">Reading Skills</h3>
-                      <p className="text-xs text-forest-ink/60 mb-6">Metrics covering Academic and General Reading passages.</p>
-                      
-                      <div className="grid grid-cols-3 gap-4 border-t border-forest-ink/10 pt-4 font-inter text-forest-ink mb-6">
-                        <div>
-                          <span className="text-[10px] font-mono uppercase tracking-wider opacity-60">Attempts</span>
-                          <div className="text-xl font-bold font-mono mt-1">{readingStats.attemptsCount}</div>
-                        </div>
-                        <div>
-                          <span className="text-[10px] font-mono uppercase tracking-wider opacity-60">Avg Band</span>
-                          <div className="text-xl font-bold font-mono mt-1">{readingStats.averageBand}</div>
-                        </div>
-                        <div>
-                          <span className="text-[10px] font-mono uppercase tracking-wider opacity-60">Best Band</span>
-                          <div className="text-xl font-bold font-mono mt-1">{readingStats.bestBand}</div>
-                        </div>
-                      </div>
-
-                      {/* Sub-breakdown shown conditionally */}
-                      {(academicStats.attemptsCount > 0 || generalStats.attemptsCount > 0) && (
-                        <div className="bg-white/40 border border-forest-ink/10 rounded-xl p-3 space-y-2 font-inter text-xs text-forest-ink">
-                          {academicStats.attemptsCount > 0 && (
-                            <div className="flex justify-between">
-                              <span className="font-semibold">Academic Reading:</span>
-                              <span className="font-mono">{academicStats.attemptsCount} attempts (Avg {academicStats.averageBand})</span>
-                            </div>
-                          )}
-                          {generalStats.attemptsCount > 0 && (
-                            <div className="flex justify-between">
-                              <span className="font-semibold">General Reading:</span>
-                              <span className="font-mono">{generalStats.attemptsCount} attempts (Avg {generalStats.averageBand})</span>
-                            </div>
-                          )}
-                        </div>
-                      )}
-                    </div>
-                  </motion.div>
-                </div>
-
-                {/* 4. Recent Attempts List */}
-                <div className="bg-white rounded-2xl shadow-sm border border-pencil-gray/20 p-6 md:p-8">
-                  <h2 className="text-xl font-bold font-bricolage text-forest-ink mb-6 flex items-center gap-2">
-                    <Clock className="text-forest-ink/60 h-5 w-5" /> Recent Attempt Details
-                  </h2>
-
-                  <div className="divide-y divide-pencil-gray/10">
-                    {attempts.map((attempt) => {
-                      const date = attempt.submittedAt
-                        ? new Date(attempt.submittedAt.seconds * 1000).toLocaleDateString("en-US", {
-                            month: "short",
-                            day: "numeric",
-                            year: "numeric",
-                          })
-                        : "N/A";
-                      const band = getBandScore(attempt.score, attempt.testType);
-
-                      return (
-                        <div
-                          key={attempt.id}
-                          className="py-5 first:pt-0 last:pb-0 flex flex-col sm:flex-row sm:items-center justify-between gap-4"
-                        >
-                          <div className="space-y-1">
-                            <h3 className="font-bold text-forest-ink font-inter text-base">
-                              {formatTestName(attempt.testId)}
-                            </h3>
-                            <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5 text-xs text-forest-ink/50 font-mono">
-                              <span className="flex items-center gap-1">
-                                <FileText size={13} /> {formatTestType(attempt.testType)}
-                              </span>
-                              <span className="flex items-center gap-1">
-                                <Calendar size={13} /> {date}
-                              </span>
-                            </div>
-                          </div>
-
-                          <div className="flex items-center justify-between sm:justify-end gap-6">
-                            <div className="flex gap-4 items-center">
-                              <div className="text-right">
-                                <span className="text-[9px] font-mono text-forest-ink/40 uppercase tracking-wider block">Raw Score</span>
-                                <span className="font-bold text-sm text-forest-ink font-inter">
-                                  {attempt.score} <span className="text-xs text-forest-ink/40">/ {attempt.total}</span>
-                                </span>
-                              </div>
-
-                              <div className="w-10 h-10 rounded-full bg-sticky-note-mint/20 flex items-center justify-center border border-pencil-gray/10 shrink-0">
-                                <span className="font-bold text-sm text-forest-ink font-bricolage">{band}</span>
-                              </div>
-                            </div>
-
-                            <Link href={`/tests/${attempt.testType}/${attempt.testId}/results/${attempt.id}`}>
-                              <Button
-                                variant="outline"
-                                size="sm"
-                                className="rounded-xl border-pencil-gray/20 text-forest-ink hover:bg-whisper-gray font-semibold font-inter shadow-xs cursor-pointer flex items-center gap-1 shrink-0"
-                              >
-                                <span>Review</span>
-                                <ChevronRight size={14} />
-                              </Button>
-                            </Link>
-                          </div>
-                        </div>
-                      );
-                    })}
-                  </div>
                 </div>
               </>
             )}
 
-            {/* 5. Writing Review Submissions List */}
-            <div className="bg-white rounded-2xl shadow-sm border border-pencil-gray/20 p-6 md:p-8">
-              <h2 className="text-xl font-bold font-bricolage text-forest-ink mb-6 flex items-center gap-2">
-                <FileText className="text-forest-ink/60 h-5 w-5" /> Writing Review History
+            {/* Saved Practice Session Drafts */}
+            {savedSessions.length > 0 && (
+              <div className="bg-white rounded-3xl border border-amber-200/60 shadow-sm p-6 space-y-4">
+                <div className="flex items-center justify-between border-b border-forest-ink/5 pb-4">
+                  <div className="flex items-center gap-3">
+                    <div className="w-9 h-9 rounded-xl bg-amber-50 text-amber-700 border border-amber-200/50 flex items-center justify-center shrink-0">
+                      <Clock size={18} />
+                    </div>
+                    <div>
+                      <h3 className="text-base font-bold font-bricolage text-forest-ink">
+                        In-Progress Practice Drafts ({savedSessions.length})
+                      </h3>
+                      <p className="text-xs text-forest-ink/60">
+                        Pick up right where you left off without losing your answers.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {savedSessions.map((session) => {
+                    const answered = Object.values(session.answers || {}).filter((v) => v?.trim()).length;
+                    return (
+                      <div
+                        key={session.testId}
+                        className="p-4 rounded-2xl bg-[#faf9f5] border border-forest-ink/10 hover:border-forest-ink/20 transition-all flex flex-col justify-between space-y-3"
+                      >
+                        <div className="flex items-start justify-between gap-3">
+                          <div>
+                            <span className="px-2.5 py-0.5 rounded-full bg-forest-ink/10 text-forest-ink text-[10px] font-mono font-bold uppercase tracking-wider">
+                              {formatTestType(session.testType)}
+                            </span>
+                            <h4 className="text-sm font-bold font-bricolage text-forest-ink mt-1.5 leading-snug">
+                              {session.testName || formatTestName(session.testId)}
+                            </h4>
+                            <p className="text-xs font-mono text-forest-ink/60 mt-1">
+                              {answered} / 40 Questions Answered
+                            </p>
+                          </div>
+
+                          <button
+                            type="button"
+                            onClick={() => handleDiscardSession(session.testId)}
+                            className="p-1.5 rounded-lg text-forest-ink/40 hover:text-rose-600 hover:bg-rose-50 transition-colors"
+                            title="Discard draft"
+                          >
+                            <X size={15} />
+                          </button>
+                        </div>
+
+                        <div className="pt-2 border-t border-forest-ink/10 flex items-center justify-between">
+                          <span className="text-[11px] font-mono text-forest-ink/50">
+                            {new Date(session.updatedAt).toLocaleDateString(undefined, {
+                              month: "short",
+                              day: "numeric",
+                            })}
+                          </span>
+
+                          <Link
+                            href={`/tests/${session.testType}/${session.testId}`}
+                            className="px-3.5 py-1.5 rounded-xl bg-forest-ink hover:bg-forest-ink/90 text-white text-xs font-semibold flex items-center gap-1.5 shadow-2xs transition-all"
+                          >
+                            Resume <ArrowRight size={13} />
+                          </Link>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+
+            {/* Recent Attempt Details Table */}
+            {hasAttempts && (
+              <div className="bg-white rounded-3xl border border-forest-ink/10 p-6 sm:p-8 shadow-sm space-y-6">
+                <h2 className="text-lg font-bold font-bricolage text-forest-ink flex items-center gap-2">
+                  <Clock size={20} className="text-forest-ink/70" /> Recent Test History
+                </h2>
+
+                <div className="divide-y divide-forest-ink/10">
+                  {attempts.map((attempt) => {
+                    const date = attempt.submittedAt
+                      ? new Date(attempt.submittedAt.seconds * 1000).toLocaleDateString("en-US", {
+                          month: "short",
+                          day: "numeric",
+                          year: "numeric",
+                        })
+                      : "N/A";
+                    const band = getBandScore(attempt.score, attempt.testType);
+
+                    return (
+                      <div
+                        key={attempt.id}
+                        className="py-4 first:pt-0 last:pb-0 flex flex-col sm:flex-row sm:items-center justify-between gap-4"
+                      >
+                        <div className="space-y-1">
+                          <h3 className="font-bold text-forest-ink text-sm sm:text-base leading-snug">
+                            {formatTestName(attempt.testId)}
+                          </h3>
+                          <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-forest-ink/60 font-mono">
+                            <span className="px-2 py-0.5 rounded bg-forest-ink/5 border border-forest-ink/10 text-[10px] uppercase font-bold">
+                              {formatTestType(attempt.testType)}
+                            </span>
+                            <span>{date}</span>
+                          </div>
+                        </div>
+
+                        <div className="flex items-center justify-between sm:justify-end gap-5">
+                          <div className="flex gap-3 items-center">
+                            <div className="text-right">
+                              <span className="text-[10px] font-mono text-forest-ink/50 block">Score</span>
+                              <span className="font-bold text-sm font-mono text-forest-ink">
+                                {attempt.score} / {attempt.total}
+                              </span>
+                            </div>
+
+                            <div className="px-3 py-1.5 rounded-xl bg-forest-ink text-white flex items-center justify-center font-bold text-sm font-bricolage shadow-2xs">
+                              Band {band}
+                            </div>
+                          </div>
+
+                          <Link href={`/tests/${attempt.testType}/${attempt.testId}/results/${attempt.id}`}>
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              className="h-9 px-3 rounded-xl border-forest-ink/15 text-forest-ink hover:bg-forest-ink hover:text-white font-medium text-xs cursor-pointer flex items-center gap-1 shrink-0 transition-colors"
+                            >
+                              <span>Review</span>
+                              <ChevronRight size={13} />
+                            </Button>
+                          </Link>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+
+            {/* Writing Submissions History */}
+            <div className="bg-white rounded-3xl border border-forest-ink/10 p-6 sm:p-8 shadow-sm space-y-6">
+              <h2 className="text-lg font-bold font-bricolage text-forest-ink flex items-center gap-2">
+                <FileText size={20} className="text-forest-ink/70" /> Essay Review History
               </h2>
 
               {loadingSubmissions ? (
                 <div className="py-8 text-center text-forest-ink/50 text-sm font-inter">
-                  <Loader2 className="h-5 w-5 animate-spin mx-auto mb-2 text-forest-ink/75" />
-                  Loading submissions...
+                  <Loader2 className="h-5 w-5 animate-spin mx-auto mb-2 text-forest-ink/70" />
+                  Loading writing submissions...
                 </div>
               ) : submissions.length === 0 ? (
-                <div className="py-8 text-center text-forest-ink/50 text-sm font-inter">
-                  No writing submissions found.{" "}
-                  <Link href="/writing-review/submit" className="text-forest-ink font-semibold hover:underline">
-                    Submit your first essay!
+                <div className="py-8 text-center text-forest-ink/60 text-sm">
+                  No essay submissions yet.{" "}
+                  <Link href="/writing-review/submit" className="text-forest-ink font-bold hover:underline">
+                    Submit an essay for evaluation!
                   </Link>
                 </div>
               ) : (
-                <div className="divide-y divide-pencil-gray/10">
+                <div className="divide-y divide-forest-ink/10">
                   {submissions.map((sub) => {
                     const date = sub.submittedAt
                       ? new Date(sub.submittedAt.seconds * 1000).toLocaleDateString("en-US", {
@@ -1108,28 +1105,23 @@ export default function ProfilePage() {
                     return (
                       <div
                         key={sub.id}
-                        className="py-4 first:pt-0 last:pb-0 flex flex-col sm:flex-row sm:items-center justify-between gap-4 font-inter text-sm"
+                        className="py-4 first:pt-0 last:pb-0 flex flex-col sm:flex-row sm:items-center justify-between gap-4 text-sm"
                       >
                         <div>
                           <h3 className="font-bold text-forest-ink">
                             {sub.taskType === "task_1" ? "Writing Task 1" : "Writing Task 2"}
                           </h3>
-                          <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5 text-xs text-forest-ink/50 font-mono mt-1">
+                          <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-forest-ink/60 font-mono mt-1">
                             <span className="capitalize">Method: {sub.submissionMethod}</span>
                             {sub.wordCount !== null && (
                               <span>{sub.wordCount} words</span>
-                            )}
-                            {sub.fileName && (
-                              <span className="truncate max-w-[150px]" title={sub.fileName}>
-                                File: {sub.fileName}
-                              </span>
                             )}
                             <span>{date}</span>
                           </div>
                         </div>
 
-                        <div className="flex items-center justify-between sm:justify-end gap-4">
-                          <span className="px-3 py-1.5 rounded-full text-xs font-semibold capitalize bg-[#faf9f6] border border-pencil-gray/20 text-forest-ink">
+                        <div className="flex items-center justify-between sm:justify-end gap-3">
+                          <span className="px-3 py-1 rounded-full text-xs font-semibold uppercase font-mono bg-forest-ink/5 border border-forest-ink/10 text-forest-ink">
                             {sub.status}
                           </span>
                         </div>
@@ -1142,53 +1134,76 @@ export default function ProfilePage() {
 
           </div>
 
-          {/* Account Sidebar Column */}
-          <div className="lg:col-span-1 space-y-6">
-            <div className="bg-white rounded-2xl shadow-sm border border-pencil-gray/20 p-6 md:p-8">
-              
-              {/* Profile Card Summary */}
-              <div className="flex flex-col items-center text-center pb-6 border-b border-pencil-gray/10 mb-6">
-                <div className="w-20 h-20 rounded-full bg-forest-ink text-cream-paper flex items-center justify-center font-bold text-3xl mb-4 border border-pencil-gray/10 shadow-xs overflow-hidden">
-                  {user.photoURL ? (
-                    <img src={user.photoURL} alt="Profile" className="w-full h-full object-cover" />
-                  ) : (
-                    user.email?.[0].toUpperCase() || "U"
-                  )}
+          {/* Right Sidebar Column (35%): Skills Breakdown + Account Settings */}
+          <div className="lg:col-span-1 space-y-8">
+
+            {/* Skills Mastery Breakdown Cards (Stacked in Sidebar) */}
+            {hasAttempts && (
+              <div className="space-y-6">
+                {/* Listening Card */}
+                <div className="bg-white rounded-3xl border border-forest-ink/10 p-6 shadow-sm space-y-4">
+                  <h3 className="text-base font-bold font-bricolage text-forest-ink flex items-center gap-2">
+                    <BookOpen size={18} className="text-forest-ink/70" /> Listening Skills
+                  </h3>
+                  <div className="grid grid-cols-3 gap-2 text-center pt-2 border-t border-forest-ink/10">
+                    <div>
+                      <span className="text-[10px] font-mono uppercase tracking-wider text-forest-ink/50 block">Taken</span>
+                      <strong className="text-base font-bold font-mono">{listeningStats.attemptsCount}</strong>
+                    </div>
+                    <div>
+                      <span className="text-[10px] font-mono uppercase tracking-wider text-forest-ink/50 block">Avg Band</span>
+                      <strong className="text-base font-bold font-mono">{listeningStats.averageBand}</strong>
+                    </div>
+                    <div>
+                      <span className="text-[10px] font-mono uppercase tracking-wider text-forest-ink/50 block">Best</span>
+                      <strong className="text-base font-bold font-mono text-emerald-700">{listeningStats.bestBand}</strong>
+                    </div>
+                  </div>
                 </div>
-                <h2 className="text-xl font-extrabold font-bricolage text-forest-ink">
-                  {user.displayName || "Practice Account"}
-                </h2>
-                <span className="text-xs font-mono text-forest-ink/50 mt-1">{user.email}</span>
-                
-                <div className="mt-4 flex flex-wrap gap-1.5 justify-center">
-                  {user.providerData.map((provider) => (
-                    <span
-                      key={provider.providerId}
-                      className="px-2 py-0.5 rounded-full text-[10px] font-mono border border-pencil-gray/25 bg-whisper-gray text-forest-ink/75 capitalize animate-fade-in"
-                    >
-                      {provider.providerId === "password" ? "email user" : provider.providerId.replace(".com", "")}
-                    </span>
-                  ))}
+
+                {/* Reading Card */}
+                <div className="bg-white rounded-3xl border border-forest-ink/10 p-6 shadow-sm space-y-4">
+                  <h3 className="text-base font-bold font-bricolage text-forest-ink flex items-center gap-2">
+                    <FileText size={18} className="text-forest-ink/70" /> Reading Skills
+                  </h3>
+                  <div className="grid grid-cols-3 gap-2 text-center pt-2 border-t border-forest-ink/10">
+                    <div>
+                      <span className="text-[10px] font-mono uppercase tracking-wider text-forest-ink/50 block">Taken</span>
+                      <strong className="text-base font-bold font-mono">{readingStats.attemptsCount}</strong>
+                    </div>
+                    <div>
+                      <span className="text-[10px] font-mono uppercase tracking-wider text-forest-ink/50 block">Avg Band</span>
+                      <strong className="text-base font-bold font-mono">{readingStats.averageBand}</strong>
+                    </div>
+                    <div>
+                      <span className="text-[10px] font-mono uppercase tracking-wider text-forest-ink/50 block">Best</span>
+                      <strong className="text-base font-bold font-mono text-emerald-700">{readingStats.bestBand}</strong>
+                    </div>
+                  </div>
                 </div>
               </div>
+            )}
 
-              {/* Profile settings Form */}
+            {/* Account Settings & Security Card */}
+            <div className="bg-white rounded-3xl border border-forest-ink/10 p-6 sm:p-8 shadow-sm space-y-6">
+
+              {/* Display Name Editor Form */}
               <form onSubmit={handleUpdateName} className="space-y-4">
-                <h3 className="text-sm font-mono text-forest-ink/40 uppercase tracking-wider mb-2 flex items-center gap-1.5">
-                  <User size={14} /> Profile Settings
+                <h3 className="text-sm font-bold font-bricolage text-forest-ink flex items-center gap-2 border-b border-forest-ink/10 pb-3">
+                  <User size={16} className="text-forest-ink/70" /> Account Settings
                 </h3>
-                
+
                 {nameError && (
-                  <div className="flex items-center gap-1.5 text-xs text-red-600 bg-red-50 p-2 rounded-lg border border-red-200">
+                  <div className="flex items-center gap-2 text-xs text-rose-700 bg-rose-50 p-2.5 rounded-xl border border-rose-200">
                     <AlertCircle size={14} className="shrink-0" />
                     <span>{nameError}</span>
                   </div>
                 )}
 
                 {nameSuccess && (
-                  <div className="flex items-center gap-1.5 text-xs text-forest-ink bg-sticky-note-mint/15 p-2 rounded-lg border border-sticky-note-mint/30">
+                  <div className="flex items-center gap-2 text-xs text-emerald-800 bg-emerald-50 p-2.5 rounded-xl border border-emerald-200">
                     <CheckCircle size={14} className="shrink-0" />
-                    <span>Display name updated! Refreshing...</span>
+                    <span>Display name updated!</span>
                   </div>
                 )}
 
@@ -1202,8 +1217,8 @@ export default function ProfilePage() {
                     value={nameInput}
                     onChange={(e) => setNameInput(e.target.value)}
                     disabled={updatingName}
-                    placeholder="Enter your name"
-                    className="h-9 border-pencil-gray/20 focus-visible:border-forest-ink focus-visible:ring-forest-ink/10 text-sm"
+                    placeholder="Enter full name"
+                    className="h-10 border-forest-ink/20 focus-visible:border-forest-ink focus-visible:ring-forest-ink/10 text-sm rounded-xl"
                   />
                 </div>
 
@@ -1212,11 +1227,11 @@ export default function ProfilePage() {
                   disabled={updatingName || user.displayName === nameInput}
                   variant="forest"
                   size="sm"
-                  className="w-full h-9 text-xs"
+                  className="w-full h-10 text-xs font-semibold rounded-xl cursor-pointer"
                 >
                   {updatingName ? (
                     <>
-                      <Loader2 size={12} className="animate-spin mr-1.5" />
+                      <Loader2 size={13} className="animate-spin mr-1.5" />
                       Saving...
                     </>
                   ) : (
@@ -1225,61 +1240,211 @@ export default function ProfilePage() {
                 </Button>
               </form>
 
-              {/* Divider */}
-              <div className="border-t border-pencil-gray/10 my-6"></div>
+              {/* IELTS Candidate Demographics Form */}
+              <form onSubmit={handleSaveDemographics} className="space-y-4 pt-2 border-t border-forest-ink/10">
+                <h3 className="text-sm font-bold font-bricolage text-forest-ink flex items-center gap-2">
+                  <GraduationCap size={16} className="text-forest-ink/70" /> Candidate Profile & Goals
+                </h3>
+
+                {demoError && (
+                  <div className="flex items-center gap-2 text-xs text-rose-700 bg-rose-50 p-2.5 rounded-xl border border-rose-200">
+                    <AlertCircle size={14} className="shrink-0" />
+                    <span>{demoError}</span>
+                  </div>
+                )}
+
+                {demoSuccess && (
+                  <div className="flex items-center gap-2 text-xs text-emerald-800 bg-emerald-50 p-2.5 rounded-xl border border-emerald-200">
+                    <CheckCircle size={14} className="shrink-0" />
+                    <span>Candidate profile saved!</span>
+                  </div>
+                )}
+
+                {/* Gender */}
+                <div className="space-y-1.5">
+                  <Label htmlFor="gender" className="text-xs font-semibold text-forest-ink">
+                    Gender / Salutation
+                  </Label>
+                  <select
+                    id="gender"
+                    value={gender}
+                    onChange={(e) => setGender(e.target.value)}
+                    className="w-full h-10 px-3 bg-white border border-forest-ink/20 focus:border-forest-ink text-xs rounded-xl font-inter text-forest-ink"
+                  >
+                    <option value="">Select Gender</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="non_binary">Non-Binary</option>
+                    <option value="prefer_not_to_say">Prefer not to say</option>
+                  </select>
+                </div>
+
+                {/* Target Module */}
+                <div className="space-y-1.5">
+                  <Label htmlFor="targetModule" className="text-xs font-semibold text-forest-ink">
+                    Target Exam Module
+                  </Label>
+                  <select
+                    id="targetModule"
+                    value={targetModule}
+                    onChange={(e) => setTargetModule(e.target.value)}
+                    className="w-full h-10 px-3 bg-white border border-forest-ink/20 focus:border-forest-ink text-xs rounded-xl font-inter text-forest-ink"
+                  >
+                    <option value="academic">Academic (University / Professional)</option>
+                    <option value="general">General Training (Migration / Work)</option>
+                  </select>
+                </div>
+
+                {/* Target Band & Exam Date */}
+                <div className="grid grid-cols-2 gap-3">
+                  <div className="space-y-1.5">
+                    <Label htmlFor="targetBand" className="text-xs font-semibold text-forest-ink">
+                      Target Band
+                    </Label>
+                    <select
+                      id="targetBand"
+                      value={targetBand}
+                      onChange={(e) => setTargetBand(e.target.value)}
+                      className="w-full h-10 px-3 bg-white border border-forest-ink/20 focus:border-forest-ink text-xs rounded-xl font-inter text-forest-ink font-mono font-bold"
+                    >
+                      <option value="6.0">Band 6.0</option>
+                      <option value="6.5">Band 6.5</option>
+                      <option value="7.0">Band 7.0</option>
+                      <option value="7.5">Band 7.5</option>
+                      <option value="8.0">Band 8.0</option>
+                      <option value="8.5+">Band 8.5+</option>
+                    </select>
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <Label htmlFor="targetDate" className="text-xs font-semibold text-forest-ink">
+                      Target Date
+                    </Label>
+                    <Input
+                      id="targetDate"
+                      type="date"
+                      value={targetDate}
+                      onChange={(e) => setTargetDate(e.target.value)}
+                      className="h-10 border-forest-ink/20 text-xs rounded-xl font-mono"
+                    />
+                  </div>
+                </div>
+
+                {/* Primary Purpose */}
+                <div className="space-y-1.5">
+                  <Label htmlFor="primaryPurpose" className="text-xs font-semibold text-forest-ink">
+                    Primary Goal / Purpose
+                  </Label>
+                  <select
+                    id="primaryPurpose"
+                    value={primaryPurpose}
+                    onChange={(e) => setPrimaryPurpose(e.target.value)}
+                    className="w-full h-10 px-3 bg-white border border-forest-ink/20 focus:border-forest-ink text-xs rounded-xl font-inter text-forest-ink"
+                  >
+                    <option value="university">Higher Education / University</option>
+                    <option value="immigration">Immigration / Permanent Residency</option>
+                    <option value="professional">Professional Registration</option>
+                    <option value="work">Work Visa / Employment</option>
+                    <option value="personal">Personal Self-Assessment</option>
+                  </select>
+                </div>
+
+                {/* Native Language & Country */}
+                <div className="grid grid-cols-2 gap-3">
+                  <div className="space-y-1.5">
+                    <Label htmlFor="nativeLanguage" className="text-xs font-semibold text-forest-ink">
+                      Native Language
+                    </Label>
+                    <Input
+                      id="nativeLanguage"
+                      type="text"
+                      placeholder="e.g. Punjabi, Hindi..."
+                      value={nativeLanguage}
+                      onChange={(e) => setNativeLanguage(e.target.value)}
+                      className="h-10 border-forest-ink/20 text-xs rounded-xl"
+                    />
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <Label htmlFor="country" className="text-xs font-semibold text-forest-ink">
+                      Country of Origin
+                    </Label>
+                    <Input
+                      id="country"
+                      type="text"
+                      placeholder="e.g. India, Nepal..."
+                      value={country}
+                      onChange={(e) => setCountry(e.target.value)}
+                      className="h-10 border-forest-ink/20 text-xs rounded-xl"
+                    />
+                  </div>
+                </div>
+
+                <Button
+                  type="submit"
+                  disabled={savingDemo}
+                  variant="forest"
+                  size="sm"
+                  className="w-full h-10 text-xs font-semibold rounded-xl cursor-pointer"
+                >
+                  {savingDemo ? (
+                    <>
+                      <Loader2 size={13} className="animate-spin mr-1.5" />
+                      Saving Candidate Profile...
+                    </>
+                  ) : (
+                    "Save Candidate Profile"
+                  )}
+                </Button>
+              </form>
 
               {/* Authentication Methods Section */}
-              <div className="space-y-4">
-                <h3 className="text-sm font-mono text-forest-ink/40 uppercase tracking-wider flex items-center gap-1.5">
-                  <Sparkles size={14} /> Authentication Methods
+              <div className="space-y-4 pt-2 border-t border-forest-ink/10">
+                <h3 className="text-sm font-bold font-bricolage text-forest-ink flex items-center gap-2">
+                  <Shield size={16} className="text-forest-ink/70" /> Authentication Providers
                 </h3>
 
                 {linkError && (
-                  <div className="flex items-center gap-1.5 text-xs text-red-600 bg-red-50 p-2.5 rounded-lg border border-red-200 leading-normal">
+                  <div className="flex items-center gap-2 text-xs text-rose-700 bg-rose-50 p-2.5 rounded-xl border border-rose-200">
                     <AlertCircle size={14} className="shrink-0" />
                     <span>{linkError}</span>
                   </div>
                 )}
 
                 {linkSuccess && (
-                  <div className="flex items-center gap-1.5 text-xs text-forest-ink bg-sticky-note-mint/15 p-2 rounded-lg border border-sticky-note-mint/30">
+                  <div className="flex items-center gap-2 text-xs text-emerald-800 bg-emerald-50 p-2.5 rounded-xl border border-emerald-200">
                     <CheckCircle size={14} className="shrink-0" />
-                    <span>Google account connected successfully!</span>
+                    <span>Google account linked successfully!</span>
                   </div>
                 )}
 
-                <div className="space-y-3 font-inter">
+                <div className="space-y-3">
                   {/* Email & Password Provider Status */}
-                  <div className="flex items-center justify-between p-3 rounded-lg border border-pencil-gray/10 bg-whisper-gray text-sm">
-                    <div className="flex flex-col">
-                      <span className="font-semibold text-forest-ink">Email & Password</span>
-                      <span className="text-[10px] text-forest-ink/50 font-mono mt-0.5">
-                        {hasPasswordProvider ? "✓ Connected" : "○ Not connected"}
+                  <div className="flex items-center justify-between p-3.5 rounded-2xl border border-forest-ink/10 bg-[#faf9f5] text-sm">
+                    <div>
+                      <span className="font-semibold text-forest-ink block text-xs">Email & Password</span>
+                      <span className="text-[10px] text-forest-ink/60 font-mono">
+                        {hasPasswordProvider ? "Connected" : "Not connected"}
                       </span>
                     </div>
-                    {!hasPasswordProvider && (
-                      <span className="text-xs font-mono text-forest-ink/40 select-none">
-                        (Password Setup Deferred)
-                      </span>
-                    )}
                   </div>
 
                   {/* Google SSO Provider Status */}
-                  <div className="flex items-center justify-between p-3 rounded-lg border border-pencil-gray/10 bg-whisper-gray text-sm">
-                    <div className="flex flex-col">
-                      <span className="font-semibold text-forest-ink">Google Account</span>
-                      <span className="text-[10px] text-forest-ink/50 font-mono mt-0.5">
-                        {user.providerData.some((p) => p.providerId === "google.com") ? "✓ Connected" : "○ Not connected"}
+                  <div className="flex items-center justify-between p-3.5 rounded-2xl border border-forest-ink/10 bg-[#faf9f5] text-sm">
+                    <div>
+                      <span className="font-semibold text-forest-ink block text-xs">Google Account</span>
+                      <span className="text-[10px] text-forest-ink/60 font-mono">
+                        {user.providerData.some((p) => p.providerId === "google.com") ? "Connected" : "Not connected"}
                       </span>
                     </div>
-                    {!user.providerData.some((p) => p.providerId === "google.com") ? (
+                    {!user.providerData.some((p) => p.providerId === "google.com") && (
                       <Button
                         type="button"
                         onClick={handleLinkGoogle}
                         disabled={linkingGoogle}
                         variant="forest"
                         size="sm"
-                        className="h-8 px-3 text-xs"
+                        className="h-8 px-3 text-xs rounded-lg cursor-pointer"
                       >
                         {linkingGoogle ? (
                           <Loader2 size={12} className="animate-spin" />
@@ -1287,101 +1452,84 @@ export default function ProfilePage() {
                           "Connect"
                         )}
                       </Button>
-                    ) : (
-                      <span className="text-xs font-semibold text-forest-ink/50 flex items-center gap-0.5 select-none">
-                        ✓ Connected
-                      </span>
                     )}
                   </div>
                 </div>
               </div>
 
-              {/* Security change password Form (conditional) */}
+              {/* Password Change Form */}
               {hasPasswordProvider && (
-                <>
-                  <div className="border-t border-pencil-gray/10 my-6"></div>
-                  
-                  <form onSubmit={handleUpdatePassword} className="space-y-4">
-                    <h3 className="text-sm font-mono text-forest-ink/40 uppercase tracking-wider mb-2 flex items-center gap-1.5">
-                      <Lock size={14} /> Change Password
-                    </h3>
+                <form onSubmit={handleUpdatePassword} className="space-y-4 pt-2 border-t border-forest-ink/10">
+                  <h3 className="text-sm font-bold font-bricolage text-forest-ink flex items-center gap-2">
+                    <Lock size={16} className="text-forest-ink/70" /> Change Password
+                  </h3>
 
-                    {passError && (
-                      <div className="flex items-center gap-1.5 text-xs text-red-600 bg-red-50 p-2.5 rounded-lg border border-red-200 leading-normal">
-                        <AlertCircle size={14} className="shrink-0" />
-                        <span>{passError}</span>
-                      </div>
-                    )}
-
-                    {passSuccess && (
-                      <div className="flex items-center gap-1.5 text-xs text-forest-ink bg-sticky-note-mint/15 p-2 rounded-lg border border-sticky-note-mint/30">
-                        <CheckCircle size={14} className="shrink-0" />
-                        <span>Password changed successfully!</span>
-                      </div>
-                    )}
-
-                    <div className="space-y-1.5">
-                      <Label htmlFor="newPass" className="text-xs font-semibold text-forest-ink">
-                        New Password
-                      </Label>
-                      <Input
-                        id="newPass"
-                        type="password"
-                        value={newPassword}
-                        onChange={(e) => setNewPassword(e.target.value)}
-                        disabled={updatingPass}
-                        placeholder="Min 6 characters"
-                        className="h-9 border-pencil-gray/20 focus-visible:border-forest-ink focus-visible:ring-forest-ink/10 text-sm"
-                      />
+                  {passError && (
+                    <div className="flex items-center gap-2 text-xs text-rose-700 bg-rose-50 p-2.5 rounded-xl border border-rose-200">
+                      <AlertCircle size={14} className="shrink-0" />
+                      <span>{passError}</span>
                     </div>
+                  )}
 
-                    <div className="space-y-1.5">
-                      <Label htmlFor="confirmPass" className="text-xs font-semibold text-forest-ink">
-                        Confirm Password
-                      </Label>
-                      <Input
-                        id="confirmPass"
-                        type="password"
-                        value={confirmPassword}
-                        onChange={(e) => setConfirmPassword(e.target.value)}
-                        disabled={updatingPass}
-                        placeholder="Repeat new password"
-                        className="h-9 border-pencil-gray/20 focus-visible:border-forest-ink focus-visible:ring-forest-ink/10 text-sm"
-                      />
+                  {passSuccess && (
+                    <div className="flex items-center gap-2 text-xs text-emerald-800 bg-emerald-50 p-2.5 rounded-xl border border-emerald-200">
+                      <CheckCircle size={14} className="shrink-0" />
+                      <span>Password changed successfully!</span>
                     </div>
+                  )}
 
-                    <Button
-                      type="submit"
+                  <div className="space-y-1.5">
+                    <Label htmlFor="newPass" className="text-xs font-semibold text-forest-ink">
+                      New Password
+                    </Label>
+                    <Input
+                      id="newPass"
+                      type="password"
+                      value={newPassword}
+                      onChange={(e) => setNewPassword(e.target.value)}
                       disabled={updatingPass}
-                      variant="forest"
-                      size="sm"
-                      className="w-full h-9 text-xs"
-                    >
-                      {updatingPass ? (
-                        <>
-                          <Loader2 size={12} className="animate-spin mr-1.5" />
-                          Updating...
-                        </>
-                      ) : (
-                        "Update Password"
-                      )}
-                    </Button>
-                  </form>
-                </>
-              )}
+                      placeholder="Min 6 characters"
+                      className="h-10 border-forest-ink/20 focus-visible:border-forest-ink focus-visible:ring-forest-ink/10 text-sm rounded-xl"
+                    />
+                  </div>
 
-              {/* Logout Block */}
-              <div className="border-t border-pencil-gray/10 my-6"></div>
-              <Button
-                onClick={handleLogoutClick}
-                variant="forestOutline"
-                className="w-full h-10 text-sm justify-center flex items-center gap-1.5 cursor-pointer"
-              >
-                <LogOut size={16} /> Log Out
-              </Button>
+                  <div className="space-y-1.5">
+                    <Label htmlFor="confirmPass" className="text-xs font-semibold text-forest-ink">
+                      Confirm Password
+                    </Label>
+                    <Input
+                      id="confirmPass"
+                      type="password"
+                      value={confirmPassword}
+                      onChange={(e) => setConfirmPassword(e.target.value)}
+                      disabled={updatingPass}
+                      placeholder="Repeat new password"
+                      className="h-10 border-forest-ink/20 focus-visible:border-forest-ink focus-visible:ring-forest-ink/10 text-sm rounded-xl"
+                    />
+                  </div>
+
+                  <Button
+                    type="submit"
+                    disabled={updatingPass}
+                    variant="forest"
+                    size="sm"
+                    className="w-full h-10 text-xs font-semibold rounded-xl cursor-pointer"
+                  >
+                    {updatingPass ? (
+                      <>
+                        <Loader2 size={13} className="animate-spin mr-1.5" />
+                        Updating...
+                      </>
+                    ) : (
+                      "Update Password"
+                    )}
+                  </Button>
+                </form>
+              )}
 
             </div>
           </div>
+
         </div>
 
       </div>

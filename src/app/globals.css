@@ -346,3 +346,210 @@
     padding: 8px 12px;
   }
 }
+
+/* ==========================================================================
+   Dark Forest Ink Theme for IELTS Test Runner (.dark-test-mode)
+   ========================================================================== */
+.dark-test-mode {
+  color-scheme: dark;
+  background-color: #060d05 !important; /* Deep Midnight Forest */
+  color: #e5f0d8 !important;
+}
+
+/* Cards, Passages & Canvas Panels */
+.dark-test-mode .bg-white,
+.dark-test-mode .bg-cream-paper,
+.dark-test-mode .bg-cream-paper\/95,
+.dark-test-mode .bg-white\/85,
+.dark-test-mode .bg-\[\#fcfaf5\] {
+  background-color: #0f1a0e !important; /* Midnight Forest Card Surface */
+  border-color: #1e301d !important;
+  color: #e5f0d8 !important;
+}
+
+/* Headers & Navigation Bars */
+.dark-test-mode header,
+.dark-test-mode .sticky {
+  background-color: #0f1a0e !important;
+  border-color: #1e301d !important;
+  color: #e5f0d8 !important;
+}
+
+/* Base Text & Headings */
+.dark-test-mode .text-forest-ink,
+.dark-test-mode .prose,
+.dark-test-mode .prose p,
+.dark-test-mode .prose span,
+.dark-test-mode .prose strong,
+.dark-test-mode .prose td,
+.dark-test-mode .prose th,
+.dark-test-mode .prose li {
+  color: #e5f0d8 !important;
+}
+
+.dark-test-mode .prose h1,
+.dark-test-mode .prose h2,
+.dark-test-mode .prose h3,
+.dark-test-mode .prose h4 {
+  color: #f7fee7 !important;
+}
+
+/* Subtext & Muted Labels */
+.dark-test-mode .text-forest-ink\/75,
+.dark-test-mode .text-forest-ink\/70,
+.dark-test-mode .text-forest-ink\/65,
+.dark-test-mode .text-forest-ink\/60,
+.dark-test-mode .text-forest-ink\/55,
+.dark-test-mode .text-forest-ink\/50,
+.dark-test-mode .text-forest-ink\/45,
+.dark-test-mode .text-forest-ink\/40,
+.dark-test-mode .text-pencil-gray\/40,
+.dark-test-mode .text-pencil-gray {
+  color: #92b087 !important;
+}
+
+/* Requirement & Word Limit Badges ("ONE WORD ONLY", etc.) */
+.dark-test-mode .bg-amber-500\/10 {
+  background-color: rgba(245, 158, 11, 0.25) !important;
+  border-color: rgba(245, 158, 11, 0.5) !important;
+}
+
+.dark-test-mode .text-amber-950,
+.dark-test-mode .text-amber-900,
+.dark-test-mode .text-amber-800,
+.dark-test-mode .text-amber-700 {
+  color: #fef08a !important; /* Bright Canary Yellow text */
+}
+
+/* Form Inputs & Text Areas */
+.dark-test-mode input[type="text"],
+.dark-test-mode input:not([type="radio"]):not([type="submit"]):not([type="button"]):not([type="hidden"]),
+.dark-test-mode textarea,
+.dark-test-mode select {
+  background-color: #060d05 !important;
+  color: #ffffff !important;
+  border-color: #2b4529 !important;
+}
+
+.dark-test-mode input[type="text"]:focus,
+.dark-test-mode input:not([type="radio"]):not([type="submit"]):not([type="button"]):not([type="hidden"]):focus {
+  border-color: #ffe95c !important;
+  box-shadow: 0 0 0 2px rgba(255, 233, 92, 0.3) !important;
+}
+
+/* Radio Buttons & Checkboxes */
+.dark-test-mode button[role="radio"],
+.dark-test-mode button[role="checkbox"],
+.dark-test-mode input[type="radio"] {
+  border-color: #2b4529 !important;
+  background-color: #060d05 !important;
+  color: #ffffff !important;
+}
+
+.dark-test-mode button[role="radio"][data-state="checked"],
+.dark-test-mode button[role="checkbox"][data-state="checked"] {
+  background-color: #ffe95c !important;
+  border-color: #ffe95c !important;
+  color: #1a3300 !important;
+}
+
+/* Question Navigator Pills */
+.dark-test-mode .bg-white.text-forest-ink\/70,
+.dark-test-mode button.bg-white {
+  background-color: #1a2c18 !important; /* Dark Green Pill */
+  color: #ffffff !important; /* 100% Crisp White Number */
+  border-color: #2c442a !important;
+}
+
+.dark-test-mode .bg-forest-ink {
+  background-color: #059669 !important; /* Emerald 600 for answered */
+  color: #ffffff !important;
+  border-color: #047857 !important;
+}
+
+.dark-test-mode .bg-forest-ink\/5,
+.dark-test-mode .bg-forest-ink\/10 {
+  background-color: #060d05 !important;
+  color: #e5f0d8 !important;
+}
+
+/* Submit Test & Primary Action Buttons in Header / Modals */
+.dark-test-mode .bg-highlighter-yellow {
+  background-color: #ffe95c !important;
+  color: #1a3300 !important;
+}
+
+/* Section Evaluated & Checked Section Box */
+.dark-test-mode .bg-emerald-100 {
+  background-color: #065f46 !important;
+  color: #ecfdf5 !important;
+  border-color: #047857 !important;
+}
+
+.dark-test-mode .text-emerald-900,
+.dark-test-mode .text-emerald-700 {
+  color: #a7f3d0 !important;
+}
+
+.dark-test-mode .bg-gray-100 {
+  background-color: #142413 !important;
+  color: #799474 !important;
+  border-color: #1e301d !important;
+}
+
+.dark-test-mode .text-gray-400 {
+  color: #4f684a !important;
+}
+
+/* Practice Feedback Cards (Individual question feedback) */
+.dark-test-mode .bg-emerald-50 {
+  background-color: #064e3b !important;
+  color: #a7f3d0 !important;
+  border-color: #047857 !important;
+}
+
+.dark-test-mode .text-emerald-900,
+.dark-test-mode .text-emerald-600 {
+  color: #6ee7b7 !important;
+}
+
+.dark-test-mode .bg-rose-50 {
+  background-color: #881337 !important;
+  color: #fecdd3 !important;
+  border-color: #be123c !important;
+}
+
+.dark-test-mode .text-rose-900,
+.dark-test-mode .text-rose-600 {
+  color: #fda4af !important;
+}
+
+/* Borders across workspace */
+.dark-test-mode .border-pencil-gray\/20,
+.dark-test-mode .border-pencil-gray\/25,
+.dark-test-mode .border-pencil-gray\/15,
+.dark-test-mode .border-pencil-gray\/10,
+.dark-test-mode .border-forest-ink\/15,
+.dark-test-mode .border-forest-ink\/10,
+.dark-test-mode .border-forest-ink\/20,
+.dark-test-mode .border-forest-ink\/30 {
+  border-color: #1e301d !important;
+}
+
+/* Reference Box (FileText box inside instructions) */
+.dark-test-mode .bg-forest-ink\/5.border-b {
+  background-color: #142413 !important;
+  border-color: #1e301d !important;
+}
+
+/* Tables inside reading passages & question cards */
+.dark-test-mode table,
+.dark-test-mode td,
+.dark-test-mode th {
+  border-color: #1e301d !important;
+  color: #e5f0d8 !important;
+}
+
+.dark-test-mode th {
+  background-color: #060d05 !important;
+}

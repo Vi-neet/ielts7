@@ -2,7 +2,7 @@
 
 import { useRef, useState } from "react";
 import Image from "next/image";
-import { motion, useReducedMotion } from "framer-motion";
+import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import {
   ArrowRight,
   CheckCircle2,
@@ -13,6 +13,8 @@ import {
 } from "lucide-react";
 import { AmbientBackground } from "@/components/ui/AmbientBackground";
 import { FloatingShape } from "@/components/ui/FloatingShape";
+import { InteractiveGridSpotlight } from "./InteractiveGridSpotlight";
+import { InteractiveDoodles } from "./InteractiveDoodles";
 import { HighlightedText } from "./HighlightedText";
 import ProductPreview, { SkillType } from "./ProductPreview";
 import { Button } from "@/components/ui/button";
@@ -24,6 +26,15 @@ const HeroSection = () => {
   const previewRef = useRef<HTMLDivElement>(null);
   const prefersReducedMotion = useReducedMotion();
   const [activeSkill, setActiveSkill] = useState<SkillType>("listening");
+
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end start"],
+  });
+
+  const previewRotateX = useTransform(scrollYProgress, [0, 0.35], [10, 0]);
+  const previewScale = useTransform(scrollYProgress, [0, 0.35], [0.95, 1]);
+  const previewY = useTransform(scrollYProgress, [0, 0.35], [30, 0]);
 
   const skillPills: { id: SkillType; icon: any; label: string; href: string }[] = [
     { id: "reading", icon: BookOpen, label: "Reading", href: "/tests?module=reading" },
@@ -38,6 +49,8 @@ const HeroSection = () => {
       ref={containerRef}
     >
       <AmbientBackground variant="cream" />
+      <InteractiveGridSpotlight />
+      <InteractiveDoodles />
 
       {/* Dynamic Ambient Accent Glow behind hero */}
       <motion.div
@@ -98,8 +111,30 @@ const HeroSection = () => {
           </h1>
 
           <p className="mb-8 text-forest-ink/65 leading-relaxed font-inter text-[clamp(16px,2vw,18px)] max-w-[560px]">
-            Comprehensive practice materials and proven strategies that have
-            helped thousands of students achieve their target IELTS scores.
+            Comprehensive practice materials and{" "}
+            <span className="relative inline-block text-forest-ink font-semibold group cursor-pointer">
+              proven strategies
+              <svg
+                width="140"
+                height="12"
+                viewBox="0 0 140 12"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                className="absolute -bottom-1 left-0 w-full"
+              >
+                <motion.path
+                  d="M 2 6 Q 35 12, 70 6 T 138 6"
+                  stroke="#1a3300"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  initial={prefersReducedMotion ? { pathLength: 1 } : { pathLength: 0 }}
+                  animate={{ pathLength: 1 }}
+                  transition={{ duration: 0.8, delay: 0.6, ease: "easeOut" }}
+                  className="group-hover:stroke-highlighter-yellow transition-colors"
+                />
+              </svg>
+            </span>{" "}
+            that have helped thousands of students achieve their target IELTS scores.
           </p>
 
           <div className="flex flex-wrap items-center justify-center gap-3 mb-5">
@@ -124,7 +159,7 @@ const HeroSection = () => {
           </div>
 
           {/* Interactive Skill Selector Pills */}
-          <div className="flex flex-wrap items-center justify-center gap-2 mb-12 md:mb-16">
+          <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6 py-4 mb-12 md:mb-16">
             {skillPills.map(({ id, icon: Icon, label, href }) => {
               const isActive = activeSkill === id;
               return (
@@ -133,22 +168,39 @@ const HeroSection = () => {
                   href={href}
                   onMouseEnter={() => setActiveSkill(id)}
                   onClick={(e) => {
-                    // Pre-select active skill tab
                     setActiveSkill(id);
                   }}
-                  whileHover={prefersReducedMotion ? {} : { y: -2, scale: 1.04 }}
-                  whileTap={prefersReducedMotion ? {} : { scale: 0.98 }}
+                  animate={isActive ? { scale: 1.25, y: -4, zIndex: 30 } : { scale: 1, y: 0, zIndex: 10 }}
+                  whileHover={prefersReducedMotion ? {} : { scale: isActive ? 1.3 : 1.06, y: -3 }}
+                  whileTap={prefersReducedMotion ? {} : { scale: 0.95 }}
+                  transition={{ type: "spring", stiffness: 420, damping: 22 }}
                   className={cn(
-                    "flex items-center gap-2 px-4 py-2 rounded-full border text-[13px] font-semibold transition-all font-inter shadow-xs cursor-pointer",
+                    "relative flex items-center gap-2 px-5 py-2.5 rounded-full text-[13px] font-extrabold transition-colors font-inter cursor-pointer select-none",
                     isActive
-                      ? "bg-forest-ink text-white border-forest-ink shadow-md"
-                      : "bg-white/80 text-forest-ink/75 border-pencil-gray/25 hover:text-forest-ink hover:bg-white hover:border-forest-ink/30"
+                      ? "text-white shadow-2xl"
+                      : "bg-white/80 text-forest-ink/75 border border-pencil-gray/25 hover:text-forest-ink hover:bg-white"
                   )}
                 >
-                  <Icon className={cn("w-4 h-4", isActive ? "text-highlighter-yellow" : "text-forest-ink/60")} />
-                  <span>{label}</span>
                   {isActive && (
-                    <span className="w-1.5 h-1.5 rounded-full bg-highlighter-yellow animate-pulse ml-0.5" />
+                    <motion.div
+                      layoutId="activeSkillBg"
+                      className="absolute inset-0 rounded-full bg-forest-ink -z-10 shadow-xl"
+                      transition={{ type: "spring", stiffness: 450, damping: 28 }}
+                    />
+                  )}
+                  <motion.div
+                    animate={isActive ? { scale: 1.25, rotate: -8 } : { scale: 1, rotate: 0 }}
+                    transition={{ type: "spring", stiffness: 400, damping: 20 }}
+                  >
+                    <Icon className={cn("w-4 h-4", isActive ? "text-highlighter-yellow" : "text-forest-ink/60")} />
+                  </motion.div>
+                  <span className="relative z-10">{label}</span>
+                  {isActive && (
+                    <motion.span
+                      initial={{ scale: 0 }}
+                      animate={{ scale: 1 }}
+                      className="w-1.5 h-1.5 rounded-full bg-highlighter-yellow ml-0.5"
+                    />
                   )}
                 </motion.a>
               );
@@ -160,8 +212,14 @@ const HeroSection = () => {
           ref={previewRef}
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
+          style={{
+            rotateX: prefersReducedMotion ? 0 : previewRotateX,
+            scale: prefersReducedMotion ? 1 : previewScale,
+            y: prefersReducedMotion ? 0 : previewY,
+            transformPerspective: 1200,
+          }}
           transition={{ duration: 1, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-          className="relative z-10 w-full"
+          className="relative z-10 w-full origin-top"
         >
           <div className="absolute -inset-4 rounded-2xl pointer-events-none bg-[radial-gradient(ellipse_at_50%_60%,rgba(26,51,0,0.04)_0%,transparent_70%)]" />
           <ProductPreview activeSkill={activeSkill} />

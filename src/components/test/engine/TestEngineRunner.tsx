@@ -110,6 +110,24 @@ export default function TestEngineRunner({
   const [passageCollapsed, setPassageCollapsed] = useState(false);
   const [navigatorCollapsed, setNavigatorCollapsed] = useState(false);
 
+  // Dark mode state
+  const [isDarkMode, setIsDarkMode] = useState<boolean>(() => {
+    if (typeof window !== "undefined") {
+      return localStorage.getItem("ielts7_test_dark_mode") === "true";
+    }
+    return false;
+  });
+
+  const toggleDarkMode = () => {
+    setIsDarkMode((prev) => {
+      const next = !prev;
+      if (typeof window !== "undefined") {
+        localStorage.setItem("ielts7_test_dark_mode", String(next));
+      }
+      return next;
+    });
+  };
+
   // Exam mode timer state
   const [timeRemaining, setTimeRemaining] = useState(
     mode === "exam" ? examDurationSeconds : 0
@@ -509,7 +527,7 @@ export default function TestEngineRunner({
   const canPrevious = currentQuestion > 1;
 
   return (
-    <div className="fixed inset-0 z-50 flex flex-col bg-cream-paper overflow-hidden select-none animate-in fade-in duration-200">
+    <div className={cn("fixed inset-0 z-50 flex flex-col overflow-hidden select-none animate-in fade-in duration-200 transition-colors duration-200", isDarkMode ? "dark-test-mode bg-[#121c0e] text-[#e8efe2]" : "bg-cream-paper text-forest-ink")}>
       {/* Test Header */}
       <TestHeader
         testName={testName}
@@ -521,6 +539,8 @@ export default function TestEngineRunner({
         onSubmitClick={() => setShowSubmitConfirmModal(true)}
         onRestartClick={() => setShowRestartConfirmModal(true)}
         onBackClick={() => setShowExitConfirmModal(true)}
+        isDarkMode={isDarkMode}
+        onToggleDarkMode={toggleDarkMode}
       />
 
       {/* Main Workspace Layout (Full-Height Distraction-Free Canvas) */}

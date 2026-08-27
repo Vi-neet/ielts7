@@ -3,6 +3,7 @@
 import { useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import { motion, useInView, useReducedMotion } from "framer-motion";
 import {
   Instagram,
@@ -15,10 +16,15 @@ import {
 } from "lucide-react";
 
 export const Footer = () => {
+  const pathname = usePathname();
   const currentYear = new Date().getFullYear();
   const footerRef = useRef(null);
   const isInView = useInView(footerRef, { once: true, amount: 0.2 });
   const prefersReducedMotion = useReducedMotion();
+
+  if (pathname === "/login" || pathname === "/signup") {
+    return null;
+  }
 
   const containerVariants = {
     hidden: { opacity: 0 },
