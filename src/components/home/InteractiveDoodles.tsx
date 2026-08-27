@@ -119,28 +119,22 @@ export function InteractiveDoodles({ className }: InteractiveDoodlesProps) {
         </div>
       </motion.div>
 
-      {/* Doodle 3: Target Band 8.0+ Sketch Badge */}
+      {/* Doodle 3: Practice Tests Sketch Badge */}
       <motion.div
         style={{ x: m3X, y: m3Y }}
         className="absolute top-[360px] right-[4%] xl:right-[6%] hidden lg:block pointer-events-auto group cursor-pointer"
         whileHover={{ scale: 1.08, rotate: 4 }}
         transition={{ type: "spring", stiffness: 280 }}
       >
-        <div className="relative p-3 rounded-xl border-2 border-dashed border-forest-ink/30 bg-cream-paper/90 backdrop-blur-xs shadow-xs group-hover:border-forest-ink group-hover:shadow-md transition-all transform rotate-[2deg]">
+        <div className="relative p-2.5 rounded-xl border border-dashed border-forest-ink/30 bg-cream-paper/90 backdrop-blur-xs shadow-xs group-hover:border-forest-ink group-hover:shadow-sm transition-all transform rotate-[2deg]">
           <div className="flex items-center gap-2">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="12" cy="12" r="9" stroke="#1a3300" strokeWidth="1.5" strokeDasharray="3 2" />
-              <circle cx="12" cy="12" r="5" stroke="#1a3300" strokeWidth="1.5" />
-              <circle cx="12" cy="12" r="2" fill="#1a3300" />
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1a3300" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
+              <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
             </svg>
-            <div className="flex flex-col">
-              <span className="font-bricolage text-[11px] font-extrabold text-forest-ink leading-none opacity-80">
-                TARGET SCORE
-              </span>
-              <span className="font-roboto-mono text-[14px] font-bold text-forest-ink">
-                BAND 8.0+
-              </span>
-            </div>
+            <span className="font-bricolage text-[12px] font-extrabold text-forest-ink tracking-wide">
+              PRACTICE TESTS
+            </span>
           </div>
         </div>
       </motion.div>

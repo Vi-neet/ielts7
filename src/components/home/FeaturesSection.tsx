@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useRef } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -22,141 +22,109 @@ import {
   Users,
   Award,
 } from "lucide-react";
-import { FeatureCard } from "./FeatureCard";
 import { SectionHeader } from "./SectionHeader";
+import { MarqueeFeatures } from "./MarqueeFeatures";
 import { cn } from "@/lib/utils";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
 }
 
-type FeatureCategory = "preparation" | "tracking" | "resources";
-
 interface FeatureItem {
   icon: React.ElementType;
   title: string;
   description: string;
   colorClass: string;
-  badgeText: string;
-  delay: number;
+  badgeText?: string;
+  category: string;
 }
 
-const featureCategories: Record<FeatureCategory, { title: string; description: string; features: FeatureItem[] }> = {
-  preparation: {
-    title: "Exam Preparation",
-    description: "Our comprehensive and structured approach to IELTS preparation",
-    features: [
-      {
-        icon: BookOpen,
-        title: "Authentic Materials",
-        description: "Practice with genuine Cambridge IELTS tests for the most accurate preparation experience.",
-        colorClass: "bg-sticky-note-mint/35",
-        badgeText: "Cambridge 20",
-        delay: 0,
-      },
-      {
-        icon: Clock,
-        title: "Time Management",
-        description: "Master timing strategies with our timed practice tests and performance tracking.",
-        colorClass: "bg-highlighter-yellow/35",
-        badgeText: "Timed Exam",
-        delay: 0.1,
-      },
-      {
-        icon: CheckCircle2,
-        title: "Question Techniques",
-        description: "Learn effective approaches for every question type across all test sections.",
-        colorClass: "bg-sticky-note-blush/35",
-        badgeText: "Strategy Guide",
-        delay: 0.2,
-      },
-      {
-        icon: GraduationCap,
-        title: "Expert Guidance",
-        description: "Follow instruction from IELTS examiners with decades of assessment experience.",
-        colorClass: "bg-sticky-note-teal/35",
-        badgeText: "Examiner Tips",
-        delay: 0.3,
-      },
-    ],
+const allFeatures: FeatureItem[] = [
+  {
+    icon: BookOpen,
+    title: "Authentic Materials",
+    description: "Practice with genuine Cambridge IELTS tests for the most accurate preparation experience.",
+    colorClass: "bg-sticky-note-mint/35",
+    category: "Preparation",
   },
-  tracking: {
-    title: "Progress Tracking",
-    description: "Monitor your improvement and identify areas for development",
-    features: [
-      {
-        icon: BarChart3,
-        title: "Performance Analytics",
-        description: "Detailed insights into your test performance with strength and weakness analysis.",
-        colorClass: "bg-sticky-note-teal/35",
-        badgeText: "Analytics",
-        delay: 0,
-      },
-      {
-        icon: LineChart,
-        title: "Progress Dashboard",
-        description: "Track your improvement over time with visual progress indicators and reports.",
-        colorClass: "bg-sticky-note-mint/35",
-        badgeText: "Dashboard",
-        delay: 0.1,
-      },
-      {
-        icon: Brain,
-        title: "Adaptive Learning",
-        description: "Our system adapts to focus on your areas of weakness for faster improvement.",
-        colorClass: "bg-sticky-note-blush/35",
-        badgeText: "AI Engine",
-        delay: 0.2,
-      },
-      {
-        icon: Gauge,
-        title: "Band Score Prediction",
-        description: "AI-powered band score assessment based on your practice test performance.",
-        colorClass: "bg-highlighter-yellow/35",
-        badgeText: "Predictor",
-        delay: 0.3,
-      },
-    ],
+  {
+    icon: Clock,
+    title: "Time Management",
+    description: "Master timing strategies with our timed practice tests and performance tracking.",
+    colorClass: "bg-highlighter-yellow/35",
+    category: "Preparation",
   },
-  resources: {
-    title: "Learning Resources",
-    description: "Comprehensive tools and materials for every aspect of your IELTS journey",
-    features: [
-      {
-        icon: Globe2,
-        title: "Global Access",
-        description: "Study from anywhere with our cloud-based platform and mobile optimization.",
-        colorClass: "bg-sticky-note-blush/35",
-        badgeText: "24/7 Access",
-        delay: 0,
-      },
-      {
-        icon: Headphones,
-        title: "Audio Library",
-        description: "Extensive listening practice with various accents and speech patterns.",
-        colorClass: "bg-sticky-note-teal/35",
-        badgeText: "Clear British",
-        delay: 0.1,
-      },
-      {
-        icon: Laptop,
-        title: "Interactive Exercises",
-        description: "Engage with interactive activities designed to build specific test skills.",
-        colorClass: "bg-highlighter-yellow/35",
-        badgeText: "Interactive",
-        delay: 0.2,
-      },
-      {
-        icon: Route,
-        title: "Guided Study Paths",
-        description: "Follow structured learning paths tailored to your target band score.",
-        colorClass: "bg-sticky-note-mint/35",
-        badgeText: "Structured",
-        delay: 0.3,
-      },
-    ],
+  {
+    icon: CheckCircle2,
+    title: "Question Techniques",
+    description: "Learn effective approaches for every question type across all test sections.",
+    colorClass: "bg-sticky-note-blush/35",
+    category: "Preparation",
   },
-};
+  {
+    icon: GraduationCap,
+    title: "Expert Guidance",
+    description: "Follow instruction from IELTS examiners with decades of assessment experience.",
+    colorClass: "bg-sticky-note-teal/35",
+    category: "Preparation",
+  },
+  {
+    icon: BarChart3,
+    title: "Performance Analytics",
+    description: "Detailed insights into your test performance with strength and weakness analysis.",
+    colorClass: "bg-sticky-note-teal/35",
+    category: "Tracking",
+  },
+  {
+    icon: LineChart,
+    title: "Progress Dashboard",
+    description: "Track your improvement over time with visual progress indicators and reports.",
+    colorClass: "bg-sticky-note-mint/35",
+    category: "Tracking",
+  },
+  {
+    icon: Brain,
+    title: "Adaptive Learning",
+    description: "Our system adapts to focus on your areas of weakness for faster improvement.",
+    colorClass: "bg-sticky-note-blush/35",
+    category: "Tracking",
+  },
+  {
+    icon: Gauge,
+    title: "Band Score Prediction",
+    description: "AI-powered band score assessment based on your practice test performance.",
+    colorClass: "bg-highlighter-yellow/35",
+    category: "Tracking",
+  },
+  {
+    icon: Globe2,
+    title: "Global Access",
+    description: "Study from anywhere with our cloud-based platform and mobile optimization.",
+    colorClass: "bg-sticky-note-blush/35",
+    category: "Resources",
+  },
+  {
+    icon: Headphones,
+    title: "Audio Library",
+    description: "Extensive listening practice with various accents and speech patterns.",
+    colorClass: "bg-sticky-note-teal/35",
+    category: "Resources",
+  },
+  {
+    icon: Laptop,
+    title: "Interactive Exercises",
+    description: "Engage with interactive activities designed to build specific test skills.",
+    colorClass: "bg-highlighter-yellow/35",
+    category: "Resources",
+  },
+  {
+    icon: Route,
+    title: "Guided Study Paths",
+    description: "Follow structured learning paths tailored to your target band score.",
+    colorClass: "bg-sticky-note-mint/35",
+    category: "Resources",
+  },
+];
 
 const AnimatedNumber = ({ value, label, icon: Icon, colorClass }: { value: number; label: string; icon: React.ElementType; colorClass: string }) => {
   const numberRef = useRef<HTMLDivElement>(null);
@@ -211,11 +179,9 @@ const AnimatedNumber = ({ value, label, icon: Icon, colorClass }: { value: numbe
 };
 
 export const FeaturesSection = () => {
-  const [activeTab, setActiveTab] = useState<FeatureCategory>("preparation");
   const sectionRef = useRef<HTMLDivElement>(null);
   const textBgRef = useRef<HTMLDivElement>(null);
   const prefersReducedMotion = useReducedMotion();
-  const currentCategory = featureCategories[activeTab];
 
   useGSAP(() => {
     if (!sectionRef.current || prefersReducedMotion) return;
@@ -224,7 +190,7 @@ export const FeaturesSection = () => {
 
     mm.add("(min-width: 1024px)", () => {
       gsap.to(textBgRef.current, {
-        xPercent: -20,
+        xPercent: -85,
         ease: "none",
         scrollTrigger: {
           trigger: sectionRef.current,
@@ -237,7 +203,7 @@ export const FeaturesSection = () => {
 
     mm.add("(max-width: 1023px)", () => {
       gsap.to(textBgRef.current, {
-        xPercent: -10,
+        xPercent: -75,
         ease: "none",
         scrollTrigger: {
           trigger: sectionRef.current,
@@ -254,7 +220,7 @@ export const FeaturesSection = () => {
       {/* Oversized background typography */}
       <div
         ref={textBgRef}
-        className="absolute top-[20%] left-0 text-[280px] font-bricolage font-extrabold text-forest-ink/[0.02] tracking-tighter leading-none whitespace-nowrap pointer-events-none z-0"
+        className="absolute top-[36%] left-0 text-[200px] md:text-[220px] font-bricolage font-extrabold text-forest-ink/[0.06] tracking-tighter leading-none whitespace-nowrap pointer-events-none z-0 select-none"
       >
         PRACTICE LEARN ACHIEVE
       </div>
@@ -267,60 +233,16 @@ export const FeaturesSection = () => {
           eyebrowIcon={<Sparkles className="w-3.5 h-3.5" />}
           title="Everything you need to succeed"
           description="A complete ecosystem of tools, tests, and resources built specifically for ambitious IELTS candidates."
-          className="mb-16"
+          className="mb-14"
         />
 
-        {/* Tab Navigation */}
-        <div className="flex justify-center mb-12 relative z-20">
-          <div className="inline-flex flex-wrap justify-center bg-white border border-pencil-gray/20 rounded-full p-1.5 shadow-sm max-w-full">
-            {(Object.keys(featureCategories) as FeatureCategory[]).map((key) => {
-              const isActive = activeTab === key;
-              return (
-                <button
-                  key={key}
-                  onClick={() => setActiveTab(key)}
-                  className={cn(
-                    "relative px-6 py-2.5 rounded-full text-sm font-bold transition-colors font-inter outline-none whitespace-nowrap z-10 cursor-pointer",
-                    isActive ? "text-white" : "text-forest-ink/70 hover:text-forest-ink hover:bg-forest-ink/5"
-                  )}
-                >
-                  {isActive && (
-                    <motion.div
-                      layoutId="activeFeatureTabIndicator"
-                      className="absolute inset-0 bg-forest-ink rounded-full shadow-sm -z-10"
-                      transition={prefersReducedMotion ? { duration: 0 } : { type: "spring", bounce: 0.2, duration: 0.5 }}
-                    />
-                  )}
-                  <span>{featureCategories[key].title}</span>
-                </button>
-              );
-            })}
-          </div>
+        {/* Option 2: Permanent Infinite Marquee Track */}
+        <div className="relative z-10">
+          <MarqueeFeatures features={allFeatures} />
         </div>
 
-        {/* Feature Grid */}
-        <motion.div
-          key={activeTab}
-          initial={{ opacity: 0, y: prefersReducedMotion ? 0 : 20, scale: 0.98 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
-          transition={{ duration: 0.5, staggerChildren: 0.1 }}
-          className="grid grid-cols-1 md:grid-cols-2 gap-6 relative z-10"
-        >
-          {currentCategory.features.map((feature, idx) => (
-            <FeatureCard
-              key={`${activeTab}-${idx}`}
-              icon={feature.icon}
-              title={feature.title}
-              description={feature.description}
-              colorClass={feature.colorClass}
-              badgeText={feature.badgeText}
-              delay={prefersReducedMotion ? 0 : feature.delay}
-            />
-          ))}
-        </motion.div>
-
         {/* Stats Showcase with Floating Cards */}
-        <div className="mt-24 pt-16 border-t border-pencil-gray/20 relative z-10">
+        <div className="mt-20 pt-16 border-t border-pencil-gray/20 relative z-10">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             <AnimatedNumber value={25000} label="Worldwide learners" icon={Users} colorClass="bg-sticky-note-mint/40" />
             <AnimatedNumber value={42} label="Global reach (countries)" icon={Globe2} colorClass="bg-sticky-note-blush/40" />

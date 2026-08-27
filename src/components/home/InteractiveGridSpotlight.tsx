@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import { motion, useMotionValue, useSpring, useReducedMotion } from "framer-motion";
 import { cn } from "@/lib/utils";
 
@@ -8,17 +8,14 @@ interface InteractiveGridSpotlightProps {
   className?: string;
 }
 
-const SPOTLIGHT_SIZE = 280;
-
 export function InteractiveGridSpotlight({ className }: InteractiveGridSpotlightProps) {
-  const containerRef = useRef<HTMLDivElement>(null);
   const prefersReducedMotion = useReducedMotion();
 
   const mouseX = useMotionValue(-500);
   const mouseY = useMotionValue(-500);
 
-  const smoothX = useSpring(mouseX, { damping: 28, stiffness: 250 });
-  const smoothY = useSpring(mouseY, { damping: 28, stiffness: 250 });
+  const smoothX = useSpring(mouseX, { damping: 26, stiffness: 240 });
+  const smoothY = useSpring(mouseY, { damping: 26, stiffness: 240 });
 
   const [isMounted, setIsMounted] = useState(false);
 
@@ -26,15 +23,9 @@ export function InteractiveGridSpotlight({ className }: InteractiveGridSpotlight
     setIsMounted(true);
 
     const handleMouseMove = (e: MouseEvent) => {
-      if (prefersReducedMotion || !containerRef.current) return;
-      const rect = containerRef.current.getBoundingClientRect();
-
-      // Calculate relative position within container and offset by half size to center on cursor
-      const relativeX = e.clientX - rect.left - SPOTLIGHT_SIZE / 2;
-      const relativeY = e.clientY - rect.top - SPOTLIGHT_SIZE / 2;
-
-      mouseX.set(relativeX);
-      mouseY.set(relativeY);
+      if (prefersReducedMotion) return;
+      mouseX.set(e.clientX);
+      mouseY.set(e.clientY);
     };
 
     window.addEventListener("mousemove", handleMouseMove);
@@ -44,22 +35,22 @@ export function InteractiveGridSpotlight({ className }: InteractiveGridSpotlight
   if (!isMounted) return null;
 
   return (
-    <div ref={containerRef} className={cn("absolute inset-0 overflow-hidden pointer-events-none z-0", className)}>
+    <div className={cn("absolute inset-0 overflow-hidden pointer-events-none z-0", className)}>
       {/* Soft Graph Grid Pattern */}
       <div 
         className="absolute inset-0 opacity-[0.035] bg-[linear-gradient(to_right,#1a3300_1px,transparent_1px),linear-gradient(to_bottom,#1a3300_1px,transparent_1px)] bg-[size:32px_32px]"
       />
 
-      {/* Tightly Centered Cursor Spotlight Beam */}
+      {/* Viewport-Fixed Spotlight Beam (Perfectly Centered on Cursor Tip) */}
       {!prefersReducedMotion && (
         <motion.div
-          className="absolute top-0 left-0 rounded-full pointer-events-none"
+          className="fixed rounded-full pointer-events-none -translate-x-1/2 -translate-y-1/2 z-0"
           style={{
-            x: smoothX,
-            y: smoothY,
-            width: SPOTLIGHT_SIZE,
-            height: SPOTLIGHT_SIZE,
-            background: "radial-gradient(circle, rgba(255,233,92,0.18) 0%, rgba(26,51,0,0.06) 45%, transparent 70%)",
+            left: smoothX,
+            top: smoothY,
+            width: 240,
+            height: 240,
+            background: "radial-gradient(circle, rgba(255,233,92,0.16) 0%, rgba(26,51,0,0.04) 50%, transparent 70%)",
           }}
         />
       )}

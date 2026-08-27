@@ -2,7 +2,7 @@
 
 import { useRef, useState } from "react";
 import Image from "next/image";
-import { motion, useReducedMotion } from "framer-motion";
+import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import {
   ArrowRight,
   CheckCircle2,
@@ -26,6 +26,15 @@ const HeroSection = () => {
   const previewRef = useRef<HTMLDivElement>(null);
   const prefersReducedMotion = useReducedMotion();
   const [activeSkill, setActiveSkill] = useState<SkillType>("listening");
+
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end start"],
+  });
+
+  const previewRotateX = useTransform(scrollYProgress, [0, 0.35], [10, 0]);
+  const previewScale = useTransform(scrollYProgress, [0, 0.35], [0.95, 1]);
+  const previewY = useTransform(scrollYProgress, [0, 0.35], [30, 0]);
 
   const skillPills: { id: SkillType; icon: any; label: string; href: string }[] = [
     { id: "reading", icon: BookOpen, label: "Reading", href: "/tests?module=reading" },
@@ -203,8 +212,14 @@ const HeroSection = () => {
           ref={previewRef}
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
+          style={{
+            rotateX: prefersReducedMotion ? 0 : previewRotateX,
+            scale: prefersReducedMotion ? 1 : previewScale,
+            y: prefersReducedMotion ? 0 : previewY,
+            transformPerspective: 1200,
+          }}
           transition={{ duration: 1, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-          className="relative z-10 w-full"
+          className="relative z-10 w-full origin-top"
         >
           <div className="absolute -inset-4 rounded-2xl pointer-events-none bg-[radial-gradient(ellipse_at_50%_60%,rgba(26,51,0,0.04)_0%,transparent_70%)]" />
           <ProductPreview activeSkill={activeSkill} />
