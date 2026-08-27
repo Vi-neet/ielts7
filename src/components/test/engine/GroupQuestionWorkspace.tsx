@@ -272,20 +272,20 @@ export default function GroupQuestionWorkspace({
       </div>
 
       {/* 3. Group Action Footer (Practice Mode Check & Section Navigation) */}
-      <div className="bg-white rounded-3xl border border-forest-ink/15 p-5 shadow-sm space-y-4">
+      <div className="bg-white rounded-3xl border border-forest-ink/15 p-6 shadow-sm space-y-5">
         {/* Practice Mode Check Button */}
         {isPractice && (
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 border-b border-forest-ink/10 pb-4">
-            <div>
-              <p className="text-xs font-bold text-forest-ink font-inter">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-forest-ink/10 pb-5">
+            <div className="flex-1 min-w-0 space-y-1">
+              <p className="text-sm font-extrabold text-forest-ink font-bricolage leading-snug">
                 {isGroupChecked
                   ? `Section Evaluated: ${correctCount} / ${qNums.length} Correct`
                   : `Evaluate Section Answers (Questions ${startNum}–${endNum})`}
               </p>
-              <p className="text-[11px] font-mono text-forest-ink/60">
+              <p className="text-xs font-mono text-forest-ink/60">
                 {isGroupChecked
                   ? "Answers checked against official IELTS key."
-                  : "Check all responses in this section."}
+                  : "Check all responses in this section before moving forward."}
               </p>
             </div>
 
@@ -294,7 +294,7 @@ export default function GroupQuestionWorkspace({
               disabled={isGroupChecked}
               onClick={handleCheckGroup}
               className={cn(
-                "px-6 py-2.5 rounded-2xl font-bold font-inter text-xs transition-all shadow-xs shrink-0 flex items-center gap-2",
+                "px-6 py-3 rounded-2xl font-bold font-inter text-xs transition-all shadow-xs shrink-0 flex items-center justify-center gap-2 whitespace-nowrap w-full sm:w-auto",
                 isGroupChecked
                   ? "bg-emerald-100 text-emerald-900 border border-emerald-300 cursor-default"
                   : "bg-forest-ink text-white hover:bg-forest-ink/90 active:scale-98"
@@ -302,12 +302,12 @@ export default function GroupQuestionWorkspace({
             >
               {isGroupChecked ? (
                 <>
-                  <CheckCircle2 size={16} className="text-emerald-700" />
+                  <CheckCircle2 size={16} className="text-emerald-700 shrink-0" />
                   Section Answers Checked
                 </>
               ) : (
                 <>
-                  <CheckCircle2 size={15} className="text-highlighter-yellow" />
+                  <CheckCircle2 size={15} className="text-highlighter-yellow shrink-0" />
                   Check Section Answers
                 </>
               )}
@@ -316,23 +316,23 @@ export default function GroupQuestionWorkspace({
         )}
 
         {/* Section Navigation Buttons */}
-        <div className="flex items-center justify-between gap-4 pt-1">
+        <div className="flex items-center justify-between gap-3 pt-1">
           <button
             type="button"
             disabled={!canPreviousGroup}
             onClick={onPreviousGroup}
             className={cn(
-              "px-4 py-2.5 rounded-2xl font-bold font-inter text-xs flex items-center gap-2 border transition-all",
+              "px-5 py-3 rounded-2xl font-bold font-inter text-xs flex items-center justify-center gap-2 border transition-all whitespace-nowrap",
               canPreviousGroup
-                ? "bg-white text-forest-ink border-forest-ink/20 hover:border-forest-ink hover:bg-forest-ink/5"
+                ? "bg-white text-forest-ink border-forest-ink/20 hover:border-forest-ink hover:bg-forest-ink/5 shadow-2xs"
                 : "bg-gray-100 text-gray-400 border-gray-200 cursor-not-allowed opacity-50"
             )}
           >
-            <ArrowLeft size={15} />
-            Previous Section
+            <ArrowLeft size={15} className="shrink-0" />
+            <span>Previous Section</span>
           </button>
 
-          <span className="text-xs font-mono font-bold text-forest-ink/60 hidden sm:inline">
+          <span className="text-xs font-mono font-extrabold text-forest-ink/70 shrink-0 whitespace-nowrap hidden sm:inline">
             Questions {startNum}–{endNum}
           </span>
 
@@ -341,14 +341,14 @@ export default function GroupQuestionWorkspace({
             disabled={!canNextGroup}
             onClick={onNextGroup}
             className={cn(
-              "px-5 py-2.5 rounded-2xl font-bold font-inter text-xs flex items-center gap-2 border transition-all",
+              "px-5 py-3 rounded-2xl font-bold font-inter text-xs flex items-center justify-center gap-2 border transition-all whitespace-nowrap",
               canNextGroup
-                ? "bg-forest-ink text-white border-forest-ink hover:bg-forest-ink/90"
+                ? "bg-forest-ink text-white border-forest-ink hover:bg-forest-ink/90 shadow-2xs"
                 : "bg-gray-100 text-gray-400 border-gray-200 cursor-not-allowed opacity-50"
             )}
           >
-            Next Section
-            <ArrowRight size={15} />
+            <span>Next Section</span>
+            <ArrowRight size={15} className="shrink-0" />
           </button>
         </div>
       </div>
