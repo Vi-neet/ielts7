@@ -73,12 +73,20 @@ export default function PassageViewer({
 
   // Handle Text Selection Highlighting
   const handleMouseUpPassage = () => {
-    const sel = window.getSelection();
-    if (sel && sel.toString().trim().length > 0) {
-      setHasSelection(true);
-    } else {
-      setHasSelection(false);
-    }
+    setTimeout(() => {
+      const sel = window.getSelection();
+      if (
+        sel &&
+        !sel.isCollapsed &&
+        sel.toString().trim().length > 0 &&
+        (passageContainerRef.current?.contains(sel.anchorNode) ||
+          passageContainerRef.current?.contains(sel.focusNode))
+      ) {
+        setHasSelection(true);
+      } else {
+        setHasSelection(false);
+      }
+    }, 10);
   };
 
   const applyHighlight = () => {
@@ -87,22 +95,106 @@ export default function PassageViewer({
 
     try {
       const range = sel.getRangeAt(0);
-      const selectedText = sel.toString();
-      if (!selectedText.trim()) return;
+      const container = passageContainerRef.current;
+      if (!container) return;
 
-      const mark = document.createElement("mark");
-      mark.className =
-        "bg-highlighter-yellow/90 text-forest-ink font-semibold rounded px-0.5 shadow-2xs user-highlight";
+      const startNode = range.startContainer;
+      const endNode = range.endContainer;
 
-      if (range.startContainer === range.endContainer && range.startContainer.nodeType === Node.TEXT_NODE) {
-        range.surroundContents(mark);
+      // Single text node selection
+      if (startNode === endNode && startNode.nodeType === Node.TEXT_NODE) {
+        const textNode = startNode as Text;
+        const text = textNode.nodeValue || "";
+        const startOffset = range.startOffset;
+        const endOffset = range.endOffset;
+
+        if (startOffset < endOffset) {
+          const before = text.slice(0, startOffset);
+          const selected = text.slice(startOffset, endOffset);
+          const after = text.slice(endOffset);
+
+          const parent = textNode.parentNode;
+          if (parent) {
+            const frag = document.createDocumentFragment();
+            if (before) frag.appendChild(document.createTextNode(before));
+
+            const mark = document.createElement("mark");
+            mark.className = "bg-amber-300 text-amber-950 font-semibold rounded-xs px-0.5 shadow-2xs user-highlight";
+            mark.appendChild(document.createTextNode(selected));
+            frag.appendChild(mark);
+
+            if (after) frag.appendChild(document.createTextNode(after));
+
+            parent.replaceChild(frag, textNode);
+            setHighlightCount((prev) => prev + 1);
+          }
+        }
       } else {
-        const contents = range.extractContents();
-        mark.appendChild(contents);
-        range.insertNode(mark);
+        // Multi-node selection: walk text nodes safely
+        const ancestor = range.commonAncestorContainer;
+        const walker = document.createTreeWalker(
+          ancestor.nodeType === Node.TEXT_NODE ? ancestor.parentNode || container : ancestor,
+          NodeFilter.SHOW_TEXT,
+          {
+            acceptNode: (node) => {
+              if (!range.intersectsNode(node)) return NodeFilter.FILTER_REJECT;
+              const parent = node.parentNode as HTMLElement;
+              if (parent && (parent.tagName === "MARK" || parent.classList.contains("user-highlight"))) {
+                return NodeFilter.FILTER_REJECT;
+              }
+              return NodeFilter.FILTER_ACCEPT;
+            },
+          }
+        );
+
+        const nodesToProcess: { node: Text; start: number; end: number }[] = [];
+        let currentNode: Node | null = walker.currentNode;
+
+        while (currentNode) {
+          if (currentNode.nodeType === Node.TEXT_NODE) {
+            const textNode = currentNode as Text;
+            let start = 0;
+            let end = textNode.nodeValue?.length || 0;
+
+            if (textNode === startNode) start = range.startOffset;
+            if (textNode === endNode) end = range.endOffset;
+
+            if (start < end) {
+              nodesToProcess.push({ node: textNode, start, end });
+            }
+          }
+          currentNode = walker.nextNode();
+        }
+
+        let highlightedAny = false;
+        nodesToProcess.forEach(({ node, start, end }) => {
+          const text = node.nodeValue || "";
+          const before = text.slice(0, start);
+          const selected = text.slice(start, end);
+          const after = text.slice(end);
+          const parent = node.parentNode;
+
+          if (parent && selected.trim().length > 0) {
+            const frag = document.createDocumentFragment();
+            if (before) frag.appendChild(document.createTextNode(before));
+
+            const mark = document.createElement("mark");
+            mark.className = "bg-amber-300 text-amber-950 font-semibold rounded-xs px-0.5 shadow-2xs user-highlight";
+            mark.appendChild(document.createTextNode(selected));
+            frag.appendChild(mark);
+
+            if (after) frag.appendChild(document.createTextNode(after));
+
+            parent.replaceChild(frag, node);
+            highlightedAny = true;
+          }
+        });
+
+        if (highlightedAny) {
+          setHighlightCount((prev) => prev + 1);
+        }
       }
 
-      setHighlightCount((prev) => prev + 1);
       sel.removeAllRanges();
       setHasSelection(false);
     } catch (err) {
@@ -113,7 +205,7 @@ export default function PassageViewer({
 
   const clearHighlights = () => {
     if (!passageContainerRef.current) return;
-    const marks = passageContainerRef.current.querySelectorAll("mark.user-highlight, mark:not(.search-match)");
+    const marks = passageContainerRef.current.querySelectorAll("mark.user-highlight");
     marks.forEach((mark) => {
       const parent = mark.parentNode;
       if (parent) {
@@ -121,6 +213,7 @@ export default function PassageViewer({
           parent.insertBefore(mark.firstChild, mark);
         }
         parent.removeChild(mark);
+        parent.normalize();
       }
     });
     setHighlightCount(0);
@@ -305,23 +398,13 @@ export default function PassageViewer({
               <div className="flex items-center gap-2">
                 {!isAudioPassage && (
                   <>
-                    {/* Floating Selection Highlight Pill */}
-                    {hasSelection && (
-                      <button
-                        type="button"
-                        onClick={applyHighlight}
-                        className="px-3 py-1 rounded-full bg-highlighter-yellow text-forest-ink border border-forest-ink/30 text-xs font-mono font-bold shadow-xs flex items-center gap-1.5 animate-in fade-in duration-150"
-                      >
-                        <Highlighter size={13} /> Highlight Text
-                      </button>
-                    )}
-
                     {/* Clear Highlights Button */}
                     {highlightCount > 0 && (
                       <button
                         type="button"
+                        onMouseDown={(e) => e.preventDefault()}
                         onClick={clearHighlights}
-                        className="px-2.5 py-1 rounded-full bg-rose-100 text-rose-800 border border-rose-200 text-xs font-mono font-bold flex items-center gap-1 hover:bg-rose-200 transition-colors"
+                        className="px-2.5 py-1 rounded-full bg-rose-100 text-rose-800 border border-rose-200 text-xs font-mono font-bold flex items-center gap-1 hover:bg-rose-200 transition-colors cursor-pointer"
                         title="Clear all text highlights"
                       >
                         <X size={12} /> Clear ({highlightCount})
@@ -344,7 +427,19 @@ export default function PassageViewer({
             </div>
 
             {/* Passage Scrollable Content Body */}
-            <div className="p-6 overflow-y-auto flex-1 space-y-4 font-inter text-forest-ink leading-relaxed text-sm">
+            <div className="p-6 overflow-y-auto flex-1 space-y-4 font-inter text-forest-ink leading-relaxed text-sm relative">
+              {!isAudioPassage && hasSelection && (
+                <div className="sticky top-2 z-30 flex justify-center animate-in fade-in zoom-in-95 duration-150">
+                  <button
+                    type="button"
+                    onMouseDown={(e) => e.preventDefault()}
+                    onClick={applyHighlight}
+                    className="px-4 py-2 rounded-full bg-forest-ink text-highlighter-yellow shadow-xl text-xs font-mono font-bold border border-highlighter-yellow/40 flex items-center gap-2 hover:bg-forest-ink/90 active:scale-95 transition-all cursor-pointer"
+                  >
+                    <Highlighter size={14} className="text-highlighter-yellow" /> Highlight Selected Text
+                  </button>
+                </div>
+              )}
               {renderPassageContent()}
             </div>
           </div>

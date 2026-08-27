@@ -49,17 +49,8 @@ export default function GroupQuestionWorkspace({
   const qNums = groupQuestions.map((q) => q.questionNumber);
 
   // Accordion state: map of qNum -> boolean (expanded)
-  // By default all questions start collapsed
+  // By default all questions start 100% collapsed
   const [expandedMap, setExpandedMap] = useState<Record<number, boolean>>({});
-
-  useEffect(() => {
-    if (activeQuestionNumber) {
-      setExpandedMap((prev) => ({
-        ...prev,
-        [activeQuestionNumber]: true,
-      }));
-    }
-  }, [activeQuestionNumber]);
 
   const isQuestionExpanded = (qNum: number) => expandedMap[qNum] === true;
 
@@ -190,10 +181,10 @@ export default function GroupQuestionWorkspace({
                 onClick={() => toggleQuestionExpand(qNum)}
                 className="w-full px-5 py-4 flex items-start justify-between gap-4 cursor-pointer hover:bg-forest-ink/5 transition-colors select-none"
               >
-                <div className="flex items-center gap-3 flex-1 min-w-0">
+                <div className="flex items-start gap-3 flex-1 min-w-0">
                   <span
                     className={cn(
-                      "min-w-[28px] h-7 px-2.5 rounded-lg font-bold font-inter text-xs flex items-center justify-center shrink-0 border select-none shadow-2xs",
+                      "min-w-[28px] h-7 px-2.5 rounded-lg font-bold font-inter text-xs flex items-center justify-center shrink-0 border select-none mt-0.5 shadow-2xs",
                       checked
                         ? checked.isCorrect
                           ? "bg-emerald-700 text-white border-emerald-800"
@@ -204,16 +195,9 @@ export default function GroupQuestionWorkspace({
                     {qNum}
                   </span>
 
-                  <div className="flex items-center gap-2 flex-1 min-w-0">
-                    <span className="text-sm font-extrabold text-forest-ink font-bricolage tracking-tight">
-                      Question {qNum}
-                    </span>
-                    {!isExpanded && currentVal.trim() && (
-                      <span className="text-xs font-mono font-medium text-forest-ink/60 truncate max-w-[200px] hidden sm:inline">
-                        • {currentVal.trim()}
-                      </span>
-                    )}
-                  </div>
+                  <p className="text-sm font-semibold text-forest-ink font-inter leading-relaxed flex-1 min-w-0">
+                    {qObj.promptText || `Question ${qNum}`}
+                  </p>
                 </div>
 
                 <div className="flex items-center gap-2.5 shrink-0">
@@ -237,13 +221,7 @@ export default function GroupQuestionWorkspace({
 
               {/* Card Body (Visible when expanded) */}
               {isExpanded && (
-                <div className="px-6 pb-6 pt-4 border-t border-forest-ink/10 space-y-5">
-                  {/* Main Question Prompt */}
-                  {qObj.promptText && (
-                    <p className="text-base font-semibold text-forest-ink leading-relaxed">
-                      {qObj.promptText}
-                    </p>
-                  )}
+                <div className="px-6 pb-6 pt-3 border-t border-forest-ink/10 space-y-5">
 
                   <div className="flex items-center justify-end pt-1">
                     <button
