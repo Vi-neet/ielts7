@@ -104,12 +104,52 @@ export async function POST(request: Request) {
         );
       }
 
-      const payment = await rzpResponse.json();
+      let payment = await rzpResponse.json();
+      console.log("Razorpay payment details:", {
+        id: payment.id,
+        status: payment.status,
+        amount: payment.amount,
+        currency: payment.currency,
+      });
 
-      // Check transaction properties: captured, currency, and ₹49 (4900 paise)
-      if (payment.status !== "captured" || payment.amount !== 4900 || payment.currency !== "INR") {
+      // If payment is authorized but not yet captured, auto-capture it via Razorpay API
+      if (payment.status === "authorized") {
+        try {
+          const captureRes = await fetch(`https://api.razorpay.com/v1/payments/${paymentId}/capture`, {
+            method: "POST",
+            headers: {
+              Authorization: authHeader,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ amount: payment.amount || 4900, currency: "INR" }),
+          });
+          if (captureRes.ok) {
+            payment = await captureRes.json();
+            console.log("Payment successfully auto-captured:", payment.id, payment.status);
+          } else {
+            console.warn("Auto-capture returned non-ok status:", await captureRes.text());
+          }
+        } catch (captureErr) {
+          console.error("Auto-capture failed:", captureErr);
+        }
+      }
+
+      // Check transaction properties: captured (or authorized), currency, and ₹49 (4900 paise)
+      const isValidStatus = payment.status === "captured" || payment.status === "authorized";
+      const isValidAmount = payment.amount === 4900;
+      const isValidCurrency = payment.currency === "INR";
+
+      if (!isValidStatus || !isValidAmount || !isValidCurrency) {
+        console.error("Payment validation check failed:", {
+          status: payment.status,
+          amount: payment.amount,
+          currency: payment.currency,
+        });
         return NextResponse.json(
-          { success: false, error: "Invalid payment status or amount." },
+          {
+            success: false,
+            error: `Payment validation failed: status is '${payment.status}' (expected 'captured' or 'authorized'), amount is ₹${(payment.amount || 0) / 100} (expected ₹49).`,
+          },
           { status: 400 }
         );
       }

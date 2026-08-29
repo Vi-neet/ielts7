@@ -82,11 +82,25 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             }
           }
 
+          const envAdminEmails = (process.env.NEXT_PUBLIC_ADMIN_EMAILS || "")
+            .split(",")
+            .map((e) => e.trim().toLowerCase())
+            .filter(Boolean);
+          const isEmailAdmin = currentUser.email && envAdminEmails.includes(currentUser.email.toLowerCase());
+
           if (userSnap.exists()) {
             const data = userSnap.data();
-            setIsAdmin(data.role === "admin");
+            const isAdminRole = data.role === "admin" || isEmailAdmin;
+            setIsAdmin(Boolean(isAdminRole));
+
+            // Auto-sync admin role to Firestore if defined in env
+            if (isEmailAdmin && data.role !== "admin") {
+              setDoc(userDocRef, { role: "admin" }, { merge: true }).catch((err) =>
+                console.warn("Could not sync admin role to Firestore:", err)
+              );
+            }
           } else {
-            setIsAdmin(false);
+            setIsAdmin(Boolean(isEmailAdmin));
           }
         } catch (error) {
           console.error("Error fetching user role:", error);

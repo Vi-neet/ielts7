@@ -15,6 +15,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
+  Shield,
   ShieldAlert,
   Loader2,
   FileText,
@@ -150,6 +151,7 @@ interface WritingSubmission {
   candidateEmail?: string;
   candidateName?: string;
   paymentId?: string;
+  reviewedBy?: string;
 }
 
 interface Attempt {
@@ -296,6 +298,7 @@ export default function AdminPage() {
           candidateEmail: candidate?.email || "Unknown Student",
           candidateName: candidate?.displayName || "Practice Candidate",
           paymentId: data.paymentId || undefined,
+          reviewedBy: data.reviewedBy || undefined,
         };
       });
 
@@ -408,6 +411,8 @@ export default function AdminPage() {
         scores: rubricScores,
         annotations: activeAnnotations,
         feedbackText: gradingFeedback,
+        reviewedBy: user?.email || "admin",
+        reviewedByUid: user?.uid || null,
         updatedAt: serverTimestamp(),
       });
 
@@ -683,26 +688,57 @@ export default function AdminPage() {
         {/* Banner header */}
         <div className="relative bg-forest-ink text-white rounded-3xl p-6 sm:p-8 shadow-md overflow-hidden">
           <div className="absolute inset-0 opacity-[0.07] bg-[linear-gradient(to_right,#ffffff_1px,transparent_1px),linear-gradient(to_bottom,#ffffff_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none" />
-          <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
-            <div className="space-y-1">
-              <span className="inline-block px-2.5 py-0.5 rounded-full bg-highlighter-yellow/20 text-highlighter-yellow text-[10px] font-mono font-bold uppercase tracking-wider border border-highlighter-yellow/30">
-                Staff Operations
-              </span>
-              <h1 className="text-2xl sm:text-3xl font-extrabold font-bricolage text-white tracking-tight">
-                Admin Dashboard
-              </h1>
+          <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+            {/* Admin Identity */}
+            <div className="flex items-center gap-5">
+              <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-white/10 text-white flex items-center justify-center font-bricolage font-bold text-2xl sm:text-3xl border border-white/20 shadow-xs overflow-hidden shrink-0">
+                {user?.photoURL ? (
+                  <img src={user.photoURL} alt="Admin" className="w-full h-full object-cover" />
+                ) : (
+                  <Shield size={30} className="text-white/85" />
+                )}
+              </div>
+              <div className="space-y-0.5">
+                <h1 className="text-2xl sm:text-3xl font-extrabold font-bricolage text-white tracking-tight">
+                  Admin Dashboard
+                </h1>
+                <p className="text-white/60 text-xs font-mono">
+                  {user?.email || "admin@ielts7plus.internal"}
+                </p>
+              </div>
             </div>
-            
-            {/* Quick Actions */}
-            <div className="flex items-center gap-3">
+
+            {/* Quick Stat Summary Bar & Action Button */}
+            <div className="flex flex-wrap items-center gap-4 w-full md:w-auto justify-between md:justify-end">
+              <div className="flex items-center gap-4 bg-white/10 px-5 py-2.5 rounded-2xl border border-white/15 backdrop-blur-xs text-xs font-mono">
+                <div>
+                  <span className="text-white/50 block text-[9px] uppercase tracking-wider">Students</span>
+                  <strong className="text-white font-bold text-base">{students.length}</strong>
+                </div>
+                <div className="w-px h-6 bg-white/15" />
+                <div>
+                  <span className="text-white/50 block text-[9px] uppercase tracking-wider">Pending</span>
+                  <strong className="text-highlighter-yellow font-bold text-base">
+                    {submissions.filter((s) => s.status === "submitted").length}
+                  </strong>
+                </div>
+                <div className="w-px h-6 bg-white/15" />
+                <div>
+                  <span className="text-white/50 block text-[9px] uppercase tracking-wider">Graded</span>
+                  <strong className="text-white font-bold text-base">
+                    {submissions.filter((s) => s.status === "graded").length}
+                  </strong>
+                </div>
+              </div>
+
               <Button
                 variant="outline"
                 size="sm"
                 onClick={activeTab === "students" ? exportStudentsToCSV : exportSubmissionsToCSV}
-                className="bg-white/10 hover:bg-white/20 border-white/15 text-white h-9 text-xs font-semibold rounded-xl flex items-center gap-1.5 cursor-pointer shadow-xs"
+                className="h-10 px-4 rounded-2xl border-white/20 bg-white/10 text-white hover:bg-white hover:text-forest-ink font-semibold font-inter shadow-2xs transition-colors cursor-pointer flex items-center gap-1.5"
               >
-                <Download size={13} />
-                Export {activeTab === "students" ? "Students" : "Essays"}
+                <Download size={15} />
+                <span>Export {activeTab === "students" ? "Students" : "Essays"}</span>
               </Button>
             </div>
           </div>
@@ -904,9 +940,16 @@ export default function AdminPage() {
                             </td>
                             <td className="py-4 pr-3">
                               {sub.status === "graded" ? (
-                                <div className="flex items-center gap-1.5 text-xs text-emerald-800 font-semibold">
-                                  <CheckCircle2 size={14} className="text-emerald-700" />
-                                  <span>Graded (Band {sub.score})</span>
+                                <div className="space-y-0.5">
+                                  <div className="flex items-center gap-1.5 text-xs text-emerald-800 font-semibold">
+                                    <CheckCircle2 size={14} className="text-emerald-700 shrink-0" />
+                                    <span>Graded (Band {sub.score})</span>
+                                  </div>
+                                  {sub.reviewedBy && (
+                                    <span className="text-[10px] text-forest-ink/45 font-mono block truncate max-w-[150px]">
+                                      by {sub.reviewedBy}
+                                    </span>
+                                  )}
                                 </div>
                               ) : (
                                 <div className="flex items-center gap-1.5 text-xs text-amber-700 font-semibold">
@@ -920,7 +963,7 @@ export default function AdminPage() {
                                 size="sm"
                                 variant={sub.status === "graded" ? "outline" : "forest"}
                                 onClick={() => setGradingSubmission(sub)}
-                                className="h-8 text-xs font-semibold rounded-lg cursor-pointer shadow-xs"
+                                className="text-xs font-semibold rounded-lg cursor-pointer shadow-xs"
                               >
                                 {sub.status === "graded" ? "Review feedback" : "Evaluate Essay"}
                               </Button>
@@ -1030,7 +1073,7 @@ export default function AdminPage() {
                                 size="sm"
                                 variant="forest"
                                 onClick={() => setSelectedStudentForAttempts(s)}
-                                className="h-8 text-xs font-semibold rounded-lg cursor-pointer shadow-xs"
+                                className="text-xs font-semibold rounded-lg cursor-pointer shadow-xs"
                               >
                                 View Attempts
                               </Button>
