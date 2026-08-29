@@ -1,12 +1,11 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useAuth } from "@/lib/AuthContext";
 import { useRouter } from "next/navigation";
 import { db } from "@/lib/firebase";
 import {
   collection,
-  query,
   getDocs,
   doc,
   updateDoc,
@@ -20,18 +19,19 @@ import {
   Loader2,
   FileText,
   Users,
-  History,
   Search,
   CheckCircle2,
   Clock,
-  ArrowRight,
-  User,
-  GraduationCap,
   Calendar,
   Globe,
   Award,
-  BookOpen,
   X,
+  Download,
+  Plus,
+  Trash2,
+  MessageSquare,
+  ArrowRight,
+  Sparkles,
 } from "lucide-react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
@@ -121,6 +121,14 @@ interface Student {
   photoURL?: string;
 }
 
+interface Annotation {
+  start: number;
+  end: number;
+  text: string;
+  comment: string;
+  category: "grammar" | "vocabulary" | "coherence" | "task";
+}
+
 interface WritingSubmission {
   id: string;
   uid: string;
@@ -131,9 +139,17 @@ interface WritingSubmission {
   status: "submitted" | "graded";
   submittedAt: any;
   score?: string;
+  scores?: {
+    tr: number;
+    cc: number;
+    lr: number;
+    gra: number;
+  };
+  annotations?: Annotation[];
   feedbackText?: string;
   candidateEmail?: string;
   candidateName?: string;
+  paymentId?: string;
 }
 
 interface Attempt {
@@ -146,9 +162,13 @@ interface Attempt {
   submittedAt: any;
   candidateEmail?: string;
   candidateName?: string;
+  isGuest?: boolean;
 }
 
 type Tab = "submissions" | "students";
+
+type SortFieldStudents = "displayName" | "country" | "targetBand" | "updatedAt" | "targetDate";
+type SortFieldSubmissions = "candidateName" | "taskType" | "submittedAt" | "status";
 
 export default function AdminPage() {
   const { user, loading: authLoading, isAdmin } = useAuth();
@@ -162,17 +182,42 @@ export default function AdminPage() {
   const [students, setStudents] = useState<Student[]>([]);
   const [attempts, setAttempts] = useState<Attempt[]>([]);
 
-  // Search & Filter state
+  // Search, Filters & Sorting
   const [searchQuery, setSearchQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState<"all" | "submitted" | "graded">("all");
+  
+  const [sortFieldStud, setSortFieldStud] = useState<SortFieldStudents>("updatedAt");
+  const [sortFieldSub, setSortFieldSub] = useState<SortFieldSubmissions>("submittedAt");
+  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
 
   // Loading indicator states
   const [loadingData, setLoadingData] = useState(true);
+
+  // Active evaluation (drawer-split panel)
   const [gradingSubmission, setGradingSubmission] = useState<WritingSubmission | null>(null);
-  const [gradingScore, setGradingScore] = useState("7.0");
+  const [rubricScores, setRubricScores] = useState({
+    tr: 7.0,
+    cc: 7.0,
+    lr: 7.0,
+    gra: 7.0,
+  });
   const [gradingFeedback, setGradingFeedback] = useState("");
   const [savingGrade, setSavingGrade] = useState(false);
   const [saveError, setSaveError] = useState("");
+
+  // Annotations Builder State
+  const [activeAnnotations, setActiveAnnotations] = useState<Annotation[]>([]);
+  const [newAnnotation, setNewAnnotation] = useState<{
+    start: number;
+    end: number;
+    text: string;
+    comment: string;
+    category: "grammar" | "vocabulary" | "coherence" | "task";
+  } | null>(null);
+
+  const essayTextContainerRef = useRef<HTMLDivElement>(null);
+
+  // Expanded student activity hub modal
   const [selectedStudentForAttempts, setSelectedStudentForAttempts] = useState<Student | null>(null);
 
   // Route security checks
@@ -181,6 +226,35 @@ export default function AdminPage() {
       router.replace("/login?redirect=/admin");
     }
   }, [user, authLoading, router]);
+
+  // Keyboard shortcut listener (Ctrl+Enter to save, Esc to close)
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        if (newAnnotation) {
+          setNewAnnotation(null);
+        } else if (gradingSubmission) {
+          closeGradingPanel();
+        } else if (selectedStudentForAttempts) {
+          setSelectedStudentForAttempts(null);
+        }
+      }
+      if ((e.ctrlKey || e.metaKey) && e.key === "Enter" && gradingSubmission && !savingGrade) {
+        e.preventDefault();
+        submitEvaluationForm();
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [gradingSubmission, rubricScores, gradingFeedback, activeAnnotations, newAnnotation, selectedStudentForAttempts, savingGrade]);
+
+  const closeGradingPanel = () => {
+    setGradingSubmission(null);
+    setGradingFeedback("");
+    setRubricScores({ tr: 7.0, cc: 7.0, lr: 7.0, gra: 7.0 });
+    setActiveAnnotations([]);
+    setNewAnnotation(null);
+  };
 
   // Fetch all collections data if authorized
   const loadAdminData = async () => {
@@ -195,7 +269,7 @@ export default function AdminPage() {
         ...docSnap.data(),
       }));
       
-      // Build a fast lookup map for candidates
+      // Build lookup map
       const studentsMap: Record<string, Student> = {};
       studentsList.forEach((s) => {
         studentsMap[s.id] = s;
@@ -216,19 +290,13 @@ export default function AdminPage() {
           status: data.status,
           submittedAt: data.submittedAt,
           score: data.score,
+          scores: data.scores,
+          annotations: data.annotations || [],
           feedbackText: data.feedbackText,
           candidateEmail: candidate?.email || "Unknown Student",
           candidateName: candidate?.displayName || "Practice Candidate",
+          paymentId: data.paymentId || undefined,
         };
-      });
-
-      // Sort: submitted first, then newest
-      subList.sort((a, b) => {
-        if (a.status === "submitted" && b.status === "graded") return -1;
-        if (a.status === "graded" && b.status === "submitted") return 1;
-        const timeA = a.submittedAt?.seconds || 0;
-        const timeB = b.submittedAt?.seconds || 0;
-        return timeB - timeA;
       });
 
       // 3. Fetch Test Attempts
@@ -249,12 +317,6 @@ export default function AdminPage() {
         };
       });
 
-      attemptsList.sort((a, b) => {
-        const timeA = a.submittedAt?.seconds || 0;
-        const timeB = b.submittedAt?.seconds || 0;
-        return timeB - timeA;
-      });
-
       setStudents(studentsList);
       setSubmissions(subList);
       setAttempts(attemptsList);
@@ -269,9 +331,68 @@ export default function AdminPage() {
     loadAdminData();
   }, [user, isAdmin]);
 
-  // Handle grading submit
-  const handleSaveGrade = async (e: React.FormEvent) => {
-    e.preventDefault();
+  // Load active grading submission data when selected
+  useEffect(() => {
+    if (gradingSubmission) {
+      setGradingFeedback(gradingSubmission.feedbackText || "");
+      if (gradingSubmission.scores) {
+        setRubricScores({
+          tr: gradingSubmission.scores.tr || 7.0,
+          cc: gradingSubmission.scores.cc || 7.0,
+          lr: gradingSubmission.scores.lr || 7.0,
+          gra: gradingSubmission.scores.gra || 7.0,
+        });
+      } else {
+        const parsedScore = parseFloat(gradingSubmission.score || "7.0");
+        const defaultVal = isNaN(parsedScore) ? 7.0 : parsedScore;
+        setRubricScores({ tr: defaultVal, cc: defaultVal, lr: defaultVal, gra: defaultVal });
+      }
+      setActiveAnnotations(gradingSubmission.annotations || []);
+    }
+  }, [gradingSubmission]);
+
+  // Calculate dynamic average band rounded to nearest half band
+  const calculatedOverallBand = Math.round(((rubricScores.tr + rubricScores.cc + rubricScores.lr + rubricScores.gra) / 4) * 2) / 2;
+
+  // Handle text selection in essay container
+  const handleEssayTextSelection = () => {
+    if (!gradingSubmission || gradingSubmission.status === "graded") return;
+    
+    const selection = window.getSelection();
+    if (!selection || selection.rangeCount === 0) return;
+
+    const selectedText = selection.toString().trim();
+    if (!selectedText) return;
+
+    const text = gradingSubmission.essayText || "";
+    // Locate the first occurrence of selection in essay text
+    const index = text.indexOf(selectedText);
+    if (index !== -1) {
+      // Prompt creation modal
+      setNewAnnotation({
+        start: index,
+        end: index + selectedText.length,
+        text: selectedText,
+        comment: "",
+        category: "grammar",
+      });
+    }
+  };
+
+  // Add constructed annotation to state
+  const handleSaveNewAnnotation = () => {
+    if (!newAnnotation || !newAnnotation.comment.trim()) return;
+    setActiveAnnotations((prev) => [...prev, newAnnotation as Annotation]);
+    setNewAnnotation(null);
+  };
+
+  // Remove annotation from list
+  const handleDeleteAnnotation = (index: number) => {
+    setActiveAnnotations((prev) => prev.filter((_, i) => i !== index));
+  };
+
+  // Dynamic submit handler
+  const submitEvaluationForm = async () => {
     if (!gradingSubmission) return;
 
     setSavingGrade(true);
@@ -279,9 +400,13 @@ export default function AdminPage() {
 
     try {
       const docRef = doc(db, "writingSubmissions", gradingSubmission.id);
+      const overallStr = calculatedOverallBand.toFixed(1);
+
       await updateDoc(docRef, {
         status: "graded",
-        score: gradingScore,
+        score: overallStr,
+        scores: rubricScores,
+        annotations: activeAnnotations,
         feedbackText: gradingFeedback,
         updatedAt: serverTimestamp(),
       });
@@ -293,16 +418,16 @@ export default function AdminPage() {
             ? {
                 ...sub,
                 status: "graded",
-                score: gradingScore,
+                score: overallStr,
+                scores: rubricScores,
+                annotations: activeAnnotations,
                 feedbackText: gradingFeedback,
               }
             : sub
         )
       );
 
-      setGradingSubmission(null);
-      setGradingFeedback("");
-      setGradingScore("7.0");
+      closeGradingPanel();
     } catch (err: any) {
       console.error("Failed to submit grade evaluation:", err);
       setSaveError(err.message || "Failed to update essay evaluation document.");
@@ -311,7 +436,203 @@ export default function AdminPage() {
     }
   };
 
-  // ─── Visual Render Checks ──────────────────────────────────────────────────
+  const handleSaveGrade = (e: React.FormEvent) => {
+    e.preventDefault();
+    submitEvaluationForm();
+  };
+
+  // --- Dynamic Search Highlighting helper ---
+  function highlightText(text: string, q: string) {
+    if (!q || !text) return <>{text}</>;
+    const parts = text.split(new RegExp(`(${q.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&")})`, "gi"));
+    return (
+      <>
+        {parts.map((part, i) =>
+          part.toLowerCase() === q.toLowerCase() ? (
+            <mark key={i} className="bg-highlighter-yellow text-forest-ink font-bold px-0.5 rounded-sm">
+              {part}
+            </mark>
+          ) : (
+            part
+          )
+        )}
+      </>
+    );
+  }
+
+  // --- Sort Toggles ---
+  const toggleStudentSort = (field: SortFieldStudents) => {
+    if (sortFieldStud === field) {
+      setSortOrder(sortOrder === "asc" ? "desc" : "asc");
+    } else {
+      setSortFieldStud(field);
+      setSortOrder("desc");
+    }
+  };
+
+  const toggleSubmissionSort = (field: SortFieldSubmissions) => {
+    if (sortFieldSub === field) {
+      setSortOrder(sortOrder === "asc" ? "desc" : "asc");
+    } else {
+      setSortFieldSub(field);
+      setSortOrder("desc");
+    }
+  };
+
+  // --- CSV Exports ---
+  const exportStudentsToCSV = () => {
+    const headers = ["Name", "Email", "Country", "Native Language", "Target Module", "Target Band", "Exam Date", "Last Updated"];
+    const rows = students.map((s) => [
+      s.displayName || "N/A",
+      s.email || "N/A",
+      s.country || "N/A",
+      s.nativeLanguage || "N/A",
+      s.targetModule || "N/A",
+      s.targetBand || "7.0",
+      s.targetDate || "N/A",
+      s.updatedAt ? new Date(s.updatedAt).toLocaleDateString() : "N/A"
+    ]);
+
+    const csvContent = "data:text/csv;charset=utf-8,"
+      + [headers.join(","), ...rows.map(e => e.map(val => `"${val.replace(/"/g, '""')}"`).join(","))].join("\n");
+
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", `ielts_students_${new Date().toISOString().split("T")[0]}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
+  const exportSubmissionsToCSV = () => {
+    const headers = ["Candidate Name", "Email", "Task Type", "Submission Method", "Payment ID", "Status", "Overall Band", "Submitted At"];
+    const rows = submissions.map((sub) => [
+      sub.candidateName || "N/A",
+      sub.candidateEmail || "N/A",
+      sub.taskType === "task_1" ? "Task 1" : "Task 2",
+      sub.submissionMethod,
+      sub.paymentId || "Unpaid/Legacy",
+      sub.status,
+      sub.score || "N/A",
+      sub.submittedAt ? new Date(sub.submittedAt.seconds * 1000).toLocaleDateString() : "N/A"
+    ]);
+
+    const csvContent = "data:text/csv;charset=utf-8,"
+      + [headers.join(","), ...rows.map(e => e.map(val => `"${val.replace(/"/g, '""')}"`).join(","))].join("\n");
+
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", `essay_submissions_${new Date().toISOString().split("T")[0]}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
+  // --- Render Annotations in text pane ---
+  const renderAnnotatedText = (text: string, list: Annotation[]) => {
+    if (!list || list.length === 0) return text;
+    // Sort chronologically by character start offset
+    const sorted = [...list].sort((a, b) => a.start - b.start);
+
+    const elements: React.ReactNode[] = [];
+    let lastIdx = 0;
+
+    sorted.forEach((ann, i) => {
+      // Text segment before highlight
+      if (ann.start > lastIdx) {
+        elements.push(text.substring(lastIdx, ann.start));
+      }
+
+      // Highlights based on annotation category
+      const colorMap = {
+        grammar: "bg-terracotta/20 border-b-2 border-terracotta text-forest-ink",
+        vocabulary: "bg-highlighter-yellow/30 border-b-2 border-highlighter-yellow text-forest-ink",
+        coherence: "bg-sticky-note-teal/20 border-b-2 border-sticky-note-teal text-forest-ink",
+        task: "bg-sticky-note-blush/30 border-b-2 border-purple-500 text-forest-ink",
+      };
+
+      const highlightClass = colorMap[ann.category] || "bg-amber-100";
+
+      elements.push(
+        <span
+          key={`ann-${i}`}
+          className={`relative group px-1 font-medium rounded-sm cursor-help transition-all ${highlightClass}`}
+        >
+          {text.substring(ann.start, ann.end)}
+          <span className="pointer-events-none absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover:block w-56 bg-forest-ink text-white text-[11px] p-3 rounded-xl shadow-lg z-50 leading-relaxed font-inter">
+            <strong className="block text-[9px] uppercase font-bold text-highlighter-yellow tracking-wider mb-1">
+              {ann.category === "grammar" ? "Grammar & Accuracy" : ann.category}
+            </strong>
+            {ann.comment}
+          </span>
+        </span>
+      );
+      lastIdx = ann.end;
+    });
+
+    if (lastIdx < text.length) {
+      elements.push(text.substring(lastIdx));
+    }
+
+    return <div className="whitespace-pre-wrap">{elements}</div>;
+  };
+
+  // --- Dynamic Filtering & Sorting Logic ---
+  const filteredSubmissions = submissions
+    .filter((sub) => {
+      const q = searchQuery.toLowerCase();
+      const name = (sub.candidateName || "").toLowerCase();
+      const email = (sub.candidateEmail || "").toLowerCase();
+      const id = (sub.id || "").toLowerCase();
+      
+      const matchesSearch = name.includes(q) || email.includes(q) || id.includes(q);
+      const matchesStatus = statusFilter === "all" || sub.status === statusFilter;
+      return matchesSearch && matchesStatus;
+    })
+    .sort((a, b) => {
+      let valA: any = a[sortFieldSub];
+      let valB: any = b[sortFieldSub];
+
+      if (sortFieldSub === "submittedAt") {
+        valA = a.submittedAt?.seconds || 0;
+        valB = b.submittedAt?.seconds || 0;
+      }
+
+      if (valA < valB) return sortOrder === "asc" ? -1 : 1;
+      if (valA > valB) return sortOrder === "asc" ? 1 : -1;
+      return 0;
+    });
+
+  const filteredStudents = students
+    .filter((s) => {
+      const q = searchQuery.toLowerCase();
+      const name = (s.displayName || "").toLowerCase();
+      const email = (s.email || "").toLowerCase();
+      const country = (s.country || "").toLowerCase();
+      const lang = (s.nativeLanguage || "").toLowerCase();
+      
+      return name.includes(q) || email.includes(q) || country.includes(q) || lang.includes(q);
+    })
+    .sort((a, b) => {
+      let valA: any = a[sortFieldStud] || "";
+      let valB: any = b[sortFieldStud] || "";
+
+      if (sortFieldStud === "updatedAt") {
+        valA = new Date(a.updatedAt || 0).getTime();
+        valB = new Date(b.updatedAt || 0).getTime();
+      }
+
+      if (typeof valA === "string") valA = valA.toLowerCase();
+      if (typeof valB === "string") valB = valB.toLowerCase();
+
+      if (valA < valB) return sortOrder === "asc" ? -1 : 1;
+      if (valA > valB) return sortOrder === "asc" ? 1 : -1;
+      return 0;
+    });
+
+  // Visual Verification loading indicator
   if (authLoading) {
     return (
       <div className="min-h-screen bg-cream-paper flex items-center justify-center">
@@ -345,7 +666,7 @@ export default function AdminPage() {
           </div>
           <div className="pt-2">
             <Link href="/">
-              <Button variant="forest" className="w-full h-11 font-semibold flex items-center justify-center gap-1.5 shadow-sm">
+              <Button variant="forest" className="w-full h-11 font-semibold flex items-center justify-center gap-1.5 shadow-sm cursor-pointer">
                 Return to Homepage
               </Button>
             </Link>
@@ -355,45 +676,14 @@ export default function AdminPage() {
     );
   }
 
-  // Filter lists based on Query & Status filters
-  const filteredSubmissions = submissions.filter((sub) => {
-    const q = searchQuery.toLowerCase();
-    const name = (sub.candidateName || "").toLowerCase();
-    const email = (sub.candidateEmail || "").toLowerCase();
-    const id = (sub.id || "").toLowerCase();
-    
-    const matchesSearch = name.includes(q) || email.includes(q) || id.includes(q);
-    const matchesStatus = statusFilter === "all" || sub.status === statusFilter;
-    return matchesSearch && matchesStatus;
-  });
-
-  const filteredStudents = students.filter((s) => {
-    const q = searchQuery.toLowerCase();
-    const name = (s.displayName || "").toLowerCase();
-    const email = (s.email || "").toLowerCase();
-    const country = (s.country || "").toLowerCase();
-    const lang = (s.nativeLanguage || "").toLowerCase();
-    
-    return name.includes(q) || email.includes(q) || country.includes(q) || lang.includes(q);
-  });
-
-  const filteredAttempts = attempts.filter((att) => {
-    const q = searchQuery.toLowerCase();
-    const name = (att.candidateName || "").toLowerCase();
-    const email = (att.candidateEmail || "").toLowerCase();
-    const testName = formatTestName(att.testId).toLowerCase();
-    
-    return name.includes(q) || email.includes(q) || testName.includes(q);
-  });
-
   return (
-    <div className="min-h-screen bg-[#faf9f5] text-forest-ink pt-8 pb-24 px-4 sm:px-6 lg:px-8 font-inter">
+    <div className="min-h-screen bg-[#faf9f5] text-forest-ink pt-8 pb-24 px-4 sm:px-6 lg:px-8 font-inter relative overflow-x-hidden">
       <div className="max-w-6xl mx-auto space-y-8">
         
         {/* Banner header */}
         <div className="relative bg-forest-ink text-white rounded-3xl p-6 sm:p-8 shadow-md overflow-hidden">
           <div className="absolute inset-0 opacity-[0.07] bg-[linear-gradient(to_right,#ffffff_1px,transparent_1px),linear-gradient(to_bottom,#ffffff_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none" />
-          <div className="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div className="space-y-1">
               <span className="inline-block px-2.5 py-0.5 rounded-full bg-highlighter-yellow/20 text-highlighter-yellow text-[10px] font-mono font-bold uppercase tracking-wider border border-highlighter-yellow/30">
                 Staff Operations
@@ -403,33 +693,77 @@ export default function AdminPage() {
               </h1>
             </div>
             
-            {/* Quick counters */}
-            <div className="flex items-center gap-4 bg-white/10 px-5 py-2.5 rounded-2xl border border-white/15 backdrop-blur-xs text-xs font-mono">
-              <div>
-                <span className="text-white/50 block text-[9px] uppercase tracking-wider">Pending Essays</span>
-                <strong className="text-highlighter-yellow font-bold text-base">
-                  {submissions.filter((s) => s.status === "submitted").length}
-                </strong>
-              </div>
-              <div className="w-px h-6 bg-white/15" />
-              <div>
-                <span className="text-white/50 block text-[9px] uppercase tracking-wider">Students</span>
-                <strong className="text-white font-bold text-base">{students.length}</strong>
-              </div>
-              <div className="w-px h-6 bg-white/15" />
-              <div>
-                <span className="text-white/50 block text-[9px] uppercase tracking-wider">Exams Scored</span>
-                <strong className="text-white font-bold text-base">{attempts.length}</strong>
-              </div>
+            {/* Quick Actions */}
+            <div className="flex items-center gap-3">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={activeTab === "students" ? exportStudentsToCSV : exportSubmissionsToCSV}
+                className="bg-white/10 hover:bg-white/20 border-white/15 text-white h-9 text-xs font-semibold rounded-xl flex items-center gap-1.5 cursor-pointer shadow-xs"
+              >
+                <Download size={13} />
+                Export {activeTab === "students" ? "Students" : "Essays"}
+              </Button>
             </div>
           </div>
+        </div>
+
+        {/* --- Theme styled Statistics Cards (Notebook Aesthetics) --- */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 font-inter">
+          <motion.div
+            whileHover={{ y: -3, rotate: -0.5 }}
+            className="bg-sticky-note-mint border border-pencil-gray/25 shadow-card rounded-3xl p-6 relative overflow-hidden rotate-0.5"
+          >
+            <div className="absolute top-3 right-3 opacity-20">
+              <Users size={40} className="text-forest-ink" />
+            </div>
+            <span className="text-[10px] font-mono uppercase tracking-wider text-forest-ink/60 font-bold block mb-1">
+              Enrolled Students
+            </span>
+            <strong className="text-3xl font-extrabold font-bricolage text-forest-ink block">
+              {students.length}
+            </strong>
+            <span className="text-xs text-forest-ink/55 mt-1 block">Active user profiles in database</span>
+          </motion.div>
+
+          <motion.div
+            whileHover={{ y: -3, rotate: 0.5 }}
+            className="bg-highlighter-yellow/30 border border-pencil-gray/25 shadow-card rounded-3xl p-6 relative overflow-hidden -rotate-0.5"
+          >
+            <div className="absolute top-3 right-3 opacity-20">
+              <FileText size={40} className="text-forest-ink" />
+            </div>
+            <span className="text-[10px] font-mono uppercase tracking-wider text-forest-ink/60 font-bold block mb-1">
+              Pending Evaluation
+            </span>
+            <strong className="text-3xl font-extrabold font-bricolage text-forest-ink block">
+              {submissions.filter((s) => s.status === "submitted").length}
+            </strong>
+            <span className="text-xs text-forest-ink/55 mt-1 block">Paid essays waiting for feedback</span>
+          </motion.div>
+
+          <motion.div
+            whileHover={{ y: -3, rotate: -0.5 }}
+            className="bg-sticky-note-teal border border-pencil-gray/25 shadow-card rounded-3xl p-6 relative overflow-hidden rotate-0.5"
+          >
+            <div className="absolute top-3 right-3 opacity-20">
+              <Award size={40} className="text-forest-ink" />
+            </div>
+            <span className="text-[10px] font-mono uppercase tracking-wider text-forest-ink/60 font-bold block mb-1">
+              Evaluations Graded
+            </span>
+            <strong className="text-3xl font-extrabold font-bricolage text-forest-ink block">
+              {submissions.filter((s) => s.status === "graded").length}
+            </strong>
+            <span className="text-xs text-forest-ink/55 mt-1 block">Essays completed and reports sent</span>
+          </motion.div>
         </div>
 
         {/* Filters and Tabs */}
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
           
           {/* Tabs navigation */}
-          <div className="flex gap-2 p-1.5 bg-white border border-forest-ink/10 rounded-2xl self-start">
+          <div className="flex gap-2 p-1.5 bg-white border border-forest-ink/10 rounded-2xl self-start shadow-2xs">
             <button
               onClick={() => {
                 setActiveTab("students");
@@ -469,8 +803,8 @@ export default function AdminPage() {
                 type="text"
                 placeholder={
                   activeTab === "submissions"
-                    ? "Search candidate name, email, or submission ID…"
-                    : "Search student name, email, country…"
+                    ? "Search name, email, or submission ID…"
+                    : "Search student, country, native language…"
                 }
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
@@ -482,7 +816,7 @@ export default function AdminPage() {
               <select
                 value={statusFilter}
                 onChange={(e) => setStatusFilter(e.target.value as any)}
-                className="h-10 px-3 bg-white border border-forest-ink/20 focus:border-forest-ink text-xs rounded-xl font-inter text-forest-ink font-semibold shrink-0 cursor-pointer"
+                className="h-10 px-3 bg-white border border-forest-ink/20 focus:border-forest-ink text-xs rounded-xl font-inter text-forest-ink font-semibold shrink-0 cursor-pointer shadow-2xs"
               >
                 <option value="all">All status</option>
                 <option value="submitted">Submitted (Pending)</option>
@@ -509,14 +843,22 @@ export default function AdminPage() {
                     No essay submissions match your filters.
                   </div>
                 ) : (
-                  <table className="w-full text-left border-collapse">
+                  <table className="w-full text-left border-collapse font-inter">
                     <thead>
-                      <tr className="border-b border-forest-ink/5 text-[11px] font-mono uppercase tracking-wider text-forest-ink/45 pb-3">
-                        <th className="pb-3 font-semibold">Candidate</th>
-                        <th className="pb-3 font-semibold">Task</th>
-                        <th className="pb-3 font-semibold">Method</th>
-                        <th className="pb-3 font-semibold">Submitted</th>
-                        <th className="pb-3 font-semibold">Status / Band</th>
+                      <tr className="border-b border-forest-ink/5 text-[10px] font-mono uppercase tracking-wider text-forest-ink/45 pb-3">
+                        <th className="pb-3 font-semibold cursor-pointer select-none hover:text-forest-ink" onClick={() => toggleSubmissionSort("candidateName")}>
+                          Candidate {sortFieldSub === "candidateName" && (sortOrder === "asc" ? "↑" : "↓")}
+                        </th>
+                        <th className="pb-3 font-semibold cursor-pointer select-none hover:text-forest-ink" onClick={() => toggleSubmissionSort("taskType")}>
+                          Task {sortFieldSub === "taskType" && (sortOrder === "asc" ? "↑" : "↓")}
+                        </th>
+                        <th className="pb-3 font-semibold">Payment ID</th>
+                        <th className="pb-3 font-semibold cursor-pointer select-none hover:text-forest-ink" onClick={() => toggleSubmissionSort("submittedAt")}>
+                          Submitted {sortFieldSub === "submittedAt" && (sortOrder === "asc" ? "↑" : "↓")}
+                        </th>
+                        <th className="pb-3 font-semibold cursor-pointer select-none hover:text-forest-ink" onClick={() => toggleSubmissionSort("status")}>
+                          Status / Band {sortFieldSub === "status" && (sortOrder === "asc" ? "↑" : "↓")}
+                        </th>
                         <th className="pb-3 font-semibold text-right">Actions</th>
                       </tr>
                     </thead>
@@ -534,16 +876,28 @@ export default function AdminPage() {
                         return (
                           <tr key={sub.id} className="hover:bg-cream-paper/20 transition-all">
                             <td className="py-4 pr-3 max-w-[200px] truncate">
-                              <span className="font-bold text-forest-ink block leading-snug">{sub.candidateName}</span>
-                              <span className="text-[10px] text-forest-ink/50 block font-mono truncate">{sub.candidateEmail}</span>
+                              <span className="font-bold text-forest-ink block leading-snug">
+                                {highlightText(sub.candidateName || "", searchQuery)}
+                              </span>
+                              <span className="text-[10px] text-forest-ink/50 block font-mono truncate">
+                                {highlightText(sub.candidateEmail || "", searchQuery)}
+                              </span>
                             </td>
                             <td className="py-4 pr-3">
                               <span className="px-2 py-0.5 rounded-sm bg-forest-ink/5 border border-forest-ink/10 text-[10px] font-mono font-bold uppercase tracking-wider">
                                 {sub.taskType === "task_1" ? "Task 1" : "Task 2"}
                               </span>
                             </td>
-                            <td className="py-4 pr-3 text-xs capitalize text-forest-ink/70">
-                              {sub.submissionMethod}
+                            <td className="py-4 pr-3 text-xs font-mono text-forest-ink/60">
+                              {sub.paymentId ? (
+                                <span className="text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded border border-emerald-200/50">
+                                  {sub.paymentId}
+                                </span>
+                              ) : (
+                                <span className="text-amber-700 bg-amber-50 px-1.5 py-0.5 rounded border border-amber-200/40 italic">
+                                  Legacy / Manual
+                                </span>
+                              )}
                             </td>
                             <td className="py-4 pr-3 text-xs text-forest-ink/60">
                               {date}
@@ -566,7 +920,7 @@ export default function AdminPage() {
                                 size="sm"
                                 variant={sub.status === "graded" ? "outline" : "forest"}
                                 onClick={() => setGradingSubmission(sub)}
-                                className="h-8 text-xs font-semibold rounded-lg cursor-pointer"
+                                className="h-8 text-xs font-semibold rounded-lg cursor-pointer shadow-xs"
                               >
                                 {sub.status === "graded" ? "Review feedback" : "Evaluate Essay"}
                               </Button>
@@ -586,14 +940,24 @@ export default function AdminPage() {
                     No student profile records matches the query.
                   </div>
                 ) : (
-                  <table className="w-full text-left border-collapse">
+                  <table className="w-full text-left border-collapse font-inter">
                     <thead>
-                      <tr className="border-b border-forest-ink/5 text-[11px] font-mono uppercase tracking-wider text-forest-ink/45 pb-3">
-                        <th className="pb-3 font-semibold">Student Name</th>
-                        <th className="pb-3 font-semibold">Demographics</th>
-                        <th className="pb-3 font-semibold">IELTS Goal</th>
-                        <th className="pb-3 font-semibold">Exam Date</th>
-                        <th className="pb-3 font-semibold">Last Updated</th>
+                      <tr className="border-b border-forest-ink/5 text-[10px] font-mono uppercase tracking-wider text-forest-ink/45 pb-3">
+                        <th className="pb-3 font-semibold cursor-pointer select-none hover:text-forest-ink" onClick={() => toggleStudentSort("displayName")}>
+                          Student Name {sortFieldStud === "displayName" && (sortOrder === "asc" ? "↑" : "↓")}
+                        </th>
+                        <th className="pb-3 font-semibold cursor-pointer select-none hover:text-forest-ink" onClick={() => toggleStudentSort("country")}>
+                          Demographics {sortFieldStud === "country" && (sortOrder === "asc" ? "↑" : "↓")}
+                        </th>
+                        <th className="pb-3 font-semibold cursor-pointer select-none hover:text-forest-ink" onClick={() => toggleStudentSort("targetBand")}>
+                          IELTS Goal {sortFieldStud === "targetBand" && (sortOrder === "asc" ? "↑" : "↓")}
+                        </th>
+                        <th className="pb-3 font-semibold cursor-pointer select-none hover:text-forest-ink" onClick={() => toggleStudentSort("targetDate")}>
+                          Exam Date {sortFieldStud === "targetDate" && (sortOrder === "asc" ? "↑" : "↓")}
+                        </th>
+                        <th className="pb-3 font-semibold cursor-pointer select-none hover:text-forest-ink" onClick={() => toggleStudentSort("updatedAt")}>
+                          Last Updated {sortFieldStud === "updatedAt" && (sortOrder === "asc" ? "↑" : "↓")}
+                        </th>
                         <th className="pb-3 font-semibold text-right">Actions</th>
                       </tr>
                     </thead>
@@ -622,18 +986,22 @@ export default function AdminPage() {
                                   </div>
                                 )}
                                 <div className="truncate max-w-[180px]">
-                                  <span className="font-bold text-forest-ink block leading-snug truncate">{s.displayName || "Practice Candidate"}</span>
-                                  <span className="text-[10px] text-forest-ink/50 block font-mono truncate">{s.email || "No Email"}</span>
+                                  <span className="font-bold text-forest-ink block leading-snug truncate">
+                                    {highlightText(s.displayName || "Practice Candidate", searchQuery)}
+                                  </span>
+                                  <span className="text-[10px] text-forest-ink/50 block font-mono truncate">
+                                    {highlightText(s.email || "No Email", searchQuery)}
+                                  </span>
                                 </div>
                               </div>
                             </td>
                             <td className="py-4 pr-3 text-xs text-forest-ink/75 space-y-0.5">
                               <div className="flex items-center gap-1">
                                 <Globe size={11} className="text-forest-ink/40" />
-                                <span>{s.country || "Unknown Country"}</span>
+                                <span>{highlightText(s.country || "Unknown Country", searchQuery)}</span>
                               </div>
                               <div className="text-[10px] text-forest-ink/50 pl-4 font-mono">
-                                Lang: {s.nativeLanguage || "N/A"}
+                                Lang: {highlightText(s.nativeLanguage || "N/A", searchQuery)}
                               </div>
                             </td>
                             <td className="py-4 pr-3">
@@ -662,7 +1030,7 @@ export default function AdminPage() {
                                 size="sm"
                                 variant="forest"
                                 onClick={() => setSelectedStudentForAttempts(s)}
-                                className="h-8 text-xs font-semibold rounded-lg cursor-pointer"
+                                className="h-8 text-xs font-semibold rounded-lg cursor-pointer shadow-xs"
                               >
                                 View Attempts
                               </Button>
@@ -680,70 +1048,149 @@ export default function AdminPage() {
 
       </div>
 
-      {/* Evaluation/Grading Modal Overlay */}
-      {gradingSubmission && (
-        <div className="fixed inset-0 bg-black/60 backdrop-blur-xs z-50 flex items-center justify-center p-4">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.96, y: 10 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.96 }}
-            className="bg-cream-paper rounded-2xl w-full max-w-4xl max-h-[85vh] overflow-y-auto border border-pencil-gray/25 shadow-2xl flex flex-col text-forest-ink"
-          >
-            {/* Modal Header */}
-            <div className="sticky top-0 bg-white border-b border-pencil-gray/10 px-6 py-4 flex items-center justify-between z-10">
-              <div className="space-y-0.5">
-                <h3 className="font-bold text-lg font-bricolage text-forest-ink">
-                  Essay Evaluation & Feedback
-                </h3>
-                <p className="text-xs text-forest-ink/60 font-mono">
-                  {gradingSubmission.candidateName} ({gradingSubmission.candidateEmail}) • {gradingSubmission.taskType === "task_1" ? "Writing Task 1" : "Writing Task 2"}
-                </p>
+      {/* --- Upgraded Side-by-Side Grading Split Panel --- */}
+      <AnimatePresence>
+        {gradingSubmission && (
+          <>
+            {/* Backdrop Overlay */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 0.5 }}
+              exit={{ opacity: 0 }}
+              onClick={closeGradingPanel}
+              className="fixed inset-0 bg-black z-40"
+            />
+            
+            {/* Slide-out side drawer */}
+            <motion.div
+              initial={{ x: "100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "100%" }}
+              transition={{ type: "spring", damping: 25, stiffness: 200 }}
+              className="fixed right-0 top-0 bottom-0 bg-cream-paper border-l border-pencil-gray/25 shadow-2xl w-full max-w-3xl z-50 flex flex-col text-forest-ink"
+            >
+              {/* Header */}
+              <div className="bg-white border-b border-pencil-gray/10 px-6 py-4 flex items-center justify-between sticky top-0 z-10 font-inter">
+                <div className="space-y-0.5">
+                  <h3 className="font-extrabold text-lg font-bricolage text-forest-ink flex items-center gap-1.5">
+                    <FileText className="w-5 h-5 text-forest-ink/75" />
+                    Essay Evaluation & Rubrics
+                  </h3>
+                  <p className="text-xs text-forest-ink/60 font-mono truncate max-w-md">
+                    {gradingSubmission.candidateName} • {gradingSubmission.taskType === "task_1" ? "Writing Task 1" : "Writing Task 2"}
+                  </p>
+                </div>
+                
+                <button
+                  onClick={closeGradingPanel}
+                  className="p-1.5 rounded-full hover:bg-whisper-gray text-forest-ink/60 hover:text-forest-ink transition-colors cursor-pointer"
+                >
+                  <X size={20} />
+                </button>
               </div>
-              
-              <button
-                onClick={() => {
-                  setGradingSubmission(null);
-                  setGradingFeedback("");
-                  setGradingScore("7.0");
-                }}
-                className="p-1.5 rounded-full hover:bg-whisper-gray text-forest-ink/60 hover:text-forest-ink transition-colors cursor-pointer"
-              >
-                <X size={20} />
-              </button>
-            </div>
 
-            {/* Modal Content */}
-            <div className="p-6 overflow-y-auto flex-grow grid grid-cols-1 lg:grid-cols-12 gap-6">
-              
-              {/* Left Essay Panel */}
-              <div className="lg:col-span-7 flex flex-col space-y-4 max-h-[500px]">
+              {/* Scrollable Split Layout */}
+              <div className="flex-grow overflow-y-auto p-6 space-y-6 font-inter">
+                
+                {/* Payment Badge & Transaction info */}
+                <div className="bg-white border border-forest-ink/10 rounded-2xl p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-2xs">
+                  <div>
+                    <span className="text-[10px] font-mono text-forest-ink/40 uppercase tracking-wider block">Payment Verification</span>
+                    <div className="flex items-center gap-1.5 mt-0.5">
+                      <CheckCircle2 size={14} className="text-emerald-700" />
+                      <strong className="text-xs font-bold text-emerald-800">Verified ₹49 Transaction</strong>
+                    </div>
+                  </div>
+                  <div className="text-right">
+                    <span className="text-[10px] font-mono text-forest-ink/40 uppercase tracking-wider block">Razorpay ID</span>
+                    <strong className="text-xs font-mono text-forest-ink/75 block mt-0.5">
+                      {gradingSubmission.paymentId || "Legacy Verification"}
+                    </strong>
+                  </div>
+                </div>
+
+                {/* Candidate Notes */}
                 {gradingSubmission.notes && (
-                  <div className="bg-amber-50/50 border border-amber-200/50 rounded-xl p-3 text-xs leading-relaxed">
-                    <strong className="text-amber-800 font-bold block mb-0.5">Candidate Notes:</strong>
-                    <span className="text-forest-ink/80 italic">{gradingSubmission.notes}</span>
+                  <div className="bg-[#fffbeb] border border-amber-200/50 rounded-2xl p-4 text-xs leading-relaxed text-amber-900 shadow-2xs">
+                    <strong className="font-extrabold block text-amber-900 uppercase tracking-wide mb-1 font-mono text-[9px]">
+                      Candidate Specific Notes:
+                    </strong>
+                    <span className="italic">"{gradingSubmission.notes}"</span>
                   </div>
                 )}
-                
-                <div className="flex-grow flex flex-col min-h-0 bg-white border border-forest-ink/10 rounded-2xl p-5 shadow-inner">
-                  <div className="flex justify-between items-center text-[10px] font-mono text-forest-ink/40 uppercase tracking-wider pb-2 border-b border-forest-ink/5">
-                    <span>Submitted Essay Text</span>
+
+                {/* --- Essay annotations text pane --- */}
+                <div className="space-y-2">
+                  <div className="flex justify-between items-center text-[10px] font-mono text-forest-ink/45 uppercase tracking-wider">
+                    <span>
+                      {gradingSubmission.status === "graded" 
+                        ? "Evaluated Essay Text (Hover annotations for corrections)" 
+                        : "Highlight essay text to add inline annotations"}
+                    </span>
                     <span>{gradingSubmission.essayText?.trim().split(/\s+/).length || 0} Words</span>
                   </div>
-                  
-                  <div className="flex-grow overflow-y-auto pt-4 text-sm leading-relaxed whitespace-pre-wrap font-inter text-forest-ink/90 scroll-smooth">
-                    {gradingSubmission.essayText || (
+
+                  <div
+                    ref={essayTextContainerRef}
+                    onMouseUp={handleEssayTextSelection}
+                    className="bg-white border border-forest-ink/10 rounded-2xl p-5 shadow-xs text-sm leading-relaxed text-forest-ink select-text focus-visible:outline-none min-h-[160px] max-h-[360px] overflow-y-auto"
+                  >
+                    {gradingSubmission.essayText ? (
+                      renderAnnotatedText(gradingSubmission.essayText, activeAnnotations)
+                    ) : (
                       <em className="text-forest-ink/30 text-xs">No essay text submitted.</em>
                     )}
                   </div>
                 </div>
-              </div>
 
-              {/* Right Feedback Panel */}
-              <div className="lg:col-span-5 flex flex-col">
+                {/* --- Inline Annotations List Builder (Grading Mode) --- */}
+                {gradingSubmission.status === "submitted" && (
+                  <div className="space-y-3">
+                    <h4 className="font-bold text-xs font-mono uppercase tracking-wider text-forest-ink/45">
+                      Active Corrections ({activeAnnotations.length})
+                    </h4>
+                    {activeAnnotations.length === 0 ? (
+                      <div className="p-4 bg-white/50 border border-dashed border-forest-ink/15 rounded-2xl text-center text-xs text-forest-ink/45">
+                        No inline corrections yet. Drag-select text in the essay box above to comment.
+                      </div>
+                    ) : (
+                      <div className="space-y-2 max-h-[220px] overflow-y-auto pr-1">
+                        {activeAnnotations.map((ann, idx) => (
+                          <div
+                            key={idx}
+                            className="bg-white border border-forest-ink/5 rounded-xl p-3 flex justify-between gap-3 text-xs shadow-2xs hover:border-forest-ink/10 transition-colors"
+                          >
+                            <div className="space-y-1">
+                              <span className="inline-block px-1.5 py-0.5 rounded-[4px] text-[9px] font-mono font-bold uppercase tracking-wider bg-forest-ink/5 border border-forest-ink/10 text-forest-ink capitalize">
+                                {ann.category}
+                              </span>
+                              <p className="font-semibold text-forest-ink/80 italic">"{ann.text}"</p>
+                              <p className="text-forest-ink/75 font-medium">{ann.comment}</p>
+                            </div>
+                            <button
+                              type="button"
+                              onClick={() => handleDeleteAnnotation(idx)}
+                              className="text-forest-ink/35 hover:text-rose-700 transition-colors self-start p-1 rounded-lg hover:bg-rose-50 cursor-pointer"
+                            >
+                              <Trash2 size={13} />
+                            </button>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                )}
+
+                {/* --- Rubric-based Scoring & Summary Form --- */}
                 <form onSubmit={handleSaveGrade} className="space-y-4 bg-white border border-forest-ink/10 rounded-2xl p-5 shadow-xs">
-                  <h4 className="font-bold text-sm font-bricolage text-forest-ink border-b border-forest-ink/5 pb-2">
-                    Evaluation Details
-                  </h4>
+                  <div className="flex items-center justify-between border-b border-forest-ink/5 pb-2">
+                    <h4 className="font-extrabold text-sm font-bricolage text-forest-ink">
+                      IELTS Score Breakdown
+                    </h4>
+                    <span className="text-[10px] font-mono uppercase tracking-wider text-forest-ink/40">
+                      Calculated overall
+                    </span>
+                  </div>
 
                   {saveError && (
                     <div className="text-xs text-rose-700 bg-rose-50 p-3 rounded-xl border border-rose-200">
@@ -751,201 +1198,391 @@ export default function AdminPage() {
                     </div>
                   )}
 
-                  {/* Select Score */}
-                  <div className="space-y-1.5">
-                    <Label htmlFor="gradingScore" className="text-xs font-semibold text-forest-ink">
-                      Estimated IELTS Band Score
-                    </Label>
-                    <select
-                      id="gradingScore"
-                      value={gradingScore}
-                      onChange={(e) => setGradingScore(e.target.value)}
-                      disabled={savingGrade}
-                      className="w-full h-10 px-3 bg-white border border-forest-ink/20 focus:border-forest-ink text-xs rounded-xl font-inter text-forest-ink font-mono font-bold cursor-pointer"
-                    >
-                      <option value="9.0">Band 9.0 (Expert)</option>
-                      <option value="8.5">Band 8.5</option>
-                      <option value="8.0">Band 8.0 (Very Good)</option>
-                      <option value="7.5">Band 7.5</option>
-                      <option value="7.0">Band 7.0 (Good)</option>
-                      <option value="6.5">Band 6.5</option>
-                      <option value="6.0">Band 6.0 (Competent)</option>
-                      <option value="5.5">Band 5.5</option>
-                      <option value="5.0">Band 5.0 (Modest)</option>
-                      <option value="4.5">Band 4.5</option>
-                      <option value="4.0">Band 4.0 (Limited)</option>
-                    </select>
+                  {/* Rubric Matrix Grid */}
+                  <div className="grid grid-cols-2 gap-4">
+                    {/* TR */}
+                    <div className="space-y-1.5">
+                      <Label htmlFor="score_tr" className="text-xs font-semibold text-forest-ink">
+                        Task Response / Achievement
+                      </Label>
+                      <select
+                        id="score_tr"
+                        value={rubricScores.tr}
+                        onChange={(e) => setRubricScores(prev => ({ ...prev, tr: parseFloat(e.target.value) }))}
+                        disabled={savingGrade || gradingSubmission.status === "graded"}
+                        className="w-full h-10 px-3 bg-white border border-forest-ink/20 focus:border-forest-ink text-xs rounded-xl font-inter text-forest-ink font-mono font-bold cursor-pointer"
+                      >
+                        {[9.0, 8.5, 8.0, 7.5, 7.0, 6.5, 6.0, 5.5, 5.0, 4.5, 4.0, 3.5, 3.0].map(val => (
+                          <option key={val} value={val}>Band {val.toFixed(1)}</option>
+                        ))}
+                      </select>
+                    </div>
+
+                    {/* CC */}
+                    <div className="space-y-1.5">
+                      <Label htmlFor="score_cc" className="text-xs font-semibold text-forest-ink">
+                        Coherence & Cohesion
+                      </Label>
+                      <select
+                        id="score_cc"
+                        value={rubricScores.cc}
+                        onChange={(e) => setRubricScores(prev => ({ ...prev, cc: parseFloat(e.target.value) }))}
+                        disabled={savingGrade || gradingSubmission.status === "graded"}
+                        className="w-full h-10 px-3 bg-white border border-forest-ink/20 focus:border-forest-ink text-xs rounded-xl font-inter text-forest-ink font-mono font-bold cursor-pointer"
+                      >
+                        {[9.0, 8.5, 8.0, 7.5, 7.0, 6.5, 6.0, 5.5, 5.0, 4.5, 4.0, 3.5, 3.0].map(val => (
+                          <option key={val} value={val}>Band {val.toFixed(1)}</option>
+                        ))}
+                      </select>
+                    </div>
+
+                    {/* LR */}
+                    <div className="space-y-1.5">
+                      <Label htmlFor="score_lr" className="text-xs font-semibold text-forest-ink">
+                        Lexical Resource (Vocabulary)
+                      </Label>
+                      <select
+                        id="score_lr"
+                        value={rubricScores.lr}
+                        onChange={(e) => setRubricScores(prev => ({ ...prev, lr: parseFloat(e.target.value) }))}
+                        disabled={savingGrade || gradingSubmission.status === "graded"}
+                        className="w-full h-10 px-3 bg-white border border-forest-ink/20 focus:border-forest-ink text-xs rounded-xl font-inter text-forest-ink font-mono font-bold cursor-pointer"
+                      >
+                        {[9.0, 8.5, 8.0, 7.5, 7.0, 6.5, 6.0, 5.5, 5.0, 4.5, 4.0, 3.5, 3.0].map(val => (
+                          <option key={val} value={val}>Band {val.toFixed(1)}</option>
+                        ))}
+                      </select>
+                    </div>
+
+                    {/* GRA */}
+                    <div className="space-y-1.5">
+                      <Label htmlFor="score_gra" className="text-xs font-semibold text-forest-ink">
+                        Grammatical Range & Accuracy
+                      </Label>
+                      <select
+                        id="score_gra"
+                        value={rubricScores.gra}
+                        onChange={(e) => setRubricScores(prev => ({ ...prev, gra: parseFloat(e.target.value) }))}
+                        disabled={savingGrade || gradingSubmission.status === "graded"}
+                        className="w-full h-10 px-3 bg-white border border-forest-ink/20 focus:border-forest-ink text-xs rounded-xl font-inter text-forest-ink font-mono font-bold cursor-pointer"
+                      >
+                        {[9.0, 8.5, 8.0, 7.5, 7.0, 6.5, 6.0, 5.5, 5.0, 4.5, 4.0, 3.5, 3.0].map(val => (
+                          <option key={val} value={val}>Band {val.toFixed(1)}</option>
+                        ))}
+                      </select>
+                    </div>
                   </div>
 
-                  {/* Written Feedback */}
+                  {/* Calculated summary band preview */}
+                  <div className="bg-[#faf9f6] border border-forest-ink/5 rounded-2xl p-4 flex items-center justify-between text-xs">
+                    <div>
+                      <strong className="block text-forest-ink font-bold">Estimated IELTS Band Score</strong>
+                      <span className="text-forest-ink/65">Standardized mean average rounding rules apply</span>
+                    </div>
+                    <div className="px-4 py-2 rounded-xl bg-forest-ink text-white font-mono font-bold text-lg shadow-sm">
+                      Band {calculatedOverallBand.toFixed(1)}
+                    </div>
+                  </div>
+
+                  {/* Written General Feedback */}
                   <div className="space-y-1.5">
                     <Label htmlFor="gradingFeedback" className="text-xs font-semibold text-forest-ink">
-                      Detailed Corrections & Feedback
+                      Detailed Corrections & Feedback Review
                     </Label>
                     <textarea
                       id="gradingFeedback"
-                      rows={8}
-                      placeholder="Write grammatical corrections, structural suggestions, band score breakdowns for Lexical Resource, Cohesion & Coherence, Task Response..."
+                      rows={6}
+                      placeholder="Write structural corrections, detailed improvements, and general reviews..."
                       value={gradingFeedback}
                       onChange={(e) => setGradingFeedback(e.target.value)}
-                      disabled={savingGrade}
+                      disabled={savingGrade || gradingSubmission.status === "graded"}
                       required
                       className="w-full p-3 border border-forest-ink/20 focus:border-forest-ink text-xs rounded-xl font-inter text-forest-ink bg-white placeholder-forest-ink/30 focus-visible:ring-0 focus-visible:outline-none"
                     />
                   </div>
 
-                  <Button
-                    type="submit"
-                    disabled={savingGrade}
-                    variant="forest"
-                    className="w-full h-10 text-xs font-semibold rounded-xl cursor-pointer"
-                  >
-                    {savingGrade ? (
-                      <>
-                        <Loader2 size={13} className="animate-spin mr-1.5" />
-                        Submitting Evaluation...
-                      </>
-                    ) : (
-                      "Submit Grade & Feedback"
-                    )}
-                  </Button>
+                  {/* Submit Button */}
+                  {gradingSubmission.status === "submitted" && (
+                    <Button
+                      type="submit"
+                      disabled={savingGrade}
+                      variant="forest"
+                      className="w-full h-10 text-xs font-semibold rounded-xl cursor-pointer shadow-sm"
+                    >
+                      {savingGrade ? (
+                        <>
+                          <Loader2 size={13} className="animate-spin mr-1.5" />
+                          Submitting Evaluation...
+                        </>
+                      ) : (
+                        "Submit Grade & Feedback (Ctrl+Enter)"
+                      )}
+                    </Button>
+                  )}
                 </form>
               </div>
 
-            </div>
-
-            {/* Modal Footer */}
-            <div className="sticky bottom-0 bg-white border-t border-pencil-gray/10 px-6 py-4 flex justify-end">
-              <Button
-                variant="forestOutline"
-                onClick={() => {
-                  setGradingSubmission(null);
-                  setGradingFeedback("");
-                  setGradingScore("7.0");
-                }}
-                size="sm"
-                className="h-10 px-6 cursor-pointer rounded-xl font-semibold border-forest-ink/15 text-forest-ink"
-              >
-                Close Panel
-              </Button>
-            </div>
-          </motion.div>
-        </div>
-      )}
-
-      {/* Student Attempts Modal */}
-      {selectedStudentForAttempts && (
-        <div className="fixed inset-0 bg-black/60 backdrop-blur-xs z-50 flex items-center justify-center p-4 animate-in fade-in duration-200">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.96, y: 10 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.96 }}
-            className="bg-cream-paper rounded-2xl w-full max-w-3xl max-h-[80vh] overflow-y-auto border border-pencil-gray/25 shadow-2xl flex flex-col text-forest-ink"
-          >
-            {/* Header */}
-            <div className="sticky top-0 bg-white border-b border-pencil-gray/10 px-6 py-4 flex items-center justify-between z-10">
-              <div className="flex items-center gap-3">
-                {selectedStudentForAttempts.photoURL ? (
-                  <img
-                    src={selectedStudentForAttempts.photoURL}
-                    alt={selectedStudentForAttempts.displayName}
-                    className="w-12 h-12 rounded-full object-cover border border-forest-ink/10"
-                  />
-                ) : (
-                  <div className="w-12 h-12 rounded-full bg-forest-ink/5 text-forest-ink border border-forest-ink/10 flex items-center justify-center font-bold text-base uppercase">
-                    {selectedStudentForAttempts.displayName?.[0] || selectedStudentForAttempts.email?.[0] || "U"}
-                  </div>
-                )}
-                <div>
-                  <h3 className="font-bold text-lg font-bricolage text-forest-ink">
-                    {selectedStudentForAttempts.displayName || "Practice Candidate"}
-                  </h3>
-                  <p className="text-xs text-forest-ink/60 font-mono">
-                    {selectedStudentForAttempts.email || "No Email"}
-                  </p>
+              {/* Modal Footer actions */}
+              <div className="bg-white border-t border-pencil-gray/10 px-6 py-4 flex justify-between sticky bottom-0 z-10">
+                <div className="text-[10px] font-mono text-forest-ink/35 flex items-center">
+                  Ctrl+Enter to save • Esc to close
                 </div>
+                <Button
+                  variant="forestOutline"
+                  onClick={closeGradingPanel}
+                  size="sm"
+                  className="h-10 px-6 cursor-pointer rounded-xl font-semibold border-forest-ink/15 text-forest-ink"
+                >
+                  Close Panel
+                </Button>
               </div>
-              
-              <button
-                onClick={() => setSelectedStudentForAttempts(null)}
-                className="p-1.5 rounded-full hover:bg-whisper-gray text-forest-ink/60 hover:text-forest-ink transition-colors cursor-pointer"
-              >
-                <X size={20} />
-              </button>
-            </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
 
-            {/* Content */}
-            <div className="p-6 overflow-y-auto flex-grow">
-              {attempts.filter((att) => att.uid === selectedStudentForAttempts.id).length === 0 ? (
-                <div className="py-12 text-center text-forest-ink/50 text-sm">
-                  This candidate has not attempted any practice exams yet.
-                </div>
-              ) : (
-                <div className="overflow-x-auto">
-                  <table className="w-full text-left border-collapse">
-                    <thead>
-                      <tr className="border-b border-forest-ink/5 text-[10px] font-mono uppercase tracking-wider text-forest-ink/45 pb-2">
-                        <th className="pb-2 font-semibold">Test Name</th>
-                        <th className="pb-2 font-semibold">Category</th>
-                        <th className="pb-2 font-semibold">Attempt Date</th>
-                        <th className="pb-2 font-semibold text-right">Score & Band</th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-forest-ink/5 text-sm">
-                      {attempts
-                        .filter((att) => att.uid === selectedStudentForAttempts.id)
-                        .map((att) => {
-                          const date = att.submittedAt
-                            ? new Date(att.submittedAt.seconds * 1000).toLocaleDateString("en-US", {
-                                month: "short",
-                                day: "numeric",
-                                year: "numeric",
-                              })
-                            : "N/A";
-                          return (
-                            <tr key={att.id} className="hover:bg-cream-paper/20 transition-all">
-                              <td className="py-3 pr-3 font-semibold text-forest-ink text-xs max-w-[280px] truncate">
-                                {formatTestName(att.testId)}
-                              </td>
-                              <td className="py-3 pr-3 text-xs">
-                                <span className="px-2 py-0.5 rounded bg-forest-ink/5 border border-forest-ink/10 text-[9px] font-mono font-bold uppercase tracking-wider text-forest-ink/75">
-                                  {formatTestType(att.testType)}
-                                </span>
-                              </td>
-                              <td className="py-3 pr-3 text-xs text-forest-ink/65">
-                                {date}
-                              </td>
-                              <td className="py-3 text-right space-y-0.5">
-                                <span className="font-bold font-mono text-xs block text-forest-ink">
-                                  {att.score} / {att.total}
-                                </span>
-                                <span className="inline-block px-1.5 py-0.5 rounded-md bg-forest-ink text-white font-bold text-[9px] font-mono">
-                                  Band {getBandScore(att.score, att.testType)}
-                                </span>
-                              </td>
-                            </tr>
-                          );
-                        })}
-                    </tbody>
-                  </table>
-                </div>
-              )}
-            </div>
+      {/* --- Upgraded Interactive Highlight creation popover --- */}
+      <AnimatePresence>
+        {newAnnotation && (
+          <div className="fixed inset-0 bg-black/30 backdrop-blur-xs z-50 flex items-center justify-center p-4">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0 }}
+              className="bg-white rounded-2xl w-full max-w-sm border border-pencil-gray/25 shadow-2xl p-5 space-y-4 text-forest-ink font-inter"
+            >
+              <div className="flex items-center justify-between border-b border-forest-ink/5 pb-2">
+                <h4 className="font-bold text-sm font-bricolage">Add Text Annotation</h4>
+                <button onClick={() => setNewAnnotation(null)} className="text-forest-ink/40 hover:text-forest-ink cursor-pointer">
+                  <X size={16} />
+                </button>
+              </div>
 
-            {/* Footer */}
-            <div className="sticky bottom-0 bg-white border-t border-pencil-gray/10 px-6 py-4 flex justify-end">
-              <Button
-                variant="forestOutline"
-                onClick={() => setSelectedStudentForAttempts(null)}
-                size="sm"
-                className="h-10 px-6 cursor-pointer rounded-xl font-semibold border-forest-ink/15 text-forest-ink"
-              >
-                Close Attempts
-              </Button>
-            </div>
-          </motion.div>
-        </div>
-      )}
+              <div className="text-xs space-y-1">
+                <span className="font-mono text-forest-ink/45 block">Selected sentence highlight:</span>
+                <p className="bg-cream-paper border border-forest-ink/5 p-2 rounded-lg italic font-medium">
+                  "{newAnnotation.text}"
+                </p>
+              </div>
+
+              {/* Annotation Category */}
+              <div className="space-y-1">
+                <Label htmlFor="ann_cat" className="text-xs font-semibold">Category</Label>
+                <select
+                  id="ann_cat"
+                  value={newAnnotation.category}
+                  onChange={(e) => setNewAnnotation(prev => ({ ...prev!, category: e.target.value as any }))}
+                  className="w-full h-9 px-2 bg-white border border-pencil-gray/25 text-xs rounded-xl font-inter text-forest-ink cursor-pointer"
+                >
+                  <option value="grammar">Grammar & Accuracy (GRA)</option>
+                  <option value="vocabulary">Lexical Resource / Vocabulary (LR)</option>
+                  <option value="coherence">Coherence & Cohesion (CC)</option>
+                  <option value="task">Task Response (TR)</option>
+                </select>
+              </div>
+
+              {/* Annotation Note */}
+              <div className="space-y-1">
+                <Label htmlFor="ann_comment" className="text-xs font-semibold">Correction Advice / Comment</Label>
+                <textarea
+                  id="ann_comment"
+                  rows={3}
+                  placeholder="Explain the error or suggest replacement text..."
+                  value={newAnnotation.comment}
+                  onChange={(e) => setNewAnnotation(prev => ({ ...prev!, comment: e.target.value }))}
+                  required
+                  className="w-full p-2.5 border border-pencil-gray/25 focus:border-forest-ink text-xs rounded-xl font-inter text-forest-ink resize-none"
+                />
+              </div>
+
+              <div className="flex gap-2 justify-end pt-2">
+                <Button
+                  variant="forestOutline"
+                  size="sm"
+                  onClick={() => setNewAnnotation(null)}
+                  className="h-9 px-4 text-xs font-semibold rounded-xl"
+                >
+                  Cancel
+                </Button>
+                <Button
+                  variant="forest"
+                  size="sm"
+                  onClick={handleSaveNewAnnotation}
+                  disabled={!newAnnotation.comment.trim()}
+                  className="h-9 px-4 text-xs font-semibold rounded-xl cursor-pointer"
+                >
+                  Save Highlight
+                </Button>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+
+      {/* --- Upgraded Student Activity Journey Timeline Modal --- */}
+      <AnimatePresence>
+        {selectedStudentForAttempts && (
+          <>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 0.5 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setSelectedStudentForAttempts(null)}
+              className="fixed inset-0 bg-black z-40"
+            />
+            <motion.div
+              initial={{ opacity: 0, scale: 0.96, y: 15 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.96 }}
+              className="fixed inset-x-4 top-10 bottom-10 md:inset-x-auto md:left-1/2 md:-translate-x-1/2 md:w-full md:max-w-2xl bg-cream-paper rounded-3xl border border-pencil-gray/25 shadow-2xl flex flex-col text-forest-ink z-50 overflow-hidden"
+            >
+              {/* Header */}
+              <div className="bg-white border-b border-pencil-gray/10 px-6 py-4 flex items-center justify-between z-10 font-inter">
+                <div className="flex items-center gap-3">
+                  {selectedStudentForAttempts.photoURL ? (
+                    <img
+                      src={selectedStudentForAttempts.photoURL}
+                      alt={selectedStudentForAttempts.displayName}
+                      className="w-12 h-12 rounded-full object-cover border border-forest-ink/10"
+                    />
+                  ) : (
+                    <div className="w-12 h-12 rounded-full bg-forest-ink/5 text-forest-ink border border-forest-ink/10 flex items-center justify-center font-bold text-base uppercase">
+                      {selectedStudentForAttempts.displayName?.[0] || selectedStudentForAttempts.email?.[0] || "U"}
+                    </div>
+                  )}
+                  <div>
+                    <h3 className="font-extrabold text-base font-bricolage text-forest-ink">
+                      {selectedStudentForAttempts.displayName || "Practice Candidate"}
+                    </h3>
+                    <p className="text-xs text-forest-ink/60 font-mono">
+                      {selectedStudentForAttempts.email || "No Email"}
+                    </p>
+                  </div>
+                </div>
+                
+                <button
+                  onClick={() => setSelectedStudentForAttempts(null)}
+                  className="p-1.5 rounded-full hover:bg-whisper-gray text-forest-ink/60 hover:text-forest-ink transition-colors cursor-pointer"
+                >
+                  <X size={20} />
+                </button>
+              </div>
+
+              {/* Unified chronological timeline contents */}
+              <div className="p-6 overflow-y-auto flex-grow bg-white/40">
+                {(() => {
+                  const timelineEvents = [
+                    ...attempts
+                      .filter((att) => att.uid === selectedStudentForAttempts.id)
+                      .map((att) => ({
+                        id: att.id,
+                        type: "test",
+                        date: att.submittedAt,
+                        title: formatTestName(att.testId),
+                        subtitle: formatTestType(att.testType),
+                        result: `${att.score} / ${att.total}`,
+                        band: `Band ${getBandScore(att.score, att.testType)}`,
+                      })),
+                    ...submissions
+                      .filter((sub) => sub.uid === selectedStudentForAttempts.id)
+                      .map((sub) => ({
+                        id: sub.id,
+                        type: "essay",
+                        date: sub.submittedAt,
+                        title: sub.taskType === "task_1" ? "Writing Task 1 Essay" : "Writing Task 2 Essay",
+                        subtitle: sub.status === "graded" ? "Graded & Reviewed" : "Pending Evaluation",
+                        result: sub.status === "graded" ? `Band ${sub.score}` : "Under Review",
+                        band: sub.status === "graded" ? `Band ${sub.score}` : "Pending",
+                      })),
+                  ].sort((a, b) => {
+                    const timeA = a.date?.seconds || 0;
+                    const timeB = b.date?.seconds || 0;
+                    return timeB - timeA; // Newest events first
+                  });
+
+                  if (timelineEvents.length === 0) {
+                    return (
+                      <div className="py-16 text-center text-forest-ink/50 text-xs">
+                        This candidate has no recorded practice history or essay submissions.
+                      </div>
+                    );
+                  }
+
+                  return (
+                    <div className="relative border-l-2 border-forest-ink/10 pl-6 ml-4 space-y-6">
+                      {timelineEvents.map((ev, idx) => {
+                        const eventDate = ev.date
+                          ? new Date(ev.date.seconds * 1000).toLocaleDateString("en-US", {
+                              month: "short",
+                              day: "numeric",
+                              year: "numeric",
+                            })
+                          : "N/A";
+                        
+                        return (
+                          <div key={`${ev.id}-${idx}`} className="relative">
+                            {/* Dot element */}
+                            <span className={`absolute -left-[31px] top-1.5 flex h-4 w-4 items-center justify-center rounded-full border bg-white shadow-2xs ${
+                              ev.type === "essay" ? "border-terracotta text-terracotta" : "border-forest-ink text-forest-ink"
+                            }`}>
+                              <span className={`h-1.5 w-1.5 rounded-full ${
+                                ev.type === "essay" ? "bg-terracotta" : "bg-forest-ink"
+                              }`} />
+                            </span>
+
+                            <div className="bg-white border border-forest-ink/5 rounded-2xl p-4 shadow-2xs space-y-1.5">
+                              <div className="flex justify-between items-start gap-4">
+                                <span className="text-[10px] font-mono text-forest-ink/40 uppercase block">
+                                  {eventDate}
+                                </span>
+                                <span className={`px-2 py-0.5 rounded text-[9px] font-mono font-bold uppercase tracking-wider block ${
+                                  ev.type === "essay" 
+                                    ? "bg-terracotta/5 border border-terracotta/20 text-terracotta" 
+                                    : "bg-forest-ink/5 border border-forest-ink/10 text-forest-ink"
+                                }`}>
+                                  {ev.type === "essay" ? "Essay Response" : "Practice Exam"}
+                                </span>
+                              </div>
+
+                              <div className="space-y-0.5">
+                                <h4 className="font-bold text-sm text-forest-ink">
+                                  {ev.title}
+                                </h4>
+                                <p className="text-xs text-forest-ink/65">
+                                  {ev.subtitle}
+                                </p>
+                              </div>
+
+                              <div className="pt-2 border-t border-forest-ink/5 flex items-center justify-between">
+                                <span className="text-xs text-forest-ink/60">Performance Result:</span>
+                                <span className="text-xs font-mono font-bold text-forest-ink">
+                                  {ev.result} <span className="ml-1 text-[10px] bg-forest-ink text-white px-1.5 py-0.2 rounded font-bold">{ev.band}</span>
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  );
+                })()}
+              </div>
+
+              {/* Footer */}
+              <div className="bg-white border-t border-pencil-gray/10 px-6 py-4 flex justify-end sticky bottom-0">
+                <Button
+                  variant="forestOutline"
+                  onClick={() => setSelectedStudentForAttempts(null)}
+                  size="sm"
+                  className="h-10 px-6 cursor-pointer rounded-xl font-semibold border-forest-ink/15 text-forest-ink"
+                >
+                  Close History
+                </Button>
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
 
     </div>
   );

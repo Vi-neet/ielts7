@@ -49,4 +49,6 @@ docs/
 
 # firebase
 .firebase/
+firebase-service-account.json
+*firebase-adminsdk*.json
 

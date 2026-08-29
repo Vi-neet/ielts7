@@ -3,8 +3,6 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/lib/AuthContext";
-import { db } from "@/lib/firebase";
-import { doc, collection, setDoc, serverTimestamp } from "firebase/firestore";
 import { Button } from "@/components/ui/button";
 import {
   ArrowLeft,
@@ -12,6 +10,7 @@ import {
   AlertTriangle,
   Loader2,
   FileText,
+  CreditCard,
 } from "lucide-react";
 import Link from "next/link";
 import { motion } from "framer-motion";
@@ -25,6 +24,17 @@ const MAX_WORDS = 1000;
 export default function SubmitEssayPage() {
   const { user, loading: authLoading } = useAuth();
   const router = useRouter();
+
+  // Load Razorpay Checkout Script on mount
+  useEffect(() => {
+    const script = document.createElement("script");
+    script.src = "https://checkout.razorpay.com/v1/checkout.js";
+    script.async = true;
+    document.body.appendChild(script);
+    return () => {
+      document.body.removeChild(script);
+    };
+  }, []);
 
   // Auth guard — redirect guests to login, preserving the return URL
   useEffect(() => {
@@ -90,44 +100,101 @@ export default function SubmitEssayPage() {
     else if (step === "preview") setStep("content");
   };
 
-  // ── Submission ──────────────────────────────────────────────────────────────
-  const handleSubmit = async () => {
+  // ── Secure Submission ────────────────────────────────────────────────────────
+  const submitEssayWithPayment = async (paymentId: string) => {
+    try {
+      const res = await fetch("/api/verify-payment", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          paymentId,
+          taskType,
+          essayText,
+          notes,
+          uid: user.uid,
+        }),
+      });
+
+      const data = await res.json();
+      if (data.success) {
+        setSuccessId(data.submissionId);
+        setStep("success");
+      } else {
+        setErrorMsg(data.error || "Verification failed. Please check your payment status.");
+      }
+    } catch (err) {
+      console.error("Verification POST failed:", err);
+      setErrorMsg("Failed to confirm your payment with the server. Please check your connection.");
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  const handlePaymentAndSubmit = async () => {
+    if (typeof window === "undefined" || !(window as any).Razorpay) {
+      setErrorMsg("Payment gateway is initializing, please try again in a few seconds.");
+      return;
+    }
+
     setSubmitting(true);
     setErrorMsg("");
 
+    const keyId = process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID;
+
+    // Dev Fallback Mode: if keys are missing in dev environment, bypass payment
+    if (!keyId) {
+      console.warn("NEXT_PUBLIC_RAZORPAY_KEY_ID is missing. Simulating dummy payment in developer mode.");
+      const dummyId = `pay_dummy_${Math.random().toString(36).substring(2, 11)}`;
+      await submitEssayWithPayment(dummyId);
+      return;
+    }
+
     try {
-      // Pre-allocate a Firestore document ID so the storage path stays coherent
-      // if file support is added in the future.
-      const docRef = doc(collection(db, "writingSubmissions"));
+      const options = {
+        key: keyId,
+        amount: 4900, // ₹49 in paise
+        currency: "INR",
+        name: "IELTS 7+ House",
+        description: `Writing Evaluation (${taskType === "task_1" ? "Task 1" : "Task 2"})`,
+        image: "/icon.webp",
+        handler: async function (response: any) {
+          const paymentId = response.razorpay_payment_id;
+          if (paymentId) {
+            await submitEssayWithPayment(paymentId);
+          } else {
+            setErrorMsg("Payment captured, but transaction ID is missing.");
+            setSubmitting(false);
+          }
+        },
+        prefill: {
+          name: user.displayName || "",
+          email: user.email || "",
+        },
+        theme: {
+          color: "#1a3300", // Matches forest-ink green
+        },
+        modal: {
+          ondismiss: function () {
+            setErrorMsg("Payment window closed. Please complete payment to submit your essay.");
+            setSubmitting(false);
+          },
+        },
+      };
 
-      await setDoc(docRef, {
-        uid: user.uid,
-        taskType,
-        submissionMethod: "text",
-        essayText,
-        storagePath: null,
-        fileName: null,
-        fileSize: null,
-        wordCount,
-        notes: notes.trim() !== "" ? notes.trim() : null,
-        status: "submitted",
-        submittedAt: serverTimestamp(),
-        updatedAt: serverTimestamp(),
-      });
-
-      setSuccessId(docRef.id);
-      setStep("success");
-    } catch (err) {
-      console.error("Submission failed:", err);
-      setErrorMsg("Could not record your submission. Please check your connection and try again.");
-    } finally {
+      const rzp = new (window as any).Razorpay(options);
+      rzp.open();
+    } catch (err: any) {
+      console.error("Razorpay trigger error:", err);
+      setErrorMsg("Could not connect to Razorpay checkout. Please try again.");
       setSubmitting(false);
     }
   };
 
   // ── Step indicator dots ─────────────────────────────────────────────────────
   const stepIndex = { setup: 0, content: 1, preview: 2, success: 3 };
-  const stepLabel = { setup: "Step 1 · Task Selection", content: "Step 2 · Essay", preview: "Step 3 · Review" };
+  const stepLabel = { setup: "Step 1 · Task Selection", content: "Step 2 · Essay", preview: "Step 3 · Review & Checkout" };
 
   // ── Render ──────────────────────────────────────────────────────────────────
   return (
@@ -143,7 +210,7 @@ export default function SubmitEssayPage() {
               <Button
                 variant="outline"
                 size="sm"
-                className="flex items-center gap-1.5 rounded-full border-pencil-gray/25 bg-white text-forest-ink hover:bg-whisper-gray font-semibold shadow-xs"
+                className="flex items-center gap-1.5 rounded-full border-pencil-gray/25 bg-white text-forest-ink hover:bg-whisper-gray font-semibold shadow-xs cursor-pointer"
               >
                 <ArrowLeft size={15} />
                 Cancel
@@ -166,8 +233,8 @@ export default function SubmitEssayPage() {
               Essay Submitted!
             </h1>
             <p className="text-forest-ink/70 text-sm max-w-sm mx-auto mb-8 leading-relaxed">
-              Your essay has been received. Our IELTS trainers will review it
-              and send detailed corrections within 24–48 hours.
+              Your payment has been verified and your essay was uploaded successfully.
+              Our IELTS trainers will review it and send detailed feedback to your dashboard within 24–48 hours.
             </p>
             <p className="text-[10px] font-mono text-forest-ink/35 mb-8">
               Submission ID: {successId}
@@ -316,7 +383,7 @@ export default function SubmitEssayPage() {
                     </h2>
                     <div className="grid grid-cols-2 gap-y-2.5">
                       <span className="text-forest-ink/50">Task Type</span>
-                      <span className="font-semibold text-forest-ink">
+                      <span className="font-semibold text-forest-ink text-xs capitalize">
                         {taskType === "task_1" ? "Writing Task 1" : "Writing Task 2"}
                       </span>
 
@@ -336,14 +403,14 @@ export default function SubmitEssayPage() {
 
                   <div className="p-3.5 bg-whisper-gray/30 border border-pencil-gray/15 rounded-2xl text-xs text-forest-ink/55 flex gap-2 leading-relaxed">
                     <AlertTriangle size={15} className="shrink-0 mt-0.5 text-forest-ink/40" />
-                    Submissions are locked once sent and cannot be edited or deleted. Please review before confirming.
+                    Submissions require a ₹49 fee and are locked once sent. Please review before payment.
                   </div>
                 </motion.div>
               )}
             </div>
 
             {/* Bottom action row */}
-            <div className="bg-whisper-gray/25 border-t border-pencil-gray/10 px-6 md:px-8 py-5 flex flex-col sm:flex-row gap-3 sm:justify-between items-center">
+            <div className="bg-whisper-gray/25 border-t border-pencil-gray/10 px-6 md:px-8 py-5 flex flex-col sm:flex-row gap-3 sm:justify-between items-center font-inter">
               {step !== "setup" ? (
                 <Button
                   onClick={goBack}
@@ -359,7 +426,7 @@ export default function SubmitEssayPage() {
 
               {step === "preview" ? (
                 <Button
-                  onClick={handleSubmit}
+                  onClick={handlePaymentAndSubmit}
                   disabled={submitting}
                   variant="forest"
                   className="w-full sm:w-auto h-10 px-8 font-semibold shadow-xs flex items-center justify-center gap-2 cursor-pointer"
@@ -367,10 +434,13 @@ export default function SubmitEssayPage() {
                   {submitting ? (
                     <>
                       <Loader2 size={15} className="animate-spin" />
-                      Submitting…
+                      Verifying Transaction…
                     </>
                   ) : (
-                    "Confirm & Submit Essay"
+                    <>
+                      <CreditCard size={15} />
+                      Pay ₹49 & Submit Essay
+                    </>
                   )}
                 </Button>
               ) : (

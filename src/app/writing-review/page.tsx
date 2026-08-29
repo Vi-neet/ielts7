@@ -273,8 +273,8 @@ const EvaluationPage = () => {
           <SectionHeader
             eyebrowText="Get Started"
             eyebrowIcon={<PenTool className="w-3.5 h-3.5" />}
-            title="General Inquiry & Payment Form"
-            description="Complete the form below for general inquiries or manual payment validations."
+            title="General Inquiries & Support"
+            description="Have questions about the writing packages, evaluation process, or need support? Complete the form below."
             className="mb-12"
           />
 

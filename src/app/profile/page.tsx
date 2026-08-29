@@ -232,6 +232,9 @@ export default function ProfilePage() {
   const [reviewLoading, setReviewLoading] = useState(false);
   const [reviewResults, setReviewResults] = useState<GradeResult | null>(null);
 
+  // States for reviewing a specific essay submission
+  const [reviewingEssay, setReviewingEssay] = useState<any | null>(null);
+
   // Saved Practice Sessions State
   interface SavedSession {
     testId: string;
@@ -409,6 +412,10 @@ export default function ProfilePage() {
             notes: data.notes,
             status: data.status || "submitted",
             submittedAt: data.submittedAt,
+            score: data.score || null,
+            scores: data.scores || null,
+            annotations: data.annotations || [],
+            feedbackText: data.feedbackText || "",
           };
         });
 
@@ -670,6 +677,50 @@ export default function ProfilePage() {
 
   const pathD = points.map((p, i) => `${i === 0 ? 'M' : 'L'} ${p.x} ${p.y}`).join(' ');
   const targetY = paddingTop + graphHeight - ((7.0 - minY) / (maxY - minY)) * graphHeight;
+
+  const renderAnnotatedText = (text: string, list: any[]) => {
+    if (!list || list.length === 0) return text;
+    const sorted = [...list].sort((a, b) => a.start - b.start);
+    const elements: React.ReactNode[] = [];
+    let lastIdx = 0;
+
+    sorted.forEach((ann, i) => {
+      if (ann.start > lastIdx) {
+        elements.push(text.substring(lastIdx, ann.start));
+      }
+
+      const colorMap = {
+        grammar: "bg-terracotta/20 border-b-2 border-terracotta text-forest-ink",
+        vocabulary: "bg-highlighter-yellow/30 border-b-2 border-highlighter-yellow text-forest-ink",
+        coherence: "bg-sticky-note-teal/20 border-b-2 border-sticky-note-teal text-forest-ink",
+        task: "bg-sticky-note-blush/30 border-b-2 border-purple-500 text-forest-ink",
+      };
+
+      const highlightClass = colorMap[ann.category as keyof typeof colorMap] || "bg-amber-100";
+
+      elements.push(
+        <span
+          key={`ann-${i}`}
+          className={`relative group px-1 font-medium rounded-sm cursor-help transition-all ${highlightClass}`}
+        >
+          {text.substring(ann.start, ann.end)}
+          <span className="pointer-events-none absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover:block w-56 bg-forest-ink text-white text-[11px] p-3 rounded-xl shadow-lg z-50 leading-relaxed font-inter">
+            <strong className="block text-[9px] uppercase font-bold text-highlighter-yellow tracking-wider mb-1">
+              {ann.category === "grammar" ? "Grammar & Accuracy" : ann.category} Correction
+            </strong>
+            {ann.comment}
+          </span>
+        </span>
+      );
+      lastIdx = ann.end;
+    });
+
+    if (lastIdx < text.length) {
+      elements.push(text.substring(lastIdx));
+    }
+
+    return <div className="whitespace-pre-wrap">{elements}</div>;
+  };
 
   return (
     <div className="min-h-screen bg-[#faf9f5] text-forest-ink pt-8 pb-24 px-4 sm:px-6 lg:px-8 font-inter">
@@ -1126,9 +1177,20 @@ export default function ProfilePage() {
                         </div>
 
                         <div className="flex items-center justify-between sm:justify-end gap-3">
-                          <span className="px-3 py-1 rounded-full text-xs font-semibold uppercase font-mono bg-forest-ink/5 border border-forest-ink/10 text-forest-ink">
-                            {sub.status}
-                          </span>
+                          {sub.status === "graded" ? (
+                            <Button
+                              size="sm"
+                              variant="forest"
+                              onClick={() => setReviewingEssay(sub)}
+                              className="h-8 text-xs font-semibold rounded-lg cursor-pointer shadow-xs"
+                            >
+                              View Feedback
+                            </Button>
+                          ) : (
+                            <span className="px-3 py-1 rounded-full text-[10px] font-bold uppercase font-mono bg-forest-ink/5 border border-forest-ink/10 text-forest-ink/65">
+                              Pending Evaluation
+                            </span>
+                          )}
                         </div>
                       </div>
                     );
@@ -1661,6 +1723,112 @@ export default function ProfilePage() {
             <div className="sticky bottom-0 bg-white border-t border-pencil-gray/10 px-6 py-4 flex justify-end">
               <Button variant="forest" onClick={handleCloseReview} size="sm" className="h-10 px-6 cursor-pointer">
                 Close Review
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Review Essay Feedback Overlay Modal */}
+      {reviewingEssay && (
+        <div className="fixed inset-0 bg-black/55 backdrop-blur-xs z-50 flex items-center justify-center p-4">
+          <div className="bg-cream-paper rounded-3xl w-full max-w-4xl max-h-[85vh] overflow-y-auto border border-pencil-gray/25 shadow-2xl flex flex-col text-forest-ink font-inter">
+            {/* Modal Header */}
+            <div className="sticky top-0 bg-white border-b border-pencil-gray/10 px-6 py-4 flex items-center justify-between z-10">
+              <div>
+                <h3 className="font-extrabold text-lg font-bricolage text-forest-ink">
+                  Essay Feedback & Score Report
+                </h3>
+                <p className="text-xs font-mono text-forest-ink/65 mt-0.5">
+                  {reviewingEssay.taskType === "task_1" ? "Writing Task 1" : "Writing Task 2"} • Submitted{" "}
+                  {reviewingEssay.submittedAt
+                    ? new Date(reviewingEssay.submittedAt.seconds * 1000).toLocaleDateString("en-US", {
+                        month: "short",
+                        day: "numeric",
+                        year: "numeric",
+                      })
+                    : "N/A"}
+                </p>
+              </div>
+              <button
+                onClick={() => setReviewingEssay(null)}
+                className="p-1.5 rounded-full hover:bg-whisper-gray text-forest-ink/60 hover:text-forest-ink transition-colors cursor-pointer"
+              >
+                <X size={20} />
+              </button>
+            </div>
+
+            {/* Modal Content */}
+            <div className="p-6 overflow-y-auto flex-grow grid grid-cols-1 lg:grid-cols-12 gap-6">
+              {/* Left Essay Panel */}
+              <div className="lg:col-span-7 flex flex-col space-y-4">
+                <div className="flex justify-between items-center text-[10px] font-mono text-forest-ink/40 uppercase tracking-wider pb-2 border-b border-forest-ink/5">
+                  <span>Your Essay Response (Hover highlights for feedback)</span>
+                  <span>{reviewingEssay.wordCount || 0} Words</span>
+                </div>
+                
+                <div className="bg-white border border-forest-ink/10 rounded-2xl p-5 shadow-xs text-sm leading-relaxed min-h-[220px] max-h-[440px] overflow-y-auto">
+                  {reviewingEssay.essayText ? (
+                    renderAnnotatedText(reviewingEssay.essayText, reviewingEssay.annotations || [])
+                  ) : (
+                    <em className="text-forest-ink/30 text-xs">No essay text.</em>
+                  )}
+                </div>
+              </div>
+
+              {/* Right Evaluation Panel */}
+              <div className="lg:col-span-5 space-y-4">
+                {/* Score Summary */}
+                <div className="bg-white border border-forest-ink/10 rounded-2xl p-5 shadow-xs space-y-4">
+                  <div className="flex items-center justify-between border-b border-forest-ink/5 pb-2">
+                    <h4 className="font-extrabold text-sm font-bricolage">
+                      Rubric Scores
+                    </h4>
+                    <span className="px-3 py-1 rounded-xl bg-forest-ink text-white font-mono font-bold text-xs">
+                      Overall Band {reviewingEssay.score}
+                    </span>
+                  </div>
+
+                  {reviewingEssay.scores ? (
+                    <div className="grid grid-cols-2 gap-3 text-xs">
+                      <div className="bg-whisper-gray/40 p-2.5 rounded-xl border border-pencil-gray/10">
+                        <span className="text-forest-ink/55 block text-[9px] uppercase tracking-wider">Task Response</span>
+                        <strong className="text-sm font-bold font-mono">Band {reviewingEssay.scores.tr?.toFixed(1) || "N/A"}</strong>
+                      </div>
+                      <div className="bg-whisper-gray/40 p-2.5 rounded-xl border border-pencil-gray/10">
+                        <span className="text-forest-ink/55 block text-[9px] uppercase tracking-wider">Coherence & Cohesion</span>
+                        <strong className="text-sm font-bold font-mono">Band {reviewingEssay.scores.cc?.toFixed(1) || "N/A"}</strong>
+                      </div>
+                      <div className="bg-whisper-gray/40 p-2.5 rounded-xl border border-pencil-gray/10">
+                        <span className="text-forest-ink/55 block text-[9px] uppercase tracking-wider">Lexical Resource</span>
+                        <strong className="text-sm font-bold font-mono">Band {reviewingEssay.scores.lr?.toFixed(1) || "N/A"}</strong>
+                      </div>
+                      <div className="bg-whisper-gray/40 p-2.5 rounded-xl border border-pencil-gray/10">
+                        <span className="text-forest-ink/55 block text-[9px] uppercase tracking-wider">Grammatical Range</span>
+                        <strong className="text-sm font-bold font-mono">Band {reviewingEssay.scores.gra?.toFixed(1) || "N/A"}</strong>
+                      </div>
+                    </div>
+                  ) : (
+                    <p className="text-xs text-forest-ink/55 italic">Sub-scores not available for this evaluation.</p>
+                  )}
+                </div>
+
+                {/* General Written Feedback */}
+                <div className="bg-white border border-forest-ink/10 rounded-2xl p-5 shadow-xs space-y-2">
+                  <h4 className="font-extrabold text-xs font-mono uppercase tracking-wider text-forest-ink/50 border-b border-forest-ink/5 pb-2">
+                    Evaluator Feedback Summary
+                  </h4>
+                  <p className="text-xs leading-relaxed text-forest-ink/80 whitespace-pre-wrap bg-[#fcfaf5] p-3 rounded-xl border border-pencil-gray/10">
+                    {reviewingEssay.feedbackText || "No feedback summary provided."}
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Modal Footer */}
+            <div className="sticky bottom-0 bg-white border-t border-pencil-gray/10 px-6 py-4 flex justify-end">
+              <Button variant="forest" onClick={() => setReviewingEssay(null)} size="sm" className="h-10 px-6 cursor-pointer rounded-xl font-semibold">
+                Close Feedback
               </Button>
             </div>
           </div>
