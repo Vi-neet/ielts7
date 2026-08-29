@@ -33,6 +33,7 @@ import {
   MessageSquare,
   ArrowRight,
   Sparkles,
+  ExternalLink,
 } from "lucide-react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
@@ -1519,23 +1520,25 @@ export default function AdminPage() {
                       .filter((att) => att.uid === selectedStudentForAttempts.id)
                       .map((att) => ({
                         id: att.id,
-                        type: "test",
+                        type: "test" as const,
                         date: att.submittedAt,
                         title: formatTestName(att.testId),
                         subtitle: formatTestType(att.testType),
                         result: `${att.score} / ${att.total}`,
                         band: `Band ${getBandScore(att.score, att.testType)}`,
+                        rawAttempt: att,
                       })),
                     ...submissions
                       .filter((sub) => sub.uid === selectedStudentForAttempts.id)
                       .map((sub) => ({
                         id: sub.id,
-                        type: "essay",
+                        type: "essay" as const,
                         date: sub.submittedAt,
                         title: sub.taskType === "task_1" ? "Writing Task 1 Essay" : "Writing Task 2 Essay",
                         subtitle: sub.status === "graded" ? "Graded & Reviewed" : "Pending Evaluation",
                         result: sub.status === "graded" ? `Band ${sub.score}` : "Under Review",
                         band: sub.status === "graded" ? `Band ${sub.score}` : "Pending",
+                        rawSubmission: sub,
                       })),
                   ].sort((a, b) => {
                     const timeA = a.date?.seconds || 0;
@@ -1573,7 +1576,7 @@ export default function AdminPage() {
                               }`} />
                             </span>
 
-                            <div className="bg-white border border-forest-ink/5 rounded-2xl p-4 shadow-2xs space-y-1.5">
+                            <div className="bg-white border border-forest-ink/5 rounded-2xl p-4 shadow-2xs space-y-2">
                               <div className="flex justify-between items-start gap-4">
                                 <span className="text-[10px] font-mono text-forest-ink/40 uppercase block">
                                   {eventDate}
@@ -1596,11 +1599,47 @@ export default function AdminPage() {
                                 </p>
                               </div>
 
-                              <div className="pt-2 border-t border-forest-ink/5 flex items-center justify-between">
-                                <span className="text-xs text-forest-ink/60">Performance Result:</span>
-                                <span className="text-xs font-mono font-bold text-forest-ink">
-                                  {ev.result} <span className="ml-1 text-[10px] bg-forest-ink text-white px-1.5 py-0.2 rounded font-bold">{ev.band}</span>
-                                </span>
+                              <div className="pt-2 border-t border-forest-ink/5 flex items-center justify-between gap-3">
+                                <div>
+                                  <span className="text-[10px] text-forest-ink/50 uppercase font-mono block">Performance</span>
+                                  <span className="text-xs font-mono font-bold text-forest-ink">
+                                    {ev.result} <span className="ml-1 text-[10px] bg-forest-ink text-white px-1.5 py-0.5 rounded font-bold">{ev.band}</span>
+                                  </span>
+                                </div>
+
+                                <div className="flex items-center gap-2">
+                                  {ev.type === "test" && ev.rawAttempt && (
+                                    <Link
+                                      href={`/tests/${ev.rawAttempt.testType}/${ev.rawAttempt.testId}/results/${ev.rawAttempt.id}`}
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                    >
+                                      <Button
+                                        size="sm"
+                                        variant="forestOutline"
+                                        className="px-3 text-xs font-semibold rounded-xl cursor-pointer flex items-center gap-1.5 hover:bg-forest-ink hover:text-white transition-colors shadow-2xs"
+                                      >
+                                        <span>View Result</span>
+                                        <ExternalLink size={12} />
+                                      </Button>
+                                    </Link>
+                                  )}
+
+                                  {ev.type === "essay" && ev.rawSubmission && (
+                                    <Button
+                                      size="sm"
+                                      variant={ev.rawSubmission.status === "graded" ? "outline" : "forest"}
+                                      onClick={() => {
+                                        setSelectedStudentForAttempts(null);
+                                        setGradingSubmission(ev.rawSubmission);
+                                      }}
+                                      className="px-3 text-xs font-semibold rounded-xl cursor-pointer flex items-center gap-1.5 shadow-2xs"
+                                    >
+                                      <span>{ev.rawSubmission.status === "graded" ? "View Evaluation" : "Evaluate Essay"}</span>
+                                      <ArrowRight size={12} />
+                                    </Button>
+                                  )}
+                                </div>
                               </div>
                             </div>
                           </div>
