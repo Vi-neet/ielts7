@@ -118,6 +118,7 @@ interface Student {
   nativeLanguage?: string;
   country?: string;
   updatedAt?: string;
+  photoURL?: string;
 }
 
 interface WritingSubmission {
@@ -147,14 +148,14 @@ interface Attempt {
   candidateName?: string;
 }
 
-type Tab = "submissions" | "students" | "attempts";
+type Tab = "submissions" | "students";
 
 export default function AdminPage() {
   const { user, loading: authLoading, isAdmin } = useAuth();
   const router = useRouter();
 
   // Navigation & Data tabs
-  const [activeTab, setActiveTab] = useState<Tab>("submissions");
+  const [activeTab, setActiveTab] = useState<Tab>("students");
 
   // Core Data sets
   const [submissions, setSubmissions] = useState<WritingSubmission[]>([]);
@@ -172,6 +173,7 @@ export default function AdminPage() {
   const [gradingFeedback, setGradingFeedback] = useState("");
   const [savingGrade, setSavingGrade] = useState(false);
   const [saveError, setSaveError] = useState("");
+  const [selectedStudentForAttempts, setSelectedStudentForAttempts] = useState<Student | null>(null);
 
   // Route security checks
   useEffect(() => {
@@ -355,30 +357,33 @@ export default function AdminPage() {
 
   // Filter lists based on Query & Status filters
   const filteredSubmissions = submissions.filter((sub) => {
-    const matchesSearch =
-      sub.candidateName?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      sub.candidateEmail?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      sub.id.toLowerCase().includes(searchQuery.toLowerCase());
+    const q = searchQuery.toLowerCase();
+    const name = (sub.candidateName || "").toLowerCase();
+    const email = (sub.candidateEmail || "").toLowerCase();
+    const id = (sub.id || "").toLowerCase();
+    
+    const matchesSearch = name.includes(q) || email.includes(q) || id.includes(q);
     const matchesStatus = statusFilter === "all" || sub.status === statusFilter;
     return matchesSearch && matchesStatus;
   });
 
   const filteredStudents = students.filter((s) => {
-    return (
-      s.displayName?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      s.email?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      s.country?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      s.nativeLanguage?.toLowerCase().includes(searchQuery.toLowerCase())
-    );
+    const q = searchQuery.toLowerCase();
+    const name = (s.displayName || "").toLowerCase();
+    const email = (s.email || "").toLowerCase();
+    const country = (s.country || "").toLowerCase();
+    const lang = (s.nativeLanguage || "").toLowerCase();
+    
+    return name.includes(q) || email.includes(q) || country.includes(q) || lang.includes(q);
   });
 
   const filteredAttempts = attempts.filter((att) => {
-    const testName = formatTestName(att.testId);
-    return (
-      att.candidateName?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      att.candidateEmail?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      testName.toLowerCase().includes(searchQuery.toLowerCase())
-    );
+    const q = searchQuery.toLowerCase();
+    const name = (att.candidateName || "").toLowerCase();
+    const email = (att.candidateEmail || "").toLowerCase();
+    const testName = formatTestName(att.testId).toLowerCase();
+    
+    return name.includes(q) || email.includes(q) || testName.includes(q);
   });
 
   return (
@@ -427,21 +432,6 @@ export default function AdminPage() {
           <div className="flex gap-2 p-1.5 bg-white border border-forest-ink/10 rounded-2xl self-start">
             <button
               onClick={() => {
-                setActiveTab("submissions");
-                setSearchQuery("");
-              }}
-              className={`px-4 py-2 text-xs font-bold font-inter rounded-xl transition-all cursor-pointer flex items-center gap-1.5 ${
-                activeTab === "submissions"
-                  ? "bg-forest-ink text-white shadow-2xs"
-                  : "text-forest-ink/75 hover:bg-whisper-gray"
-              }`}
-            >
-              <FileText size={14} />
-              <span>Essay Submissions</span>
-            </button>
-            
-            <button
-              onClick={() => {
                 setActiveTab("students");
                 setSearchQuery("");
               }}
@@ -457,17 +447,17 @@ export default function AdminPage() {
 
             <button
               onClick={() => {
-                setActiveTab("attempts");
+                setActiveTab("submissions");
                 setSearchQuery("");
               }}
               className={`px-4 py-2 text-xs font-bold font-inter rounded-xl transition-all cursor-pointer flex items-center gap-1.5 ${
-                activeTab === "attempts"
+                activeTab === "submissions"
                   ? "bg-forest-ink text-white shadow-2xs"
                   : "text-forest-ink/75 hover:bg-whisper-gray"
               }`}
             >
-              <History size={14} />
-              <span>Test Attempts</span>
+              <FileText size={14} />
+              <span>Essay Submissions</span>
             </button>
           </div>
 
@@ -480,9 +470,7 @@ export default function AdminPage() {
                 placeholder={
                   activeTab === "submissions"
                     ? "Search candidate name, email, or submission ID…"
-                    : activeTab === "students"
-                    ? "Search student name, email, country…"
-                    : "Search student, email, test name…"
+                    : "Search student name, email, country…"
                 }
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
@@ -606,6 +594,7 @@ export default function AdminPage() {
                         <th className="pb-3 font-semibold">IELTS Goal</th>
                         <th className="pb-3 font-semibold">Exam Date</th>
                         <th className="pb-3 font-semibold">Last Updated</th>
+                        <th className="pb-3 font-semibold text-right">Actions</th>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-forest-ink/5 text-sm">
@@ -621,9 +610,17 @@ export default function AdminPage() {
                           <tr key={s.id} className="hover:bg-cream-paper/20 transition-all">
                             <td className="py-4 pr-3">
                               <div className="flex items-center gap-3">
-                                <div className="w-8 h-8 rounded-full bg-forest-ink/5 text-forest-ink border border-forest-ink/10 flex items-center justify-center font-bold text-xs uppercase shrink-0">
-                                  {s.displayName?.[0] || s.email?.[0] || "U"}
-                                </div>
+                                {s.photoURL ? (
+                                  <img
+                                    src={s.photoURL}
+                                    alt={s.displayName || "Avatar"}
+                                    className="w-10 h-10 rounded-full object-cover border border-forest-ink/10 shrink-0"
+                                  />
+                                ) : (
+                                  <div className="w-10 h-10 rounded-full bg-forest-ink/5 text-forest-ink border border-forest-ink/10 flex items-center justify-center font-bold text-sm uppercase shrink-0">
+                                    {s.displayName?.[0] || s.email?.[0] || "U"}
+                                  </div>
+                                )}
                                 <div className="truncate max-w-[180px]">
                                   <span className="font-bold text-forest-ink block leading-snug truncate">{s.displayName || "Practice Candidate"}</span>
                                   <span className="text-[10px] text-forest-ink/50 block font-mono truncate">{s.email || "No Email"}</span>
@@ -660,64 +657,15 @@ export default function AdminPage() {
                             <td className="py-4 text-xs text-forest-ink/60">
                               {date}
                             </td>
-                          </tr>
-                        );
-                      })}
-                    </tbody>
-                  </table>
-                )
-              )}
-
-              {/* Tab 3: Attempts */}
-              {activeTab === "attempts" && (
-                filteredAttempts.length === 0 ? (
-                  <div className="py-12 text-center text-forest-ink/50 text-sm">
-                    No historical test attempts found.
-                  </div>
-                ) : (
-                  <table className="w-full text-left border-collapse">
-                    <thead>
-                      <tr className="border-b border-forest-ink/5 text-[11px] font-mono uppercase tracking-wider text-forest-ink/45 pb-3">
-                        <th className="pb-3 font-semibold">Student</th>
-                        <th className="pb-3 font-semibold">Test Name</th>
-                        <th className="pb-3 font-semibold">Category</th>
-                        <th className="pb-3 font-semibold">Test Date</th>
-                        <th className="pb-3 font-semibold text-right">Score & Band</th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-forest-ink/5 text-sm">
-                      {filteredAttempts.map((att) => {
-                        const date = att.submittedAt
-                          ? new Date(att.submittedAt.seconds * 1000).toLocaleDateString("en-US", {
-                              month: "short",
-                              day: "numeric",
-                              year: "numeric",
-                            })
-                          : "N/A";
-                        return (
-                          <tr key={att.id} className="hover:bg-cream-paper/20 transition-all">
-                            <td className="py-4 pr-3 max-w-[200px] truncate">
-                              <span className="font-bold text-forest-ink block leading-snug">{att.candidateName}</span>
-                              <span className="text-[10px] text-forest-ink/50 block font-mono truncate">{att.candidateEmail}</span>
-                            </td>
-                            <td className="py-4 pr-3 text-xs font-bold text-forest-ink leading-snug">
-                              {formatTestName(att.testId)}
-                            </td>
-                            <td className="py-4 pr-3 text-xs">
-                              <span className="px-2 py-0.5 rounded-sm bg-forest-ink/5 border border-forest-ink/10 text-[9px] font-mono font-bold uppercase tracking-wider text-forest-ink/70">
-                                {formatTestType(att.testType)}
-                              </span>
-                            </td>
-                            <td className="py-4 pr-3 text-xs text-forest-ink/65">
-                              {date}
-                            </td>
-                            <td className="py-4 text-right space-y-0.5">
-                              <span className="font-bold font-mono text-xs block text-forest-ink">
-                                {att.score} / {att.total}
-                              </span>
-                              <span className="inline-block px-1.5 py-0.5 rounded-md bg-forest-ink text-white font-bold text-[10px] font-mono">
-                                Band {getBandScore(att.score, att.testType)}
-                              </span>
+                            <td className="py-4 text-right">
+                              <Button
+                                size="sm"
+                                variant="forest"
+                                onClick={() => setSelectedStudentForAttempts(s)}
+                                className="h-8 text-xs font-semibold rounded-lg cursor-pointer"
+                              >
+                                View Attempts
+                              </Button>
                             </td>
                           </tr>
                         );
@@ -726,7 +674,6 @@ export default function AdminPage() {
                   </table>
                 )
               )}
-
             </div>
           )}
         </div>
@@ -880,6 +827,120 @@ export default function AdminPage() {
                 className="h-10 px-6 cursor-pointer rounded-xl font-semibold border-forest-ink/15 text-forest-ink"
               >
                 Close Panel
+              </Button>
+            </div>
+          </motion.div>
+        </div>
+      )}
+
+      {/* Student Attempts Modal */}
+      {selectedStudentForAttempts && (
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-xs z-50 flex items-center justify-center p-4 animate-in fade-in duration-200">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.96, y: 10 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.96 }}
+            className="bg-cream-paper rounded-2xl w-full max-w-3xl max-h-[80vh] overflow-y-auto border border-pencil-gray/25 shadow-2xl flex flex-col text-forest-ink"
+          >
+            {/* Header */}
+            <div className="sticky top-0 bg-white border-b border-pencil-gray/10 px-6 py-4 flex items-center justify-between z-10">
+              <div className="flex items-center gap-3">
+                {selectedStudentForAttempts.photoURL ? (
+                  <img
+                    src={selectedStudentForAttempts.photoURL}
+                    alt={selectedStudentForAttempts.displayName}
+                    className="w-12 h-12 rounded-full object-cover border border-forest-ink/10"
+                  />
+                ) : (
+                  <div className="w-12 h-12 rounded-full bg-forest-ink/5 text-forest-ink border border-forest-ink/10 flex items-center justify-center font-bold text-base uppercase">
+                    {selectedStudentForAttempts.displayName?.[0] || selectedStudentForAttempts.email?.[0] || "U"}
+                  </div>
+                )}
+                <div>
+                  <h3 className="font-bold text-lg font-bricolage text-forest-ink">
+                    {selectedStudentForAttempts.displayName || "Practice Candidate"}
+                  </h3>
+                  <p className="text-xs text-forest-ink/60 font-mono">
+                    {selectedStudentForAttempts.email || "No Email"}
+                  </p>
+                </div>
+              </div>
+              
+              <button
+                onClick={() => setSelectedStudentForAttempts(null)}
+                className="p-1.5 rounded-full hover:bg-whisper-gray text-forest-ink/60 hover:text-forest-ink transition-colors cursor-pointer"
+              >
+                <X size={20} />
+              </button>
+            </div>
+
+            {/* Content */}
+            <div className="p-6 overflow-y-auto flex-grow">
+              {attempts.filter((att) => att.uid === selectedStudentForAttempts.id).length === 0 ? (
+                <div className="py-12 text-center text-forest-ink/50 text-sm">
+                  This candidate has not attempted any practice exams yet.
+                </div>
+              ) : (
+                <div className="overflow-x-auto">
+                  <table className="w-full text-left border-collapse">
+                    <thead>
+                      <tr className="border-b border-forest-ink/5 text-[10px] font-mono uppercase tracking-wider text-forest-ink/45 pb-2">
+                        <th className="pb-2 font-semibold">Test Name</th>
+                        <th className="pb-2 font-semibold">Category</th>
+                        <th className="pb-2 font-semibold">Attempt Date</th>
+                        <th className="pb-2 font-semibold text-right">Score & Band</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-forest-ink/5 text-sm">
+                      {attempts
+                        .filter((att) => att.uid === selectedStudentForAttempts.id)
+                        .map((att) => {
+                          const date = att.submittedAt
+                            ? new Date(att.submittedAt.seconds * 1000).toLocaleDateString("en-US", {
+                                month: "short",
+                                day: "numeric",
+                                year: "numeric",
+                              })
+                            : "N/A";
+                          return (
+                            <tr key={att.id} className="hover:bg-cream-paper/20 transition-all">
+                              <td className="py-3 pr-3 font-semibold text-forest-ink text-xs max-w-[280px] truncate">
+                                {formatTestName(att.testId)}
+                              </td>
+                              <td className="py-3 pr-3 text-xs">
+                                <span className="px-2 py-0.5 rounded bg-forest-ink/5 border border-forest-ink/10 text-[9px] font-mono font-bold uppercase tracking-wider text-forest-ink/75">
+                                  {formatTestType(att.testType)}
+                                </span>
+                              </td>
+                              <td className="py-3 pr-3 text-xs text-forest-ink/65">
+                                {date}
+                              </td>
+                              <td className="py-3 text-right space-y-0.5">
+                                <span className="font-bold font-mono text-xs block text-forest-ink">
+                                  {att.score} / {att.total}
+                                </span>
+                                <span className="inline-block px-1.5 py-0.5 rounded-md bg-forest-ink text-white font-bold text-[9px] font-mono">
+                                  Band {getBandScore(att.score, att.testType)}
+                                </span>
+                              </td>
+                            </tr>
+                          );
+                        })}
+                    </tbody>
+                  </table>
+                </div>
+              )}
+            </div>
+
+            {/* Footer */}
+            <div className="sticky bottom-0 bg-white border-t border-pencil-gray/10 px-6 py-4 flex justify-end">
+              <Button
+                variant="forestOutline"
+                onClick={() => setSelectedStudentForAttempts(null)}
+                size="sm"
+                className="h-10 px-6 cursor-pointer rounded-xl font-semibold border-forest-ink/15 text-forest-ink"
+              >
+                Close Attempts
               </Button>
             </div>
           </motion.div>

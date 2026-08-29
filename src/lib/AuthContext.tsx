@@ -3,7 +3,7 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { User, onAuthStateChanged } from "firebase/auth";
 import { auth, db } from "./firebase";
-import { doc, getDoc } from "firebase/firestore";
+import { doc, getDoc, setDoc } from "firebase/firestore";
 
 interface AuthContextType {
   user: User | null;
@@ -32,7 +32,56 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       if (currentUser) {
         try {
           const userDocRef = doc(db, "users", currentUser.uid);
-          const userSnap = await getDoc(userDocRef);
+          let userSnap = await getDoc(userDocRef);
+
+          // Auto-create document if it doesn't exist yet
+          if (!userSnap.exists()) {
+            try {
+              await setDoc(userDocRef, {
+                email: currentUser.email || "",
+                displayName: currentUser.displayName || "",
+                photoURL: currentUser.photoURL || "",
+                createdAt: new Date().toISOString(),
+                updatedAt: new Date().toISOString(),
+                role: "student",
+              });
+              userSnap = await getDoc(userDocRef);
+            } catch (createErr) {
+              console.warn("Could not auto-create user document:", createErr);
+            }
+          } else {
+            // Document exists, check if email, displayName, role, or photoURL are missing
+            const data = userSnap.data() || {};
+            const updatePayload: any = {};
+            let needsUpdate = false;
+
+            if (!data.email && currentUser.email) {
+              updatePayload.email = currentUser.email;
+              needsUpdate = true;
+            }
+            if (!data.displayName && currentUser.displayName) {
+              updatePayload.displayName = currentUser.displayName;
+              needsUpdate = true;
+            }
+            if (!data.photoURL && currentUser.photoURL) {
+              updatePayload.photoURL = currentUser.photoURL;
+              needsUpdate = true;
+            }
+            if (!data.role) {
+              updatePayload.role = "student";
+              needsUpdate = true;
+            }
+
+            if (needsUpdate) {
+              try {
+                await setDoc(userDocRef, updatePayload, { merge: true });
+                userSnap = await getDoc(userDocRef);
+              } catch (updateErr) {
+                console.warn("Could not update missing user fields:", updateErr);
+              }
+            }
+          }
+
           if (userSnap.exists()) {
             const data = userSnap.data();
             setIsAdmin(data.role === "admin");
