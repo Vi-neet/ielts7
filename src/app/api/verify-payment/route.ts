@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { initializeApp, getApps, cert } from "firebase-admin/app";
 import { getFirestore, FieldValue } from "firebase-admin/firestore";
+import { getAuth } from "firebase-admin/auth";
 import fs from "fs";
 import path from "path";
 
@@ -13,23 +14,8 @@ let hasAdminCredentials = false;
 
 if (getApps().length === 0) {
   try {
-    // Dynamically search root directory for a Firebase Service Account key file
-    const rootFiles = fs.readdirSync(process.cwd());
-    const serviceAccountFile = rootFiles.find(
-      (f) =>
-        f === "firebase-service-account.json" ||
-        (f.includes("firebase-adminsdk") && f.endsWith(".json"))
-    );
-
-    if (serviceAccountFile) {
-      const serviceAccountPath = path.join(process.cwd(), serviceAccountFile);
-      const serviceAccount = JSON.parse(fs.readFileSync(serviceAccountPath, "utf-8"));
-      initializeApp({
-        credential: cert(serviceAccount),
-      });
-      hasAdminCredentials = true;
-      console.log(`Firebase Admin initialized successfully using dynamic key file: ${serviceAccountFile}`);
-    } else if (clientEmail && privateKey) {
+    // 1. Check environment variables first (safest for serverless/cloud environments)
+    if (clientEmail && privateKey) {
       initializeApp({
         credential: cert({
           projectId,
@@ -40,33 +26,111 @@ if (getApps().length === 0) {
       hasAdminCredentials = true;
       console.log("Firebase Admin initialized successfully using service account environment variables.");
     } else {
-      // Fallback configuration
-      initializeApp({
-        projectId,
-      });
-      console.warn("⚠️ Firebase Admin initialized without service account credentials (keys missing).");
+      // 2. Fallback to local service account file if available
+      try {
+        const rootFiles = fs.readdirSync(process.cwd());
+        const serviceAccountFile = rootFiles.find(
+          (f) =>
+            f === "firebase-service-account.json" ||
+            (f.includes("firebase-adminsdk") && f.endsWith(".json"))
+        );
+
+        if (serviceAccountFile) {
+          const serviceAccountPath = path.join(process.cwd(), serviceAccountFile);
+          const serviceAccount = JSON.parse(fs.readFileSync(serviceAccountPath, "utf-8"));
+          initializeApp({
+            credential: cert(serviceAccount),
+          });
+          hasAdminCredentials = true;
+          console.log(`Firebase Admin initialized successfully using dynamic key file: ${serviceAccountFile}`);
+        } else {
+          initializeApp({ projectId });
+          console.warn("⚠️ Firebase Admin initialized without credentials (keys missing).");
+        }
+      } catch (fsErr) {
+        initializeApp({ projectId });
+        console.warn("⚠️ Firebase Admin initialized without credentials (filesystem read error).", fsErr);
+      }
     }
   } catch (err) {
     console.error("Firebase Admin initialization error:", err);
   }
 } else {
-  // Check if credentials are present in already initialized apps
-  const rootFiles = fs.readdirSync(process.cwd());
-  const serviceAccountFile = rootFiles.find(
-    (f) =>
-      f === "firebase-service-account.json" ||
-      (f.includes("firebase-adminsdk") && f.endsWith(".json"))
-  );
-  hasAdminCredentials = !!serviceAccountFile || !!(clientEmail && privateKey);
+  // Check if credentials are present
+  hasAdminCredentials = !!(clientEmail && privateKey);
+  if (!hasAdminCredentials) {
+    try {
+      const rootFiles = fs.readdirSync(process.cwd());
+      const serviceAccountFile = rootFiles.find(
+        (f) =>
+          f === "firebase-service-account.json" ||
+          (f.includes("firebase-adminsdk") && f.endsWith(".json"))
+      );
+      hasAdminCredentials = !!serviceAccountFile;
+    } catch {
+      hasAdminCredentials = false;
+    }
+  }
 }
 
 export async function POST(request: Request) {
   try {
-    const { paymentId, taskType, essayText, notes, uid } = await request.json();
-
-    if (!paymentId || !taskType || !essayText || !uid) {
+    // --- Verify Server-Side Authentication ---
+    const authHeader = request.headers.get("authorization") || "";
+    if (!authHeader.startsWith("Bearer ")) {
       return NextResponse.json(
-        { success: false, error: "Missing required fields." },
+        { success: false, error: "Unauthorized: Missing or invalid authorization token." },
+        { status: 401 }
+      );
+    }
+
+    const idToken = authHeader.substring(7).trim();
+    if (!idToken) {
+      return NextResponse.json(
+        { success: false, error: "Unauthorized: Empty authentication token provided." },
+        { status: 401 }
+      );
+    }
+
+    let verifiedUid: string;
+    try {
+      const decodedToken = await getAuth().verifyIdToken(idToken);
+      verifiedUid = decodedToken.uid;
+    } catch (authErr: any) {
+      console.error("Firebase ID token verification failed:", authErr);
+      return NextResponse.json(
+        { success: false, error: "Unauthorized: Invalid or expired session token. Please re-login." },
+        { status: 401 }
+      );
+    }
+
+    // --- Parse Request Body ---
+    const { paymentId, taskType, essayText, notes } = await request.json();
+
+    if (!paymentId || !taskType || !essayText) {
+      return NextResponse.json(
+        { success: false, error: "Missing required fields (paymentId, taskType, essayText)." },
+        { status: 400 }
+      );
+    }
+
+    if (taskType !== "task_1" && taskType !== "task_2") {
+      return NextResponse.json(
+        { success: false, error: "Invalid taskType. Must be 'task_1' or 'task_2'." },
+        { status: 400 }
+      );
+    }
+
+    const words = essayText.trim().split(/\s+/).filter(Boolean);
+    if (words.length < 50) {
+      return NextResponse.json(
+        { success: false, error: `Essay is too short (${words.length} words). Minimum is 50 words.` },
+        { status: 400 }
+      );
+    }
+    if (words.length > 1000) {
+      return NextResponse.json(
+        { success: false, error: `Essay exceeds word limit (${words.length} words). Maximum is 1000 words.` },
         { status: 400 }
       );
     }
@@ -74,85 +138,85 @@ export async function POST(request: Request) {
     const keyId = process.env.RAZORPAY_KEY_ID;
     const keySecret = process.env.RAZORPAY_KEY_SECRET;
 
-    // --- Dev Mode Bypass / Fallback ---
-    // If keys are not set, allow dummy verification in development mode
-    const dummyPayment = paymentId.startsWith("pay_dummy_") || !keyId || !keySecret;
+    if (!keyId || !keySecret) {
+      return NextResponse.json(
+        { success: false, error: "Razorpay credentials are not configured on the server." },
+        { status: 500 }
+      );
+    }
 
-    if (dummyPayment) {
-      console.warn("Razorpay API keys missing or dummy payment ID received. Running fallback validation.");
-      if (!paymentId.startsWith("pay_") || paymentId.length <= 10) {
-        return NextResponse.json(
-          { success: false, error: "Invalid payment ID format." },
-          { status: 400 }
-        );
+    if (!paymentId.startsWith("pay_") || paymentId.length <= 10) {
+      return NextResponse.json(
+        { success: false, error: "Invalid payment ID format." },
+        { status: 400 }
+      );
+    }
+
+    // --- Secure Server-Side Razorpay API Verification ---
+    const rzpAuthHeader = `Basic ${Buffer.from(`${keyId}:${keySecret}`).toString("base64")}`;
+    
+    const rzpResponse = await fetch(`https://api.razorpay.com/v1/payments/${paymentId}`, {
+      method: "GET",
+      headers: {
+        Authorization: rzpAuthHeader,
+      },
+    });
+
+    if (!rzpResponse.ok) {
+      return NextResponse.json(
+        { success: false, error: "Payment verification failed with Razorpay API." },
+        { status: 400 }
+      );
+    }
+
+    let payment = await rzpResponse.json();
+    console.log("Razorpay payment status:", {
+      id: payment.id,
+      status: payment.status,
+      amount: payment.amount,
+      currency: payment.currency,
+    });
+
+    // If payment is authorized but not yet captured, auto-capture it via Razorpay API
+    if (payment.status === "authorized") {
+      try {
+        const captureRes = await fetch(`https://api.razorpay.com/v1/payments/${paymentId}/capture`, {
+          method: "POST",
+          headers: {
+            Authorization: rzpAuthHeader,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ amount: payment.amount || 4900, currency: "INR" }),
+        });
+        if (captureRes.ok) {
+          payment = await captureRes.json();
+          console.log("Payment successfully auto-captured:", payment.id, payment.status);
+        } else {
+          console.warn("Auto-capture returned non-ok status:", await captureRes.text());
+        }
+      } catch (captureErr) {
+        console.error("Auto-capture failed:", captureErr);
       }
-    } else {
-      // --- Secure Server-Side Razorpay API Verification ---
-      const authHeader = `Basic ${Buffer.from(`${keyId}:${keySecret}`).toString("base64")}`;
-      
-      const rzpResponse = await fetch(`https://api.razorpay.com/v1/payments/${paymentId}`, {
-        method: "GET",
-        headers: {
-          Authorization: authHeader,
-        },
-      });
+    }
 
-      if (!rzpResponse.ok) {
-        return NextResponse.json(
-          { success: false, error: "Payment verification failed with Razorpay API." },
-          { status: 400 }
-        );
-      }
+    // Enforce: status MUST be captured, currency INR, amount 4900 paise (₹49)
+    const isValidStatus = payment.status === "captured";
+    const isValidAmount = payment.amount === 4900;
+    const isValidCurrency = payment.currency === "INR";
 
-      let payment = await rzpResponse.json();
-      console.log("Razorpay payment details:", {
-        id: payment.id,
+    if (!isValidStatus || !isValidAmount || !isValidCurrency) {
+      console.error("Payment validation check failed:", {
         status: payment.status,
         amount: payment.amount,
         currency: payment.currency,
       });
-
-      // If payment is authorized but not yet captured, auto-capture it via Razorpay API
-      if (payment.status === "authorized") {
-        try {
-          const captureRes = await fetch(`https://api.razorpay.com/v1/payments/${paymentId}/capture`, {
-            method: "POST",
-            headers: {
-              Authorization: authHeader,
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ amount: payment.amount || 4900, currency: "INR" }),
-          });
-          if (captureRes.ok) {
-            payment = await captureRes.json();
-            console.log("Payment successfully auto-captured:", payment.id, payment.status);
-          } else {
-            console.warn("Auto-capture returned non-ok status:", await captureRes.text());
-          }
-        } catch (captureErr) {
-          console.error("Auto-capture failed:", captureErr);
-        }
-      }
-
-      // Check transaction properties: captured (or authorized), currency, and ₹49 (4900 paise)
-      const isValidStatus = payment.status === "captured" || payment.status === "authorized";
-      const isValidAmount = payment.amount === 4900;
-      const isValidCurrency = payment.currency === "INR";
-
-      if (!isValidStatus || !isValidAmount || !isValidCurrency) {
-        console.error("Payment validation check failed:", {
-          status: payment.status,
-          amount: payment.amount,
-          currency: payment.currency,
-        });
-        return NextResponse.json(
-          {
-            success: false,
-            error: `Payment validation failed: status is '${payment.status}' (expected 'captured' or 'authorized'), amount is ₹${(payment.amount || 0) / 100} (expected ₹49).`,
-          },
-          { status: 400 }
-        );
-      }
+      return NextResponse.json(
+        {
+          success: false,
+          error: `Payment validation failed: status is '${payment.status}' (expected 'captured'), amount is ₹${(payment.amount || 0) / 100} (expected ₹49).`,
+        },
+        { status: 400 }
+      );
     }
 
     // --- Enforce Credentials Check ---
@@ -160,14 +224,13 @@ export async function POST(request: Request) {
       return NextResponse.json(
         { 
           success: false, 
-          error: "Firebase Admin credentials are not configured on the server. Please place a Firebase service account JSON key file in the project root." 
+          error: "Firebase Admin credentials are not configured on the server." 
         },
         { status: 500 }
       );
     }
 
     // --- Prevent Double-Spending Bypasses ---
-    // Query Firestore writingSubmissions collection using Admin SDK
     const db = getFirestore();
     const duplicateQuery = await db
       .collection("writingSubmissions")
@@ -177,7 +240,7 @@ export async function POST(request: Request) {
 
     if (!duplicateQuery.empty) {
       return NextResponse.json(
-        { success: false, error: "This Payment ID has already been used for a submission." },
+        { success: false, error: "This Payment ID has already been used for an essay submission." },
         { status: 400 }
       );
     }
@@ -187,14 +250,14 @@ export async function POST(request: Request) {
     const timestamp = FieldValue.serverTimestamp();
 
     await submissionRef.set({
-      uid,
+      uid: verifiedUid,
       taskType,
       submissionMethod: "text",
       essayText,
       storagePath: null,
       fileName: null,
       fileSize: null,
-      wordCount: essayText.trim().split(/\s+/).length,
+      wordCount: words.length,
       notes: notes?.trim() || null,
       status: "submitted",
       paymentId,

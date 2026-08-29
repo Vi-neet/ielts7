@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useAuth } from "@/lib/AuthContext";
 import { useRouter } from "next/navigation";
-import { db } from "@/lib/firebase";
+import { db, storage } from "@/lib/firebase";
 import {
   collection,
   getDocs,
@@ -11,6 +11,7 @@ import {
   updateDoc,
   serverTimestamp,
 } from "firebase/firestore";
+import { ref, getDownloadURL } from "firebase/storage";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -137,6 +138,9 @@ interface WritingSubmission {
   taskType: "task_1" | "task_2";
   submissionMethod: "text" | "file";
   essayText?: string;
+  storagePath?: string;
+  fileName?: string;
+  fileSize?: number;
   notes?: string;
   status: "submitted" | "graded";
   submittedAt: any;
@@ -289,6 +293,9 @@ export default function AdminPage() {
           taskType: data.taskType,
           submissionMethod: data.submissionMethod,
           essayText: data.essayText,
+          storagePath: data.storagePath || undefined,
+          fileName: data.fileName || undefined,
+          fileSize: data.fileSize || undefined,
           notes: data.notes,
           status: data.status,
           submittedAt: data.submittedAt,
@@ -358,9 +365,42 @@ export default function AdminPage() {
   // Calculate dynamic average band rounded to nearest half band
   const calculatedOverallBand = Math.round(((rubricScores.tr + rubricScores.cc + rubricScores.lr + rubricScores.gra) / 4) * 2) / 2;
 
-  // Handle text selection in essay container
+  const [downloadingFile, setDownloadingFile] = useState(false);
+
+  const handleDownloadSubmissionFile = async (storagePath: string) => {
+    try {
+      setDownloadingFile(true);
+      const fileRef = ref(storage, storagePath);
+      const url = await getDownloadURL(fileRef);
+      window.open(url, "_blank");
+    } catch (err: any) {
+      console.error("Failed to load file from storage:", err);
+      alert("Could not open file: " + (err.message || "Please check storage permissions."));
+    } finally {
+      setDownloadingFile(false);
+    }
+  };
+
+  // Accurately compute selection character offsets relative to container
+  function getSelectionCharacterOffsetWithin(element: HTMLElement): { start: number; end: number } | null {
+    const selection = window.getSelection();
+    if (!selection || selection.rangeCount === 0) return null;
+    const range = selection.getRangeAt(0);
+    if (!element.contains(range.startContainer) || !element.contains(range.endContainer)) {
+      return null;
+    }
+    const preCaretRange = range.cloneRange();
+    preCaretRange.selectNodeContents(element);
+    preCaretRange.setEnd(range.startContainer, range.startOffset);
+    const start = preCaretRange.toString().length;
+    const end = start + range.toString().length;
+    return { start, end };
+  }
+
+  // Handle text selection in essay container with accurate DOM offset calculation
   const handleEssayTextSelection = () => {
     if (!gradingSubmission || gradingSubmission.status === "graded") return;
+    if (!essayTextContainerRef.current) return;
     
     const selection = window.getSelection();
     if (!selection || selection.rangeCount === 0) return;
@@ -369,13 +409,19 @@ export default function AdminPage() {
     if (!selectedText) return;
 
     const text = gradingSubmission.essayText || "";
-    // Locate the first occurrence of selection in essay text
-    const index = text.indexOf(selectedText);
-    if (index !== -1) {
-      // Prompt creation modal
+    const offsets = getSelectionCharacterOffsetWithin(essayTextContainerRef.current);
+    let startIndex = offsets ? offsets.start : text.indexOf(selectedText);
+
+    if (offsets) {
+      const rawText = selection.toString();
+      const leadingSpaces = rawText.length - rawText.trimStart().length;
+      startIndex += leadingSpaces;
+    }
+
+    if (startIndex >= 0 && startIndex < text.length) {
       setNewAnnotation({
-        start: index,
-        end: index + selectedText.length,
+        start: startIndex,
+        end: startIndex + selectedText.length,
         text: selectedText,
         comment: "",
         category: "grammar",
@@ -537,8 +583,10 @@ export default function AdminPage() {
   };
 
   // --- Render Annotations in text pane ---
-  const renderAnnotatedText = (text: string, list: Annotation[]) => {
-    if (!list || list.length === 0) return text;
+  const renderAnnotatedText = (text: string | undefined, list: Annotation[]) => {
+    if (!text) return <em className="text-forest-ink/30 text-xs">No essay text submitted.</em>;
+    if (!list || list.length === 0) return <div className="whitespace-pre-wrap">{text}</div>;
+
     // Sort chronologically by character start offset
     const sorted = [...list].sort((a, b) => a.start - b.start);
 
@@ -546,10 +594,18 @@ export default function AdminPage() {
     let lastIdx = 0;
 
     sorted.forEach((ann, i) => {
+      const annStart = Math.max(0, Math.min(ann.start, text.length));
+      const annEnd = Math.max(annStart, Math.min(ann.end, text.length));
+
+      // Skip if already completely covered by a previous highlight
+      if (annEnd <= lastIdx) return;
+
       // Text segment before highlight
-      if (ann.start > lastIdx) {
-        elements.push(text.substring(lastIdx, ann.start));
+      if (annStart > lastIdx) {
+        elements.push(text.substring(lastIdx, annStart));
       }
+
+      const effectiveStart = Math.max(annStart, lastIdx);
 
       // Highlights based on annotation category
       const colorMap = {
@@ -566,7 +622,7 @@ export default function AdminPage() {
           key={`ann-${i}`}
           className={`relative group px-1 font-medium rounded-sm cursor-help transition-all ${highlightClass}`}
         >
-          {text.substring(ann.start, ann.end)}
+          {text.substring(effectiveStart, annEnd)}
           <span className="pointer-events-none absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover:block w-56 bg-forest-ink text-white text-[11px] p-3 rounded-xl shadow-lg z-50 leading-relaxed font-inter">
             <strong className="block text-[9px] uppercase font-bold text-highlighter-yellow tracking-wider mb-1">
               {ann.category === "grammar" ? "Grammar & Accuracy" : ann.category}
@@ -575,7 +631,7 @@ export default function AdminPage() {
           </span>
         </span>
       );
-      lastIdx = ann.end;
+      lastIdx = annEnd;
     });
 
     if (lastIdx < text.length) {
@@ -602,8 +658,10 @@ export default function AdminPage() {
       let valB: any = b[sortFieldSub];
 
       if (sortFieldSub === "submittedAt") {
-        valA = a.submittedAt?.seconds || 0;
-        valB = b.submittedAt?.seconds || 0;
+        valA = a.submittedAt?.seconds ? a.submittedAt.seconds * 1000 : (a.submittedAt ? new Date(a.submittedAt).getTime() : 0);
+        valB = b.submittedAt?.seconds ? b.submittedAt.seconds * 1000 : (b.submittedAt ? new Date(b.submittedAt).getTime() : 0);
+        if (isNaN(valA)) valA = 0;
+        if (isNaN(valB)) valB = 0;
       }
 
       if (valA < valB) return sortOrder === "asc" ? -1 : 1;
@@ -626,8 +684,12 @@ export default function AdminPage() {
       let valB: any = b[sortFieldStud] || "";
 
       if (sortFieldStud === "updatedAt") {
-        valA = new Date(a.updatedAt || 0).getTime();
-        valB = new Date(b.updatedAt || 0).getTime();
+        const rawA = a.updatedAt as any;
+        const rawB = b.updatedAt as any;
+        valA = rawA ? new Date(rawA?.seconds ? rawA.seconds * 1000 : rawA).getTime() : 0;
+        valB = rawB ? new Date(rawB?.seconds ? rawB.seconds * 1000 : rawB).getTime() : 0;
+        if (isNaN(valA)) valA = 0;
+        if (isNaN(valB)) valB = 0;
       }
 
       if (typeof valA === "string") valA = valA.toLowerCase();
@@ -1163,66 +1225,126 @@ export default function AdminPage() {
                   </div>
                 )}
 
-                {/* --- Essay annotations text pane --- */}
-                <div className="space-y-2">
-                  <div className="flex justify-between items-center text-[10px] font-mono text-forest-ink/45 uppercase tracking-wider">
-                    <span>
-                      {gradingSubmission.status === "graded" 
-                        ? "Evaluated Essay Text (Hover annotations for corrections)" 
-                        : "Highlight essay text to add inline annotations"}
-                    </span>
-                    <span>{gradingSubmission.essayText?.trim().split(/\s+/).length || 0} Words</span>
-                  </div>
-
-                  <div
-                    ref={essayTextContainerRef}
-                    onMouseUp={handleEssayTextSelection}
-                    className="bg-white border border-forest-ink/10 rounded-2xl p-5 shadow-xs text-sm leading-relaxed text-forest-ink select-text focus-visible:outline-none min-h-[160px] max-h-[360px] overflow-y-auto"
-                  >
-                    {gradingSubmission.essayText ? (
-                      renderAnnotatedText(gradingSubmission.essayText, activeAnnotations)
-                    ) : (
-                      <em className="text-forest-ink/30 text-xs">No essay text submitted.</em>
-                    )}
-                  </div>
-                </div>
-
-                {/* --- Inline Annotations List Builder (Grading Mode) --- */}
-                {gradingSubmission.status === "submitted" && (
+                {/* --- Essay Content Area (File vs Text) --- */}
+                {gradingSubmission.submissionMethod === "file" ? (
                   <div className="space-y-3">
-                    <h4 className="font-bold text-xs font-mono uppercase tracking-wider text-forest-ink/45">
-                      Active Corrections ({activeAnnotations.length})
-                    </h4>
-                    {activeAnnotations.length === 0 ? (
-                      <div className="p-4 bg-white/50 border border-dashed border-forest-ink/15 rounded-2xl text-center text-xs text-forest-ink/45">
-                        No inline corrections yet. Drag-select text in the essay box above to comment.
-                      </div>
-                    ) : (
-                      <div className="space-y-2 max-h-[220px] overflow-y-auto pr-1">
-                        {activeAnnotations.map((ann, idx) => (
-                          <div
-                            key={idx}
-                            className="bg-white border border-forest-ink/5 rounded-xl p-3 flex justify-between gap-3 text-xs shadow-2xs hover:border-forest-ink/10 transition-colors"
-                          >
-                            <div className="space-y-1">
-                              <span className="inline-block px-1.5 py-0.5 rounded-[4px] text-[9px] font-mono font-bold uppercase tracking-wider bg-forest-ink/5 border border-forest-ink/10 text-forest-ink capitalize">
-                                {ann.category}
-                              </span>
-                              <p className="font-semibold text-forest-ink/80 italic">"{ann.text}"</p>
-                              <p className="text-forest-ink/75 font-medium">{ann.comment}</p>
-                            </div>
-                            <button
-                              type="button"
-                              onClick={() => handleDeleteAnnotation(idx)}
-                              className="text-forest-ink/35 hover:text-rose-700 transition-colors self-start p-1 rounded-lg hover:bg-rose-50 cursor-pointer"
-                            >
-                              <Trash2 size={13} />
-                            </button>
+                    <div className="flex justify-between items-center text-[10px] font-mono text-forest-ink/45 uppercase tracking-wider">
+                      <span>Submitted Document File</span>
+                      <span>Attachment Review</span>
+                    </div>
+
+                    <div className="bg-white border border-forest-ink/10 rounded-2xl p-5 shadow-xs space-y-4">
+                      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                        <div className="flex items-center gap-3">
+                          <div className="w-12 h-12 rounded-2xl bg-forest-ink/5 border border-forest-ink/10 flex items-center justify-center text-forest-ink shrink-0">
+                            <FileText size={24} />
                           </div>
-                        ))}
+                          <div className="min-w-0">
+                            <strong className="block text-sm font-bold text-forest-ink truncate max-w-sm">
+                              {gradingSubmission.fileName || "Uploaded Essay Document"}
+                            </strong>
+                            <span className="text-xs text-forest-ink/50 font-mono block mt-0.5">
+                              {gradingSubmission.fileSize
+                                ? `${(Number(gradingSubmission.fileSize) / (1024 * 1024)).toFixed(2)} MB`
+                                : "Document File"}
+                            </span>
+                          </div>
+                        </div>
+
+                        {gradingSubmission.storagePath ? (
+                          <Button
+                            size="sm"
+                            variant="forest"
+                            disabled={downloadingFile}
+                            onClick={() => handleDownloadSubmissionFile(gradingSubmission.storagePath!)}
+                            className="flex items-center gap-2 text-xs font-semibold cursor-pointer shrink-0"
+                          >
+                            {downloadingFile ? (
+                              <>
+                                <Loader2 size={14} className="animate-spin" />
+                                <span>Loading File...</span>
+                              </>
+                            ) : (
+                              <>
+                                <Download size={14} />
+                                <span>Download / Open File</span>
+                              </>
+                            )}
+                          </Button>
+                        ) : (
+                          <span className="text-xs text-amber-700 font-mono">No storage path available</span>
+                        )}
+                      </div>
+
+                      <p className="text-xs text-forest-ink/65 bg-cream-paper p-3 rounded-xl border border-forest-ink/5 leading-relaxed">
+                        The candidate submitted a file attachment (PDF/DOCX/Image). Click the button above to inspect their essay submission, then record your criteria marks and written feedback below.
+                      </p>
+                    </div>
+                  </div>
+                ) : (
+                  <>
+                    {/* --- Essay annotations text pane --- */}
+                    <div className="space-y-2">
+                      <div className="flex justify-between items-center text-[10px] font-mono text-forest-ink/45 uppercase tracking-wider">
+                        <span>
+                          {gradingSubmission.status === "graded" 
+                            ? "Evaluated Essay Text (Hover annotations for corrections)" 
+                            : "Highlight essay text to add inline annotations"}
+                        </span>
+                        <span>{gradingSubmission.essayText?.trim().split(/\s+/).length || 0} Words</span>
+                      </div>
+
+                      <div
+                        ref={essayTextContainerRef}
+                        onMouseUp={handleEssayTextSelection}
+                        className="bg-white border border-forest-ink/10 rounded-2xl p-5 shadow-xs text-sm leading-relaxed text-forest-ink select-text focus-visible:outline-none min-h-[160px] max-h-[360px] overflow-y-auto"
+                      >
+                        {gradingSubmission.essayText ? (
+                          renderAnnotatedText(gradingSubmission.essayText, activeAnnotations)
+                        ) : (
+                          <em className="text-forest-ink/30 text-xs">No essay text submitted.</em>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* --- Inline Annotations List Builder (Grading Mode) --- */}
+                    {gradingSubmission.status === "submitted" && (
+                      <div className="space-y-3">
+                        <h4 className="font-bold text-xs font-mono uppercase tracking-wider text-forest-ink/45">
+                          Active Corrections ({activeAnnotations.length})
+                        </h4>
+                        {activeAnnotations.length === 0 ? (
+                          <div className="p-4 bg-white/50 border border-dashed border-forest-ink/15 rounded-2xl text-center text-xs text-forest-ink/45">
+                            No inline corrections yet. Drag-select text in the essay box above to comment.
+                          </div>
+                        ) : (
+                          <div className="space-y-2 max-h-[220px] overflow-y-auto pr-1">
+                            {activeAnnotations.map((ann, idx) => (
+                              <div
+                                key={idx}
+                                className="bg-white border border-forest-ink/5 rounded-xl p-3 flex justify-between gap-3 text-xs shadow-2xs hover:border-forest-ink/10 transition-colors"
+                              >
+                                <div className="space-y-1">
+                                  <span className="inline-block px-1.5 py-0.5 rounded-[4px] text-[9px] font-mono font-bold uppercase tracking-wider bg-forest-ink/5 border border-forest-ink/10 text-forest-ink capitalize">
+                                    {ann.category}
+                                  </span>
+                                  <p className="font-semibold text-forest-ink/80 italic">"{ann.text}"</p>
+                                  <p className="text-forest-ink/75 font-medium">{ann.comment}</p>
+                                </div>
+                                <button
+                                  type="button"
+                                  onClick={() => handleDeleteAnnotation(idx)}
+                                  className="text-forest-ink/35 hover:text-rose-700 transition-colors self-start p-1 rounded-lg hover:bg-rose-50 cursor-pointer"
+                                >
+                                  <Trash2 size={13} />
+                                </button>
+                              </div>
+                            ))}
+                          </div>
+                        )}
                       </div>
                     )}
-                  </div>
+                  </>
                 )}
 
                 {/* --- Rubric-based Scoring & Summary Form --- */}

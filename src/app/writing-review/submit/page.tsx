@@ -103,17 +103,18 @@ export default function SubmitEssayPage() {
   // ── Secure Submission ────────────────────────────────────────────────────────
   const submitEssayWithPayment = async (paymentId: string) => {
     try {
+      const idToken = await user.getIdToken();
       const res = await fetch("/api/verify-payment", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${idToken}`,
         },
         body: JSON.stringify({
           paymentId,
           taskType,
           essayText,
           notes,
-          uid: user.uid,
         }),
       });
 
@@ -142,12 +143,9 @@ export default function SubmitEssayPage() {
     setErrorMsg("");
 
     const keyId = process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID;
-
-    // Dev Fallback Mode: if keys are missing in dev environment, bypass payment
     if (!keyId) {
-      console.warn("NEXT_PUBLIC_RAZORPAY_KEY_ID is missing. Simulating dummy payment in developer mode.");
-      const dummyId = `pay_dummy_${Math.random().toString(36).substring(2, 11)}`;
-      await submitEssayWithPayment(dummyId);
+      setErrorMsg("Payment gateway is temporarily unavailable. Please contact support.");
+      setSubmitting(false);
       return;
     }
 

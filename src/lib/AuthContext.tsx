@@ -49,58 +49,22 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             } catch (createErr) {
               console.warn("Could not auto-create user document:", createErr);
             }
-          } else {
-            // Document exists, check if email, displayName, role, or photoURL are missing
-            const data = userSnap.data() || {};
-            const updatePayload: any = {};
-            let needsUpdate = false;
-
-            if (!data.email && currentUser.email) {
-              updatePayload.email = currentUser.email;
-              needsUpdate = true;
-            }
-            if (!data.displayName && currentUser.displayName) {
-              updatePayload.displayName = currentUser.displayName;
-              needsUpdate = true;
-            }
-            if (!data.photoURL && currentUser.photoURL) {
-              updatePayload.photoURL = currentUser.photoURL;
-              needsUpdate = true;
-            }
-            if (!data.role) {
-              updatePayload.role = "student";
-              needsUpdate = true;
-            }
-
-            if (needsUpdate) {
-              try {
-                await setDoc(userDocRef, updatePayload, { merge: true });
-                userSnap = await getDoc(userDocRef);
-              } catch (updateErr) {
-                console.warn("Could not update missing user fields:", updateErr);
-              }
-            }
           }
 
-          const envAdminEmails = (process.env.NEXT_PUBLIC_ADMIN_EMAILS || "")
-            .split(",")
-            .map((e) => e.trim().toLowerCase())
-            .filter(Boolean);
-          const isEmailAdmin = currentUser.email && envAdminEmails.includes(currentUser.email.toLowerCase());
+          const isEmailAdmin = Boolean(
+            currentUser.email &&
+            (process.env.NEXT_PUBLIC_ADMIN_EMAILS || "")
+              .split(",")
+              .map((e) => e.trim().toLowerCase())
+              .filter(Boolean)
+              .includes(currentUser.email.toLowerCase())
+          );
 
           if (userSnap.exists()) {
             const data = userSnap.data();
-            const isAdminRole = data.role === "admin" || isEmailAdmin;
-            setIsAdmin(Boolean(isAdminRole));
-
-            // Auto-sync admin role to Firestore if defined in env
-            if (isEmailAdmin && data.role !== "admin") {
-              setDoc(userDocRef, { role: "admin" }, { merge: true }).catch((err) =>
-                console.warn("Could not sync admin role to Firestore:", err)
-              );
-            }
+            setIsAdmin(data.role === "admin" || isEmailAdmin);
           } else {
-            setIsAdmin(Boolean(isEmailAdmin));
+            setIsAdmin(isEmailAdmin);
           }
         } catch (error) {
           console.error("Error fetching user role:", error);
