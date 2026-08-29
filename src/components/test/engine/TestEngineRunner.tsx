@@ -146,6 +146,11 @@ export default function TestEngineRunner({
       if (cached) {
         const data = JSON.parse(cached);
         if (data && Date.now() - (data.updatedAt || 0) < 24 * 60 * 60 * 1000) {
+          // Verify that this draft session belongs to the current user (or guest)
+          const sessionUid = data.uid || null;
+          const currentUid = user?.uid || null;
+          if (sessionUid !== currentUid) return;
+
           if (data.answers && Object.keys(data.answers).length > 0) {
             setAnswers(data.answers);
           }
@@ -160,7 +165,7 @@ export default function TestEngineRunner({
     } catch {
       // Storage read error ignored
     }
-  }, [sessionKey, mode]);
+  }, [sessionKey, mode, user]);
 
   // Persist active session state to localStorage
   useEffect(() => {
@@ -178,13 +183,14 @@ export default function TestEngineRunner({
           currentQuestion,
           timeRemaining,
           updatedAt: Date.now(),
+          uid: user?.uid || null,
         };
         localStorage.setItem(sessionKey, JSON.stringify(payload));
       }
     } catch {
       // Storage quota error ignored
     }
-  }, [testId, testType, testName, mode, answers, bookmarks, checkedQuestions, currentQuestion, timeRemaining, isSubmitted, sessionKey]);
+  }, [testId, testType, testName, mode, answers, bookmarks, checkedQuestions, currentQuestion, timeRemaining, isSubmitted, sessionKey, user]);
 
   // Warn user on browser reload / tab close if answers exist
   useEffect(() => {

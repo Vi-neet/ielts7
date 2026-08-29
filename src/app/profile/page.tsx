@@ -240,12 +240,14 @@ export default function ProfilePage() {
     mode: "practice" | "exam";
     answers: Record<number, string>;
     updatedAt: number;
+    uid?: string | null;
   }
   const [savedSessions, setSavedSessions] = useState<SavedSession[]>([]);
 
   useEffect(() => {
     try {
       const list: SavedSession[] = [];
+      const currentUid = user?.uid || null;
       for (let i = 0; i < localStorage.length; i++) {
         const key = localStorage.key(i);
         if (key && key.startsWith("ielts7_session_")) {
@@ -253,7 +255,10 @@ export default function ProfilePage() {
           if (raw) {
             const data = JSON.parse(raw);
             if (data && data.mode === "practice" && data.answers && Object.keys(data.answers).length > 0) {
-              list.push(data);
+              const sessionUid = data.uid || null;
+              if (sessionUid === currentUid) {
+                list.push(data);
+              }
             }
           }
         }
@@ -262,7 +267,7 @@ export default function ProfilePage() {
     } catch {
       // Ignore storage errors
     }
-  }, []);
+  }, [user]);
 
   const handleDiscardSession = (testId: string) => {
     localStorage.removeItem(`ielts7_session_${testId}`);

@@ -86,6 +86,8 @@ function LoginForm() {
         setError("Invalid email address or password.");
       } else if (err.code === "auth/invalid-email") {
         setError("Invalid email address format.");
+      } else if (err.code === "auth/operation-not-allowed") {
+        setError("Email and password sign-in is currently disabled. Please enable it in the Firebase Console or sign in with Google.");
       } else {
         setError(err.message || "Failed to sign in. Please try again.");
       }

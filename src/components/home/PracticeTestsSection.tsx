@@ -88,6 +88,7 @@ export const PracticeTestsSection = () => {
     // Scan local drafts
     try {
       const drafts: Record<string, number> = {};
+      const currentUid = user?.uid || null;
       for (let i = 0; i < localStorage.length; i++) {
         const key = localStorage.key(i);
         if (key && key.startsWith("ielts7_session_")) {
@@ -95,9 +96,12 @@ export const PracticeTestsSection = () => {
           if (raw) {
             const data = JSON.parse(raw);
             if (data && data.testId && data.answers) {
-              const count = Object.values(data.answers).filter((v: any) => String(v).trim()).length;
-              if (count > 0) {
-                drafts[data.testId] = count;
+              const sessionUid = data.uid || null;
+              if (sessionUid === currentUid) {
+                const count = Object.values(data.answers).filter((v: any) => String(v).trim()).length;
+                if (count > 0) {
+                  drafts[data.testId] = count;
+                }
               }
             }
           }

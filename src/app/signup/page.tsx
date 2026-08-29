@@ -96,6 +96,8 @@ function SignupForm() {
         setError("Invalid email address format.");
       } else if (err.code === "auth/weak-password") {
         setError("Password is too weak. Please use a stronger password.");
+      } else if (err.code === "auth/operation-not-allowed") {
+        setError("Email and password signup is currently disabled. Please enable it in the Firebase Console or sign in with Google.");
       } else {
         setError(err.message || "Failed to create account. Please try again.");
       }

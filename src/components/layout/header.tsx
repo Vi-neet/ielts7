@@ -26,7 +26,7 @@ import {
   DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
-import { LogOut, History, Loader2 } from "lucide-react";
+import { LogOut, History, Loader2, User } from "lucide-react";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -36,7 +36,7 @@ const Header = () => {
   const isHomePage = activeItem === "/";
   const [hoveredItem, setHoveredItem] = useState<string | null>(null);
   
-  const { user, loading } = useAuth();
+  const { user, loading, isAdmin } = useAuth();
 
   const { scrollY } = useScroll();
   const headerOpacity = useTransform(scrollY, [0, 100], [1, 0.95]);
@@ -322,6 +322,14 @@ const Header = () => {
                         My Tests
                       </Link>
                     </DropdownMenuItem>
+                    {isAdmin && (
+                      <DropdownMenuItem asChild className="focus:bg-whisper-gray focus:text-forest-ink rounded-lg py-2">
+                        <Link href="/admin" className="flex items-center gap-2 cursor-pointer w-full font-medium">
+                          <User size={16} />
+                          Admin Panel
+                        </Link>
+                      </DropdownMenuItem>
+                    )}
                     <DropdownMenuSeparator className="bg-pencil-gray/20" />
                     <DropdownMenuItem
                       onClick={() => logOut()}
@@ -459,6 +467,15 @@ const Header = () => {
                       >
                         My Tests
                       </Link>
+                      {isAdmin && (
+                        <Link
+                          href="/admin"
+                          className="py-2 text-forest-ink/75 hover:text-forest-ink font-semibold font-inter flex items-center gap-2"
+                          onClick={() => setIsMenuOpen(false)}
+                        >
+                          Admin Panel
+                        </Link>
+                      )}
                       <button
                         onClick={async () => {
                           setIsMenuOpen(false);
