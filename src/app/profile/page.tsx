@@ -729,37 +729,114 @@ export default function ProfilePage() {
     <div className="space-y-8">
       {/* Bento Metrics */}
       {hasAttempts && (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          <div className="bg-white rounded-3xl border border-forest-ink/10 p-5 shadow-sm flex flex-col justify-between min-h-[110px]">
-            <span className="text-xs font-mono uppercase tracking-wider text-forest-ink/50">Completed</span>
-            <span className="text-3xl font-extrabold font-bricolage text-forest-ink mt-2">{attempts.length}</span>
-            <span className="text-[11px] text-forest-ink/50">Scored exams taken</span>
-          </div>
-          <div className="bg-white rounded-3xl border border-emerald-200/80 bg-emerald-50/20 p-5 shadow-sm flex flex-col justify-between min-h-[110px]">
-            <span className="text-xs font-mono uppercase tracking-wider text-emerald-800 font-semibold">Best Band</span>
-            <span className="text-3xl font-extrabold font-bricolage text-emerald-700 mt-2">{bestBand}</span>
-            <span className="text-[11px] text-emerald-700/70">Highest score achieved</span>
-          </div>
-          <div className="bg-white rounded-3xl border border-forest-ink/10 p-5 shadow-sm flex flex-col justify-between min-h-[110px]">
-            <span className="text-xs font-mono uppercase tracking-wider text-forest-ink/50">Average Band</span>
-            <span className="text-3xl font-extrabold font-bricolage text-forest-ink mt-2">{averageBand}</span>
-            <span className="text-[11px] text-forest-ink/50">Standard IELTS mean</span>
-          </div>
-          <div className="bg-white rounded-3xl border border-forest-ink/10 p-5 shadow-sm flex flex-col justify-between min-h-[110px]">
-            <div className="flex justify-between items-center text-xs font-semibold">
-              <span className="text-forest-ink font-mono uppercase tracking-wider text-forest-ink/50">Band 7.0 Progress</span>
-              <span className="font-mono text-forest-ink font-bold">{band7Percentage}%</span>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 font-inter">
+          {/* Card 1: Completed Tests */}
+          <motion.div
+            whileHover={{ y: -3 }}
+            className="bg-white rounded-3xl border border-forest-ink/10 p-5 sm:p-6 shadow-xs flex flex-col justify-between min-h-[130px] relative overflow-hidden group hover:border-forest-ink/20 transition-all"
+          >
+            <div className="flex items-center justify-between">
+              <span className="text-[11px] font-mono uppercase tracking-wider text-forest-ink/50 font-bold">
+                Exams Completed
+              </span>
+              <div className="w-8 h-8 rounded-xl bg-forest-ink/5 text-forest-ink flex items-center justify-center group-hover:scale-105 transition-transform">
+                <BookOpen size={16} />
+              </div>
             </div>
-            <div className="h-2.5 w-full bg-forest-ink/10 rounded-full overflow-hidden my-2">
-              <motion.div
-                className="h-full bg-forest-ink rounded-full"
-                initial={{ width: 0 }}
-                animate={{ width: `${band7Percentage}%` }}
-                transition={{ duration: 0.8, ease: "easeOut" }}
-              />
+            <div className="mt-3">
+              <span className="text-3xl sm:text-4xl font-extrabold font-bricolage text-forest-ink block tracking-tight">
+                {attempts.length}
+              </span>
+              <span className="text-[11px] text-forest-ink/55 block mt-1">
+                Scored reading & listening tests
+              </span>
             </div>
-            <span className="text-[11px] text-forest-ink/50">Target Band 7.0 Goal</span>
-          </div>
+          </motion.div>
+
+          {/* Card 2: Best Band Score */}
+          <motion.div
+            whileHover={{ y: -3 }}
+            className="bg-[#f4faee] rounded-3xl border border-emerald-600/20 p-5 sm:p-6 shadow-xs flex flex-col justify-between min-h-[130px] relative overflow-hidden group hover:border-emerald-600/30 transition-all"
+          >
+            <div className="flex items-center justify-between">
+              <span className="text-[11px] font-mono uppercase tracking-wider text-emerald-800 font-bold">
+                Top Band Score
+              </span>
+              <div className="w-8 h-8 rounded-xl bg-emerald-600/10 text-emerald-700 flex items-center justify-center group-hover:scale-105 transition-transform">
+                <Award size={16} />
+              </div>
+            </div>
+            <div className="mt-3">
+              <div className="flex items-baseline gap-1.5">
+                <span className="text-3xl sm:text-4xl font-extrabold font-bricolage text-emerald-800 tracking-tight">
+                  {bestBand}
+                </span>
+                <span className="text-xs font-mono font-semibold text-emerald-700/80">/ 9.0</span>
+              </div>
+              <span className="text-[11px] text-emerald-700/70 block mt-1">
+                Highest achieved score
+              </span>
+            </div>
+          </motion.div>
+
+          {/* Card 3: Average Band */}
+          <motion.div
+            whileHover={{ y: -3 }}
+            className="bg-white rounded-3xl border border-forest-ink/10 p-5 sm:p-6 shadow-xs flex flex-col justify-between min-h-[130px] relative overflow-hidden group hover:border-forest-ink/20 transition-all"
+          >
+            <div className="flex items-center justify-between">
+              <span className="text-[11px] font-mono uppercase tracking-wider text-forest-ink/50 font-bold">
+                Mean Band Average
+              </span>
+              <div className="w-8 h-8 rounded-xl bg-forest-ink/5 text-forest-ink flex items-center justify-center group-hover:scale-105 transition-transform">
+                <TrendingUp size={16} />
+              </div>
+            </div>
+            <div className="mt-3">
+              <div className="flex items-baseline gap-1.5">
+                <span className="text-3xl sm:text-4xl font-extrabold font-bricolage text-forest-ink tracking-tight">
+                  {averageBand}
+                </span>
+                <span className="text-xs font-mono font-semibold text-forest-ink/40">/ 9.0</span>
+              </div>
+              <span className="text-[11px] text-forest-ink/55 block mt-1">
+                Target: <strong className="text-forest-ink">Band 7.0</strong>
+              </span>
+            </div>
+          </motion.div>
+
+          {/* Card 4: Target Milestone Progress */}
+          <motion.div
+            whileHover={{ y: -3 }}
+            className="bg-white rounded-3xl border border-forest-ink/10 p-5 sm:p-6 shadow-xs flex flex-col justify-between min-h-[130px] relative overflow-hidden group hover:border-forest-ink/20 transition-all"
+          >
+            <div className="flex items-center justify-between">
+              <span className="text-[11px] font-mono uppercase tracking-wider text-forest-ink/50 font-bold">
+                Band 7.0 Goal
+              </span>
+              <div className="w-8 h-8 rounded-xl bg-forest-ink/5 text-forest-ink flex items-center justify-center group-hover:scale-105 transition-transform">
+                <Target size={16} />
+              </div>
+            </div>
+            <div className="mt-3 space-y-2">
+              <div className="flex items-baseline justify-between">
+                <span className="text-2xl sm:text-3xl font-extrabold font-bricolage text-forest-ink">
+                  {band7Percentage}%
+                </span>
+                <span className="text-[10px] font-mono uppercase font-bold text-forest-ink/60">
+                  {band7Percentage >= 100 ? "Achieved 🎉" : "In Progress"}
+                </span>
+              </div>
+              <div className="h-2 w-full bg-forest-ink/10 rounded-full overflow-hidden">
+                <motion.div
+                  className="h-full bg-forest-ink rounded-full"
+                  initial={{ width: 0 }}
+                  animate={{ width: `${Math.min(100, band7Percentage)}%` }}
+                  transition={{ duration: 0.8, ease: "easeOut" }}
+                />
+              </div>
+            </div>
+          </motion.div>
         </div>
       )}
 
