@@ -18,10 +18,11 @@ import {
   CheckCircle2,
   Loader2,
   UserCheck,
+  Phone,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
-const TOTAL_STEPS = 7;
+const TOTAL_STEPS = 8;
 
 export default function OnboardingModal() {
   const { user, loading: authLoading } = useAuth();
@@ -38,6 +39,7 @@ export default function OnboardingModal() {
   const [targetDate, setTargetDate] = useState("");
   const [primaryPurpose, setPrimaryPurpose] = useState("university");
   const [nativeLanguage, setNativeLanguage] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
   const [country, setCountry] = useState("");
 
   const [submitting, setSubmitting] = useState(false);
@@ -83,6 +85,7 @@ export default function OnboardingModal() {
           if (data.primaryPurpose) setPrimaryPurpose(data.primaryPurpose);
           if (data.nativeLanguage) setNativeLanguage(data.nativeLanguage);
           if (data.country) setCountry(data.country);
+          if (data.phoneNumber) setPhoneNumber(data.phoneNumber);
         }
 
         // 3. Mark as prompted in Firestore & local storage so it NEVER pops up a second time
@@ -154,6 +157,7 @@ export default function OnboardingModal() {
           primaryPurpose,
           nativeLanguage,
           country,
+          phoneNumber,
           onboardingPrompted: true,
           onboardingCompleted: true,
           updatedAt: new Date().toISOString(),
@@ -511,6 +515,35 @@ export default function OnboardingModal() {
                           )
                         )}
                       </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* STEP 8: WhatsApp / Phone Number */}
+                {step === 8 && (
+                  <div className="space-y-3">
+                    <Label className="text-sm font-bold font-bricolage text-forest-ink flex items-center gap-2 text-base">
+                      <Phone size={18} className="text-forest-ink/70" />
+                      What is your WhatsApp number?
+                    </Label>
+                    <p className="text-xs text-forest-ink/60">
+                      Used to confirm your Speaking Practice session booking and share meeting links.
+                    </p>
+
+                    <div className="space-y-3 pt-2">
+                      <div className="relative">
+                        <Phone className="w-4 h-4 text-forest-ink/40 absolute left-3.5 top-1/2 -translate-y-1/2" />
+                        <Input
+                          type="tel"
+                          placeholder="+91 XXXXX XXXXX"
+                          value={phoneNumber}
+                          onChange={(e) => setPhoneNumber(e.target.value)}
+                          className="pl-10 h-11 border-forest-ink/20 text-xs rounded-xl bg-white text-forest-ink"
+                        />
+                      </div>
+                      <p className="text-[11px] text-forest-ink/50">
+                        Include country code (e.g. +91 for India). This is optional — you can add it later in your profile.
+                      </p>
                     </div>
                   </div>
                 )}

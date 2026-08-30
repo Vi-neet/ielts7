@@ -40,7 +40,7 @@ const HeroSection = () => {
     { id: "reading", icon: BookOpen, label: "Reading", href: "/tests?module=reading" },
     { id: "listening", icon: Headphones, label: "Listening", href: "/tests?module=listening" },
     { id: "writing", icon: PenTool, label: "Writing", href: "/writing-review" },
-    { id: "speaking", icon: MessageCircle, label: "Speaking", href: "/tests" },
+    { id: "speaking", icon: MessageCircle, label: "Speaking", href: "/speaking-booking" },
   ];
 
   return (

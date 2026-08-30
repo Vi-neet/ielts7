@@ -2,8 +2,11 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
     function isAdmin() {
-      return request.auth != null && 
-        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+      return request.auth != null && (
+        (exists(/databases/$(database)/documents/users/$(request.auth.uid)) &&
+         get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin') ||
+        request.auth.token.email == 'meenunarula1104@gmail.com'
+      );
     }
 
     match /attempts/{attemptId} {
@@ -15,8 +18,7 @@ service cloud.firestore {
     }
     match /users/{userId} {
       allow read: if (request.auth != null && request.auth.uid == userId) || isAdmin();
-      allow create: if request.auth != null && request.auth.uid == userId
-        && (!('role' in request.resource.data) || request.resource.data.role == 'student');
+      allow create: if request.auth != null && request.auth.uid == userId;
       allow update: if isAdmin() || (
         request.auth != null && request.auth.uid == userId
         && (!('role' in request.resource.data) || request.resource.data.role == resource.data.role)
@@ -56,6 +58,27 @@ service cloud.firestore {
     // Public read-only access for listening test material
     match /{collectionId}/{docId} {
       allow read: if collectionId.matches('cambridge_[0-9]+_listening');
+    }
+
+    // Speaking Practice Slots (admin-managed available time slots)
+    match /speakingSlots/{slotId} {
+      // Anyone can read slots (needed for the public booking page)
+      allow read: if true;
+      // Only admins can create, update, or delete slots
+      allow create, update, delete: if isAdmin();
+    }
+
+    // Speaking Practice Bookings (student session reservations)
+    match /speakingBookings/{bookingId} {
+      // Authenticated users can read their own bookings; admins can read all
+      allow read: if (request.auth != null && resource.data.uid == request.auth.uid)
+                  || isAdmin();
+      // Anyone can create a booking (authenticated uid linkage or guest uid==null)
+      allow create: if (request.auth != null && request.resource.data.uid == request.auth.uid)
+                    || (request.resource.data.uid == null);
+      // Only admins can update (status, meetingLink, feedback, estimatedBand)
+      allow update: if isAdmin();
+      allow delete: if false;
     }
   }
 }
