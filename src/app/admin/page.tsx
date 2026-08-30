@@ -35,6 +35,9 @@ import {
   ArrowRight,
   Sparkles,
   ExternalLink,
+  User,
+  Mail,
+  BookOpen,
 } from "lucide-react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
@@ -748,57 +751,58 @@ export default function AdminPage() {
     <div className="min-h-screen bg-[#faf9f5] text-forest-ink pt-8 pb-24 px-4 sm:px-6 lg:px-8 font-inter relative overflow-x-hidden">
       <div className="max-w-6xl mx-auto space-y-8">
         
-        {/* Banner header */}
-        <div className="relative bg-forest-ink text-white rounded-3xl p-6 sm:p-8 shadow-md overflow-hidden">
-          <div className="absolute inset-0 opacity-[0.07] bg-[linear-gradient(to_right,#ffffff_1px,transparent_1px),linear-gradient(to_bottom,#ffffff_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none" />
-          <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+        {/* ── Hero Banner ── */}
+        <div className="relative bg-forest-ink text-white rounded-3xl overflow-hidden shadow-lg">
+          {/* Layered gradient overlay */}
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(255,255,255,0.08)_0%,transparent_60%)] pointer-events-none" />
+          <div className="absolute inset-0 opacity-[0.06] bg-[linear-gradient(to_right,#ffffff_1px,transparent_1px),linear-gradient(to_bottom,#ffffff_1px,transparent_1px)] bg-[size:28px_28px] pointer-events-none" />
+          <div className="absolute -top-12 -right-12 w-56 h-56 rounded-full bg-emerald-400/10 blur-3xl pointer-events-none" />
+
+          <div className="relative z-10 p-6 sm:p-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
             {/* Admin Identity */}
-            <div className="flex items-center gap-5">
-              <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-white/10 text-white flex items-center justify-center font-bricolage font-bold text-2xl sm:text-3xl border border-white/20 shadow-xs overflow-hidden shrink-0">
-                {user?.photoURL ? (
-                  <img src={user.photoURL} alt="Admin" className="w-full h-full object-cover" />
-                ) : (
-                  <Shield size={30} className="text-white/85" />
-                )}
+            <div className="flex items-center gap-4 sm:gap-5">
+              <div className="relative shrink-0">
+                <div className="absolute inset-0 rounded-full bg-gradient-to-br from-emerald-400/40 to-transparent blur-sm" />
+                <div className="relative w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-white/10 border-2 border-white/25 flex items-center justify-center overflow-hidden shadow-md">
+                  {user?.photoURL ? (
+                    <img src={user.photoURL} alt="Admin" className="w-full h-full object-cover" />
+                  ) : (
+                    <Shield size={28} className="text-white/85" />
+                  )}
+                </div>
               </div>
-              <div className="space-y-0.5">
-                <h1 className="text-2xl sm:text-3xl font-extrabold font-bricolage text-white tracking-tight">
+              <div className="space-y-1">
+                <h1 className="text-2xl sm:text-3xl font-extrabold font-bricolage text-white tracking-tight leading-tight">
                   Admin Dashboard
                 </h1>
-                <p className="text-white/60 text-xs font-mono">
-                  {user?.email || "admin@ielts7plus.internal"}
-                </p>
+                <p className="text-white/55 text-xs font-mono tracking-wide">{user?.email || "admin@ielts7plus.internal"}</p>
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-white/10 border border-white/15 text-[10px] font-mono text-white/70 uppercase tracking-wider font-bold">
+                  <div className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                  Administrator
+                </span>
               </div>
             </div>
 
-            {/* Quick Stat Summary Bar & Action Button */}
-            <div className="flex flex-wrap items-center gap-4 w-full md:w-auto justify-between md:justify-end">
-              <div className="flex items-center gap-4 bg-white/10 px-5 py-2.5 rounded-2xl border border-white/15 backdrop-blur-xs text-xs font-mono">
-                <div>
-                  <span className="text-white/50 block text-[9px] uppercase tracking-wider">Students</span>
-                  <strong className="text-white font-bold text-base">{students.length}</strong>
-                </div>
-                <div className="w-px h-6 bg-white/15" />
-                <div>
-                  <span className="text-white/50 block text-[9px] uppercase tracking-wider">Pending</span>
-                  <strong className="text-highlighter-yellow font-bold text-base">
-                    {submissions.filter((s) => s.status === "submitted").length}
-                  </strong>
-                </div>
-                <div className="w-px h-6 bg-white/15" />
-                <div>
-                  <span className="text-white/50 block text-[9px] uppercase tracking-wider">Graded</span>
-                  <strong className="text-white font-bold text-base">
-                    {submissions.filter((s) => s.status === "graded").length}
-                  </strong>
-                </div>
+            {/* Stats pill + Export */}
+            <div className="flex flex-wrap items-center gap-3 sm:gap-4 w-full md:w-auto justify-between md:justify-end">
+              <div className="flex items-center gap-0 bg-white/[0.08] rounded-2xl border border-white/10 overflow-hidden divide-x divide-white/10">
+                {[
+                  { label: "Students", value: String(students.length), color: "text-white" },
+                  { label: "Pending", value: String(submissions.filter((s) => s.status === "submitted").length), color: "text-amber-300" },
+                  { label: "Graded", value: String(submissions.filter((s) => s.status === "graded").length), color: "text-emerald-300" },
+                ].map((stat) => (
+                  <div key={stat.label} className="px-4 py-2.5 flex flex-col items-center min-w-[72px]">
+                    <span className="text-white/45 text-[9px] uppercase tracking-widest font-mono font-bold">{stat.label}</span>
+                    <strong className={`${stat.color} font-bold text-base font-bricolage leading-tight`}>{stat.value}</strong>
+                  </div>
+                ))}
               </div>
 
               <Button
                 variant="outline"
                 size="sm"
                 onClick={activeTab === "students" ? exportStudentsToCSV : exportSubmissionsToCSV}
-                className="h-10 px-4 rounded-2xl border-white/20 bg-white/10 text-white hover:bg-white hover:text-forest-ink font-semibold font-inter shadow-2xs transition-colors cursor-pointer flex items-center gap-1.5"
+                className="h-10 px-4 rounded-2xl border-white/20 bg-white/10 text-white hover:bg-white hover:text-forest-ink font-semibold font-inter transition-colors cursor-pointer flex items-center gap-1.5"
               >
                 <Download size={15} />
                 <span>Export {activeTab === "students" ? "Students" : "Essays"}</span>
@@ -807,90 +811,89 @@ export default function AdminPage() {
           </div>
         </div>
 
-        {/* --- Theme styled Statistics Cards (Notebook Aesthetics) --- */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 font-inter">
-          <motion.div
-            whileHover={{ y: -3, rotate: -0.5 }}
-            className="bg-sticky-note-mint border border-pencil-gray/25 shadow-card rounded-3xl p-6 relative overflow-hidden rotate-0.5"
-          >
-            <div className="absolute top-3 right-3 opacity-20">
-              <Users size={40} className="text-forest-ink" />
-            </div>
-            <span className="text-[10px] font-mono uppercase tracking-wider text-forest-ink/60 font-bold block mb-1">
-              Enrolled Students
-            </span>
-            <strong className="text-3xl font-extrabold font-bricolage text-forest-ink block">
-              {students.length}
-            </strong>
-            <span className="text-xs text-forest-ink/55 mt-1 block">Active user profiles in database</span>
-          </motion.div>
-
-          <motion.div
-            whileHover={{ y: -3, rotate: 0.5 }}
-            className="bg-highlighter-yellow/30 border border-pencil-gray/25 shadow-card rounded-3xl p-6 relative overflow-hidden -rotate-0.5"
-          >
-            <div className="absolute top-3 right-3 opacity-20">
-              <FileText size={40} className="text-forest-ink" />
-            </div>
-            <span className="text-[10px] font-mono uppercase tracking-wider text-forest-ink/60 font-bold block mb-1">
-              Pending Evaluation
-            </span>
-            <strong className="text-3xl font-extrabold font-bricolage text-forest-ink block">
-              {submissions.filter((s) => s.status === "submitted").length}
-            </strong>
-            <span className="text-xs text-forest-ink/55 mt-1 block">Paid essays waiting for feedback</span>
-          </motion.div>
-
-          <motion.div
-            whileHover={{ y: -3, rotate: -0.5 }}
-            className="bg-sticky-note-teal border border-pencil-gray/25 shadow-card rounded-3xl p-6 relative overflow-hidden rotate-0.5"
-          >
-            <div className="absolute top-3 right-3 opacity-20">
-              <Award size={40} className="text-forest-ink" />
-            </div>
-            <span className="text-[10px] font-mono uppercase tracking-wider text-forest-ink/60 font-bold block mb-1">
-              Evaluations Graded
-            </span>
-            <strong className="text-3xl font-extrabold font-bricolage text-forest-ink block">
-              {submissions.filter((s) => s.status === "graded").length}
-            </strong>
-            <span className="text-xs text-forest-ink/55 mt-1 block">Essays completed and reports sent</span>
-          </motion.div>
+        {/* ── Stat Cards ── */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 font-inter">
+          {[
+            {
+              label: "Enrolled Students",
+              value: students.length,
+              sub: "Active user profiles in database",
+              icon: Users,
+              bg: "bg-white",
+              iconColor: "text-forest-ink/20",
+              accent: "border-forest-ink/10",
+            },
+            {
+              label: "Pending Evaluation",
+              value: submissions.filter((s) => s.status === "submitted").length,
+              sub: "Paid essays awaiting feedback",
+              icon: FileText,
+              bg: "bg-amber-50",
+              iconColor: "text-amber-400/40",
+              accent: "border-amber-200/60",
+            },
+            {
+              label: "Evaluations Graded",
+              value: submissions.filter((s) => s.status === "graded").length,
+              sub: "Essays completed and sent",
+              icon: Award,
+              bg: "bg-emerald-50",
+              iconColor: "text-emerald-400/40",
+              accent: "border-emerald-200/60",
+            },
+          ].map(({ label, value, sub, icon: Icon, bg, iconColor, accent }) => (
+            <motion.div
+              key={label}
+              whileHover={{ y: -3 }}
+              className={`${bg} border ${accent} rounded-3xl p-6 relative overflow-hidden shadow-xs transition-shadow hover:shadow-md`}
+            >
+              <div className={`absolute top-4 right-4 ${iconColor}`}>
+                <Icon size={52} strokeWidth={1.5} />
+              </div>
+              <span className="text-[10px] font-mono uppercase tracking-wider text-forest-ink/55 font-bold block mb-2">
+                {label}
+              </span>
+              <strong className="text-4xl font-extrabold font-bricolage text-forest-ink block leading-none mb-1">
+                {value}
+              </strong>
+              <span className="text-xs text-forest-ink/50 block">{sub}</span>
+            </motion.div>
+          ))}
         </div>
 
         {/* Filters and Tabs */}
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
           
-          {/* Tabs navigation */}
-          <div className="flex gap-2 p-1.5 bg-white border border-forest-ink/10 rounded-2xl self-start shadow-2xs">
+          {/* Tabs navigation with count badges */}
+          <div className="flex gap-1 p-1.5 bg-white border border-forest-ink/10 rounded-2xl self-start shadow-xs">
             <button
-              onClick={() => {
-                setActiveTab("students");
-                setSearchQuery("");
-              }}
+              onClick={() => { setActiveTab("students"); setSearchQuery(""); }}
               className={`px-4 py-2 text-xs font-bold font-inter rounded-xl transition-all cursor-pointer flex items-center gap-1.5 ${
                 activeTab === "students"
-                  ? "bg-forest-ink text-white shadow-2xs"
-                  : "text-forest-ink/75 hover:bg-whisper-gray"
+                  ? "bg-forest-ink text-white shadow-sm"
+                  : "text-forest-ink/75 hover:bg-forest-ink/5"
               }`}
             >
-              <Users size={14} />
+              <Users size={13} />
               <span>Students</span>
+              <span className={`text-[10px] font-bold px-1.5 py-0 rounded-full ${
+                activeTab === "students" ? "bg-white/20 text-white" : "bg-forest-ink/10 text-forest-ink/60"
+              }`}>{students.length}</span>
             </button>
 
             <button
-              onClick={() => {
-                setActiveTab("submissions");
-                setSearchQuery("");
-              }}
+              onClick={() => { setActiveTab("submissions"); setSearchQuery(""); }}
               className={`px-4 py-2 text-xs font-bold font-inter rounded-xl transition-all cursor-pointer flex items-center gap-1.5 ${
                 activeTab === "submissions"
-                  ? "bg-forest-ink text-white shadow-2xs"
-                  : "text-forest-ink/75 hover:bg-whisper-gray"
+                  ? "bg-forest-ink text-white shadow-sm"
+                  : "text-forest-ink/75 hover:bg-forest-ink/5"
               }`}
             >
-              <FileText size={14} />
+              <FileText size={13} />
               <span>Essay Submissions</span>
+              <span className={`text-[10px] font-bold px-1.5 py-0 rounded-full ${
+                activeTab === "submissions" ? "bg-white/20 text-white" : "bg-forest-ink/10 text-forest-ink/60"
+              }`}>{submissions.length}</span>
             </button>
           </div>
 
@@ -925,233 +928,208 @@ export default function AdminPage() {
           </div>
         </div>
 
-        {/* Primary Data List Area */}
-        <div className="bg-white rounded-3xl border border-forest-ink/10 p-6 sm:p-8 shadow-sm">
+        {/* ── Primary Data Area ── */}
+        <div>
           {loadingData ? (
-            <div className="py-20 text-center text-forest-ink/50 text-sm font-inter">
+            <div className="bg-white rounded-3xl border border-forest-ink/10 py-20 text-center text-forest-ink/50 text-sm font-inter shadow-xs">
               <Loader2 className="h-7 w-7 animate-spin mx-auto mb-2 text-forest-ink/70" />
               Loading database collections…
             </div>
           ) : (
-            <div className="overflow-x-auto">
-              
-              {/* Tab 1: Submissions */}
+            <>
+              {/* Tab: Essay Submissions */}
               {activeTab === "submissions" && (
                 filteredSubmissions.length === 0 ? (
-                  <div className="py-12 text-center text-forest-ink/50 text-sm">
+                  <div className="bg-white rounded-3xl border border-forest-ink/10 py-16 text-center text-forest-ink/50 text-sm shadow-xs">
                     No essay submissions match your filters.
                   </div>
                 ) : (
-                  <table className="w-full text-left border-collapse font-inter">
-                    <thead>
-                      <tr className="border-b border-forest-ink/5 text-[10px] font-mono uppercase tracking-wider text-forest-ink/45 pb-3">
-                        <th className="pb-3 font-semibold cursor-pointer select-none hover:text-forest-ink" onClick={() => toggleSubmissionSort("candidateName")}>
-                          Candidate {sortFieldSub === "candidateName" && (sortOrder === "asc" ? "↑" : "↓")}
-                        </th>
-                        <th className="pb-3 font-semibold cursor-pointer select-none hover:text-forest-ink" onClick={() => toggleSubmissionSort("taskType")}>
-                          Task {sortFieldSub === "taskType" && (sortOrder === "asc" ? "↑" : "↓")}
-                        </th>
-                        <th className="pb-3 font-semibold">Payment ID</th>
-                        <th className="pb-3 font-semibold cursor-pointer select-none hover:text-forest-ink" onClick={() => toggleSubmissionSort("submittedAt")}>
-                          Submitted {sortFieldSub === "submittedAt" && (sortOrder === "asc" ? "↑" : "↓")}
-                        </th>
-                        <th className="pb-3 font-semibold cursor-pointer select-none hover:text-forest-ink" onClick={() => toggleSubmissionSort("status")}>
-                          Status / Band {sortFieldSub === "status" && (sortOrder === "asc" ? "↑" : "↓")}
-                        </th>
-                        <th className="pb-3 font-semibold text-right">Actions</th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-forest-ink/5 text-sm">
-                      {filteredSubmissions.map((sub) => {
-                        const date = sub.submittedAt
-                          ? new Date(sub.submittedAt.seconds * 1000).toLocaleDateString("en-US", {
-                              month: "short",
-                              day: "numeric",
-                              year: "numeric",
-                              hour: "2-digit",
-                              minute: "2-digit",
-                            })
-                          : "N/A";
-                        return (
-                          <tr key={sub.id} className="hover:bg-cream-paper/20 transition-all">
-                            <td className="py-4 pr-3 max-w-[200px] truncate">
-                              <span className="font-bold text-forest-ink block leading-snug">
-                                {highlightText(sub.candidateName || "", searchQuery)}
-                              </span>
-                              <span className="text-[10px] text-forest-ink/50 block font-mono truncate">
+                  <div className="space-y-3">
+                    {filteredSubmissions.map((sub) => {
+                      const date = sub.submittedAt
+                        ? new Date(sub.submittedAt.seconds * 1000).toLocaleDateString("en-US", {
+                            month: "short",
+                            day: "numeric",
+                            year: "numeric",
+                          })
+                        : "N/A";
+                      const isGraded = sub.status === "graded";
+                      return (
+                        <motion.div
+                          key={sub.id}
+                          whileHover={{ y: -1 }}
+                          className={`rounded-2xl border p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center gap-4 shadow-xs transition-all ${
+                            isGraded
+                              ? "bg-[#f4faee] border-emerald-600/20 hover:border-emerald-600/30"
+                              : "bg-white border-forest-ink/10 hover:border-amber-400/40"
+                          }`}
+                        >
+                          {/* Avatar + candidate */}
+                          <div className="flex items-center gap-3 flex-1 min-w-0">
+                            <div className="w-10 h-10 rounded-full bg-forest-ink/8 border border-forest-ink/10 flex items-center justify-center font-bold text-sm text-forest-ink uppercase shrink-0">
+                              {sub.candidateName?.[0] || sub.candidateEmail?.[0] || "?"}
+                            </div>
+                            <div className="min-w-0">
+                              <p className="font-bold text-forest-ink text-sm leading-snug font-bricolage truncate">
+                                {highlightText(sub.candidateName || "Unknown", searchQuery)}
+                              </p>
+                              <p className="text-[11px] text-forest-ink/50 font-mono truncate">
                                 {highlightText(sub.candidateEmail || "", searchQuery)}
+                              </p>
+                            </div>
+                          </div>
+
+                          {/* Meta chips */}
+                          <div className="flex flex-wrap items-center gap-2">
+                            <span className={`text-[10px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded-md border ${
+                              sub.taskType === "task_1"
+                                ? "bg-forest-ink/8 border-forest-ink/10 text-forest-ink/70"
+                                : "bg-forest-ink text-white border-forest-ink"
+                            }`}>
+                              {sub.taskType === "task_1" ? "Task 1" : "Task 2"}
+                            </span>
+
+                            {sub.paymentId ? (
+                              <span className="text-[10px] font-mono px-2 py-0.5 rounded-md bg-emerald-50 border border-emerald-200/60 text-emerald-700 font-semibold truncate max-w-[120px]">
+                                {sub.paymentId}
                               </span>
-                            </td>
-                            <td className="py-4 pr-3">
-                              <span className="px-2 py-0.5 rounded-sm bg-forest-ink/5 border border-forest-ink/10 text-[10px] font-mono font-bold uppercase tracking-wider">
-                                {sub.taskType === "task_1" ? "Task 1" : "Task 2"}
+                            ) : (
+                              <span className="text-[10px] font-mono px-2 py-0.5 rounded-md bg-amber-50 border border-amber-200/50 text-amber-700 italic">
+                                Legacy
                               </span>
-                            </td>
-                            <td className="py-4 pr-3 text-xs font-mono text-forest-ink/60">
-                              {sub.paymentId ? (
-                                <span className="text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded border border-emerald-200/50">
-                                  {sub.paymentId}
+                            )}
+
+                            <span className="text-[10px] font-mono text-forest-ink/40">{date}</span>
+                          </div>
+
+                          {/* Status + Action */}
+                          <div className="flex items-center gap-3 sm:ml-auto shrink-0">
+                            {isGraded ? (
+                              <div className="flex items-center gap-1.5">
+                                <CheckCircle2 size={14} className="text-emerald-600 shrink-0" />
+                                <span className="text-xs font-semibold text-emerald-800">
+                                  Band {sub.score}
                                 </span>
-                              ) : (
-                                <span className="text-amber-700 bg-amber-50 px-1.5 py-0.5 rounded border border-amber-200/40 italic">
-                                  Legacy / Manual
-                                </span>
-                              )}
-                            </td>
-                            <td className="py-4 pr-3 text-xs text-forest-ink/60">
-                              {date}
-                            </td>
-                            <td className="py-4 pr-3">
-                              {sub.status === "graded" ? (
-                                <div className="space-y-0.5">
-                                  <div className="flex items-center gap-1.5 text-xs text-emerald-800 font-semibold">
-                                    <CheckCircle2 size={14} className="text-emerald-700 shrink-0" />
-                                    <span>Graded (Band {sub.score})</span>
-                                  </div>
-                                  {sub.reviewedBy && (
-                                    <span className="text-[10px] text-forest-ink/45 font-mono block truncate max-w-[150px]">
-                                      by {sub.reviewedBy}
-                                    </span>
-                                  )}
-                                </div>
-                              ) : (
-                                <div className="flex items-center gap-1.5 text-xs text-amber-700 font-semibold">
-                                  <Clock size={14} className="text-amber-600 animate-pulse" />
-                                  <span>Pending Grading</span>
-                                </div>
-                              )}
-                            </td>
-                            <td className="py-4 text-right">
-                              <Button
-                                size="sm"
-                                variant={sub.status === "graded" ? "outline" : "forest"}
-                                onClick={() => setGradingSubmission(sub)}
-                                className="text-xs font-semibold rounded-lg cursor-pointer shadow-xs"
-                              >
-                                {sub.status === "graded" ? "Review feedback" : "Evaluate Essay"}
-                              </Button>
-                            </td>
-                          </tr>
-                        );
-                      })}
-                    </tbody>
-                  </table>
+                              </div>
+                            ) : (
+                              <div className="flex items-center gap-1.5">
+                                <Clock size={14} className="text-amber-500 animate-pulse shrink-0" />
+                                <span className="text-xs font-semibold text-amber-700">Pending</span>
+                              </div>
+                            )}
+                            <Button
+                              size="sm"
+                              variant={isGraded ? "outline" : "forest"}
+                              onClick={() => setGradingSubmission(sub)}
+                              className="h-8 px-3 text-[11px] font-semibold rounded-xl cursor-pointer shrink-0 flex items-center gap-1"
+                            >
+                              {isGraded ? "Review" : "Evaluate"} <ArrowRight size={11} />
+                            </Button>
+                          </div>
+                        </motion.div>
+                      );
+                    })}
+                  </div>
                 )
               )}
 
-              {/* Tab 2: Students */}
+              {/* Tab: Students */}
               {activeTab === "students" && (
                 filteredStudents.length === 0 ? (
-                  <div className="py-12 text-center text-forest-ink/50 text-sm">
-                    No student profile records matches the query.
+                  <div className="bg-white rounded-3xl border border-forest-ink/10 py-16 text-center text-forest-ink/50 text-sm shadow-xs">
+                    No student profile records match the query.
                   </div>
                 ) : (
-                  <table className="w-full text-left border-collapse font-inter">
-                    <thead>
-                      <tr className="border-b border-forest-ink/5 text-[10px] font-mono uppercase tracking-wider text-forest-ink/45 pb-3">
-                        <th className="pb-3 font-semibold cursor-pointer select-none hover:text-forest-ink" onClick={() => toggleStudentSort("displayName")}>
-                          Student Name {sortFieldStud === "displayName" && (sortOrder === "asc" ? "↑" : "↓")}
-                        </th>
-                        <th className="pb-3 font-semibold cursor-pointer select-none hover:text-forest-ink" onClick={() => toggleStudentSort("country")}>
-                          Demographics {sortFieldStud === "country" && (sortOrder === "asc" ? "↑" : "↓")}
-                        </th>
-                        <th className="pb-3 font-semibold cursor-pointer select-none hover:text-forest-ink" onClick={() => toggleStudentSort("targetBand")}>
-                          IELTS Goal {sortFieldStud === "targetBand" && (sortOrder === "asc" ? "↑" : "↓")}
-                        </th>
-                        <th className="pb-3 font-semibold cursor-pointer select-none hover:text-forest-ink" onClick={() => toggleStudentSort("targetDate")}>
-                          Exam Date {sortFieldStud === "targetDate" && (sortOrder === "asc" ? "↑" : "↓")}
-                        </th>
-                        <th className="pb-3 font-semibold cursor-pointer select-none hover:text-forest-ink" onClick={() => toggleStudentSort("updatedAt")}>
-                          Last Updated {sortFieldStud === "updatedAt" && (sortOrder === "asc" ? "↑" : "↓")}
-                        </th>
-                        <th className="pb-3 font-semibold text-right">Actions</th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-forest-ink/5 text-sm">
-                      {filteredStudents.map((s) => {
-                        const date = s.updatedAt
-                          ? new Date(s.updatedAt).toLocaleDateString("en-US", {
-                              month: "short",
-                              day: "numeric",
-                              year: "numeric",
-                            })
-                          : "N/A";
-                        return (
-                          <tr key={s.id} className="hover:bg-cream-paper/20 transition-all">
-                            <td className="py-4 pr-3">
-                              <div className="flex items-center gap-3">
-                                {s.photoURL ? (
-                                  <img
-                                    src={s.photoURL}
-                                    alt={s.displayName || "Avatar"}
-                                    className="w-10 h-10 rounded-full object-cover border border-forest-ink/10 shrink-0"
-                                  />
-                                ) : (
-                                  <div className="w-10 h-10 rounded-full bg-forest-ink/5 text-forest-ink border border-forest-ink/10 flex items-center justify-center font-bold text-sm uppercase shrink-0">
-                                    {s.displayName?.[0] || s.email?.[0] || "U"}
-                                  </div>
-                                )}
-                                <div className="truncate max-w-[180px]">
-                                  <span className="font-bold text-forest-ink block leading-snug truncate">
-                                    {highlightText(s.displayName || "Practice Candidate", searchQuery)}
-                                  </span>
-                                  <span className="text-[10px] text-forest-ink/50 block font-mono truncate">
-                                    {highlightText(s.email || "No Email", searchQuery)}
-                                  </span>
-                                </div>
+                  <div className="space-y-3">
+                    {filteredStudents.map((s) => {
+                      const date = s.updatedAt
+                        ? new Date(s.updatedAt).toLocaleDateString("en-US", {
+                            month: "short",
+                            day: "numeric",
+                            year: "numeric",
+                          })
+                        : "N/A";
+                      return (
+                        <motion.div
+                          key={s.id}
+                          whileHover={{ y: -1 }}
+                          onClick={() => setSelectedStudentForAttempts(s)}
+                          className="bg-white rounded-2xl border border-forest-ink/10 hover:border-forest-ink/25 p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center gap-4 shadow-xs transition-all cursor-pointer group"
+                        >
+                          {/* Avatar + identity */}
+                          <div className="flex items-center gap-3 flex-1 min-w-0">
+                            {s.photoURL ? (
+                              <img
+                                src={s.photoURL}
+                                alt={s.displayName || "Avatar"}
+                                className="w-10 h-10 rounded-full object-cover border border-forest-ink/10 shrink-0"
+                              />
+                            ) : (
+                              <div className="w-10 h-10 rounded-full bg-forest-ink/8 border border-forest-ink/10 flex items-center justify-center font-bold text-sm text-forest-ink uppercase shrink-0">
+                                {s.displayName?.[0] || s.email?.[0] || "U"}
                               </div>
-                            </td>
-                            <td className="py-4 pr-3 text-xs text-forest-ink/75 space-y-0.5">
-                              <div className="flex items-center gap-1">
-                                <Globe size={11} className="text-forest-ink/40" />
-                                <span>{highlightText(s.country || "Unknown Country", searchQuery)}</span>
-                              </div>
-                              <div className="text-[10px] text-forest-ink/50 pl-4 font-mono">
-                                Lang: {highlightText(s.nativeLanguage || "N/A", searchQuery)}
-                              </div>
-                            </td>
-                            <td className="py-4 pr-3">
-                              <span className="px-2 py-0.5 rounded bg-forest-ink/5 border border-forest-ink/10 text-[10px] font-mono font-bold uppercase tracking-wider block w-fit">
-                                {s.targetModule ? `${s.targetModule} module` : "N/A"}
+                            )}
+                            <div className="min-w-0">
+                              <p className="font-bold text-forest-ink text-sm leading-snug font-bricolage truncate group-hover:text-emerald-800 transition-colors">
+                                {highlightText(s.displayName || "Practice Candidate", searchQuery)}
+                              </p>
+                              <p className="text-[11px] text-forest-ink/50 font-mono truncate">
+                                {highlightText(s.email || "No Email", searchQuery)}
+                              </p>
+                            </div>
+                          </div>
+
+                          {/* Demographics */}
+                          <div className="flex flex-wrap items-center gap-2">
+                            <span className="flex items-center gap-1 text-[11px] text-forest-ink/65 font-mono">
+                              <Globe size={11} className="text-forest-ink/35" />
+                              {highlightText(s.country || "Unknown", searchQuery)}
+                            </span>
+                            <span className="text-[10px] text-forest-ink/40 font-mono">·</span>
+                            <span className="text-[11px] text-forest-ink/55 font-mono">
+                              {highlightText(s.nativeLanguage || "N/A", searchQuery)}
+                            </span>
+                          </div>
+
+                          {/* IELTS Goal */}
+                          <div className="flex items-center gap-2">
+                            <span className="text-[10px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded-md bg-forest-ink/8 border border-forest-ink/10 text-forest-ink/70">
+                              {s.targetModule ? `${s.targetModule}` : "N/A"}
+                            </span>
+                            <span className="text-xs text-forest-ink/60">
+                              Band <strong className="text-forest-ink">{s.targetBand || "7.0"}</strong>
+                            </span>
+                            {s.targetDate && (
+                              <span className="flex items-center gap-1 text-[11px] text-forest-ink/50 font-mono">
+                                <Calendar size={11} className="text-forest-ink/35" />
+                                {s.targetDate}
                               </span>
-                              <span className="text-xs text-forest-ink/65 mt-1 block">
-                                Target Band: <strong className="text-forest-ink">{s.targetBand || "7.0"}</strong>
-                              </span>
-                            </td>
-                            <td className="py-4 pr-3 text-xs text-forest-ink/70">
-                              {s.targetDate ? (
-                                <div className="flex items-center gap-1">
-                                  <Calendar size={12} className="text-forest-ink/40" />
-                                  <span>{s.targetDate}</span>
-                                </div>
-                              ) : (
-                                "Not Scheduled"
-                              )}
-                            </td>
-                            <td className="py-4 text-xs text-forest-ink/60">
-                              {date}
-                            </td>
-                            <td className="py-4 text-right">
-                              <Button
-                                size="sm"
-                                variant="forest"
-                                onClick={() => setSelectedStudentForAttempts(s)}
-                                className="text-xs font-semibold rounded-lg cursor-pointer shadow-xs"
-                              >
-                                View Attempts
-                              </Button>
-                            </td>
-                          </tr>
-                        );
-                      })}
-                    </tbody>
-                  </table>
+                            )}
+                          </div>
+
+                          {/* Action */}
+                          <div className="sm:ml-auto shrink-0">
+                            <Button
+                              size="sm"
+                              variant="forest"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                setSelectedStudentForAttempts(s);
+                              }}
+                              className="h-8 px-3 text-[11px] font-semibold rounded-xl cursor-pointer flex items-center gap-1"
+                            >
+                              View Details <ArrowRight size={11} />
+                            </Button>
+                          </div>
+                        </motion.div>
+                      );
+                    })}
+                  </div>
                 )
               )}
-            </div>
+            </>
           )}
         </div>
-
       </div>
 
       {/* --- Upgraded Side-by-Side Grading Split Panel --- */}
@@ -1585,7 +1563,7 @@ export default function AdminPage() {
         )}
       </AnimatePresence>
 
-      {/* --- Upgraded Student Activity Journey Timeline Modal --- */}
+      {/* --- Upgraded Student Details & Activity Timeline Modal --- */}
       <AnimatePresence>
         {selectedStudentForAttempts && (
           <>
@@ -1600,27 +1578,33 @@ export default function AdminPage() {
               initial={{ opacity: 0, scale: 0.96, y: 15 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.96 }}
-              className="fixed inset-x-4 top-10 bottom-10 md:inset-x-auto md:left-1/2 md:-translate-x-1/2 md:w-full md:max-w-2xl bg-cream-paper rounded-3xl border border-pencil-gray/25 shadow-2xl flex flex-col text-forest-ink z-50 overflow-hidden"
+              className="fixed inset-x-4 top-8 bottom-8 md:inset-x-auto md:left-1/2 md:-translate-x-1/2 md:w-full md:max-w-2xl bg-[#faf9f5] rounded-3xl border border-pencil-gray/25 shadow-2xl flex flex-col text-forest-ink z-50 overflow-hidden font-inter"
             >
               {/* Header */}
-              <div className="bg-white border-b border-pencil-gray/10 px-6 py-4 flex items-center justify-between z-10 font-inter">
-                <div className="flex items-center gap-3">
+              <div className="bg-white border-b border-pencil-gray/10 px-6 py-4 flex items-center justify-between z-10 sticky top-0 shadow-xs">
+                <div className="flex items-center gap-3.5">
                   {selectedStudentForAttempts.photoURL ? (
                     <img
                       src={selectedStudentForAttempts.photoURL}
-                      alt={selectedStudentForAttempts.displayName}
-                      className="w-12 h-12 rounded-full object-cover border border-forest-ink/10"
+                      alt={selectedStudentForAttempts.displayName || "Avatar"}
+                      className="w-12 h-12 rounded-full object-cover border-2 border-forest-ink/15 shadow-xs shrink-0"
                     />
                   ) : (
-                    <div className="w-12 h-12 rounded-full bg-forest-ink/5 text-forest-ink border border-forest-ink/10 flex items-center justify-center font-bold text-base uppercase">
+                    <div className="w-12 h-12 rounded-full bg-forest-ink/10 text-forest-ink border-2 border-forest-ink/15 flex items-center justify-center font-bold font-bricolage text-lg uppercase shrink-0">
                       {selectedStudentForAttempts.displayName?.[0] || selectedStudentForAttempts.email?.[0] || "U"}
                     </div>
                   )}
                   <div>
-                    <h3 className="font-extrabold text-base font-bricolage text-forest-ink">
-                      {selectedStudentForAttempts.displayName || "Practice Candidate"}
-                    </h3>
-                    <p className="text-xs text-forest-ink/60 font-mono">
+                    <div className="flex items-center gap-2">
+                      <h3 className="font-extrabold text-base font-bricolage text-forest-ink leading-tight">
+                        {selectedStudentForAttempts.displayName || "Practice Candidate"}
+                      </h3>
+                      <span className="px-2 py-0.5 rounded-full bg-forest-ink/8 text-forest-ink/70 text-[10px] font-mono font-bold uppercase tracking-wider">
+                        Candidate
+                      </span>
+                    </div>
+                    <p className="text-xs text-forest-ink/60 font-mono flex items-center gap-1.5 mt-0.5">
+                      <Mail size={12} className="text-forest-ink/40" />
                       {selectedStudentForAttempts.email || "No Email"}
                     </p>
                   </div>
@@ -1628,14 +1612,108 @@ export default function AdminPage() {
                 
                 <button
                   onClick={() => setSelectedStudentForAttempts(null)}
-                  className="p-1.5 rounded-full hover:bg-whisper-gray text-forest-ink/60 hover:text-forest-ink transition-colors cursor-pointer"
+                  className="p-1.5 rounded-full hover:bg-forest-ink/5 text-forest-ink/60 hover:text-forest-ink transition-colors cursor-pointer"
                 >
                   <X size={20} />
                 </button>
               </div>
 
-              {/* Unified chronological timeline contents */}
-              <div className="p-6 overflow-y-auto flex-grow bg-white/40">
+              {/* Modal Body */}
+              <div className="p-6 overflow-y-auto flex-grow space-y-6">
+
+                {/* ── Candidate Full Profile & Demographics Card ── */}
+                <div className="bg-white rounded-2xl border border-forest-ink/10 p-5 shadow-xs space-y-4">
+                  <div className="flex items-center justify-between border-b border-forest-ink/5 pb-3">
+                    <h4 className="font-bold text-xs font-mono uppercase tracking-wider text-forest-ink/50 flex items-center gap-1.5">
+                      <User size={13} className="text-forest-ink/60" /> Candidate Profile & Specs
+                    </h4>
+                    <span className="text-[10px] font-mono text-forest-ink/40 bg-forest-ink/5 px-2 py-0.5 rounded border border-forest-ink/8">
+                      ID: {selectedStudentForAttempts.id.substring(0, 10)}…
+                    </span>
+                  </div>
+
+                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 text-xs">
+                    {/* Country */}
+                    <div className="bg-[#faf9f5] rounded-xl p-3 border border-forest-ink/5 space-y-0.5">
+                      <span className="text-[10px] font-mono uppercase tracking-wider text-forest-ink/45 flex items-center gap-1">
+                        <Globe size={11} className="text-forest-ink/40" /> Country
+                      </span>
+                      <strong className="font-bold text-forest-ink block truncate">
+                        {selectedStudentForAttempts.country || "Not Specified"}
+                      </strong>
+                    </div>
+
+                    {/* Native Language */}
+                    <div className="bg-[#faf9f5] rounded-xl p-3 border border-forest-ink/5 space-y-0.5">
+                      <span className="text-[10px] font-mono uppercase tracking-wider text-forest-ink/45 flex items-center gap-1">
+                        <MessageSquare size={11} className="text-forest-ink/40" /> Native Language
+                      </span>
+                      <strong className="font-bold text-forest-ink block truncate">
+                        {selectedStudentForAttempts.nativeLanguage || "Not Specified"}
+                      </strong>
+                    </div>
+
+                    {/* Gender */}
+                    <div className="bg-[#faf9f5] rounded-xl p-3 border border-forest-ink/5 space-y-0.5">
+                      <span className="text-[10px] font-mono uppercase tracking-wider text-forest-ink/45 flex items-center gap-1">
+                        <User size={11} className="text-forest-ink/40" /> Gender
+                      </span>
+                      <strong className="font-bold text-forest-ink block capitalize truncate">
+                        {selectedStudentForAttempts.gender || "Unspecified"}
+                      </strong>
+                    </div>
+
+                    {/* Target Module */}
+                    <div className="bg-[#faf9f5] rounded-xl p-3 border border-forest-ink/5 space-y-0.5">
+                      <span className="text-[10px] font-mono uppercase tracking-wider text-forest-ink/45 flex items-center gap-1">
+                        <BookOpen size={11} className="text-forest-ink/40" /> Target Module
+                      </span>
+                      <strong className="font-bold text-forest-ink block capitalize truncate">
+                        {selectedStudentForAttempts.targetModule || "Academic"}
+                      </strong>
+                    </div>
+
+                    {/* Target Band */}
+                    <div className="bg-[#faf9f5] rounded-xl p-3 border border-forest-ink/5 space-y-0.5">
+                      <span className="text-[10px] font-mono uppercase tracking-wider text-forest-ink/45 flex items-center gap-1">
+                        <Award size={11} className="text-forest-ink/40" /> Target Band
+                      </span>
+                      <strong className="font-bold text-emerald-700 block">
+                        Band {selectedStudentForAttempts.targetBand || "7.0"}
+                      </strong>
+                    </div>
+
+                    {/* Scheduled Exam Date */}
+                    <div className="bg-[#faf9f5] rounded-xl p-3 border border-forest-ink/5 space-y-0.5">
+                      <span className="text-[10px] font-mono uppercase tracking-wider text-forest-ink/45 flex items-center gap-1">
+                        <Calendar size={11} className="text-forest-ink/40" /> Exam Date
+                      </span>
+                      <strong className="font-bold text-forest-ink block truncate">
+                        {selectedStudentForAttempts.targetDate || "Not Scheduled"}
+                      </strong>
+                    </div>
+                  </div>
+
+                  {selectedStudentForAttempts.primaryPurpose && (
+                    <div className="pt-2 border-t border-forest-ink/5 text-xs">
+                      <span className="text-[10px] font-mono uppercase tracking-wider text-forest-ink/40 block mb-0.5">
+                        Primary Purpose / Goal
+                      </span>
+                      <p className="text-forest-ink/75 italic">
+                        "{selectedStudentForAttempts.primaryPurpose}"
+                      </p>
+                    </div>
+                  )}
+                </div>
+
+                {/* ── Activity History & Evaluation Timeline ── */}
+                <div className="space-y-4">
+                  <h4 className="font-bold text-xs font-mono uppercase tracking-wider text-forest-ink/50 flex items-center justify-between">
+                    <span className="flex items-center gap-1.5">
+                      <Clock size={13} className="text-forest-ink/60" /> Practice History & Submissions
+                    </span>
+                  </h4>
+
                 {(() => {
                   const timelineEvents = [
                     ...attempts
@@ -1770,6 +1848,7 @@ export default function AdminPage() {
                     </div>
                   );
                 })()}
+                </div>
               </div>
 
               {/* Footer */}

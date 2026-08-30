@@ -658,14 +658,20 @@ export default function ProfilePage() {
   const academicStats = getSkillStats(academicReadingAttempts);
   const generalStats = getSkillStats(generalReadingAttempts);
 
-  // Chart setup
-  const chartAttempts = [...attempts].reverse(); // Oldest first
+  // Chart setup — thin to max 12 evenly-spaced points to avoid congestion
+  const allChartAttempts = [...attempts].reverse(); // Oldest first
+  const MAX_CHART_POINTS = 12;
+  const chartAttempts = allChartAttempts.length <= MAX_CHART_POINTS
+    ? allChartAttempts
+    : Array.from({ length: MAX_CHART_POINTS }, (_, i) =>
+        allChartAttempts[Math.round(i * (allChartAttempts.length - 1) / (MAX_CHART_POINTS - 1))]
+      );
   const chartWidth = 500;
-  const chartHeight = 250;
-  const paddingLeft = 35;
-  const paddingRight = 15;
-  const paddingTop = 20;
-  const paddingBottom = 30;
+  const chartHeight = 280;
+  const paddingLeft = 38;
+  const paddingRight = 18;
+  const paddingTop = 24;
+  const paddingBottom = 36;
   const graphWidth = chartWidth - paddingLeft - paddingRight;
   const graphHeight = chartHeight - paddingTop - paddingBottom;
   const minY = 3.0;
@@ -679,7 +685,11 @@ export default function ProfilePage() {
   });
 
   const pathD = points.map((p, i) => `${i === 0 ? 'M' : 'L'} ${p.x} ${p.y}`).join(' ');
+  const areaD = points.length > 0
+    ? `${pathD} L ${points[points.length - 1].x} ${paddingTop + graphHeight} L ${points[0].x} ${paddingTop + graphHeight} Z`
+    : '';
   const targetY = paddingTop + graphHeight - ((7.0 - minY) / (maxY - minY)) * graphHeight;
+  const peakIdx = points.reduce((best, p, i) => p.band > points[best].band ? i : best, 0);
 
   const renderAnnotatedText = (text: string, list: any[]) => {
     if (!list || list.length === 0) return text;
@@ -884,11 +894,19 @@ export default function ProfilePage() {
                   </div>
                 </div>
 
-                <div className="w-full overflow-x-auto">
+                <div className="w-full">
                   <svg
                     viewBox={`0 0 ${chartWidth} ${chartHeight}`}
-                    className="w-full min-w-[450px] overflow-visible bg-[#faf9f5] rounded-2xl border border-forest-ink/10"
+                    className="w-full overflow-visible bg-[#faf9f5] rounded-2xl border border-forest-ink/10"
                   >
+                    <defs>
+                      <linearGradient id="chartFill" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stopColor="#1a3300" stopOpacity="0.12" />
+                        <stop offset="100%" stopColor="#1a3300" stopOpacity="0" />
+                      </linearGradient>
+                    </defs>
+
+                    {/* Horizontal grid lines */}
                     {Array.from({ length: 6 }).map((_, idx) => {
                       const bandVal = 4 + idx;
                       const y = paddingTop + graphHeight - ((bandVal - minY) / (maxY - minY)) * graphHeight;
@@ -900,22 +918,25 @@ export default function ProfilePage() {
                             x2={chartWidth - paddingRight}
                             y2={y}
                             stroke="#e2e1d7"
-                            strokeWidth={1}
-                            strokeDasharray="3 3"
+                            strokeWidth={bandVal === 7 ? 0 : 1}
+                            strokeDasharray="4 4"
                           />
                           <text
                             x={paddingLeft - 8}
-                            y={y + 3}
+                            y={y + 4}
                             textAnchor="end"
                             fill="#1a3300"
-                            className="text-[9px] font-mono opacity-50"
+                            fontSize={9}
+                            fontFamily="monospace"
+                            opacity={0.45}
                           >
-                            {bandVal.toFixed(1)}
+                            {bandVal}
                           </text>
                         </g>
                       );
                     })}
 
+                    {/* Target band 7.0 dashed line */}
                     <line
                       x1={paddingLeft}
                       y1={targetY}
@@ -923,18 +944,27 @@ export default function ProfilePage() {
                       y2={targetY}
                       stroke="#cb5521"
                       strokeWidth={1.5}
-                      strokeDasharray="4 2"
+                      strokeDasharray="5 3"
+                      opacity={0.7}
                     />
                     <text
-                      x={chartWidth - paddingRight - 6}
+                      x={chartWidth - paddingRight - 4}
                       y={targetY - 5}
                       textAnchor="end"
                       fill="#cb5521"
-                      className="text-[9px] font-bold font-mono"
+                      fontSize={9}
+                      fontFamily="monospace"
+                      fontWeight="bold"
                     >
                       Target 7.0
                     </text>
 
+                    {/* Area fill under line */}
+                    {areaD && (
+                      <path d={areaD} fill="url(#chartFill)" />
+                    )}
+
+                    {/* Main line */}
                     <path
                       d={pathD}
                       fill="none"
@@ -944,28 +974,41 @@ export default function ProfilePage() {
                       strokeLinejoin="round"
                     />
 
-                    {points.map((p, idx) => (
-                      <g key={idx}>
-                        <circle
-                          cx={p.x}
-                          cy={p.y}
-                          r={4}
-                          fill="#ffffff"
-                          stroke="#1a3300"
-                          strokeWidth={2}
-                        />
-                        <text
-                          x={p.x}
-                          y={p.y - 8}
-                          textAnchor="middle"
-                          fill="#1a3300"
-                          className="text-[9px] font-bold font-mono"
-                        >
-                          {p.band.toFixed(1)}
-                        </text>
-                      </g>
-                    ))}
+                    {/* Data points — dots only, no per-dot labels */}
+                    {points.map((p, idx) => {
+                      const isFirst = idx === 0;
+                      const isLast = idx === points.length - 1;
+                      const isPeak = idx === peakIdx;
+                      const showBandLabel = isFirst || isLast || isPeak;
+                      return (
+                        <g key={idx}>
+                          <circle
+                            cx={p.x}
+                            cy={p.y}
+                            r={showBandLabel ? 5 : 3.5}
+                            fill={isPeak ? "#1a3300" : "#ffffff"}
+                            stroke="#1a3300"
+                            strokeWidth={2}
+                            style={{ filter: "drop-shadow(0 1px 1px rgba(0,0,0,0.1))" }}
+                          />
+                          {showBandLabel && (
+                            <text
+                              x={p.x}
+                              y={p.y - 10}
+                              textAnchor="middle"
+                              fill="#1a3300"
+                              fontSize={9}
+                              fontFamily="monospace"
+                              fontWeight="bold"
+                            >
+                              {p.band.toFixed(1)}
+                            </text>
+                          )}
+                        </g>
+                      );
+                    })}
 
+                    {/* X-axis date labels — spaced evenly */}
                     {points.map((p, idx) => {
                       const showLabel = getXLabelVisible(idx, points.length);
                       if (!showLabel) return null;
@@ -982,7 +1025,9 @@ export default function ProfilePage() {
                           y={chartHeight - 10}
                           textAnchor="middle"
                           fill="#1a3300"
-                          className="text-[8px] font-mono opacity-50"
+                          fontSize={8}
+                          fontFamily="monospace"
+                          opacity={0.45}
                         >
                           {dateStr}
                         </text>
@@ -992,13 +1037,16 @@ export default function ProfilePage() {
                 </div>
               </div>
 
-              {/* Recent Attempt Details Table */}
-              <div className="bg-white rounded-3xl border border-forest-ink/10 p-6 sm:p-8 shadow-sm space-y-6">
-                <h2 className="text-lg font-bold font-bricolage text-forest-ink flex items-center gap-2">
-                  <Clock size={20} className="text-forest-ink/70" /> Recent Test History
-                </h2>
+              {/* Recent Test History — Card Grid */}
+              <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <h2 className="text-lg font-bold font-bricolage text-forest-ink flex items-center gap-2">
+                    <History size={19} className="text-forest-ink/70" /> Recent Test History
+                  </h2>
+                  <span className="text-[11px] font-mono text-forest-ink/40">{attempts.length} attempt{attempts.length !== 1 ? "s" : ""}</span>
+                </div>
 
-                <div className="divide-y divide-forest-ink/10">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   {attempts.map((attempt) => {
                     const date = attempt.submittedAt
                       ? new Date(attempt.submittedAt.seconds * 1000).toLocaleDateString("en-US", {
@@ -1008,39 +1056,59 @@ export default function ProfilePage() {
                         })
                       : "N/A";
                     const band = getBandScore(attempt.score, attempt.testType);
+                    const bandNum = parseFloat(band);
+                    const pct = Math.min(100, ((bandNum - 1) / 8) * 100);
+                    const isHighBand = bandNum >= 7;
 
                     return (
-                      <div
+                      <motion.div
                         key={attempt.id}
-                        className="py-4 first:pt-0 last:pb-0 flex flex-col sm:flex-row sm:items-center justify-between gap-4"
+                        whileHover={{ y: -2 }}
+                        className="bg-white rounded-2xl border border-forest-ink/10 hover:border-forest-ink/20 p-4 flex flex-col gap-3 shadow-xs transition-all cursor-default"
                       >
-                        <div className="space-y-1">
-                          <h3 className="font-bold text-forest-ink text-sm sm:text-base leading-snug">
-                            {formatTestName(attempt.testId)}
-                          </h3>
-                          <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-forest-ink/60 font-mono">
-                            <span className="px-2 py-0.5 rounded bg-forest-ink/5 border border-forest-ink/10 text-[10px] uppercase font-bold">
-                              {formatTestType(attempt.testType)}
+                        {/* Top row: type chip + date */}
+                        <div className="flex items-center justify-between">
+                          <span className="text-[10px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded-md bg-forest-ink/8 text-forest-ink/70 border border-forest-ink/10">
+                            {formatTestType(attempt.testType)}
+                          </span>
+                          <span className="text-[10px] font-mono text-forest-ink/40">{date}</span>
+                        </div>
+
+                        {/* Test name */}
+                        <h3 className="font-bold text-forest-ink text-sm leading-snug font-bricolage line-clamp-1">
+                          {formatTestName(attempt.testId)}
+                        </h3>
+
+                        {/* Band score + progress bar */}
+                        <div className="space-y-1.5">
+                          <div className="flex items-center justify-between">
+                            <span className="text-[10px] font-mono uppercase tracking-wider text-forest-ink/45">Band Score</span>
+                            <span className={`text-base font-extrabold font-bricolage ${isHighBand ? "text-emerald-700" : "text-forest-ink"}`}>
+                              {band}
                             </span>
-                            <span>{date}</span>
+                          </div>
+                          <div className="h-1.5 w-full bg-forest-ink/8 rounded-full overflow-hidden">
+                            <motion.div
+                              className={`h-full rounded-full ${isHighBand ? "bg-emerald-600" : "bg-forest-ink"}`}
+                              initial={{ width: 0 }}
+                              animate={{ width: `${pct}%` }}
+                              transition={{ duration: 0.6, ease: "easeOut" }}
+                            />
                           </div>
                         </div>
 
-                        <div className="flex items-center justify-between sm:justify-end gap-5">
-                          <div className="text-right">
-                            <span className="text-[10px] font-mono text-forest-ink/40 uppercase block">Estimated Band</span>
-                            <span className="text-base font-bold text-forest-ink font-mono">{band}</span>
-                          </div>
+                        {/* Action */}
+                        <div className="pt-1 border-t border-forest-ink/8 flex justify-end">
                           <Button
                             size="sm"
                             variant="forestOutline"
                             onClick={() => handleOpenReview(attempt)}
-                            className="px-3 text-xs rounded-lg cursor-pointer"
+                            className="h-7 px-3 text-[11px] rounded-lg cursor-pointer font-semibold flex items-center gap-1"
                           >
-                            View Details
+                            Review <ArrowRight size={11} />
                           </Button>
                         </div>
-                      </div>
+                      </motion.div>
                     );
                   })}
                 </div>
@@ -1108,40 +1176,39 @@ export default function ProfilePage() {
   );
 
   const renderWritingTab = () => (
-    <div className="bg-white rounded-3xl border border-forest-ink/10 p-6 sm:p-8 shadow-sm space-y-6">
-      <div className="flex items-center gap-3 border-b border-forest-ink/5 pb-4">
-        <div className="w-10 h-10 rounded-xl bg-forest-ink/5 text-forest-ink flex items-center justify-center shrink-0">
-          <FileText size={20} />
-        </div>
+    <div className="space-y-6">
+      {/* Header */}
+      <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-xl font-bold font-bricolage text-forest-ink">
-            Essay Review History
-          </h2>
-          <p className="text-xs text-forest-ink/60">
-            Track the evaluation status and detailed band breakdown of your submitted essays.
-          </p>
+          <h2 className="text-xl font-bold font-bricolage text-forest-ink">Essay Review History</h2>
+          <p className="text-xs text-forest-ink/60 mt-0.5">Track evaluation status and band breakdowns for your submitted essays.</p>
         </div>
+        <Link href="/writing-review">
+          <Button variant="forest" size="sm" className="rounded-xl cursor-pointer text-xs font-semibold hidden sm:flex items-center gap-1.5">
+            <FileText size={13} /> Submit Essay
+          </Button>
+        </Link>
       </div>
 
       {submissions.length === 0 ? (
-        <div className="text-center py-16 flex flex-col items-center justify-center">
-          <div className="w-12 h-12 rounded-xl bg-forest-ink/5 text-forest-ink/55 flex items-center justify-center mb-4">
-            <FileText size={24} />
+        <div className="bg-white rounded-3xl border border-forest-ink/10 p-12 text-center flex flex-col items-center justify-center py-16 shadow-xs">
+          <div className="w-14 h-14 rounded-2xl bg-forest-ink/5 text-forest-ink/40 flex items-center justify-center mb-4 border border-forest-ink/10">
+            <FileText size={26} />
           </div>
           <h3 className="font-bold text-forest-ink font-bricolage text-base">No Essays Submitted</h3>
-          <p className="text-xs text-forest-ink/50 max-w-sm mt-1 leading-relaxed text-center">
-            You haven't submitted any essays for evaluation yet. Submit your Task 1 or Task 2 essay to receive professional grading.
+          <p className="text-xs text-forest-ink/50 max-w-sm mt-1.5 leading-relaxed">
+            Submit your Task 1 or Task 2 essay to receive professional band-score grading and detailed feedback.
           </p>
           <div className="mt-5">
             <Link href="/writing-review">
-              <Button variant="forest" size="sm" className="px-4 rounded-xl cursor-pointer">
+              <Button variant="forest" size="sm" className="px-5 rounded-xl cursor-pointer">
                 Submit Essay for Review
               </Button>
             </Link>
           </div>
         </div>
       ) : (
-        <div className="divide-y divide-forest-ink/10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {submissions.map((sub) => {
             const date = sub.submittedAt
               ? new Date(sub.submittedAt.seconds * 1000).toLocaleDateString("en-US", {
@@ -1150,48 +1217,71 @@ export default function ProfilePage() {
                   year: "numeric",
                 })
               : "N/A";
+            const isGraded = sub.status === "graded";
             return (
-              <div
+              <motion.div
                 key={sub.id}
-                className="py-4 first:pt-0 last:pb-0 flex flex-col sm:flex-row sm:items-center justify-between gap-4"
+                whileHover={{ y: -2 }}
+                className={`rounded-3xl border p-5 flex flex-col justify-between gap-4 shadow-xs transition-all ${
+                  isGraded
+                    ? "bg-[#f4faee] border-emerald-600/20 hover:border-emerald-600/30"
+                    : "bg-white border-forest-ink/10 hover:border-forest-ink/20"
+                }`}
               >
-                <div className="space-y-1">
-                  <div className="flex items-center gap-2">
-                    <h3 className="font-bold text-forest-ink text-sm sm:text-base leading-snug">
+                <div className="flex items-start justify-between gap-3">
+                  <div className="space-y-1.5">
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <span className={`text-[10px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded-md ${
+                        sub.taskType === "task_1"
+                          ? "bg-forest-ink/10 text-forest-ink"
+                          : "bg-forest-ink text-white"
+                      }`}>
+                        {sub.taskType === "task_1" ? "Task 1" : "Task 2"}
+                      </span>
+                      {isGraded && sub.score && (
+                        <span className="px-2 py-0.5 text-[10px] font-bold font-mono rounded-md bg-emerald-700 text-white">
+                          Band {sub.score}
+                        </span>
+                      )}
+                    </div>
+                    <h3 className="font-bold text-forest-ink text-sm leading-snug font-bricolage">
                       {sub.taskType === "task_1" ? "Writing Task 1" : "Writing Task 2"}
                     </h3>
-                    {sub.status === "graded" && sub.score && (
-                      <span className="px-2 py-0.5 text-[10px] font-bold font-mono rounded-md bg-forest-ink text-white">
-                        Band {sub.score}
-                      </span>
-                    )}
+                    <div className="flex flex-wrap items-center gap-x-3 gap-y-0.5 text-[11px] text-forest-ink/55 font-mono">
+                      <span className="capitalize">{sub.submissionMethod}</span>
+                      {sub.wordCount !== null && <span>{sub.wordCount} words</span>}
+                      <span>{date}</span>
+                    </div>
                   </div>
-                  <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-forest-ink/60 font-mono">
-                    <span className="capitalize">Method: {sub.submissionMethod}</span>
-                    {sub.wordCount !== null && (
-                      <span>{sub.wordCount} words</span>
-                    )}
-                    <span>{date}</span>
+                  <div className={`w-9 h-9 rounded-2xl flex items-center justify-center shrink-0 ${
+                    isGraded ? "bg-emerald-600/10 text-emerald-700" : "bg-forest-ink/5 text-forest-ink/40"
+                  }`}>
+                    {isGraded ? <CheckCircle size={17} /> : <Clock size={17} />}
                   </div>
                 </div>
 
-                <div className="flex items-center justify-between sm:justify-end gap-3">
-                  {sub.status === "graded" ? (
+                <div className="flex items-center justify-between pt-3 border-t border-black/5">
+                  <span className={`text-[10px] font-mono font-bold uppercase tracking-wider px-2.5 py-1 rounded-full ${
+                    isGraded
+                      ? "text-emerald-800 bg-emerald-600/10"
+                      : "text-forest-ink/60 bg-forest-ink/8"
+                  }`}>
+                    {isGraded ? "Graded" : "Pending Evaluation"}
+                  </span>
+                  {isGraded ? (
                     <Button
                       size="sm"
                       variant="forest"
                       onClick={() => setReviewingEssay(sub)}
-                      className="text-xs font-semibold rounded-lg cursor-pointer shadow-xs"
+                      className="text-xs font-semibold rounded-xl cursor-pointer shadow-xs h-8 px-3"
                     >
                       View Feedback
                     </Button>
                   ) : (
-                    <span className="px-3 py-1 rounded-full text-[10px] font-bold uppercase font-mono bg-forest-ink/5 border border-forest-ink/10 text-forest-ink/65">
-                      Pending Evaluation
-                    </span>
+                    <span className="text-[10px] text-forest-ink/40 font-mono">In queue</span>
                   )}
                 </div>
-              </div>
+              </motion.div>
             );
           })}
         </div>
@@ -1628,105 +1718,97 @@ export default function ProfilePage() {
     <div className="min-h-screen bg-[#faf9f5] text-forest-ink pt-8 pb-24 px-4 sm:px-6 lg:px-8 font-inter">
       <div className="max-w-6xl mx-auto space-y-8">
 
-        {/* ── 1. Restored Signature Dark Forest Ink Hero Banner ── */}
-        <div className="relative bg-forest-ink text-white rounded-3xl p-6 sm:p-8 shadow-md overflow-hidden">
-          {/* Graph Paper Grid Watermark SVG */}
-          <div className="absolute inset-0 opacity-[0.07] bg-[linear-gradient(to_right,#ffffff_1px,transparent_1px),linear-gradient(to_bottom,#ffffff_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none" />
+        {/* ── Hero Banner ── */}
+        <div className="relative bg-forest-ink text-white rounded-3xl overflow-hidden shadow-lg">
+          {/* Layered gradient overlay */}
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(255,255,255,0.08)_0%,transparent_60%)] pointer-events-none" />
+          <div className="absolute inset-0 opacity-[0.06] bg-[linear-gradient(to_right,#ffffff_1px,transparent_1px),linear-gradient(to_bottom,#ffffff_1px,transparent_1px)] bg-[size:28px_28px] pointer-events-none" />
+          {/* Glowing accent blob */}
+          <div className="absolute -top-12 -right-12 w-56 h-56 rounded-full bg-emerald-400/10 blur-3xl pointer-events-none" />
 
-          <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+          <div className="relative z-10 p-6 sm:p-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
             {/* Candidate Identity */}
-            <div className="flex items-center gap-5">
-              <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-white/10 text-white flex items-center justify-center font-bricolage font-bold text-2xl sm:text-3xl border border-white/20 shadow-xs overflow-hidden shrink-0">
-                {user.photoURL ? (
-                  <img src={user.photoURL} alt="Profile" className="w-full h-full object-cover" />
-                ) : (
-                  user.email?.[0].toUpperCase() || "U"
-                )}
+            <div className="flex items-center gap-4 sm:gap-5">
+              {/* Avatar with ring */}
+              <div className="relative shrink-0">
+                <div className="absolute inset-0 rounded-full bg-gradient-to-br from-emerald-400/40 to-transparent blur-sm" />
+                <div className="relative w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-white/10 text-white flex items-center justify-center font-bricolage font-bold text-2xl sm:text-3xl border-2 border-white/25 overflow-hidden shadow-md">
+                  {user.photoURL ? (
+                    <img src={user.photoURL} alt="Profile" className="w-full h-full object-cover" />
+                  ) : (
+                    <span className="select-none">{user.email?.[0].toUpperCase() || "U"}</span>
+                  )}
+                </div>
               </div>
-              <div className="space-y-0.5">
-                <h1 className="text-2xl sm:text-3xl font-extrabold font-bricolage text-white tracking-tight">
+              <div className="space-y-1">
+                <h1 className="text-2xl sm:text-3xl font-extrabold font-bricolage text-white tracking-tight leading-tight">
                   {user.displayName || "Practice Candidate"}
                 </h1>
-                <p className="text-white/60 text-xs font-mono">
-                  {user.email}
-                </p>
+                <p className="text-white/55 text-xs font-mono tracking-wide">{user.email}</p>
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-white/10 border border-white/15 text-[10px] font-mono text-white/70 uppercase tracking-wider font-bold">
+                  <div className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                  IELTS Candidate
+                </span>
               </div>
             </div>
 
-            {/* Quick Stat Summary Bar & Logout Button */}
-            <div className="flex flex-wrap items-center gap-4 w-full md:w-auto justify-between md:justify-end">
-              <div className="flex items-center gap-4 bg-white/10 px-5 py-2.5 rounded-2xl border border-white/15 backdrop-blur-xs text-xs font-mono">
-                <div>
-                  <span className="text-white/50 block text-[9px] uppercase tracking-wider">Tests</span>
-                  <strong className="text-white font-bold text-base">{attempts.length}</strong>
-                </div>
-                <div className="w-px h-6 bg-white/15" />
-                <div>
-                  <span className="text-white/50 block text-[9px] uppercase tracking-wider">Best</span>
-                  <strong className="text-highlighter-yellow font-bold text-base">{bestBand}</strong>
-                </div>
-                <div className="w-px h-6 bg-white/15" />
-                <div>
-                  <span className="text-white/50 block text-[9px] uppercase tracking-wider">Target</span>
-                  <strong className="text-white font-bold text-base">7.0+</strong>
-                </div>
+            {/* Stats pill + Logout */}
+            <div className="flex flex-wrap items-center gap-3 sm:gap-4 w-full md:w-auto justify-between md:justify-end">
+              <div className="flex items-center gap-0 bg-white/[0.08] rounded-2xl border border-white/10 overflow-hidden divide-x divide-white/10">
+                {[
+                  { label: "Tests", value: String(attempts.length), color: "text-white" },
+                  { label: "Best", value: String(bestBand), color: "text-emerald-300" },
+                  { label: "Target", value: "7.0+", color: "text-white" },
+                ].map((stat) => (
+                  <div key={stat.label} className="px-4 py-2.5 flex flex-col items-center min-w-[64px]">
+                    <span className="text-white/45 text-[9px] uppercase tracking-widest font-mono font-bold">{stat.label}</span>
+                    <strong className={`${stat.color} font-bold text-base font-bricolage leading-tight`}>{stat.value}</strong>
+                  </div>
+                ))}
               </div>
 
               <Button
                 onClick={handleLogoutClick}
                 variant="outline"
                 size="sm"
-                className="h-10 px-4 rounded-2xl border-white/20 bg-white/10 text-white hover:bg-white hover:text-forest-ink font-semibold font-inter shadow-2xs transition-colors cursor-pointer flex items-center gap-1.5"
+                className="h-10 px-4 rounded-2xl border-white/20 bg-white/10 text-white hover:bg-white hover:text-forest-ink font-semibold font-inter transition-colors cursor-pointer flex items-center gap-1.5"
               >
                 <LogOut size={15} />
-                <span>Log Out</span>
+                <span>Sign Out</span>
               </Button>
             </div>
           </div>
         </div>
 
-        {/* Navigation Tabs */}
-        <div className="flex border-b border-pencil-gray/20 font-inter gap-2 sm:gap-6 overflow-x-auto scrollbar-none pb-0.5 mt-2">
-          <button
-            onClick={() => setActiveTab("progress")}
-            className={`px-4 sm:px-6 py-3 font-semibold text-xs sm:text-sm border-b-2 transition-all cursor-pointer whitespace-nowrap ${
-              activeTab === "progress"
-                ? "border-forest-ink text-forest-ink font-bold"
-                : "border-transparent text-forest-ink/50 hover:text-forest-ink/80"
-            }`}
-          >
-            My Progress & Stats
-          </button>
-          <button
-            onClick={() => setActiveTab("writing")}
-            className={`px-4 sm:px-6 py-3 font-semibold text-xs sm:text-sm border-b-2 transition-all cursor-pointer whitespace-nowrap ${
-              activeTab === "writing"
-                ? "border-forest-ink text-forest-ink font-bold"
-                : "border-transparent text-forest-ink/50 hover:text-forest-ink/80"
-            }`}
-          >
-            Writing Reviews
-          </button>
-          <button
-            onClick={() => setActiveTab("practice")}
-            className={`px-4 sm:px-6 py-3 font-semibold text-xs sm:text-sm border-b-2 transition-all cursor-pointer whitespace-nowrap ${
-              activeTab === "practice"
-                ? "border-forest-ink text-forest-ink font-bold"
-                : "border-transparent text-forest-ink/50 hover:text-forest-ink/80"
-            }`}
-          >
-            Practice Sessions {savedSessions.length > 0 && `(${savedSessions.length})`}
-          </button>
-          <button
-            onClick={() => setActiveTab("settings")}
-            className={`px-4 sm:px-6 py-3 font-semibold text-xs sm:text-sm border-b-2 transition-all cursor-pointer whitespace-nowrap ${
-              activeTab === "settings"
-                ? "border-forest-ink text-forest-ink font-bold"
-                : "border-transparent text-forest-ink/50 hover:text-forest-ink/80"
-            }`}
-          >
-            Account Settings
-          </button>
+        {/* Navigation Tabs — pill segmented control */}
+        <div className="bg-white/80 border border-forest-ink/10 rounded-2xl p-1.5 flex gap-1 overflow-x-auto scrollbar-none shadow-xs font-inter">
+          {([
+            { id: "progress", label: "Progress", icon: TrendingUp, badge: null },
+            { id: "writing", label: "Writing Reviews", icon: FileText, badge: submissions.length > 0 ? submissions.length : null },
+            { id: "practice", label: "Practice Drafts", icon: Clock, badge: savedSessions.length > 0 ? savedSessions.length : null },
+            { id: "settings", label: "Settings", icon: Sliders, badge: null },
+          ] as { id: "progress" | "writing" | "practice" | "settings"; label: string; icon: React.ElementType; badge: number | null }[]).map(({ id, label, icon: Icon, badge }) => (
+            <button
+              key={id}
+              onClick={() => setActiveTab(id)}
+              className={`relative flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all cursor-pointer flex-shrink-0 ${
+                activeTab === id
+                  ? "bg-forest-ink text-white shadow-sm"
+                  : "text-forest-ink/60 hover:text-forest-ink hover:bg-forest-ink/5"
+              }`}
+            >
+              <Icon size={13} />
+              <span className="hidden sm:inline">{label}</span>
+              <span className="sm:hidden">{label.split(" ")[0]}</span>
+              {badge !== null && (
+                <span className={`ml-0.5 text-[10px] font-bold px-1.5 py-0 rounded-full ${
+                  activeTab === id ? "bg-white/20 text-white" : "bg-forest-ink/10 text-forest-ink/70"
+                }`}>
+                  {badge}
+                </span>
+              )}
+            </button>
+          ))}
         </div>
 
                 {/* Tab Views */}
