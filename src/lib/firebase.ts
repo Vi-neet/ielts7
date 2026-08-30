@@ -25,6 +25,20 @@ import {
   sendPasswordResetEmail,
 } from "firebase/auth";
 
+// Patch protobufjs codegen for Cloudflare Workers environment (disables EvalError: Code generation from strings disallowed)
+try {
+  const protobuf = require("protobufjs/minimal");
+  if (protobuf && protobuf.util) {
+    protobuf.util.codegen.supported = false;
+  }
+} catch {}
+try {
+  const protobufFull = require("protobufjs");
+  if (protobufFull && protobufFull.util) {
+    protobufFull.util.codegen.supported = false;
+  }
+} catch {}
+
 /**
  * Firebase configuration using environment variables with fallbacks
  * Create a .env.local file based on .env.local.example to customize
