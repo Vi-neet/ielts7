@@ -25,17 +25,21 @@ import {
   sendPasswordResetEmail,
 } from "firebase/auth";
 
-// Patch protobufjs codegen for Cloudflare Workers environment (disables EvalError: Code generation from strings disallowed)
+// Patch protobufjs codegen for Cloudflare Workers environment (forces reflection fallback, disables EvalError)
 try {
   const protobuf = require("protobufjs/minimal");
   if (protobuf && protobuf.util) {
-    protobuf.util.codegen.supported = false;
+    protobuf.util.codegen = function codegen() {
+      return null as any;
+    };
   }
 } catch {}
 try {
   const protobufFull = require("protobufjs");
   if (protobufFull && protobufFull.util) {
-    protobufFull.util.codegen.supported = false;
+    protobufFull.util.codegen = function codegen() {
+      return null as any;
+    };
   }
 } catch {}
 
