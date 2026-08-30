@@ -28,10 +28,31 @@ import {
 import { Button } from "@/components/ui/button";
 import { LogOut, History, Loader2, User } from "lucide-react";
 
+function UserAvatarButton({ user }: { user: any }) {
+  const [imgError, setImgError] = useState(false);
+  return (
+    <DropdownMenuTrigger asChild>
+      <button className="flex items-center justify-center w-9 h-9 rounded-full bg-forest-ink text-cream-paper font-bold hover:shadow-md transition-all cursor-pointer overflow-hidden border border-forest-ink/20 shrink-0">
+        {user?.photoURL && !imgError ? (
+          <img
+            src={user.photoURL}
+            alt=""
+            referrerPolicy="no-referrer"
+            onError={() => setImgError(true)}
+            className="w-full h-full object-cover"
+          />
+        ) : (
+          user?.displayName?.[0]?.toUpperCase() || user?.email?.[0]?.toUpperCase() || "U"
+        )}
+      </button>
+    </DropdownMenuTrigger>
+  );
+}
+
 const Header = () => {
+  const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const pathname = usePathname();
   const activeItem = pathname || "/";
   const isHomePage = activeItem === "/";
   const [hoveredItem, setHoveredItem] = useState<string | null>(null);
@@ -101,7 +122,6 @@ const Header = () => {
     hover: { y: -3, transition: { duration: 0.2, ease: "easeOut" } },
   };
 
-  // New enhanced hover effect for navigation links
   const linkHoverVariants = {
     initial: { scaleX: 0 },
     hover: {
@@ -150,8 +170,7 @@ const Header = () => {
 
   return (
     <>
-      {/* Centralized spacer to prevent header from overlapping page content */}
-      <div className={`w-full shrink-0 ${isHomePage ? 'h-[80px]' : 'h-[72px]'}`} aria-hidden="true" />
+      <div className={isHomePage ? "w-full shrink-0 h-[80px]" : "w-full shrink-0 h-[72px]"} aria-hidden="true" />
       <motion.header
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
@@ -168,96 +187,65 @@ const Header = () => {
             : `h-[72px] ${isScrolled ? "bg-cream-paper/90 shadow-sm border-b border-pencil-gray/20" : "bg-transparent"}`
         }`}
       >
-      <motion.div
-        style={{ backdropFilter: `blur(${headerBlur}px)` }}
-        className={`absolute inset-0 -z-10 ${isHomePage ? "rounded-[16px]" : ""}`}
-      />
+        <motion.div
+          style={{ backdropFilter: `blur(${headerBlur}px)` }}
+          className={`absolute inset-0 -z-10 ${isHomePage ? "rounded-[16px]" : ""}`}
+        />
 
-      <div className="container mx-auto px-4 max-w-6xl">
-        <div className="flex items-center justify-between">
-          {/* Logo with enhanced animations and highlight effect */}
-          <motion.div
-            variants={logoVariants}
-            initial="initial"
-            animate="animate"
-            whileHover="hover"
-            whileTap="tap"
-            className="relative"
-          >
-            <Link href="/" className="flex items-center">
-              <div className="relative">
-                {/* Glow effect behind logo */}
-                <motion.div
-                  className="absolute inset-0 bg-primary/10 rounded-xl blur-xl"
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: isScrolled ? 0 : 0.5, scale: 1 }}
-                  whileHover={{ opacity: 0.7, scale: 1.2 }}
-                  transition={{ duration: 0.5 }}
-                />
-
+        <div className="container mx-auto px-4 max-w-6xl">
+          <div className="flex items-center justify-between">
+            {/* Logo */}
+            <motion.div
+              variants={logoVariants}
+              initial="initial"
+              animate="animate"
+              whileHover="hover"
+              whileTap="tap"
+              className="relative"
+            >
+              <Link href="/" className="flex items-center gap-3">
                 <Image
-                  src="/logo.webp"
-                  alt="IELTS 7+ House Logo"
-                  width={170}
-                  height={55}
-                  className="h-auto relative z-10 drop-shadow-sm transition-all"
+                  src="/icon.webp"
+                  alt="IELTS 7+ House"
+                  width={36}
+                  height={36}
+                  className="rounded-sm brightness-105"
                   priority
                 />
-              </div>
-            </Link>
-          </motion.div>
+                <span className="text-xl font-extrabold text-forest-ink tracking-tight font-bricolage">
+                  IELTS 7+ House
+                </span>
+              </Link>
+            </motion.div>
 
-          {/* Desktop Navigation with improved hover animations and Auth integration */}
-          <div className="hidden md:flex items-center gap-6">
-            <NavigationMenu>
-              <NavigationMenuList className="flex gap-5">
-                {navItems.map((item, i) => (
+            {/* Desktop Navigation */}
+            <NavigationMenu className="hidden md:flex">
+              <NavigationMenuList className="gap-2">
+                {navItems.map((item, index) => (
                   <NavigationMenuItem key={item.name}>
                     <motion.div
-                      custom={i}
+                      custom={index}
                       variants={navItemVariants}
                       initial="initial"
                       animate="animate"
                       whileHover="hover"
-                      onHoverStart={() => setHoveredItem(item.path)}
-                      onHoverEnd={() => setHoveredItem(null)}
-                      className="relative"
                     >
                       <Link
                         href={item.path}
-                        className={`relative px-3 py-2 font-medium font-inter text-base transition-colors ${
+                        onMouseEnter={() => setHoveredItem(item.path)}
+                        onMouseLeave={() => setHoveredItem(null)}
+                        className={`relative px-4 py-2 text-sm font-semibold font-inter transition-colors duration-200 block ${
                           activeItem === item.path
-                            ? "text-forest-ink"
-                            : "text-forest-ink/70 hover:text-forest-ink"
-                        } duration-300`}
+                            ? "text-forest-ink font-bold"
+                            : "text-forest-ink/75 hover:text-forest-ink"
+                        }`}
                       >
                         <span className="relative z-10">{item.name}</span>
 
-                        {/* Enhanced hover effect */}
-                        {hoveredItem === item.path && (
-                          <motion.span
-                            layoutId="hoverHighlight"
-                            className={`absolute -inset-1 -z-10 rounded-md ${
-                              isHomePage
-                                ? "bg-black/5"
-                                : "bg-black/5"
-                            }`}
-                            initial={{ opacity: 0, y: 5 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0, y: -5 }}
-                            transition={{ duration: 0.3 }}
-                          />
-                        )}
-
-                        {/* Active underline indicator */}
                         {activeItem === item.path && (
                           <motion.div
                             layoutId="underline"
-                            className={`absolute left-0 right-0 bottom-0 h-0.5 ${
-                              isHomePage
-                                ? "bg-forest-ink"
-                                : "bg-forest-ink"
-                            } rounded-full`}
+                            className="absolute left-0 right-0 bottom-0 h-0.5 bg-forest-ink rounded-full"
                             initial={{ width: 0, left: "50%", right: "50%" }}
                             animate={{
                               width: "100%",
@@ -271,22 +259,14 @@ const Header = () => {
                           />
                         )}
 
-                        {/* New hover line effect */}
-                        {hoveredItem === item.path &&
-                          activeItem !== item.path && (
-                            <motion.div
-                              variants={linkHoverVariants}
-                              initial="initial"
-                              animate="hover"
-                              className={`absolute left-0 right-0 bottom-0 h-[2px] ${
-                                isHomePage
-                                  ? "bg-forest-ink/30"
-                                  : item.name === "Free Resources"
-                                  ? "bg-forest-ink/50"
-                                  : "bg-forest-ink/30"
-                              } origin-left rounded-full`}
-                            />
-                          )}
+                        {hoveredItem === item.path && activeItem !== item.path && (
+                          <motion.div
+                            variants={linkHoverVariants}
+                            initial="initial"
+                            animate="hover"
+                            className="absolute left-0 right-0 bottom-0 h-[2px] bg-forest-ink/30 origin-left rounded-full"
+                          />
+                        )}
                       </Link>
                     </motion.div>
                   </NavigationMenuItem>
@@ -302,15 +282,7 @@ const Header = () => {
                 </div>
               ) : user ? (
                 <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <button className="flex items-center justify-center w-9 h-9 rounded-full bg-forest-ink text-cream-paper font-bold hover:shadow-md transition-all cursor-pointer overflow-hidden">
-                      {user.photoURL ? (
-                        <img src={user.photoURL} alt="Profile" className="w-full h-full object-cover" />
-                      ) : (
-                        user.email?.[0].toUpperCase() || "U"
-                      )}
-                    </button>
-                  </DropdownMenuTrigger>
+                  <UserAvatarButton user={user} />
                   <DropdownMenuContent className="w-56 bg-cream-paper border-pencil-gray/25 p-2 rounded-xl text-forest-ink shadow-lg mt-1" align="end">
                     <div className="px-2 py-1.5 text-xs text-forest-ink/60 font-mono truncate">
                       {user.email}
@@ -318,199 +290,141 @@ const Header = () => {
                     <DropdownMenuSeparator className="bg-pencil-gray/20" />
                     <DropdownMenuItem asChild className="focus:bg-whisper-gray focus:text-forest-ink rounded-lg py-2">
                       <Link href="/profile" className="flex items-center gap-2 cursor-pointer w-full font-medium">
-                        <History size={16} />
-                        My Tests
+                        <User size={16} />
+                        <span>My Profile</span>
                       </Link>
                     </DropdownMenuItem>
                     {isAdmin && (
                       <DropdownMenuItem asChild className="focus:bg-whisper-gray focus:text-forest-ink rounded-lg py-2">
-                        <Link href="/admin" className="flex items-center gap-2 cursor-pointer w-full font-medium">
+                        <Link href="/admin" className="flex items-center gap-2 cursor-pointer w-full font-semibold text-emerald-800">
                           <User size={16} />
-                          Admin Panel
+                          <span>Admin Panel</span>
                         </Link>
                       </DropdownMenuItem>
                     )}
                     <DropdownMenuSeparator className="bg-pencil-gray/20" />
                     <DropdownMenuItem
                       onClick={() => logOut()}
-                      className="focus:bg-red-50 focus:text-red-600 text-red-600 rounded-lg py-2 cursor-pointer flex items-center gap-2 font-medium"
+                      className="focus:bg-red-50 text-red-600 focus:text-red-700 rounded-lg py-2 cursor-pointer flex items-center gap-2 font-medium"
                     >
                       <LogOut size={16} />
-                      Log out
+                      <span>Log out</span>
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
               ) : (
-                <div className="flex items-center gap-4">
-                  <Link
-                    href={`/login?redirect=${encodeURIComponent(activeItem)}`}
-                    className="text-forest-ink/70 hover:text-forest-ink font-semibold font-inter transition-colors text-base"
-                  >
-                    Log In
+                <div className="flex items-center gap-3">
+                  <Link href={`/login?redirect=${encodeURIComponent(activeItem)}`}>
+                    <Button variant="ghost" size="sm" className="font-semibold text-forest-ink hover:text-forest-ink hover:bg-forest-ink/5">
+                      Log In
+                    </Button>
                   </Link>
                   <Link href={`/signup?redirect=${encodeURIComponent(activeItem)}`}>
-                    <Button variant="forest" size="sm" className="h-9 px-4">
+                    <Button variant="forest" size="sm" className="font-bold shadow-xs">
                       Sign Up
                     </Button>
                   </Link>
                 </div>
               )}
+
+              {/* Mobile menu trigger button */}
+              <button
+                onClick={toggleMenu}
+                className="md:hidden p-2 rounded-xl text-forest-ink hover:bg-forest-ink/5 transition-colors focus:outline-none"
+                aria-label="Toggle menu"
+              >
+                {isMenuOpen ? <X size={20} /> : <Menu size={20} />}
+              </button>
             </div>
           </div>
 
-          {/* Mobile Menu Button */}
-          <motion.div
-            className="md:hidden"
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.5, duration: 0.3 }}
-            whileTap={{ scale: 0.9 }}
-          >
-            <button
-              onClick={toggleMenu}
-              className={`p-2 rounded-full ${isHomePage ? "bg-forest-ink/5 text-forest-ink/70 hover:text-forest-ink hover:bg-forest-ink/10" : "bg-forest-ink/5 text-forest-ink/70 hover:text-forest-ink hover:bg-forest-ink/10"} focus:outline-none transition-all duration-300`}
-              aria-label="Toggle menu"
-            >
-              <AnimatePresence mode="wait" initial={false}>
-                {isMenuOpen ? (
-                  <motion.div
-                    key="close"
-                    initial={{ opacity: 0, rotate: -90, scale: 0.5 }}
-                    animate={{ opacity: 1, rotate: 0, scale: 1 }}
-                    exit={{ opacity: 0, rotate: 90, scale: 0.5 }}
-                    transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-                  >
-                    <X size={24} />
-                  </motion.div>
-                ) : (
-                  <motion.div
-                    key="menu"
-                    initial={{ opacity: 0, rotate: 90, scale: 0.5 }}
-                    animate={{ opacity: 1, rotate: 0, scale: 1 }}
-                    exit={{ opacity: 0, rotate: -90, scale: 0.5 }}
-                    transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-                  >
-                    <Menu size={24} />
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </button>
-          </motion.div>
-        </div>
-
-        {/* Mobile Navigation */}
-        <AnimatePresence>
-          {isMenuOpen && (
-            <motion.div
-              variants={mobileMenuVariants}
-              initial="closed"
-              animate="open"
-              exit="closed"
-              className="md:hidden absolute top-full left-0 right-0 bg-cream-paper/95 backdrop-blur-md shadow-lg overflow-hidden border-t border-pencil-gray/20"
-            >
-              <motion.nav className="flex flex-col py-4 px-6 max-w-6xl mx-auto">
-                {navItems.map((item, i) => (
-                  <motion.div
-                    key={item.name}
-                    custom={i}
-                    variants={mobileNavItemVariants}
-                    className="border-b border-pencil-gray/10 last:border-b-0"
-                  >
-                    <Link
-                      href={item.path}
-                      className={`
-                        block py-4 font-inter transition-all duration-300
-                        ${
-                          activeItem === item.path
-                            ? "text-forest-ink pl-4 border-l-2 border-forest-ink font-semibold"
-                            : item.name === "Free Resources"
-                            ? "text-forest-ink/90 pl-0 font-medium"
-                            : "text-forest-ink/70 pl-0 font-medium"
-                        }
-                        ${
-                          item.name === "Free Resources"
-                            ? "hover:text-forest-ink hover:pl-4 hover:border-l-2 hover:border-forest-ink"
-                            : "hover:text-forest-ink hover:pl-4 hover:border-l-2 hover:border-forest-ink/50"
-                        }
-                      `}
-                      onClick={() => setIsMenuOpen(false)}
+          {/* Mobile menu dropdown */}
+          <AnimatePresence>
+            {isMenuOpen && (
+              <motion.div
+                variants={mobileMenuVariants}
+                initial="closed"
+                animate="open"
+                exit="closed"
+                className="md:hidden overflow-hidden bg-cream-paper/95 backdrop-blur-md rounded-2xl mt-3 p-4 border border-pencil-gray/20 shadow-lg"
+              >
+                <motion.nav className="flex flex-col gap-3">
+                  {navItems.map((item, index) => (
+                    <motion.div
+                      key={item.name}
+                      custom={index}
+                      variants={mobileNavItemVariants}
                     >
-                      {item.name}
-                    </Link>
-                  </motion.div>
-                ))}
-
-                {/* Mobile Auth Links */}
-                <motion.div
-                  custom={navItems.length}
-                  variants={mobileNavItemVariants}
-                  className="pt-4 mt-2 border-t border-pencil-gray/10 flex flex-col gap-3"
-                >
-                  {loading ? (
-                    <span className="text-forest-ink/40 font-mono text-sm py-2">Loading...</span>
-                  ) : user ? (
-                    <>
-                      <div className="flex items-center gap-2 px-1 py-2">
-                        <div className="w-8 h-8 rounded-full bg-forest-ink text-cream-paper flex items-center justify-center font-bold text-sm overflow-hidden">
-                          {user.photoURL ? (
-                            <img src={user.photoURL} alt="Profile" className="w-full h-full object-cover" />
-                          ) : (
-                            user.email?.[0].toUpperCase() || "U"
-                          )}
-                        </div>
-                        <span className="font-medium text-forest-ink/75 truncate text-sm">{user.email}</span>
-                      </div>
                       <Link
-                        href="/profile"
-                        className="py-2 text-forest-ink/75 hover:text-forest-ink font-semibold font-inter flex items-center gap-2"
+                        href={item.path}
+                        className={`py-2 text-base font-semibold font-inter block ${
+                          activeItem === item.path
+                            ? "text-forest-ink font-bold"
+                            : "text-forest-ink/75 hover:text-forest-ink"
+                        }`}
                         onClick={() => setIsMenuOpen(false)}
                       >
-                        My Tests
+                        {item.name}
                       </Link>
-                      {isAdmin && (
+                    </motion.div>
+                  ))}
+                  
+                  {/* Mobile auth links */}
+                  <motion.div custom={navItems.length} variants={mobileNavItemVariants} className="pt-2 border-t border-pencil-gray/20">
+                    {user ? (
+                      <div className="flex flex-col gap-2">
+                        <div className="text-xs text-forest-ink/60 font-mono pb-1">{user.email}</div>
                         <Link
-                          href="/admin"
+                          href="/profile"
                           className="py-2 text-forest-ink/75 hover:text-forest-ink font-semibold font-inter flex items-center gap-2"
                           onClick={() => setIsMenuOpen(false)}
                         >
-                          Admin Panel
+                          My Profile
                         </Link>
-                      )}
-                      <button
-                        onClick={async () => {
-                          setIsMenuOpen(false);
-                          await logOut();
-                        }}
-                        className="py-2 text-left text-red-600 font-semibold font-inter hover:underline"
-                      >
-                        Log out
-                      </button>
-                    </>
-                  ) : (
-                    <div className="flex flex-col gap-3 pt-2">
-                      <Link
-                        href={`/login?redirect=${encodeURIComponent(activeItem)}`}
-                        className="py-2 text-forest-ink/70 hover:text-forest-ink font-semibold font-inter text-base"
-                        onClick={() => setIsMenuOpen(false)}
-                      >
-                        Log In
-                      </Link>
-                      <Link
-                        href={`/signup?redirect=${encodeURIComponent(activeItem)}`}
-                        onClick={() => setIsMenuOpen(false)}
-                      >
-                        <Button variant="forest" size="sm" className="w-full h-10 justify-center">
-                          Sign Up
-                        </Button>
-                      </Link>
-                    </div>
-                  )}
-                </motion.div>
-              </motion.nav>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </div>
+                        {isAdmin && (
+                          <Link
+                            href="/admin"
+                            className="py-2 text-emerald-800 font-semibold font-inter flex items-center gap-2"
+                            onClick={() => setIsMenuOpen(false)}
+                          >
+                            Admin Panel
+                          </Link>
+                        )}
+                        <button
+                          onClick={async () => {
+                            setIsMenuOpen(false);
+                            await logOut();
+                          }}
+                          className="py-2 text-left text-red-600 font-semibold font-inter hover:underline"
+                        >
+                          Log out
+                        </button>
+                      </div>
+                    ) : (
+                      <div className="flex flex-col gap-3 pt-2">
+                        <Link
+                          href={`/login?redirect=${encodeURIComponent(activeItem)}`}
+                          className="py-2 text-forest-ink/70 hover:text-forest-ink font-semibold font-inter text-base"
+                          onClick={() => setIsMenuOpen(false)}
+                        >
+                          Log In
+                        </Link>
+                        <Link
+                          href={`/signup?redirect=${encodeURIComponent(activeItem)}`}
+                          onClick={() => setIsMenuOpen(false)}
+                        >
+                          <Button variant="forest" size="sm" className="w-full h-10 justify-center">
+                            Sign Up
+                          </Button>
+                        </Link>
+                      </div>
+                    )}
+                  </motion.div>
+                </motion.nav>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
       </motion.header>
     </>
   );

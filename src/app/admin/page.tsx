@@ -180,6 +180,29 @@ type Tab = "submissions" | "students";
 type SortFieldStudents = "displayName" | "country" | "targetBand" | "updatedAt" | "targetDate";
 type SortFieldSubmissions = "candidateName" | "taskType" | "submittedAt" | "status";
 
+function SafeAvatar({ src, name, size = "w-10 h-10", textSize = "text-sm" }: { src?: string; name?: string; size?: string; textSize?: string }) {
+  const [failed, setFailed] = useState(false);
+  const initial = (name?.[0] || "U").toUpperCase();
+
+  if (src && !failed) {
+    return (
+      <img
+        src={src}
+        alt=""
+        referrerPolicy="no-referrer"
+        onError={() => setFailed(true)}
+        className={`${size} rounded-full object-cover border border-forest-ink/10 shrink-0`}
+      />
+    );
+  }
+
+  return (
+    <div className={`${size} rounded-full bg-forest-ink/10 text-forest-ink border border-forest-ink/15 flex items-center justify-center font-bold ${textSize} uppercase shrink-0`}>
+      {initial}
+    </div>
+  );
+}
+
 export default function AdminPage() {
   const { user, loading: authLoading, isAdmin } = useAuth();
   const router = useRouter();
@@ -764,11 +787,7 @@ export default function AdminPage() {
               <div className="relative shrink-0">
                 <div className="absolute inset-0 rounded-full bg-gradient-to-br from-emerald-400/40 to-transparent blur-sm" />
                 <div className="relative w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-white/10 border-2 border-white/25 flex items-center justify-center overflow-hidden shadow-md">
-                  {user?.photoURL ? (
-                    <img src={user.photoURL} alt="Admin" className="w-full h-full object-cover" />
-                  ) : (
-                    <Shield size={28} className="text-white/85" />
-                  )}
+                  <SafeAvatar src={user?.photoURL || undefined} name={user?.displayName || user?.email || "A"} size="w-full h-full" textSize="text-xl" />
                 </div>
               </div>
               <div className="space-y-1">
@@ -1058,17 +1077,7 @@ export default function AdminPage() {
                         >
                           {/* Avatar + identity */}
                           <div className="flex items-center gap-3 flex-1 min-w-0">
-                            {s.photoURL ? (
-                              <img
-                                src={s.photoURL}
-                                alt={s.displayName || "Avatar"}
-                                className="w-10 h-10 rounded-full object-cover border border-forest-ink/10 shrink-0"
-                              />
-                            ) : (
-                              <div className="w-10 h-10 rounded-full bg-forest-ink/8 border border-forest-ink/10 flex items-center justify-center font-bold text-sm text-forest-ink uppercase shrink-0">
-                                {s.displayName?.[0] || s.email?.[0] || "U"}
-                              </div>
-                            )}
+                            <SafeAvatar src={s.photoURL} name={s.displayName || s.email} size="w-10 h-10" />
                             <div className="min-w-0">
                               <p className="font-bold text-forest-ink text-sm leading-snug font-bricolage truncate group-hover:text-emerald-800 transition-colors">
                                 {highlightText(s.displayName || "Practice Candidate", searchQuery)}
@@ -1583,17 +1592,7 @@ export default function AdminPage() {
               {/* Header */}
               <div className="bg-white border-b border-pencil-gray/10 px-6 py-4 flex items-center justify-between z-10 sticky top-0 shadow-xs">
                 <div className="flex items-center gap-3.5">
-                  {selectedStudentForAttempts.photoURL ? (
-                    <img
-                      src={selectedStudentForAttempts.photoURL}
-                      alt={selectedStudentForAttempts.displayName || "Avatar"}
-                      className="w-12 h-12 rounded-full object-cover border-2 border-forest-ink/15 shadow-xs shrink-0"
-                    />
-                  ) : (
-                    <div className="w-12 h-12 rounded-full bg-forest-ink/10 text-forest-ink border-2 border-forest-ink/15 flex items-center justify-center font-bold font-bricolage text-lg uppercase shrink-0">
-                      {selectedStudentForAttempts.displayName?.[0] || selectedStudentForAttempts.email?.[0] || "U"}
-                    </div>
-                  )}
+                  <SafeAvatar src={selectedStudentForAttempts.photoURL} name={selectedStudentForAttempts.displayName || selectedStudentForAttempts.email} size="w-12 h-12" textSize="text-base" />
                   <div>
                     <div className="flex items-center gap-2">
                       <h3 className="font-extrabold text-base font-bricolage text-forest-ink leading-tight">
