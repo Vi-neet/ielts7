@@ -1,7 +1,5 @@
 import { NextResponse } from "next/server";
 
-export const runtime = "edge";
-
 const projectId = process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID || "ielts7-48b25";
 const firebaseApiKey = process.env.NEXT_PUBLIC_FIREBASE_API_KEY;
 
