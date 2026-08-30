@@ -92,115 +92,7 @@ const TEST_PARTS = [
   },
 ];
 
-const CRITERIA = [
-  {
-    code: "FC",
-    name: "Fluency & Coherence",
-    icon: Volume2,
-    color: "from-emerald-500/10 to-emerald-500/5 border-emerald-200",
-    band7: "Speaks at length without noticeable effort. Some hesitation but self-corrects. Uses cohesive devices effectively.",
-    tips: ["Avoid long silences", "Use fillers naturally (\"well\", \"let me think\")", "Link ideas with discourse markers"],
-  },
-  {
-    code: "LR",
-    name: "Lexical Resource",
-    icon: BookOpen,
-    color: "from-amber-500/10 to-amber-500/5 border-amber-200",
-    band7: "Uses a wide enough vocabulary to discuss topics with some flexibility. Uses paraphrase successfully.",
-    tips: ["Learn topic-specific collocations", "Paraphrase if unsure of exact word", "Avoid word repetition"],
-  },
-  {
-    code: "GRA",
-    name: "Grammatical Range & Accuracy",
-    icon: Zap,
-    color: "from-blue-500/10 to-blue-500/5 border-blue-200",
-    band7: "Uses a mix of simple and complex structures. Makes some errors but communication is not impeded.",
-    tips: ["Use conditional sentences", "Mix tenses naturally", "Use relative clauses"],
-  },
-  {
-    code: "PR",
-    name: "Pronunciation",
-    icon: Mic,
-    color: "from-purple-500/10 to-purple-500/5 border-purple-200",
-    band7: "Easy to understand. Uses a range of pronunciation features with mixed control. L1 accent does not impede understanding.",
-    tips: ["Focus on word stress", "Link words naturally", "Practice intonation patterns"],
-  },
-];
 
-const CUE_CARDS = [
-  {
-    topic: "Describe a book you have recently read",
-    bullets: [
-      "What the book was about",
-      "Why you decided to read it",
-      "What you liked or disliked about it",
-    ],
-    end: "...and explain how reading this book affected you.",
-    vocab: ["thought-provoking", "engaging narrative", "literary masterpiece", "captivating plot"],
-    structure: "Opening → Description → Personal reaction → Why it was significant",
-  },
-  {
-    topic: "Describe a time you helped someone",
-    bullets: [
-      "Who the person was",
-      "What the situation was",
-      "How you helped them",
-    ],
-    end: "...and explain how this experience made you feel.",
-    vocab: ["pivotal moment", "selfless act", "mutual support", "sense of accomplishment"],
-    structure: "Set the scene → Describe the problem → Explain your actions → Reflect on impact",
-  },
-  {
-    topic: "Describe a place you would like to visit",
-    bullets: [
-      "Where the place is",
-      "Why you want to visit it",
-      "What you would do there",
-    ],
-    end: "...and explain why this particular place appeals to you.",
-    vocab: ["breathtaking scenery", "rich cultural heritage", "off the beaten path", "bucket list destination"],
-    structure: "Introduce the place → Give context/reason → Describe plans → Express enthusiasm",
-  },
-];
-
-const BAND7_TIPS = [
-  {
-    num: "01",
-    title: "Extend Your Answers",
-    desc: "Never give one-word or single-sentence answers. Use the PEEL structure: Point → Explain → Example → Link back.",
-    icon: ArrowRight,
-  },
-  {
-    num: "02",
-    title: "Use Topic Vocabulary",
-    desc: "Learn 10–15 topic-specific words per common subject (technology, environment, education). Use them naturally — not robotically.",
-    icon: BookOpen,
-  },
-  {
-    num: "03",
-    title: "Master Discourse Markers",
-    desc: "Use phrases like \"Having said that\", \"What I find particularly interesting is\", and \"On reflection\" to sound more academic and fluent.",
-    icon: Volume2,
-  },
-  {
-    num: "04",
-    title: "Practice Thinking Out Loud",
-    desc: "If you need time to think, fill the silence: \"That's an interesting question, let me think about that for a moment...\" — this shows fluency.",
-    icon: Mic,
-  },
-  {
-    num: "05",
-    title: "Prepare Cue Card Structures",
-    desc: "Have a mental template: Setting → Background → Main event → Feelings → Lessons. Adapt it to any cue card topic in your 1-minute prep time.",
-    icon: Target,
-  },
-  {
-    num: "06",
-    title: "Record & Review Yourself",
-    desc: "Record a 2-minute answer on any topic and play it back. Listen for pace, pronunciation clarity, unnecessary fillers, and vocabulary range.",
-    icon: Star,
-  },
-];
 
 // ──────────────────────────────────────────────────────────
 // Types
@@ -256,10 +148,7 @@ export default function SpeakingBookingPage() {
   const { user } = useAuth();
   const bookingRef = useRef<HTMLElement>(null);
 
-  // Starter content tab
-  const [activeContentTab, setActiveContentTab] = useState<"format" | "criteria" | "cuecards" | "tips">("format");
-  const [activeCueCard, setActiveCueCard] = useState(0);
-  const [showStructure, setShowStructure] = useState(false);
+
 
   // Booking wizard
   const [step, setStep] = useState(1);
@@ -656,8 +545,9 @@ export default function SpeakingBookingPage() {
                     {/* Time slots */}
                     {selectedDate && (
                       <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}>
-                        <div className="text-[10px] font-mono font-bold text-forest-ink/40 uppercase tracking-wider mb-3">
-                          Available Times — {fmtDate(selectedDate)}
+                        <div className="text-[10px] font-mono font-bold text-forest-ink/40 uppercase tracking-wider mb-3 flex items-center justify-between">
+                          <span>Available Times — {fmtDate(selectedDate)}</span>
+                          <span className="text-[#cb5521] font-semibold">IST (GMT+5:30)</span>
                         </div>
                         <div className="flex flex-wrap gap-2">
                           {slotsByDate[selectedDate].map((slot) => (
