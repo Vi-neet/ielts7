@@ -34,7 +34,6 @@ import {
   Mail,
   User,
   ChevronRight,
-  Sparkles,
   Target,
   Volume2,
   BookOpen,
@@ -62,7 +61,7 @@ const TEST_PARTS = [
     title: "Introduction & Interview",
     duration: "4–5 minutes",
     icon: MessageCircle,
-    color: "bg-sticky-note-mint/40 border-sticky-note-mint",
+    color: "bg-emerald-50 border-emerald-200",
     iconColor: "text-emerald-700",
     description:
       "The examiner introduces themselves and asks you general questions about familiar topics such as your home, family, work, studies, and interests. Answers should be natural and fluent.",
@@ -73,7 +72,7 @@ const TEST_PARTS = [
     title: "Individual Long Turn",
     duration: "3–4 minutes",
     icon: BookOpen,
-    color: "bg-highlighter-yellow/30 border-highlighter-yellow",
+    color: "bg-amber-50 border-amber-200",
     iconColor: "text-amber-700",
     description:
       "You receive a cue card with a topic and bullet points. You have 1 minute to prepare, then speak for 1–2 minutes. The examiner may ask 1–2 brief follow-up questions.",
@@ -83,8 +82,8 @@ const TEST_PARTS = [
     part: "Part 3",
     title: "Two-way Discussion",
     duration: "4–5 minutes",
-    icon: Sparkles,
-    color: "bg-sticky-note-blush/40 border-sticky-note-blush",
+    icon: Target,
+    color: "bg-purple-50 border-purple-200",
     iconColor: "text-purple-700",
     description:
       "A deeper discussion linked to the Part 2 topic. The examiner asks abstract, analytical questions about issues, society, and trends. This is where Band 7+ candidates shine.",
@@ -365,6 +364,21 @@ export default function SpeakingBookingPage() {
 
     try {
       const refId = generateRef();
+      
+      // Fetch configured permanent Google Meet link
+      let activeMeetingLink = `https://meet.google.com/ielts7-speaking-room`;
+      if (typeof window !== "undefined" && localStorage.getItem("ielts7_default_meet_link")) {
+        activeMeetingLink = localStorage.getItem("ielts7_default_meet_link")!;
+      }
+      try {
+        const configSnap = await getDoc(doc(db, "systemConfig", "speakingSettings"));
+        if (configSnap.exists() && configSnap.data().defaultMeetingLink) {
+          activeMeetingLink = configSnap.data().defaultMeetingLink;
+        }
+      } catch (configErr) {
+        console.warn("Could not fetch systemConfig, using fallback Google Meet URL:", configErr);
+      }
+
       const bookingData: Record<string, any> = {
         referenceId: refId,
         slotId: selectedSlot.id,
@@ -378,7 +392,7 @@ export default function SpeakingBookingPage() {
         topicFocus: topicFocus.trim(),
         uid: user?.uid || null,
         status: "confirmed",
-        meetingLink: `https://meet.jit.si/IELTS7-Speaking-${refId}`,
+        meetingLink: activeMeetingLink,
         feedback: "",
         estimatedBand: "",
         createdAt: serverTimestamp(),
@@ -395,7 +409,7 @@ export default function SpeakingBookingPage() {
         updatedAt: serverTimestamp(),
       });
 
-      // Send email alert asynchronously via Web3Forms
+      // Send email alert asynchronously via Web3Forms/Resend
       sendSpeakingEmail({
         type: "new_booking",
         referenceId: refId,
@@ -448,11 +462,6 @@ export default function SpeakingBookingPage() {
             <div className="absolute -bottom-10 -left-10 w-64 h-64 bg-highlighter-yellow/10 rounded-full blur-3xl pointer-events-none" />
 
             <div className="relative z-10 max-w-3xl">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 border border-white/15 text-highlighter-yellow text-[11px] font-mono font-bold uppercase tracking-wider mb-6">
-                <Mic className="w-3.5 h-3.5" />
-                <span>100% Free Service</span>
-              </div>
-
               <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold font-bricolage text-white leading-tight mb-4">
                 Free Live 1-on-1<br />
                 <span className="text-highlighter-yellow">IELTS Speaking</span> Practice
@@ -487,220 +496,55 @@ export default function SpeakingBookingPage() {
         </div>
       </section>
 
-      {/* ── STARTER CONTENT HUB ── */}
+      {/* ── 3-BOX PREPARATION HUB ── */}
       <section className="py-16 container mx-auto max-w-6xl px-4 sm:px-6">
         <div className="text-center mb-10">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#cb5521]/10 border border-[#cb5521]/20 text-[#cb5521] text-[11px] font-mono font-bold uppercase tracking-wider mb-4">
-            <BookOpen className="w-3 h-3" />
-            Preparation Hub
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#1a3300]/10 border border-[#1a3300]/20 text-[#1a3300] text-[11px] font-mono font-bold uppercase tracking-wider mb-3">
+            <BookOpen className="w-3.5 h-3.5 text-[#1a3300]" />
+            <span>Speaking Test Structure</span>
           </div>
-          <h2 className="text-2xl sm:text-3xl font-extrabold font-bricolage text-forest-ink mb-3">
+          <h2 className="text-3xl sm:text-4xl font-extrabold font-bricolage text-[#1a3300] mb-3">
             Master the IELTS Speaking Test
           </h2>
-          <p className="text-forest-ink/60 text-sm max-w-xl mx-auto">
-            Everything you need to know before your speaking session — from test structure to Band 7+ strategies.
+          <p className="text-[#1a3300]/80 text-sm sm:text-base font-medium max-w-xl mx-auto">
+            Everything you need to know before your speaking session — clear structure & Band 7+ strategies.
           </p>
         </div>
 
-        {/* Tab bar */}
-        <div className="flex gap-1 p-1 bg-forest-ink/5 rounded-2xl border border-forest-ink/10 mb-8 overflow-x-auto">
-          {[
-            { key: "format", label: "Test Format", icon: Clock },
-            { key: "criteria", label: "Marking Criteria", icon: Award },
-            { key: "cuecards", label: "Sample Cue Cards", icon: BookOpen },
-            { key: "tips", label: "Band 7+ Tips", icon: Sparkles },
-          ].map(({ key, label, icon: Icon }) => (
-            <button
-              key={key}
-              onClick={() => setActiveContentTab(key as any)}
-              className={`flex-1 flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl text-xs font-semibold font-inter transition-all whitespace-nowrap cursor-pointer ${
-                activeContentTab === key
-                  ? "bg-forest-ink text-white shadow-sm"
-                  : "text-forest-ink/60 hover:text-forest-ink hover:bg-forest-ink/5"
-              }`}
-            >
-              <Icon className="w-3.5 h-3.5 shrink-0" />
-              <span>{label}</span>
-            </button>
-          ))}
-        </div>
-
-        {/* Tab content */}
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={activeContentTab}
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -12 }}
-            transition={{ duration: 0.2 }}
-          >
-            {/* TEST FORMAT */}
-            {activeContentTab === "format" && (
-              <div className="grid sm:grid-cols-3 gap-5">
-                {TEST_PARTS.map((part, i) => {
-                  const Icon = part.icon;
-                  return (
-                    <div key={i} className={`relative bg-white rounded-3xl border ${part.color} p-6 shadow-sm overflow-hidden`}>
-                      <div className={`w-10 h-10 rounded-xl ${part.color} flex items-center justify-center mb-4`}>
-                        <Icon className={`w-5 h-5 ${part.iconColor}`} />
-                      </div>
-                      <div className="text-[10px] font-mono font-bold text-forest-ink/50 uppercase tracking-wider mb-1">{part.part}</div>
-                      <h3 className="text-base font-bold font-bricolage text-forest-ink mb-1">{part.title}</h3>
-                      <div className="inline-flex items-center gap-1.5 text-[11px] font-mono text-forest-ink/60 bg-forest-ink/5 px-2 py-0.5 rounded-full mb-3">
-                        <Clock className="w-3 h-3" />
-                        {part.duration}
-                      </div>
-                      <p className="text-xs text-forest-ink/70 leading-relaxed mb-4">{part.description}</p>
-                      <div className="space-y-1.5">
-                        {part.tips.map((tip, j) => (
-                          <div key={j} className="flex items-start gap-2 text-[11px] text-forest-ink/70">
-                            <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0 mt-0.5" />
-                            {tip}
-                          </div>
-                        ))}
-                      </div>
+        {/* 3-Box Card Layout */}
+        <div className="grid sm:grid-cols-3 gap-6">
+          {TEST_PARTS.map((part, i) => {
+            const Icon = part.icon;
+            return (
+              <div key={i} className={`bg-white rounded-3xl border-2 ${part.color} p-6 shadow-sm flex flex-col justify-between transition-all hover:shadow-md`}>
+                <div>
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="w-10 h-10 rounded-xl bg-[#1a3300]/5 flex items-center justify-center">
+                      <Icon className={`w-5 h-5 ${part.iconColor}`} />
                     </div>
-                  );
-                })}
-              </div>
-            )}
-
-            {/* MARKING CRITERIA */}
-            {activeContentTab === "criteria" && (
-              <div className="grid sm:grid-cols-2 gap-5">
-                {CRITERIA.map((c, i) => {
-                  const Icon = c.icon;
-                  return (
-                    <div key={i} className={`bg-gradient-to-br ${c.color} border rounded-3xl p-6`}>
-                      <div className="flex items-center gap-3 mb-4">
-                        <div className="w-9 h-9 bg-white rounded-xl flex items-center justify-center shadow-sm">
-                          <Icon className="w-4 h-4 text-forest-ink" />
-                        </div>
-                        <div>
-                          <div className="text-[10px] font-mono font-bold text-forest-ink/40 uppercase tracking-wider">{c.code}</div>
-                          <div className="text-sm font-bold font-bricolage text-forest-ink">{c.name}</div>
-                        </div>
-                        <div className="ml-auto inline-flex items-center gap-1 bg-white px-2.5 py-1 rounded-full text-[11px] font-mono font-bold text-amber-700">
-                          <Star className="w-3 h-3" />
-                          Band 7
-                        </div>
-                      </div>
-                      <p className="text-xs text-forest-ink/80 leading-relaxed bg-white/60 rounded-xl p-3 mb-4 italic">
-                        &ldquo;{c.band7}&rdquo;
-                      </p>
-                      <div className="space-y-1.5">
-                        {c.tips.map((tip, j) => (
-                          <div key={j} className="flex items-center gap-2 text-[11px] text-forest-ink/70">
-                            <ChevronRight className="w-3 h-3 text-forest-ink/40 shrink-0" />
-                            {tip}
-                          </div>
-                        ))}
-                      </div>
+                    <div className="inline-flex items-center gap-1 text-[11px] font-mono font-bold text-[#1a3300] bg-[#1a3300]/10 px-2.5 py-1 rounded-full">
+                      <Clock className="w-3 h-3 text-[#1a3300]" />
+                      {part.duration}
                     </div>
-                  );
-                })}
-              </div>
-            )}
+                  </div>
+                  <div className="text-[11px] font-mono font-bold text-[#cb5521] uppercase tracking-wider mb-1">{part.part}</div>
+                  <h3 className="text-lg font-extrabold font-bricolage text-[#1a3300] mb-2">{part.title}</h3>
+                  <p className="text-xs text-[#1a3300]/85 font-medium leading-relaxed mb-5">{part.description}</p>
+                </div>
 
-            {/* CUE CARDS */}
-            {activeContentTab === "cuecards" && (
-              <div className="space-y-5">
-                {/* Card selector */}
-                <div className="flex gap-2 overflow-x-auto pb-1">
-                  {CUE_CARDS.map((_, i) => (
-                    <button
-                      key={i}
-                      onClick={() => { setActiveCueCard(i); setShowStructure(false); }}
-                      className={`flex-shrink-0 px-4 py-2 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
-                        activeCueCard === i
-                          ? "bg-[#cb5521] text-white"
-                          : "bg-white border border-forest-ink/15 text-forest-ink/70 hover:border-forest-ink/30"
-                      }`}
-                    >
-                      Cue Card {i + 1}
-                    </button>
+                <div className="border-t border-forest-ink/10 pt-4 space-y-2">
+                  <div className="text-[10px] font-mono font-bold text-[#1a3300]/60 uppercase tracking-wider mb-2">Key Tips for Band 7+</div>
+                  {part.tips.map((tip, j) => (
+                    <div key={j} className="flex items-center gap-2 text-xs font-semibold text-[#1a3300]">
+                      <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                      <span>{tip}</span>
+                    </div>
                   ))}
                 </div>
-
-                {/* Active cue card */}
-                <div className="bg-white border-2 border-[#cb5521]/20 rounded-3xl overflow-hidden shadow-sm">
-                  <div className="bg-[#cb5521] px-6 py-4">
-                    <div className="text-white/70 text-[10px] font-mono uppercase tracking-wider mb-1">Part 2 — Cue Card</div>
-                    <div className="text-white font-bold font-bricolage text-lg">{CUE_CARDS[activeCueCard].topic}</div>
-                  </div>
-                  <div className="p-6 space-y-4">
-                    <div>
-                      <div className="text-[10px] font-mono font-bold text-forest-ink/40 uppercase tracking-wider mb-2">You should say:</div>
-                      <ul className="space-y-2">
-                        {CUE_CARDS[activeCueCard].bullets.map((b, j) => (
-                          <li key={j} className="flex items-start gap-2.5 text-sm text-forest-ink/80">
-                            <span className="w-5 h-5 rounded-full bg-[#cb5521]/10 text-[#cb5521] text-[10px] font-bold flex items-center justify-center shrink-0 mt-0.5">{j + 1}</span>
-                            {b}
-                          </li>
-                        ))}
-                      </ul>
-                      <div className="mt-3 text-sm text-forest-ink/80 italic border-t border-forest-ink/10 pt-3">
-                        {CUE_CARDS[activeCueCard].end}
-                      </div>
-                    </div>
-
-                    <div className="flex flex-wrap gap-2">
-                      <div className="text-[10px] font-mono text-forest-ink/50 uppercase tracking-wider w-full mb-1">Band 7+ Vocabulary</div>
-                      {CUE_CARDS[activeCueCard].vocab.map((w) => (
-                        <span key={w} className="px-2.5 py-1 bg-highlighter-yellow/30 border border-highlighter-yellow/50 rounded-lg text-[11px] font-semibold text-forest-ink">
-                          {w}
-                        </span>
-                      ))}
-                    </div>
-
-                    <button
-                      onClick={() => setShowStructure(!showStructure)}
-                      className="w-full flex items-center justify-between p-3 bg-forest-ink/5 rounded-xl border border-forest-ink/10 text-xs font-semibold text-forest-ink cursor-pointer hover:bg-forest-ink/10 transition-colors"
-                    >
-                      <span>View Model Answer Structure</span>
-                      <ChevronRight className={`w-4 h-4 transition-transform ${showStructure ? "rotate-90" : ""}`} />
-                    </button>
-                    <AnimatePresence>
-                      {showStructure && (
-                        <motion.div
-                          initial={{ height: 0, opacity: 0 }}
-                          animate={{ height: "auto", opacity: 1 }}
-                          exit={{ height: 0, opacity: 0 }}
-                          className="overflow-hidden"
-                        >
-                          <div className="bg-forest-ink/5 rounded-xl p-4 text-xs text-forest-ink/80 font-mono leading-relaxed">
-                            {CUE_CARDS[activeCueCard].structure}
-                          </div>
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-                  </div>
-                </div>
               </div>
-            )}
-
-            {/* BAND 7+ TIPS */}
-            {activeContentTab === "tips" && (
-              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                {BAND7_TIPS.map((tip, i) => {
-                  const Icon = tip.icon;
-                  return (
-                    <div key={i} className="bg-white rounded-3xl border border-forest-ink/10 p-5 shadow-sm hover:shadow-md transition-shadow">
-                      <div className="flex items-start gap-3 mb-3">
-                        <span className="text-[11px] font-mono font-bold text-forest-ink/30">{tip.num}</span>
-                        <div className="w-8 h-8 bg-highlighter-yellow/30 rounded-xl flex items-center justify-center">
-                          <Icon className="w-4 h-4 text-amber-700" />
-                        </div>
-                      </div>
-                      <h4 className="text-sm font-bold font-bricolage text-forest-ink mb-2">{tip.title}</h4>
-                      <p className="text-xs text-forest-ink/65 leading-relaxed">{tip.desc}</p>
-                    </div>
-                  );
-                })}
-              </div>
-            )}
-          </motion.div>
-        </AnimatePresence>
+            );
+          })}
+        </div>
       </section>
 
       {/* ── BOOKING WIZARD ── */}
@@ -711,15 +555,17 @@ export default function SpeakingBookingPage() {
       >
         <div className="container mx-auto max-w-3xl px-4 sm:px-6">
           <div className="text-center mb-10">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#cb5521]/10 border border-[#cb5521]/20 text-[#cb5521] text-[11px] font-mono font-bold uppercase tracking-wider mb-4">
-              <Calendar className="w-3 h-3" />
-              Book a Session
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#1a3300]/10 border border-[#1a3300]/20 text-[#1a3300] text-[11px] font-mono font-bold uppercase tracking-wider mb-4">
+              <Calendar className="w-3.5 h-3.5" />
+              <span>{step === 3 ? "Booking Confirmed" : "Book a Session"}</span>
             </div>
-            <h2 className="text-2xl sm:text-3xl font-extrabold font-bricolage text-forest-ink mb-3">
-              Reserve Your Free Speaking Slot
+            <h2 className="text-2xl sm:text-3xl font-extrabold font-bricolage text-[#1a3300] mb-3">
+              {step === 3 ? "Your Speaking Session is Reserved!" : "Reserve Your Free Speaking Slot"}
             </h2>
-            <p className="text-forest-ink/60 text-sm">
-              Select a date and time, fill in your details, and you&apos;re done — completely free.
+            <p className="text-[#1a3300]/80 text-sm font-medium">
+              {step === 3
+                ? "Your confirmation details and Google Meet link have been prepared below."
+                : "Select a date and time, fill in your details, and you're done — completely free."}
             </p>
           </div>
 
@@ -1089,7 +935,7 @@ export default function SpeakingBookingPage() {
                   {/* Next steps */}
                   <div className="text-left bg-amber-50 border border-amber-200 rounded-2xl p-4 space-y-2">
                     <div className="text-xs font-bold text-amber-800 flex items-center gap-1.5 mb-2">
-                      <Sparkles className="w-3.5 h-3.5" />
+                      <CheckCircle2 className="w-3.5 h-3.5 text-amber-700" />
                       What happens next?
                     </div>
                     {[

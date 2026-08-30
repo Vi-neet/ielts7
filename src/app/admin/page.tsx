@@ -9,6 +9,8 @@ import {
   collection,
   getDocs,
   doc,
+  getDoc,
+  setDoc,
   addDoc,
   updateDoc,
   deleteDoc,
@@ -44,6 +46,7 @@ import {
   Mic,
   MessageCircle,
   Phone,
+  Video,
 } from "lucide-react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
@@ -266,6 +269,11 @@ export default function AdminPage() {
   const [editEstimatedBand, setEditEstimatedBand] = useState("");
   const [savingBooking, setSavingBooking] = useState(false);
 
+  // Global Permanent Google Meet link state
+  const [defaultMeetingLink, setDefaultMeetingLink] = useState("https://meet.google.com/ielts7-speaking-room");
+  const [savingMeetingLink, setSavingMeetingLink] = useState(false);
+  const [linkSaveSuccess, setLinkSaveSuccess] = useState(false);
+
   // Search, Filters & Sorting
   const [searchQuery, setSearchQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState<"all" | "submitted" | "graded">("all");
@@ -438,10 +446,52 @@ export default function AdminPage() {
       } catch (err) {
         console.warn("Could not load speaking bookings:", err);
       }
+
+      // 6. Fetch System Speaking Settings
+      if (typeof window !== "undefined" && localStorage.getItem("ielts7_default_meet_link")) {
+        setDefaultMeetingLink(localStorage.getItem("ielts7_default_meet_link")!);
+      }
+      try {
+        const configSnap = await getDoc(doc(db, "systemConfig", "speakingSettings"));
+        if (configSnap.exists() && configSnap.data().defaultMeetingLink) {
+          setDefaultMeetingLink(configSnap.data().defaultMeetingLink);
+        }
+      } catch (err) {
+        console.warn("Could not load speaking settings:", err);
+      }
     } catch (err) {
       console.error("Failed to load admin dashboard statistics:", err);
     } finally {
       setLoadingData(false);
+    }
+  };
+
+  const handleSaveDefaultMeetingLink = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!defaultMeetingLink.trim()) return;
+    setSavingMeetingLink(true);
+    setLinkSaveSuccess(false);
+
+    const cleanLink = defaultMeetingLink.trim();
+    if (typeof window !== "undefined") {
+      localStorage.setItem("ielts7_default_meet_link", cleanLink);
+    }
+
+    try {
+      await setDoc(
+        doc(db, "systemConfig", "speakingSettings"),
+        {
+          defaultMeetingLink: cleanLink,
+          updatedAt: serverTimestamp(),
+        },
+        { merge: true }
+      );
+    } catch (err) {
+      console.warn("Firestore systemConfig permission restricted, saved locally:", err);
+    } finally {
+      setLinkSaveSuccess(true);
+      setTimeout(() => setLinkSaveSuccess(false), 3500);
+      setSavingMeetingLink(false);
     }
   };
 
@@ -1344,6 +1394,57 @@ export default function AdminPage() {
               {/* Tab: Speaking Sessions & Slots */}
               {activeTab === "speaking" && (
                 <div className="space-y-6">
+
+                  {/* ── Global Permanent Google Meet Configuration Card ── */}
+                  <div className="bg-white rounded-2xl border border-forest-ink/10 p-5 shadow-xs space-y-4">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                      <div>
+                        <h3 className="font-bold text-sm text-forest-ink font-bricolage flex items-center gap-2">
+                          <Video size={16} className="text-emerald-700" /> Permanent Google Meet Link
+                        </h3>
+                        <p className="text-xs text-forest-ink/60 mt-0.5">
+                          This Google Meet link will automatically be assigned to every new student booking and included in confirmation emails.
+                        </p>
+                      </div>
+                      {linkSaveSuccess && (
+                        <span className="text-xs font-bold text-emerald-800 bg-emerald-50 px-3 py-1 rounded-xl border border-emerald-200 flex items-center gap-1.5 shrink-0">
+                          <CheckCircle2 size={13} /> Link Updated!
+                        </span>
+                      )}
+                    </div>
+
+                    <form onSubmit={handleSaveDefaultMeetingLink} className="flex flex-col sm:flex-row items-center gap-3">
+                      <div className="relative w-full">
+                        <Input
+                          type="url"
+                          value={defaultMeetingLink}
+                          onChange={(e) => setDefaultMeetingLink(e.target.value)}
+                          placeholder="https://meet.google.com/abc-defg-hij"
+                          className="h-10 pl-4 pr-10 text-xs font-mono bg-white border-forest-ink/20 focus:border-emerald-600 rounded-xl"
+                        />
+                        {defaultMeetingLink && (
+                          <a
+                            href={defaultMeetingLink}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="absolute right-3 top-1/2 -translate-y-1/2 text-forest-ink/40 hover:text-emerald-700 transition-colors"
+                            title="Test Google Meet link"
+                          >
+                            <ExternalLink size={14} />
+                          </a>
+                        )}
+                      </div>
+                      <Button
+                        type="submit"
+                        disabled={savingMeetingLink || !defaultMeetingLink.trim()}
+                        variant="forest"
+                        className="h-10 px-5 text-xs font-bold rounded-xl shrink-0 cursor-pointer w-full sm:w-auto"
+                      >
+                        {savingMeetingLink ? <Loader2 size={14} className="animate-spin" /> : "Save Google Meet Link"}
+                      </Button>
+                    </form>
+                  </div>
+
                   {/* Sub-tab switcher */}
                   <div className="flex items-center justify-between bg-white border border-forest-ink/10 rounded-2xl p-3 shadow-xs">
                     <div className="flex gap-2">
