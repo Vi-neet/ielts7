@@ -1,10 +1,12 @@
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
+import { normalizeMeetingUrl } from "@/lib/utils";
 
 export async function POST(req: Request) {
   try {
     const body = await req.json();
     const { type, referenceId, candidateName, candidateEmail, candidatePhone, slotDate, slotTime, meetingLink, estimatedBand, feedbackText, targetBand } = body;
+    const cleanMeetingLink = normalizeMeetingUrl(meetingLink);
 
     if (!candidateEmail) {
       return NextResponse.json({ success: false, error: "Missing candidate email" }, { status: 400 });
@@ -75,7 +77,7 @@ export async function POST(req: Request) {
                 <div class="detail-row"><strong>Target Band:</strong> <span>${targetBand || "7.0+"}</span></div>
               </div>
 
-              ${meetingLink ? `<p>Your video call room is ready:</p><a href="${meetingLink}" class="btn" target="_blank">Join HD Meeting Room</a>` : ""}
+              ${cleanMeetingLink ? `<p>Your video call room is ready:</p><a href="${cleanMeetingLink}" class="btn" target="_blank">Join HD Meeting Room</a>` : ""}
               
               <p style="margin-top: 25px; font-size: 13px; color: #4b5563;">You can view and manage your session anytime in your <a href="https://ielts7plushouse.com/profile" style="color: #047857;">Candidate Dashboard</a>.</p>
               `
@@ -119,10 +121,10 @@ export async function POST(req: Request) {
               <div class="details-card">
                 <div class="detail-row"><strong>Date:</strong> <span>${slotDate}</span></div>
                 <div class="detail-row"><strong>Time:</strong> <span>${slotTime}</span></div>
-                <div class="detail-row"><strong>Meeting Link:</strong> <span>${meetingLink || "Ready below"}</span></div>
+                <div class="detail-row"><strong>Meeting Link:</strong> <span>${cleanMeetingLink || "Ready below"}</span></div>
               </div>
 
-              <a href="${meetingLink || "https://ielts7plushouse.com/profile"}" class="btn" target="_blank">Join Meeting Call</a>
+              <a href="${cleanMeetingLink || "https://ielts7plushouse.com/profile"}" class="btn" target="_blank">Join Meeting Call</a>
               `
             ),
           });

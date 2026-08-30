@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { useAuth } from "@/lib/AuthContext";
 import { useRouter } from "next/navigation";
+import { normalizeMeetingUrl, isGoogleMeetRoomUrl, DEFAULT_MEET_LINK } from "@/lib/utils";
 import { db, logOut } from "@/lib/firebase";
 import { collection, query, where, orderBy, getDocs, doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 import { gradeAttempt, GradeResult, formatAnswer } from "@/lib/scoring";
@@ -203,6 +204,25 @@ export default function ProfilePage() {
   // Speaking sessions state
   const [speakingSessions, setSpeakingSessions] = useState<any[]>([]);
   const [loadingSpeaking, setLoadingSpeaking] = useState(true);
+  const [globalDefaultMeetLink, setGlobalDefaultMeetLink] = useState<string>("");
+
+  const getEffectiveMeetingLink = (rawLink?: string): string => {
+    // 1. Specific session raw link stored in Firestore (must be valid room URL)
+    const formattedRaw = normalizeMeetingUrl(rawLink);
+    if (isGoogleMeetRoomUrl(formattedRaw) && !formattedRaw.includes("meet.jit.si")) {
+      return formattedRaw;
+    }
+
+    // 2. Admin configured permanent Google Meet link (must be valid room URL)
+    const adminLink = globalDefaultMeetLink || (typeof window !== "undefined" ? localStorage.getItem("ielts7_default_meet_link") : null);
+    const formattedAdmin = normalizeMeetingUrl(adminLink);
+    if (isGoogleMeetRoomUrl(formattedAdmin)) {
+      return formattedAdmin;
+    }
+
+    // 3. Fallback system default room link
+    return DEFAULT_MEET_LINK;
+  };
   
   // Profile settings states
   const [nameInput, setNameInput] = useState("");
@@ -456,6 +476,16 @@ export default function ProfilePage() {
     const fetchSpeakingSessions = async () => {
       setLoadingSpeaking(true);
       try {
+        // Fetch global configured meeting link
+        try {
+          const configSnap = await getDoc(doc(db, "systemConfig", "speakingSettings"));
+          if (configSnap.exists() && configSnap.data().defaultMeetingLink) {
+            setGlobalDefaultMeetLink(configSnap.data().defaultMeetingLink);
+          }
+        } catch {
+          // ignore
+        }
+
         // Primary: query by uid
         const uidQuery = query(
           collection(db, "speakingBookings"),
@@ -470,7 +500,25 @@ export default function ProfilePage() {
           snap = await getDocs(query(collection(db, "speakingBookings"), where("uid", "==", user.uid)));
         }
         const fetched = snap.docs.map((d) => ({ id: d.id, ...d.data() }));
-        setSpeakingSessions(fetched);
+        const sortSessions = (items: any[]) => {
+          return [...items].sort((a, b) => {
+            const getMs = (s: any) => {
+              if (s.slotDate && s.slotTime) {
+                const timeStr = s.slotTime.includes(":") ? s.slotTime : "00:00";
+                const parsed = new Date(`${s.slotDate}T${timeStr}:00`).getTime();
+                if (!isNaN(parsed)) return parsed;
+              }
+              if (s.createdAt?.seconds) return s.createdAt.seconds * 1000;
+              if (typeof s.createdAt === "string") {
+                const parsed = new Date(s.createdAt).getTime();
+                if (!isNaN(parsed)) return parsed;
+              }
+              return 0;
+            };
+            return getMs(b) - getMs(a);
+          });
+        };
+        setSpeakingSessions(sortSessions(fetched));
       } catch (err) {
         console.error("Failed to load speaking sessions:", err);
       } finally {
@@ -508,7 +556,17 @@ export default function ProfilePage() {
 
       // Re-fetch speaking sessions
       const snap = await getDocs(query(collection(db, "speakingBookings"), where("uid", "==", user!.uid)));
-      setSpeakingSessions(snap.docs.map((d) => ({ id: d.id, ...d.data() })));
+      const reFetched = snap.docs.map((d) => ({ id: d.id, ...d.data() }));
+      const getMs = (s: any) => {
+        if (s.slotDate && s.slotTime) {
+          const timeStr = s.slotTime.includes(":") ? s.slotTime : "00:00";
+          const parsed = new Date(`${s.slotDate}T${timeStr}:00`).getTime();
+          if (!isNaN(parsed)) return parsed;
+        }
+        if (s.createdAt?.seconds) return s.createdAt.seconds * 1000;
+        return 0;
+      };
+      setSpeakingSessions(reFetched.sort((a, b) => getMs(b) - getMs(a)));
     } catch (err) {
       console.error("Failed to cancel speaking booking:", err);
     } finally {
@@ -1533,17 +1591,24 @@ export default function ProfilePage() {
                   </div>
                 </div>
 
-                {session.status === "confirmed" && session.meetingLink && (
+                {session.status === "confirmed" && (
                   <div className="flex items-center gap-2 flex-wrap">
-                    <a
-                      href={session.meetingLink}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center gap-2 px-3.5 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-bold transition-colors shadow-xs"
-                    >
-                      <ExternalLink size={13} />
-                      Join Meeting
-                    </a>
+                    {getEffectiveMeetingLink(session.meetingLink) ? (
+                      <a
+                        href={getEffectiveMeetingLink(session.meetingLink)}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-2 px-3.5 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-bold transition-colors shadow-xs"
+                      >
+                        <ExternalLink size={13} />
+                        Join Meeting
+                      </a>
+                    ) : (
+                      <span className="flex items-center gap-1.5 px-3 py-1.5 bg-amber-50 text-amber-900 border border-amber-200/80 rounded-xl text-xs font-medium">
+                        <Clock size={13} className="text-amber-700" />
+                        Meeting link pending instructor assignment
+                      </span>
+                    )}
                   </div>
                 )}
 
@@ -2046,9 +2111,9 @@ export default function ProfilePage() {
               </div>
 
               <div className="flex items-center gap-3 shrink-0">
-                {upcoming.meetingLink ? (
+                {getEffectiveMeetingLink(upcoming.meetingLink) ? (
                   <a
-                    href={upcoming.meetingLink}
+                    href={getEffectiveMeetingLink(upcoming.meetingLink)}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="px-5 py-2.5 bg-highlighter-yellow text-forest-ink text-xs font-bold rounded-xl hover:bg-highlighter-yellow/90 transition-colors shadow-md flex items-center gap-1.5"
@@ -2057,8 +2122,9 @@ export default function ProfilePage() {
                     Join Meeting
                   </a>
                 ) : (
-                  <span className="text-xs text-white/60 font-mono bg-white/10 px-3 py-2 rounded-xl">
-                    Meeting link pending
+                  <span className="px-4 py-2 bg-white/80 backdrop-blur-xs text-forest-ink text-xs font-semibold rounded-xl border border-forest-ink/10 flex items-center gap-1.5">
+                    <Clock size={13} className="text-forest-ink/60" />
+                    Link pending instructor assignment
                   </span>
                 )}
               </div>

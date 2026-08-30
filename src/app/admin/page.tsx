@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useAuth } from "@/lib/AuthContext";
 import { useRouter } from "next/navigation";
+import { normalizeMeetingUrl, isGoogleMeetRoomUrl } from "@/lib/utils";
 import { db, storage } from "@/lib/firebase";
 import { sendSpeakingEmail } from "@/lib/speakingEmail";
 import {
@@ -47,6 +48,7 @@ import {
   MessageCircle,
   Phone,
   Video,
+  Pencil,
 } from "lucide-react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
@@ -270,9 +272,11 @@ export default function AdminPage() {
   const [savingBooking, setSavingBooking] = useState(false);
 
   // Global Permanent Google Meet link state
-  const [defaultMeetingLink, setDefaultMeetingLink] = useState("https://meet.google.com/ielts7-speaking-room");
+  const [defaultMeetingLink, setDefaultMeetingLink] = useState("");
   const [savingMeetingLink, setSavingMeetingLink] = useState(false);
   const [linkSaveSuccess, setLinkSaveSuccess] = useState(false);
+  const [linkSaveError, setLinkSaveError] = useState("");
+  const [isEditingMeetLink, setIsEditingMeetLink] = useState(false);
 
   // Search, Filters & Sorting
   const [searchQuery, setSearchQuery] = useState("");
@@ -468,29 +472,58 @@ export default function AdminPage() {
 
   const handleSaveDefaultMeetingLink = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!defaultMeetingLink.trim()) return;
-    setSavingMeetingLink(true);
+    setLinkSaveError("");
     setLinkSaveSuccess(false);
+    if (!defaultMeetingLink.trim()) return;
 
-    const cleanLink = defaultMeetingLink.trim();
-    if (typeof window !== "undefined") {
-      localStorage.setItem("ielts7_default_meet_link", cleanLink);
+    const cleanLink = normalizeMeetingUrl(defaultMeetingLink);
+    if (!isGoogleMeetRoomUrl(cleanLink)) {
+      setLinkSaveError("Please include a room code (e.g. https://meet.google.com/abc-defg-hij). Generic links without a room code redirect users to Google's homepage.");
+      return;
     }
 
+    setSavingMeetingLink(true);
+
     try {
-      await setDoc(
-        doc(db, "systemConfig", "speakingSettings"),
-        {
-          defaultMeetingLink: cleanLink,
-          updatedAt: serverTimestamp(),
-        },
-        { merge: true }
+      // 1. Save locally
+      if (typeof window !== "undefined") {
+        localStorage.setItem("ielts7_default_meet_link", cleanLink);
+      }
+      setDefaultMeetingLink(cleanLink);
+
+      // 2. Save to Firestore systemConfig
+      try {
+        await setDoc(
+          doc(db, "systemConfig", "speakingSettings"),
+          {
+            defaultMeetingLink: cleanLink,
+            updatedAt: serverTimestamp(),
+          },
+          { merge: true }
+        );
+
+        // 3. Batch update all non-cancelled bookings in Firestore
+        const bookingsSnap = await getDocs(collection(db, "speakingBookings"));
+        const updatePromises = bookingsSnap.docs
+          .filter((d) => d.data().status !== "cancelled")
+          .map((d) => updateDoc(doc(db, "speakingBookings", d.id), { meetingLink: cleanLink, updatedAt: serverTimestamp() }));
+        await Promise.all(updatePromises);
+      } catch (fsErr) {
+        console.warn("Firestore sync notice:", fsErr);
+      }
+
+      setSpeakingBookings((prev) =>
+        prev.map((b) => (b.status !== "cancelled" ? { ...b, meetingLink: cleanLink } : b))
       );
-    } catch (err) {
-      console.warn("Firestore systemConfig permission restricted, saved locally:", err);
-    } finally {
+
       setLinkSaveSuccess(true);
+      setIsEditingMeetLink(false);
       setTimeout(() => setLinkSaveSuccess(false), 3500);
+      loadAdminData();
+    } catch (err: any) {
+      console.error("Save error:", err);
+      setLinkSaveError("Could not save meeting link: " + (err?.message || "Error"));
+    } finally {
       setSavingMeetingLink(false);
     }
   };
@@ -508,14 +541,15 @@ export default function AdminPage() {
       await addDoc(collection(db, "speakingSlots"), {
         date: slotDateInput,
         time: slotTimeInput,
-        duration: 30,
         isAvailable: true,
-        bookedBy: null,
+        createdBy: user?.uid || "admin",
         createdAt: serverTimestamp(),
         updatedAt: serverTimestamp(),
       });
-      setSlotTimeInput("");
-      await loadAdminData();
+      setSlotDateInput("");
+      setSlotTimeInput("10:00");
+      setIsAddingSlot(false);
+      loadAdminData();
     } catch (err) {
       console.error("Failed to create slot:", err);
     } finally {
@@ -536,10 +570,10 @@ export default function AdminPage() {
   };
 
   const handleDeleteSlot = async (slotId: string) => {
-    if (!confirm("Are you sure you want to delete this slot?")) return;
+    if (!confirm("Are you sure you want to delete this speaking slot?")) return;
     try {
       await deleteDoc(doc(db, "speakingSlots", slotId));
-      await loadAdminData();
+      loadAdminData();
     } catch (err) {
       console.error("Failed to delete slot:", err);
     }
@@ -551,7 +585,7 @@ export default function AdminPage() {
     setSavingBooking(true);
     try {
       const updatedStatus = editStatus;
-      const updatedMeetLink = editMeetingLink.trim();
+      const updatedMeetLink = normalizeMeetingUrl(editMeetingLink);
       const updatedFeedback = editFeedback.trim();
       const updatedBand = editEstimatedBand.trim();
 
@@ -1413,36 +1447,82 @@ export default function AdminPage() {
                       )}
                     </div>
 
-                    <form onSubmit={handleSaveDefaultMeetingLink} className="flex flex-col sm:flex-row items-center gap-3">
-                      <div className="relative w-full">
-                        <Input
-                          type="url"
-                          value={defaultMeetingLink}
-                          onChange={(e) => setDefaultMeetingLink(e.target.value)}
-                          placeholder="https://meet.google.com/abc-defg-hij"
-                          className="h-10 pl-4 pr-10 text-xs font-mono bg-white border-forest-ink/20 focus:border-emerald-600 rounded-xl"
-                        />
-                        {defaultMeetingLink && (
+                    {!isEditingMeetLink && defaultMeetingLink ? (
+                      <div className="flex flex-col sm:flex-row items-center justify-between gap-3 bg-[#faf9f5] p-3.5 rounded-xl border border-emerald-200">
+                        <div className="flex items-center gap-3 overflow-hidden">
+                          <span className="px-2.5 py-1 bg-emerald-100 text-emerald-800 rounded-lg text-[10px] font-mono font-bold shrink-0 uppercase tracking-wider border border-emerald-200">
+                            Active Room
+                          </span>
                           <a
                             href={defaultMeetingLink}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="absolute right-3 top-1/2 -translate-y-1/2 text-forest-ink/40 hover:text-emerald-700 transition-colors"
-                            title="Test Google Meet link"
+                            className="text-xs font-mono text-emerald-950 font-bold truncate hover:underline flex items-center gap-1.5"
                           >
-                            <ExternalLink size={14} />
+                            {defaultMeetingLink}
+                            <ExternalLink size={13} className="shrink-0 text-emerald-700" />
                           </a>
-                        )}
+                        </div>
+                        <Button
+                          type="button"
+                          onClick={() => setIsEditingMeetLink(true)}
+                          variant="outline"
+                          className="h-9 px-4 text-xs font-bold rounded-xl shrink-0 cursor-pointer border-forest-ink/20 hover:bg-forest-ink/5"
+                        >
+                          <Pencil size={13} className="mr-1.5 text-emerald-800" />
+                          Edit Link
+                        </Button>
                       </div>
-                      <Button
-                        type="submit"
-                        disabled={savingMeetingLink || !defaultMeetingLink.trim()}
-                        variant="forest"
-                        className="h-10 px-5 text-xs font-bold rounded-xl shrink-0 cursor-pointer w-full sm:w-auto"
-                      >
-                        {savingMeetingLink ? <Loader2 size={14} className="animate-spin" /> : "Save Google Meet Link"}
-                      </Button>
-                    </form>
+                    ) : (
+                      <form onSubmit={handleSaveDefaultMeetingLink} className="flex flex-col sm:flex-row items-center gap-3">
+                        <div className="relative w-full">
+                          <Input
+                            type="url"
+                            value={defaultMeetingLink}
+                            onChange={(e) => setDefaultMeetingLink(e.target.value)}
+                            placeholder="https://meet.google.com/abc-defg-hij"
+                            className="h-10 pl-4 pr-10 text-xs font-mono bg-white border-forest-ink/20 focus:border-emerald-600 rounded-xl"
+                          />
+                          {defaultMeetingLink && (
+                            <a
+                              href={defaultMeetingLink}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="absolute right-3 top-1/2 -translate-y-1/2 text-forest-ink/40 hover:text-emerald-700 transition-colors"
+                              title="Test Google Meet link"
+                            >
+                              <ExternalLink size={14} />
+                            </a>
+                          )}
+                        </div>
+                        <div className="flex items-center gap-2 w-full sm:w-auto">
+                          <Button
+                            type="submit"
+                            disabled={savingMeetingLink || !defaultMeetingLink.trim()}
+                            variant="forest"
+                            className="h-10 px-5 text-xs font-bold rounded-xl shrink-0 cursor-pointer w-full sm:w-auto"
+                          >
+                            {savingMeetingLink ? <Loader2 size={14} className="animate-spin" /> : "Save Google Meet Link"}
+                          </Button>
+                          {defaultMeetingLink && (
+                            <Button
+                              type="button"
+                              onClick={() => setIsEditingMeetLink(false)}
+                              variant="ghost"
+                              className="h-10 px-3 text-xs font-semibold rounded-xl text-forest-ink/60 hover:bg-forest-ink/5"
+                            >
+                              Cancel
+                            </Button>
+                          )}
+                        </div>
+                      </form>
+                    )}
+                    {linkSaveError && (
+                      <p className="text-xs font-semibold text-amber-900 bg-amber-50 px-3.5 py-2 rounded-xl border border-amber-200/80 flex items-center gap-2 mt-3">
+                        <ShieldAlert size={15} className="shrink-0 text-amber-700" />
+                        {linkSaveError}
+                      </p>
+                    )}
                   </div>
 
                   {/* Sub-tab switcher */}
@@ -1554,7 +1634,8 @@ export default function AdminPage() {
                                   onClick={() => {
                                     setSelectedBooking(b);
                                     setEditStatus(b.status);
-                                    setEditMeetingLink(b.meetingLink || "");
+                                    const initialLink = (b.meetingLink && isGoogleMeetRoomUrl(b.meetingLink)) ? b.meetingLink : (defaultMeetingLink || "");
+                                    setEditMeetingLink(initialLink);
                                     setEditFeedback(b.feedback || "");
                                     setEditEstimatedBand(b.estimatedBand || "");
                                   }}

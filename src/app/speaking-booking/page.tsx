@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { useAuth } from "@/lib/AuthContext";
 import { db } from "@/lib/firebase";
+import { normalizeMeetingUrl, isGoogleMeetRoomUrl } from "@/lib/utils";
 import { sendSpeakingEmail } from "@/lib/speakingEmail";
 import {
   collection,
@@ -366,17 +367,21 @@ export default function SpeakingBookingPage() {
       const refId = generateRef();
       
       // Fetch configured permanent Google Meet link
-      let activeMeetingLink = `https://meet.google.com/ielts7-speaking-room`;
-      if (typeof window !== "undefined" && localStorage.getItem("ielts7_default_meet_link")) {
-        activeMeetingLink = localStorage.getItem("ielts7_default_meet_link")!;
-      }
+      let activeMeetingLink = "";
       try {
         const configSnap = await getDoc(doc(db, "systemConfig", "speakingSettings"));
         if (configSnap.exists() && configSnap.data().defaultMeetingLink) {
           activeMeetingLink = configSnap.data().defaultMeetingLink;
         }
       } catch (configErr) {
-        console.warn("Could not fetch systemConfig, using fallback Google Meet URL:", configErr);
+        console.warn("Could not fetch systemConfig:", configErr);
+      }
+      if (!activeMeetingLink && typeof window !== "undefined" && localStorage.getItem("ielts7_default_meet_link")) {
+        activeMeetingLink = localStorage.getItem("ielts7_default_meet_link")!;
+      }
+      activeMeetingLink = normalizeMeetingUrl(activeMeetingLink);
+      if (!isGoogleMeetRoomUrl(activeMeetingLink)) {
+        activeMeetingLink = "";
       }
 
       const bookingData: Record<string, any> = {
@@ -419,7 +424,7 @@ export default function SpeakingBookingPage() {
         slotDate: selectedSlot.date,
         slotTime: selectedSlot.time,
         targetBand,
-        meetingLink: `https://meet.jit.si/IELTS7-Speaking-${refId}`,
+        meetingLink: activeMeetingLink,
       }).catch(() => {});
 
       setBookingRefId(refId);
@@ -896,7 +901,7 @@ export default function SpeakingBookingPage() {
 
                   <div>
                     <h2 className="text-2xl sm:text-3xl font-extrabold font-bricolage mb-1.5" style={{ color: "#0f172a" }}>
-                      You&apos;re Booked! 🎉
+                      You&apos;re Booked!
                     </h2>
                     <p className="text-sm font-semibold" style={{ color: "#334155" }}>
                       Your free speaking session has been reserved. Our team will confirm it shortly.
