@@ -77,8 +77,8 @@ View full session details in your Candidate Dashboard: https://ielts7plushouse.c
     formData.append("subject", subject);
     formData.append("message", message);
     
-    // For new_booking alerts, route to admin email (varunsaxena5elc@gmail.com). Otherwise, route to candidate.
-    const recipientEmail = payload.type === "new_booking" ? "varunsaxena5elc@gmail.com" : payload.candidateEmail;
+    // For new_booking alerts, route to admin email (meenunarula1104@gmail.com). Otherwise, route to candidate.
+    const recipientEmail = payload.type === "new_booking" ? "meenunarula1104@gmail.com" : payload.candidateEmail;
     formData.append("to_email", recipientEmail);
 
     const res = await fetch("https://api.web3forms.com/submit", {

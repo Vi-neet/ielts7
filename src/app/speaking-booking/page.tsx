@@ -377,8 +377,8 @@ export default function SpeakingBookingPage() {
         currentLevel,
         topicFocus: topicFocus.trim(),
         uid: user?.uid || null,
-        status: "pending",
-        meetingLink: "",
+        status: "confirmed",
+        meetingLink: `https://meet.jit.si/IELTS7-Speaking-${refId}`,
         feedback: "",
         estimatedBand: "",
         createdAt: serverTimestamp(),
@@ -405,6 +405,7 @@ export default function SpeakingBookingPage() {
         slotDate: selectedSlot.date,
         slotTime: selectedSlot.time,
         targetBand,
+        meetingLink: `https://meet.jit.si/IELTS7-Speaking-${refId}`,
       }).catch(() => {});
 
       setBookingRefId(refId);
@@ -1105,7 +1106,7 @@ export default function SpeakingBookingPage() {
 
                   {/* WhatsApp CTA */}
                   <a
-                    href={`https://wa.me/919667653192?text=${whatsappMessage}`}
+                    href={`https://wa.me/918178055015?text=${whatsappMessage}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center justify-center gap-2 w-full py-3.5 bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-sm rounded-xl transition-colors"
