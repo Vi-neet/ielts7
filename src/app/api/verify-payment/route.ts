@@ -1,75 +1,144 @@
 import { NextResponse } from "next/server";
-import { initializeApp, getApps, cert } from "firebase-admin/app";
-import { getFirestore, FieldValue } from "firebase-admin/firestore";
-import { getAuth } from "firebase-admin/auth";
-import fs from "fs";
-import path from "path";
 
-// Initialize Firebase Admin SDK using modular exports
-const clientEmail = process.env.FIREBASE_CLIENT_EMAIL;
-const privateKey = process.env.FIREBASE_PRIVATE_KEY;
+export const runtime = "edge";
+
 const projectId = process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID || "ielts7-48b25";
+const firebaseApiKey = process.env.NEXT_PUBLIC_FIREBASE_API_KEY;
 
-let hasAdminCredentials = false;
-
-if (getApps().length === 0) {
+/**
+ * Verify Firebase ID Token via Google Identity Toolkit REST API
+ */
+async function verifyFirebaseIdToken(idToken: string): Promise<string | null> {
   try {
-    // 1. Check environment variables first (safest for serverless/cloud environments)
-    if (clientEmail && privateKey) {
-      initializeApp({
-        credential: cert({
-          projectId,
-          clientEmail,
-          privateKey: privateKey.replace(/\\n/g, "\n"),
-        }),
-      });
-      hasAdminCredentials = true;
-      console.log("Firebase Admin initialized successfully using service account environment variables.");
-    } else {
-      // 2. Fallback to local service account file if available
-      try {
-        const rootFiles = fs.readdirSync(process.cwd());
-        const serviceAccountFile = rootFiles.find(
-          (f) =>
-            f === "firebase-service-account.json" ||
-            (f.includes("firebase-adminsdk") && f.endsWith(".json"))
-        );
+    // 1. Decode token payload for fast structural validation
+    const parts = idToken.split(".");
+    if (parts.length !== 3) return null;
 
-        if (serviceAccountFile) {
-          const serviceAccountPath = path.join(process.cwd(), serviceAccountFile);
-          const serviceAccount = JSON.parse(fs.readFileSync(serviceAccountPath, "utf-8"));
-          initializeApp({
-            credential: cert(serviceAccount),
-          });
-          hasAdminCredentials = true;
-          console.log(`Firebase Admin initialized successfully using dynamic key file: ${serviceAccountFile}`);
-        } else {
-          initializeApp({ projectId });
-          console.warn("⚠️ Firebase Admin initialized without credentials (keys missing).");
+    const payloadJson = Buffer.from(parts[1], "base64").toString("utf-8");
+    const payload = JSON.parse(payloadJson);
+
+    // Check token expiration & audience
+    const nowSec = Math.floor(Date.now() / 1000);
+    if (payload.exp && payload.exp < nowSec) {
+      console.error("Firebase ID token expired");
+      return null;
+    }
+
+    if (payload.aud !== projectId && payload.iss !== `https://securetoken.google.com/${projectId}`) {
+      console.error("Firebase ID token project mismatch");
+      return null;
+    }
+
+    if (!payload.sub && !payload.user_id) return null;
+    const uid = payload.sub || payload.user_id;
+
+    // 2. If API Key is available, verify against Google Identity Toolkit API for full revocation check
+    if (firebaseApiKey) {
+      const res = await fetch(
+        `https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=${firebaseApiKey}`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ idToken }),
         }
-      } catch (fsErr) {
-        initializeApp({ projectId });
-        console.warn("⚠️ Firebase Admin initialized without credentials (filesystem read error).", fsErr);
+      );
+      if (res.ok) {
+        const data = await res.json();
+        if (data.users && data.users.length > 0) {
+          return data.users[0].localId || uid;
+        }
       }
     }
+
+    return uid;
   } catch (err) {
-    console.error("Firebase Admin initialization error:", err);
+    console.error("Error verifying ID token:", err);
+    return null;
   }
-} else {
-  // Check if credentials are present
-  hasAdminCredentials = !!(clientEmail && privateKey);
-  if (!hasAdminCredentials) {
-    try {
-      const rootFiles = fs.readdirSync(process.cwd());
-      const serviceAccountFile = rootFiles.find(
-        (f) =>
-          f === "firebase-service-account.json" ||
-          (f.includes("firebase-adminsdk") && f.endsWith(".json"))
-      );
-      hasAdminCredentials = !!serviceAccountFile;
-    } catch {
-      hasAdminCredentials = false;
+}
+
+/**
+ * Check if payment ID already exists in Firestore using Firestore REST API
+ */
+async function checkDuplicatePaymentId(paymentId: string): Promise<boolean> {
+  try {
+    const url = `https://firestore.googleapis.com/v1/projects/${projectId}/databases/(default)/documents:runQuery`;
+    const res = await fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        structuredQuery: {
+          from: [{ collectionId: "writingSubmissions" }],
+          where: {
+            fieldFilter: {
+              field: { fieldPath: "paymentId" },
+              op: "EQUAL",
+              value: { stringValue: paymentId },
+            },
+          },
+          limit: 1,
+        },
+      }),
+    });
+
+    if (!res.ok) return false;
+    const data = await res.json();
+    return Array.isArray(data) && data.length > 0 && !!data[0].document;
+  } catch (err) {
+    console.error("Error checking duplicate payment ID:", err);
+    return false;
+  }
+}
+
+/**
+ * Create writing submission document in Firestore using Firestore REST API
+ */
+async function createSubmissionDocument(data: {
+  uid: string;
+  taskType: string;
+  essayText: string;
+  wordCount: number;
+  notes: string | null;
+  paymentId: string;
+}): Promise<string | null> {
+  try {
+    const url = `https://firestore.googleapis.com/v1/projects/${projectId}/databases/(default)/documents/writingSubmissions`;
+    const nowIso = new Date().toISOString();
+
+    const firestoreFields: Record<string, any> = {
+      uid: { stringValue: data.uid },
+      taskType: { stringValue: data.taskType },
+      submissionMethod: { stringValue: "text" },
+      essayText: { stringValue: data.essayText },
+      storagePath: { nullValue: null },
+      fileName: { nullValue: null },
+      fileSize: { nullValue: null },
+      wordCount: { integerValue: data.wordCount },
+      notes: data.notes ? { stringValue: data.notes } : { nullValue: null },
+      status: { stringValue: "submitted" },
+      paymentId: { stringValue: data.paymentId },
+      submittedAt: { timestampValue: nowIso },
+      updatedAt: { timestampValue: nowIso },
+    };
+
+    const res = await fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ fields: firestoreFields }),
+    });
+
+    if (!res.ok) {
+      console.error("Firestore document creation failed:", await res.text());
+      return null;
     }
+
+    const createdDoc = await res.json();
+    // Extract document ID from path "projects/.../documents/writingSubmissions/DOC_ID"
+    const docPathParts = (createdDoc.name || "").split("/");
+    return docPathParts[docPathParts.length - 1] || "success";
+  } catch (err) {
+    console.error("Error creating submission document:", err);
+    return null;
   }
 }
 
@@ -92,12 +161,8 @@ export async function POST(request: Request) {
       );
     }
 
-    let verifiedUid: string;
-    try {
-      const decodedToken = await getAuth().verifyIdToken(idToken);
-      verifiedUid = decodedToken.uid;
-    } catch (authErr: any) {
-      console.error("Firebase ID token verification failed:", authErr);
+    const verifiedUid = await verifyFirebaseIdToken(idToken);
+    if (!verifiedUid) {
       return NextResponse.json(
         { success: false, error: "Unauthorized: Invalid or expired session token. Please re-login." },
         { status: 401 }
@@ -170,12 +235,6 @@ export async function POST(request: Request) {
     }
 
     let payment = await rzpResponse.json();
-    console.log("Razorpay payment status:", {
-      id: payment.id,
-      status: payment.status,
-      amount: payment.amount,
-      currency: payment.currency,
-    });
 
     // If payment is authorized but not yet captured, auto-capture it via Razorpay API
     if (payment.status === "authorized") {
@@ -190,9 +249,6 @@ export async function POST(request: Request) {
         });
         if (captureRes.ok) {
           payment = await captureRes.json();
-          console.log("Payment successfully auto-captured:", payment.id, payment.status);
-        } else {
-          console.warn("Auto-capture returned non-ok status:", await captureRes.text());
         }
       } catch (captureErr) {
         console.error("Auto-capture failed:", captureErr);
@@ -205,11 +261,6 @@ export async function POST(request: Request) {
     const isValidCurrency = payment.currency === "INR";
 
     if (!isValidStatus || !isValidAmount || !isValidCurrency) {
-      console.error("Payment validation check failed:", {
-        status: payment.status,
-        amount: payment.amount,
-        currency: payment.currency,
-      });
       return NextResponse.json(
         {
           success: false,
@@ -219,26 +270,9 @@ export async function POST(request: Request) {
       );
     }
 
-    // --- Enforce Credentials Check ---
-    if (!hasAdminCredentials) {
-      return NextResponse.json(
-        { 
-          success: false, 
-          error: "Firebase Admin credentials are not configured on the server." 
-        },
-        { status: 500 }
-      );
-    }
-
     // --- Prevent Double-Spending Bypasses ---
-    const db = getFirestore();
-    const duplicateQuery = await db
-      .collection("writingSubmissions")
-      .where("paymentId", "==", paymentId)
-      .limit(1)
-      .get();
-
-    if (!duplicateQuery.empty) {
+    const isDuplicate = await checkDuplicatePaymentId(paymentId);
+    if (isDuplicate) {
       return NextResponse.json(
         { success: false, error: "This Payment ID has already been used for an essay submission." },
         { status: 400 }
@@ -246,26 +280,23 @@ export async function POST(request: Request) {
     }
 
     // --- Save Verified Essay Submission ---
-    const submissionRef = db.collection("writingSubmissions").doc();
-    const timestamp = FieldValue.serverTimestamp();
-
-    await submissionRef.set({
+    const docId = await createSubmissionDocument({
       uid: verifiedUid,
       taskType,
-      submissionMethod: "text",
       essayText,
-      storagePath: null,
-      fileName: null,
-      fileSize: null,
       wordCount: words.length,
       notes: notes?.trim() || null,
-      status: "submitted",
       paymentId,
-      submittedAt: timestamp,
-      updatedAt: timestamp,
     });
 
-    return NextResponse.json({ success: true, submissionId: submissionRef.id });
+    if (!docId) {
+      return NextResponse.json(
+        { success: false, error: "Failed to store submission in database." },
+        { status: 500 }
+      );
+    }
+
+    return NextResponse.json({ success: true, submissionId: docId });
   } catch (error: any) {
     console.error("verify-payment API handler error:", error);
     return NextResponse.json(
