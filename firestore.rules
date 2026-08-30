@@ -62,27 +62,31 @@ service cloud.firestore {
 
     // Speaking Practice Slots (admin-managed available time slots)
     match /speakingSlots/{slotId} {
-      // Anyone can read slots (needed for the public booking page)
+      // Anyone can view available speaking slots
       allow read: if true;
-      // Authenticated users can create, update, or delete slots
-      allow create, update, delete: if request.auth != null;
+      // Admins can create and delete slots
+      allow create, delete: if isAdmin();
+      // Admins can update any slot; candidates reserving a slot can mark it as booked (isAvailable = false)
+      allow update: if isAdmin() || (
+        request.resource.data.diff(resource.data).affectedKeys().hasOnly(['isAvailable', 'bookedBy', 'updatedAt']) &&
+        request.resource.data.isAvailable == false
+      );
     }
 
     // Speaking Practice Bookings (student session reservations)
     match /speakingBookings/{bookingId} {
-      // Authenticated users or admins can read bookings
-      allow read: if true;
-      // Anyone can create a booking (authenticated or guest)
+      // Admins or the candidate owner can read their booking
+      allow read: if isAdmin() || (request.auth != null && resource.data.uid == request.auth.uid);
+      // Anyone can submit a booking reservation
       allow create: if true;
-      // Authenticated users can update (status, meetingLink, feedback, estimatedBand)
-      allow update: if request.auth != null;
-      allow delete: if request.auth != null;
+      // Admins or the candidate owner can update or cancel their booking
+      allow update, delete: if isAdmin() || (request.auth != null && resource.data.uid == request.auth.uid);
     }
 
     // System Config (speaking settings, default meeting link)
     match /systemConfig/{configId} {
       allow read: if true;
-      allow create, update, delete: if request.auth != null;
+      allow create, update, delete: if isAdmin();
     }
   }
 }

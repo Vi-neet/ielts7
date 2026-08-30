@@ -4,6 +4,15 @@ import { normalizeMeetingUrl } from "@/lib/utils";
 
 export async function POST(req: Request) {
   try {
+    // Security check: Basic origin / header validation to deter unauthorized automated spammers
+    const secretKey = process.env.INTERNAL_API_SECRET;
+    const authHeader = req.headers.get("x-api-secret");
+    const origin = req.headers.get("origin") || req.headers.get("referer") || "";
+
+    if (secretKey && authHeader !== secretKey) {
+      return NextResponse.json({ success: false, error: "Unauthorized" }, { status: 401 });
+    }
+
     const body = await req.json();
     const { type, referenceId, candidateName, candidateEmail, candidatePhone, slotDate, slotTime, meetingLink, estimatedBand, feedbackText, targetBand } = body;
     const cleanMeetingLink = normalizeMeetingUrl(meetingLink);
@@ -14,6 +23,7 @@ export async function POST(req: Request) {
 
     const resendApiKey = process.env.RESEND_API_KEY;
     const adminEmail = process.env.ADMIN_EMAIL || "meenunarula1104@gmail.com";
+    const senderEmail = process.env.SENDER_EMAIL || "IELTS 7+ Practice <onboarding@resend.dev>";
 
     // Standard HTML email template wrapper
     const wrapHtml = (title: string, bodyContent: string) => `
@@ -60,7 +70,7 @@ export async function POST(req: Request) {
         if (type === "new_booking") {
           // 1. Send confirmation to Student
           const res1 = await resend.emails.send({
-            from: "IELTS 7+ Practice <onboarding@resend.dev>",
+            from: senderEmail,
             to: [candidateEmail],
             subject: `🎉 Booking Reserved: IELTS Speaking Practice (${referenceId})`,
             html: wrapHtml(
@@ -88,7 +98,7 @@ export async function POST(req: Request) {
 
           // 2. Send notification to Admin
           await resend.emails.send({
-            from: "IELTS 7+ System <onboarding@resend.dev>",
+            from: senderEmail,
             to: [adminEmail],
             subject: `[New Student Booking] ${candidateName} (${referenceId})`,
             html: wrapHtml(
@@ -108,7 +118,7 @@ export async function POST(req: Request) {
           });
         } else if (type === "session_confirmed") {
           const resConfirmed = await resend.emails.send({
-            from: "IELTS 7+ Practice <onboarding@resend.dev>",
+            from: senderEmail,
             to: [candidateEmail],
             subject: `✅ Confirmed: IELTS Speaking Session (${referenceId})`,
             html: wrapHtml(
@@ -131,7 +141,7 @@ export async function POST(req: Request) {
           if (resConfirmed.error) throw new Error(resConfirmed.error.message);
         } else if (type === "feedback_ready") {
           const resFeedback = await resend.emails.send({
-            from: "IELTS 7+ Practice <onboarding@resend.dev>",
+            from: senderEmail,
             to: [candidateEmail],
             subject: `📊 Examiner Feedback & Score Report (${referenceId})`,
             html: wrapHtml(

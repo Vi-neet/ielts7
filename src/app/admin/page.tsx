@@ -548,7 +548,6 @@ export default function AdminPage() {
       });
       setSlotDateInput("");
       setSlotTimeInput("10:00");
-      setIsAddingSlot(false);
       loadAdminData();
     } catch (err) {
       console.error("Failed to create slot:", err);

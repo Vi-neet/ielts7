@@ -9,6 +9,12 @@ initializeApp({
 
 const db = getFirestore();
 
+const ADMIN_EMAILS = [
+  "meenunarula1104@gmail.com",
+  "varunsaxena5elc@gmail.com",
+  ...(process.env.ADMIN_EMAILS || "").split(",").map((e) => e.trim().toLowerCase()),
+].filter(Boolean);
+
 async function main() {
   console.log("Fetching users from Firestore...");
   const usersSnap = await db.collection("users").get();
@@ -16,11 +22,17 @@ async function main() {
 
   for (const docSnap of usersSnap.docs) {
     const data = docSnap.data();
-    console.log(`Updating user ${docSnap.id} (${data.email || "No email"}) -> setting role: admin`);
-    await docSnap.ref.set({ role: "admin" }, { merge: true });
+    const userEmail = (data.email || "").toLowerCase().trim();
+
+    if (userEmail && ADMIN_EMAILS.includes(userEmail)) {
+      console.log(`Setting admin role for verified email: ${userEmail} (${docSnap.id})`);
+      await docSnap.ref.set({ role: "admin" }, { merge: true });
+    } else {
+      console.log(`Skipping non-admin user: ${userEmail || docSnap.id}`);
+    }
   }
 
-  console.log("SUCCESS: All existing users in Firestore upgraded to role: admin!");
+  console.log("SUCCESS: Admin roles synchronized for authorized emails.");
   process.exit(0);
 }
 

@@ -20,11 +20,11 @@ export function isGoogleMeetRoomUrl(url?: string | null): boolean {
   const normalized = normalizeMeetingUrl(url);
   try {
     const parsed = new URL(normalized);
-    if (parsed.hostname.includes("meet.google.com")) {
+    if (parsed.hostname === "meet.google.com" || parsed.hostname.endsWith(".meet.google.com")) {
       const pathname = parsed.pathname.replace(/^\/+|\/+$/g, "");
       return pathname.length > 0;
     }
-    return parsed.hostname.length > 0;
+    return false;
   } catch {
     return false;
   }
