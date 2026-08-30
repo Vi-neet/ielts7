@@ -51,5 +51,8 @@
     "tw-animate-css": "^1.2.9",
     "typescript": "^5",
     "wrangler": "^4.126.0"
+  },
+  "overrides": {
+    "protobufjs": "7.5.1"
   }
 }
