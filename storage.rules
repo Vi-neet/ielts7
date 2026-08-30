@@ -1,6 +1,11 @@
 rules_version = '2';
 service firebase.storage {
   match /b/{bucket}/o {
+    function isAdmin() {
+      return request.auth != null &&
+        firestore.get(/databases/(default)/documents/users/$(request.auth.uid)).data.role == 'admin';
+    }
+
     match /essays/{userId}/{submissionId}/{fileName} {
       // Allow upload only if authenticated, user owns the path, and constraints match
       allow create: if request.auth != null 
@@ -11,8 +16,8 @@ service firebase.storage {
                         || request.resource.contentType == 'image/jpeg'
                         || request.resource.contentType == 'image/png');
                         
-      // Read access is restricted to the owner
-      allow read: if request.auth != null && request.auth.uid == userId;
+      // Read access is allowed for the owner or an admin
+      allow read: if (request.auth != null && request.auth.uid == userId) || isAdmin();
       
       // Explicitly block updates and deletions (append-only)
       allow update, delete: if false;

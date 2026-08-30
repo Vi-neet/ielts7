@@ -1,10 +1,8 @@
 "use client";
 
-import { useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { motion, useInView, useReducedMotion } from "framer-motion";
 import {
   Instagram,
   Facebook,
@@ -18,40 +16,10 @@ import {
 export const Footer = () => {
   const pathname = usePathname();
   const currentYear = new Date().getFullYear();
-  const footerRef = useRef(null);
-  const isInView = useInView(footerRef, { once: true, amount: 0.2 });
-  const prefersReducedMotion = useReducedMotion();
 
   if (pathname === "/login" || pathname === "/signup") {
     return null;
   }
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: prefersReducedMotion ? 0 : 0.1,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: prefersReducedMotion ? 0 : 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] },
-    },
-  };
-
-  const linkVariants = {
-    initial: { x: 0 },
-    hover: {
-      x: prefersReducedMotion ? 0 : 4,
-      transition: { duration: 0.2, ease: "easeOut" },
-    },
-  };
 
   const quickLinks = [
     { name: "About Us", href: "/about" },
@@ -109,19 +77,12 @@ export const Footer = () => {
   ];
 
   return (
-    <footer
-      ref={footerRef}
-      className="bg-forest-ink pt-20 pb-12 font-inter"
-    >
+    <footer className="bg-forest-ink text-white pt-20 pb-12 font-inter relative z-10">
       <div className="container mx-auto px-6 max-w-6xl">
-        <motion.div 
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8 mb-16"
-          variants={containerVariants}
-          initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
-        >
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8 mb-16">
+          
           {/* Brand Section */}
-          <motion.div variants={itemVariants} className="lg:col-span-1 space-y-6">
+          <div className="lg:col-span-1 space-y-6">
             <Link href="/" className="inline-block">
               <div className="flex items-center gap-3">
                 <Image
@@ -134,7 +95,7 @@ export const Footer = () => {
                 <span className="text-xl font-bold text-cream-paper font-bricolage tracking-tight">IELTS 7+ House</span>
               </div>
             </Link>
-            <p className="text-cream-paper/70 text-[15px] leading-relaxed max-w-sm">
+            <p className="text-cream-paper/80 text-[15px] leading-relaxed max-w-sm">
               Your comprehensive platform for IELTS preparation. Achieve Band 7 and above with our expertly curated materials.
             </p>
             <div className="flex items-center gap-3 pt-2">
@@ -147,36 +108,36 @@ export const Footer = () => {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={social.ariaLabel}
-                    className="w-10 h-10 rounded-full bg-cream-paper/5 flex items-center justify-center text-cream-paper/70 hover:bg-highlighter-yellow hover:text-forest-ink transition-colors duration-300"
+                    className="w-10 h-10 rounded-full bg-cream-paper/10 flex items-center justify-center text-cream-paper/80 hover:bg-highlighter-yellow hover:text-forest-ink transition-colors duration-300"
                   >
                     <Icon className="w-4 h-4" />
                   </a>
                 );
               })}
             </div>
-          </motion.div>
+          </div>
 
           {/* Quick Links */}
-          <motion.div variants={itemVariants} className="space-y-6">
+          <div className="space-y-6">
             <h3 className="text-[15px] font-bold text-cream-paper uppercase tracking-wider font-roboto-mono">
               Quick Links
             </h3>
             <ul className="space-y-4">
               {quickLinks.map((link) => (
                 <li key={link.name}>
-                  <Link href={link.href} className="group inline-flex items-center text-cream-paper/70 hover:text-highlighter-yellow transition-colors text-[15px]">
-                    <motion.span variants={linkVariants} initial="initial" whileHover="hover" className="inline-flex items-center">
+                  <Link href={link.href} className="group inline-flex items-center text-cream-paper/80 hover:text-highlighter-yellow transition-colors text-[15px]">
+                    <span className="inline-flex items-center">
                       {link.name}
-                      <ArrowUpRight className="w-3 h-3 ml-1 opacity-0 group-hover:opacity-100 transition-opacity" />
-                    </motion.span>
+                      <ArrowUpRight className="w-3 h-3 ml-1 opacity-60 group-hover:opacity-100 transition-opacity" />
+                    </span>
                   </Link>
                 </li>
               ))}
             </ul>
-          </motion.div>
+          </div>
 
           {/* Contact Info */}
-          <motion.div variants={itemVariants} className="lg:col-span-2 space-y-6">
+          <div className="lg:col-span-2 space-y-6">
             <h3 className="text-[15px] font-bold text-cream-paper uppercase tracking-wider font-roboto-mono">
               Contact Us
             </h3>
@@ -195,10 +156,10 @@ export const Footer = () => {
                       <Icon className="w-4 h-4 text-cream-paper/80 group-hover:text-forest-ink transition-colors duration-300" />
                     </div>
                     <div>
-                      <span className="block text-[11px] text-cream-paper/50 font-roboto-mono uppercase tracking-wider mb-0.5">
+                      <span className="block text-[11px] text-cream-paper/60 font-roboto-mono uppercase tracking-wider mb-0.5 font-bold">
                         {info.label}
                       </span>
-                      <span className="text-[14px] text-cream-paper/80 group-hover:text-highlighter-yellow transition-colors font-medium leading-relaxed block">
+                      <span className="text-[14px] text-cream-paper/90 group-hover:text-highlighter-yellow transition-colors font-medium leading-relaxed block">
                         {info.text}
                       </span>
                     </div>
@@ -206,24 +167,19 @@ export const Footer = () => {
                 );
               })}
             </div>
-          </motion.div>
-        </motion.div>
+          </div>
+        </div>
 
         {/* Bottom Bar */}
-        <motion.div
-          variants={itemVariants}
-          initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
-          className="pt-8 border-t border-cream-paper/10 flex flex-col md:flex-row items-center justify-between gap-4"
-        >
-          <p className="text-cream-paper/50 text-[13px] font-roboto-mono">
+        <div className="pt-8 border-t border-cream-paper/15 flex flex-col md:flex-row items-center justify-between gap-4">
+          <p className="text-cream-paper/60 text-[13px] font-roboto-mono">
             &copy; {currentYear} IELTS 7+ House. All rights reserved.
           </p>
-          <div className="flex gap-6 text-[13px] text-cream-paper/50 font-roboto-mono">
+          <div className="flex gap-6 text-[13px] text-cream-paper/60 font-roboto-mono">
             <Link href="/privacy" className="hover:text-cream-paper transition-colors">Privacy Policy</Link>
             <Link href="/terms" className="hover:text-cream-paper transition-colors">Terms of Service</Link>
           </div>
-        </motion.div>
+        </div>
       </div>
     </footer>
   );

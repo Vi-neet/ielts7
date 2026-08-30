@@ -1,18 +1,30 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
+    function isAdmin() {
+      return request.auth != null && 
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+    }
+
     match /attempts/{attemptId} {
-      allow read: if resource.data.uid == request.auth.uid;
+      allow read: if resource.data.uid == request.auth.uid || isAdmin();
       allow create: if (request.resource.data.uid == request.auth.uid)
         || (request.resource.data.uid == null
             && request.resource.data.isGuest == true);
       allow update, delete: if false;
     }
     match /users/{userId} {
-      allow read, write: if request.auth != null && request.auth.uid == userId;
+      allow read: if (request.auth != null && request.auth.uid == userId) || isAdmin();
+      allow create: if request.auth != null && request.auth.uid == userId
+        && (!('role' in request.resource.data) || request.resource.data.role == 'student');
+      allow update: if isAdmin() || (
+        request.auth != null && request.auth.uid == userId
+        && (!('role' in request.resource.data) || request.resource.data.role == resource.data.role)
+      );
+      allow delete: if isAdmin();
     }
     match /writingSubmissions/{submissionId} {
-      allow read: if request.auth != null && resource.data.uid == request.auth.uid;
+      allow read: if (request.auth != null && resource.data.uid == request.auth.uid) || isAdmin();
       allow create: if request.auth != null
         && request.resource.data.uid == request.auth.uid
         && request.resource.data.taskType in ['task_1', 'task_2']
@@ -37,7 +49,8 @@ service cloud.firestore {
             && request.resource.data.fileSize is int && request.resource.data.fileSize > 0 && request.resource.data.fileSize <= 5242880
             && request.resource.data.wordCount == null)
         );
-      allow update, delete: if false;
+      allow update: if isAdmin();
+      allow delete: if false;
     }
 
     // Public read-only access for listening test material

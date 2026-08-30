@@ -26,10 +26,10 @@ const buttonVariants = cva(
           "border border-forest-ink/30 text-forest-ink bg-transparent rounded-[8px] hover:bg-forest-ink/5 transition-colors duration-150",
       },
       size: {
-        default: "h-9 px-4 py-2 has-[>svg]:px-3",
-        sm: "h-8 rounded-md gap-1.5 px-3 has-[>svg]:px-2.5",
-        lg: "h-10 rounded-md px-6 has-[>svg]:px-4",
-        icon: "size-9",
+        default: "h-[36px] min-h-[36px] px-4 py-2 has-[>svg]:px-3",
+        sm: "h-[32px] min-h-[32px] rounded-md gap-1.5 px-3 has-[>svg]:px-2.5",
+        lg: "h-[40px] min-h-[40px] rounded-md px-6 has-[>svg]:px-4",
+        icon: "w-[36px] h-[36px] min-h-[36px] min-w-[36px] flex items-center justify-center rounded-md shrink-0",
       },
     },
     defaultVariants: {

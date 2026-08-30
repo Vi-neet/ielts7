@@ -142,7 +142,30 @@ To enable automated deployment via GitHub Actions, the following repository secr
 
 - The legacy Vercel deployment path and Android 8 redirects have been completely removed from application code (`src/middleware.ts` and `src/app/layout.tsx`).
 - The production domain **`ielts7plushouse.com`** is currently active and its DNS transition to Cloudflare Workers is handled as a separate administrative step.
-- No Vercel deployment dependencies, middleware redirects, or Vercel build scripts exist in the canonical deployment pipeline.
+---
+
+## 👥 Multi-Admin & Essay Evaluation System
+
+The platform features a multi-trainer evaluation workspace designed for concurrent access, auditability, and conflict prevention.
+
+### 1. Configuring Admin Access
+Administrators and trainers can be granted access via two methods:
+
+* **Environment Variable (`NEXT_PUBLIC_ADMIN_EMAILS`)**:
+  Add multiple admin email addresses as a comma-separated list in `.env.local` or Worker deployment variables:
+  ```env
+  NEXT_PUBLIC_ADMIN_EMAILS=admin@ielts7.com,trainer1@ielts7.com,trainer2@ielts7.com
+  ```
+  When any user in this list logs in, their session is granted admin status, and their Firestore user document is automatically synced to `role: "admin"`.
+
+* **Firestore Role Flag**:
+  Set `role: "admin"` directly on the user's document in the `users` collection in Firestore.
+
+### 2. Multi-Admin Concurrency & Audit Safety
+* **Evaluator Attribution (`reviewedBy`)**: Every essay evaluation records the specific trainer's email (`reviewedBy`) and UID (`reviewedByUid`) in the `writingSubmissions` document.
+* **Team Visibility**: The **Completed Reviews** queue on `/admin` displays which trainer evaluated each essay (e.g. `Graded (Band 7.5) by trainer@ielts7.com`).
+* **Conflict Prevention**: Once an evaluation is published, its status transitions to `"graded"`. If another trainer opens the same submission, the rubric switches to read-only mode to prevent overwriting peer evaluations.
+* **Isolated User Sessions**: Each trainer logs in using their own Google SSO or Email credentials, maintaining an isolated session and distinct audit trail.
 
 ---
 
