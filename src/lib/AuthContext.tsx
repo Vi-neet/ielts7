@@ -34,23 +34,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           const userDocRef = doc(db, "users", currentUser.uid);
           let userSnap = await getDoc(userDocRef);
 
-          // Auto-create document if it doesn't exist yet
-          if (!userSnap.exists()) {
-            try {
-              await setDoc(userDocRef, {
-                email: currentUser.email || "",
-                displayName: currentUser.displayName || "",
-                photoURL: currentUser.photoURL || "",
-                createdAt: new Date().toISOString(),
-                updatedAt: new Date().toISOString(),
-                role: "student",
-              });
-              userSnap = await getDoc(userDocRef);
-            } catch (createErr) {
-              console.warn("Could not auto-create user document:", createErr);
-            }
-          }
-
           const isEmailAdmin = Boolean(
             currentUser.email &&
             (process.env.NEXT_PUBLIC_ADMIN_EMAILS || "")
@@ -60,9 +43,33 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
               .includes(currentUser.email.toLowerCase())
           );
 
+          // Auto-create document if it doesn't exist yet
+          if (!userSnap.exists()) {
+            try {
+              await setDoc(userDocRef, {
+                email: currentUser.email || "",
+                displayName: currentUser.displayName || "",
+                photoURL: currentUser.photoURL || "",
+                phoneNumber: "",
+                createdAt: new Date().toISOString(),
+                updatedAt: new Date().toISOString(),
+                role: isEmailAdmin ? "admin" : "student",
+              });
+              userSnap = await getDoc(userDocRef);
+            } catch (createErr) {
+              console.warn("Could not auto-create user document:", createErr);
+            }
+          }
+
           if (userSnap.exists()) {
             const data = userSnap.data();
-            setIsAdmin(data.role === "admin" || isEmailAdmin);
+            const adminStatus = data.role === "admin" || isEmailAdmin;
+            setIsAdmin(adminStatus);
+
+            // Sync role to Firestore if email is in admin list but role is not set to admin
+            if (isEmailAdmin && data.role !== "admin") {
+              setDoc(userDocRef, { role: "admin" }, { merge: true }).catch(() => {});
+            }
           } else {
             setIsAdmin(isEmailAdmin);
           }

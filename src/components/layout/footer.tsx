@@ -24,6 +24,7 @@ export const Footer = () => {
   const quickLinks = [
     { name: "About Us", href: "/about" },
     { name: "Practice Tests", href: "/tests" },
+    { name: "Speaking Practice", href: "/speaking-booking" },
     { name: "Writing Evaluation", href: "/writing-review" },
     { name: "Free Resources", href: "/resources" },
   ];

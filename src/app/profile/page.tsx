@@ -3,8 +3,9 @@
 import React, { useState, useEffect } from "react";
 import { useAuth } from "@/lib/AuthContext";
 import { useRouter } from "next/navigation";
+import { normalizeMeetingUrl, isGoogleMeetRoomUrl, DEFAULT_MEET_LINK } from "@/lib/utils";
 import { db, logOut } from "@/lib/firebase";
-import { collection, query, where, orderBy, getDocs, doc, getDoc, setDoc } from "firebase/firestore";
+import { collection, query, where, orderBy, getDocs, doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 import { gradeAttempt, GradeResult, formatAnswer } from "@/lib/scoring";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -36,7 +37,10 @@ import {
   AlertCircle,
   Target,
   Globe,
-  GraduationCap
+  GraduationCap,
+  MessageCircle,
+  Phone,
+  ExternalLink,
 } from "lucide-react";
 import Link from "next/link";
 import { motion } from "framer-motion";
@@ -197,6 +201,29 @@ export default function ProfilePage() {
   const [submissions, setSubmissions] = useState<any[]>([]);
   const [loadingSubmissions, setLoadingSubmissions] = useState(true);
   
+  // Speaking sessions state
+  const [speakingSessions, setSpeakingSessions] = useState<any[]>([]);
+  const [loadingSpeaking, setLoadingSpeaking] = useState(true);
+  const [globalDefaultMeetLink, setGlobalDefaultMeetLink] = useState<string>("");
+
+  const getEffectiveMeetingLink = (rawLink?: string): string => {
+    // 1. Specific session raw link stored in Firestore (must be valid room URL)
+    const formattedRaw = normalizeMeetingUrl(rawLink);
+    if (isGoogleMeetRoomUrl(formattedRaw) && !formattedRaw.includes("meet.jit.si")) {
+      return formattedRaw;
+    }
+
+    // 2. Admin configured permanent Google Meet link (must be valid room URL)
+    const adminLink = globalDefaultMeetLink || (typeof window !== "undefined" ? localStorage.getItem("ielts7_default_meet_link") : null);
+    const formattedAdmin = normalizeMeetingUrl(adminLink);
+    if (isGoogleMeetRoomUrl(formattedAdmin)) {
+      return formattedAdmin;
+    }
+
+    // 3. Fallback system default room link
+    return DEFAULT_MEET_LINK;
+  };
+  
   // Profile settings states
   const [nameInput, setNameInput] = useState("");
   const [updatingName, setUpdatingName] = useState(false);
@@ -211,6 +238,7 @@ export default function ProfilePage() {
   const [primaryPurpose, setPrimaryPurpose] = useState("university");
   const [nativeLanguage, setNativeLanguage] = useState("");
   const [country, setCountry] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
   const [savingDemo, setSavingDemo] = useState(false);
   const [demoSuccess, setDemoSuccess] = useState(false);
   const [demoError, setDemoError] = useState("");
@@ -236,7 +264,7 @@ export default function ProfilePage() {
   const [reviewingEssay, setReviewingEssay] = useState<any | null>(null);
 
   // Active Tab state
-  const [activeTab, setActiveTab] = useState<"progress" | "writing" | "practice" | "settings">("progress");
+  const [activeTab, setActiveTab] = useState<"progress" | "writing" | "practice" | "speaking" | "settings">("progress");
 
   // Saved Practice Sessions State
   interface SavedSession {
@@ -305,6 +333,7 @@ export default function ProfilePage() {
           if (data.primaryPurpose) setPrimaryPurpose(data.primaryPurpose);
           if (data.nativeLanguage) setNativeLanguage(data.nativeLanguage);
           if (data.country) setCountry(data.country);
+          if (data.phoneNumber) setPhoneNumber(data.phoneNumber);
         }
       } catch (err) {
         console.error("Failed to load user demographics:", err);
@@ -440,6 +469,111 @@ export default function ProfilePage() {
     fetchSubmissions();
   }, [user]);
 
+  // Fetch speaking practice session bookings
+  useEffect(() => {
+    if (!user) return;
+
+    const fetchSpeakingSessions = async () => {
+      setLoadingSpeaking(true);
+      try {
+        // Fetch global configured meeting link
+        try {
+          const configSnap = await getDoc(doc(db, "systemConfig", "speakingSettings"));
+          if (configSnap.exists() && configSnap.data().defaultMeetingLink) {
+            setGlobalDefaultMeetLink(configSnap.data().defaultMeetingLink);
+          }
+        } catch {
+          // ignore
+        }
+
+        // Primary: query by uid
+        const uidQuery = query(
+          collection(db, "speakingBookings"),
+          where("uid", "==", user.uid),
+          orderBy("createdAt", "desc")
+        );
+        let snap;
+        try {
+          snap = await getDocs(uidQuery);
+        } catch {
+          // Fallback without ordering (index not created yet)
+          snap = await getDocs(query(collection(db, "speakingBookings"), where("uid", "==", user.uid)));
+        }
+        const fetched = snap.docs.map((d) => ({ id: d.id, ...d.data() }));
+        const sortSessions = (items: any[]) => {
+          return [...items].sort((a, b) => {
+            const getMs = (s: any) => {
+              if (s.slotDate && s.slotTime) {
+                const timeStr = s.slotTime.includes(":") ? s.slotTime : "00:00";
+                const parsed = new Date(`${s.slotDate}T${timeStr}:00`).getTime();
+                if (!isNaN(parsed)) return parsed;
+              }
+              if (s.createdAt?.seconds) return s.createdAt.seconds * 1000;
+              if (typeof s.createdAt === "string") {
+                const parsed = new Date(s.createdAt).getTime();
+                if (!isNaN(parsed)) return parsed;
+              }
+              return 0;
+            };
+            return getMs(b) - getMs(a);
+          });
+        };
+        setSpeakingSessions(sortSessions(fetched));
+      } catch (err) {
+        console.error("Failed to load speaking sessions:", err);
+      } finally {
+        setLoadingSpeaking(false);
+      }
+    };
+
+    fetchSpeakingSessions();
+  }, [user]);
+
+  // Cancel speaking booking and free up the slot in Firestore
+  const [cancellingId, setCancellingId] = useState<string | null>(null);
+  const handleCancelSpeakingBooking = async (session: any) => {
+    if (!confirm("Are you sure you want to cancel this speaking session? The time slot will be re-opened for other candidates.")) return;
+    setCancellingId(session.id);
+    try {
+      // 1. Mark booking as cancelled
+      await updateDoc(doc(db, "speakingBookings", session.id), {
+        status: "cancelled",
+        updatedAt: new Date().toISOString(),
+      });
+
+      // 2. Re-open slot if slotId exists
+      if (session.slotId) {
+        try {
+          await updateDoc(doc(db, "speakingSlots", session.slotId), {
+            isAvailable: true,
+            bookedBy: null,
+            updatedAt: new Date().toISOString(),
+          });
+        } catch {
+          // slot doc might be deleted
+        }
+      }
+
+      // Re-fetch speaking sessions
+      const snap = await getDocs(query(collection(db, "speakingBookings"), where("uid", "==", user!.uid)));
+      const reFetched = snap.docs.map((d) => ({ id: d.id, ...d.data() }));
+      const getMs = (s: any) => {
+        if (s.slotDate && s.slotTime) {
+          const timeStr = s.slotTime.includes(":") ? s.slotTime : "00:00";
+          const parsed = new Date(`${s.slotDate}T${timeStr}:00`).getTime();
+          if (!isNaN(parsed)) return parsed;
+        }
+        if (s.createdAt?.seconds) return s.createdAt.seconds * 1000;
+        return 0;
+      };
+      setSpeakingSessions(reFetched.sort((a, b) => getMs(b) - getMs(a)));
+    } catch (err) {
+      console.error("Failed to cancel speaking booking:", err);
+    } finally {
+      setCancellingId(null);
+    }
+  };
+
 
   // Check if user has standard password authentication provider
   const hasPasswordProvider = user
@@ -493,6 +627,7 @@ export default function ProfilePage() {
           primaryPurpose,
           nativeLanguage,
           country,
+          phoneNumber,
           updatedAt: new Date().toISOString(),
         },
         { merge: true }
@@ -1377,6 +1512,147 @@ export default function ProfilePage() {
     </div>
   );
 
+  const renderSpeakingTab = () => (
+    <div className="bg-white rounded-3xl border border-forest-ink/10 p-6 sm:p-8 shadow-sm space-y-6">
+      <div className="flex items-center justify-between border-b border-forest-ink/5 pb-4">
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 rounded-xl bg-[#cb5521]/10 text-[#cb5521] flex items-center justify-center shrink-0">
+            <MessageCircle size={20} />
+          </div>
+          <div>
+            <h2 className="text-xl font-bold font-bricolage text-forest-ink">Speaking Practice Sessions</h2>
+            <p className="text-xs text-forest-ink/60">Your booked 1-on-1 IELTS speaking sessions with status and examiner feedback.</p>
+          </div>
+        </div>
+        <a
+          href="/speaking-booking"
+          className="flex items-center gap-1.5 text-xs font-semibold text-[#cb5521] hover:underline"
+        >
+          Book New Session <ExternalLink size={12} />
+        </a>
+      </div>
+
+      {loadingSpeaking ? (
+        <div className="flex items-center justify-center py-12">
+          <Loader2 size={24} className="animate-spin text-forest-ink/30" />
+          <span className="ml-3 text-sm text-forest-ink/50">Loading your sessions...</span>
+        </div>
+      ) : speakingSessions.length === 0 ? (
+        <div className="text-center py-16 flex flex-col items-center justify-center">
+          <div className="w-12 h-12 rounded-xl bg-[#cb5521]/10 text-[#cb5521] flex items-center justify-center mb-4">
+            <MessageCircle size={24} />
+          </div>
+          <h3 className="font-bold text-forest-ink font-bricolage text-base">No Speaking Sessions Yet</h3>
+          <p className="text-xs text-forest-ink/50 max-w-sm mt-1 leading-relaxed text-center">
+            Book a free 1-on-1 speaking session to get personalized examiner feedback and Band 7+ strategies.
+          </p>
+          <div className="mt-5">
+            <Link href="/speaking-booking">
+              <Button variant="forest" size="sm" className="px-4 rounded-xl cursor-pointer">
+                Book Free Session
+              </Button>
+            </Link>
+          </div>
+        </div>
+      ) : (
+        <div className="space-y-4">
+          {speakingSessions.map((session: any) => {
+            const statusColors: Record<string, string> = {
+              pending: "bg-amber-50 text-amber-800 border-amber-200",
+              confirmed: "bg-blue-50 text-blue-800 border-blue-200",
+              completed: "bg-emerald-50 text-emerald-800 border-emerald-200",
+              cancelled: "bg-rose-50 text-rose-800 border-rose-200",
+            };
+            const color = statusColors[session.status] || statusColors.pending;
+            const sessionDate = session.slotDate
+              ? new Date(session.slotDate + "T00:00:00").toLocaleDateString("en-IN", {
+                  weekday: "long", day: "numeric", month: "short", year: "numeric"
+                })
+              : "TBD";
+            const sessionTime = session.slotTime
+              ? (() => { const [h, m] = session.slotTime.split(":").map(Number); const ap = h >= 12 ? "PM" : "AM"; return `${h % 12 || 12}:${m.toString().padStart(2, "0")} ${ap}`; })()
+              : "TBD";
+
+            return (
+              <motion.div
+                key={session.id}
+                whileHover={{ y: -2 }}
+                className="bg-[#faf9f5] rounded-2xl border border-forest-ink/10 p-5 space-y-4 shadow-xs hover:shadow-sm transition-all"
+              >
+                <div className="flex items-start justify-between gap-3">
+                  <div className="space-y-1">
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <span className="text-[10px] font-mono font-bold text-forest-ink/50 uppercase tracking-wider">{session.referenceId}</span>
+                      <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold border ${color} capitalize`}>
+                        {session.status}
+                      </span>
+                    </div>
+                    <div className="font-bold text-sm text-forest-ink font-bricolage">{sessionDate} at {sessionTime}</div>
+                  </div>
+                </div>
+
+                {session.status === "confirmed" && (
+                  <div className="flex items-center gap-2 flex-wrap">
+                    {getEffectiveMeetingLink(session.meetingLink) ? (
+                      <a
+                        href={getEffectiveMeetingLink(session.meetingLink)}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-2 px-3.5 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-bold transition-colors shadow-xs"
+                      >
+                        <ExternalLink size={13} />
+                        Join Meeting
+                      </a>
+                    ) : (
+                      <span className="flex items-center gap-1.5 px-3 py-1.5 bg-amber-50 text-amber-900 border border-amber-200/80 rounded-xl text-xs font-medium">
+                        <Clock size={13} className="text-amber-700" />
+                        Meeting link pending instructor assignment
+                      </span>
+                    )}
+                  </div>
+                )}
+
+                {/* Cancel & Reschedule self-service options */}
+                {(session.status === "pending" || session.status === "confirmed") && (
+                  <div className="flex items-center gap-3 pt-2 border-t border-forest-ink/8 text-xs">
+                    <button
+                      onClick={() => handleCancelSpeakingBooking(session)}
+                      disabled={cancellingId === session.id}
+                      className="text-rose-600 hover:underline font-medium text-[11px] cursor-pointer"
+                    >
+                      {cancellingId === session.id ? "Cancelling..." : "Cancel Booking"}
+                    </button>
+                    <span className="text-forest-ink/30">·</span>
+                    <a href="/speaking-booking" className="text-forest-ink/60 hover:text-forest-ink hover:underline text-[11px]">
+                      Book Different Time
+                    </a>
+                  </div>
+                )}
+
+                {session.status === "completed" && (
+                  <div className="space-y-2 pt-2 border-t border-forest-ink/8">
+                    {session.estimatedBand && (
+                      <div className="flex items-center gap-2">
+                        <span className="text-[10px] font-mono text-forest-ink/50 uppercase tracking-wider">Estimated Band</span>
+                        <span className="text-sm font-bold font-mono text-emerald-700">{session.estimatedBand}</span>
+                      </div>
+                    )}
+                    {session.feedback && (
+                      <div className="bg-white rounded-xl p-3 border border-forest-ink/10">
+                        <div className="text-[10px] font-mono font-bold text-forest-ink/40 uppercase tracking-wider mb-1.5">Examiner Feedback</div>
+                        <p className="text-xs text-forest-ink/80 leading-relaxed">{session.feedback}</p>
+                      </div>
+                    )}
+                  </div>
+                )}
+              </motion.div>
+            );
+          })}
+        </div>
+      )}
+    </div>
+  );
+
   const renderSettingsTab = () => (
     <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
       <div className="lg:col-span-7 bg-white rounded-3xl border border-forest-ink/10 p-6 sm:p-8 shadow-sm space-y-6">
@@ -1564,6 +1840,24 @@ export default function ProfilePage() {
                 className="h-10 border-forest-ink/20 text-xs rounded-xl"
               />
             </div>
+          </div>
+
+          <div className="space-y-1.5">
+            <Label htmlFor="phoneNumber" className="text-xs font-semibold text-forest-ink">
+              WhatsApp / Phone Number
+            </Label>
+            <div className="relative">
+              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-forest-ink/40 text-xs font-mono">📱</span>
+              <Input
+                id="phoneNumber"
+                type="tel"
+                placeholder="+91 XXXXX XXXXX"
+                value={phoneNumber}
+                onChange={(e) => setPhoneNumber(e.target.value)}
+                className="pl-8 h-10 border-forest-ink/20 text-xs rounded-xl"
+              />
+            </div>
+            <p className="text-[11px] text-forest-ink/50">Used to receive speaking session confirmations and meeting links.</p>
           </div>
 
           <Button
@@ -1780,14 +2074,73 @@ export default function ProfilePage() {
           </div>
         </div>
 
+        {/* ── Upcoming Session Countdown Banner ── */}
+        {(() => {
+          const today = new Date().toISOString().split("T")[0];
+          const upcoming = speakingSessions.find(
+            (s: any) => (s.status === "confirmed" || s.status === "pending") && s.slotDate >= today
+          );
+          if (!upcoming) return null;
+
+          const dateStr = upcoming.slotDate;
+          const timeStr = upcoming.slotTime || "10:00";
+          const sessionDateTime = new Date(`${dateStr}T${timeStr}:00`);
+          const diffMs = sessionDateTime.getTime() - Date.now();
+          const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+          const diffHours = Math.floor((diffMs % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+
+          return (
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="bg-gradient-to-r from-[#1a3300] to-[#2d5700] text-white rounded-3xl p-5 sm:p-6 shadow-lg border border-emerald-500/20 flex flex-col sm:flex-row sm:items-center justify-between gap-4"
+            >
+              <div className="space-y-1">
+                <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-highlighter-yellow/20 text-highlighter-yellow text-[10px] font-mono font-bold uppercase tracking-wider">
+                  <Clock size={12} />
+                  Upcoming Speaking Session
+                </div>
+                <h3 className="text-base font-extrabold font-bricolage text-white">
+                  {new Date(dateStr + "T00:00:00").toLocaleDateString("en-IN", { weekday: "long", day: "numeric", month: "short" })} at {timeStr}
+                </h3>
+                <p className="text-xs text-white/70">
+                  {diffMs > 0
+                    ? `Starts in ${diffDays > 0 ? `${diffDays} day${diffDays > 1 ? "s" : ""} ` : ""}${diffHours} hour${diffHours !== 1 ? "s" : ""}`
+                    : "Session starting soon!"}
+                </p>
+              </div>
+
+              <div className="flex items-center gap-3 shrink-0">
+                {getEffectiveMeetingLink(upcoming.meetingLink) ? (
+                  <a
+                    href={getEffectiveMeetingLink(upcoming.meetingLink)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-5 py-2.5 bg-highlighter-yellow text-forest-ink text-xs font-bold rounded-xl hover:bg-highlighter-yellow/90 transition-colors shadow-md flex items-center gap-1.5"
+                  >
+                    <ExternalLink size={14} />
+                    Join Meeting
+                  </a>
+                ) : (
+                  <span className="px-4 py-2 bg-white/80 backdrop-blur-xs text-forest-ink text-xs font-semibold rounded-xl border border-forest-ink/10 flex items-center gap-1.5">
+                    <Clock size={13} className="text-forest-ink/60" />
+                    Link pending instructor assignment
+                  </span>
+                )}
+              </div>
+            </motion.div>
+          );
+        })()}
+
         {/* Navigation Tabs — pill segmented control */}
         <div className="bg-white/80 border border-forest-ink/10 rounded-2xl p-1.5 flex gap-1 overflow-x-auto scrollbar-none shadow-xs font-inter">
           {([
             { id: "progress", label: "Progress", icon: TrendingUp, badge: null },
             { id: "writing", label: "Writing Reviews", icon: FileText, badge: submissions.length > 0 ? submissions.length : null },
             { id: "practice", label: "Practice Drafts", icon: Clock, badge: savedSessions.length > 0 ? savedSessions.length : null },
+            { id: "speaking", label: "Speaking", icon: MessageCircle, badge: speakingSessions.length > 0 ? speakingSessions.length : null },
             { id: "settings", label: "Settings", icon: Sliders, badge: null },
-          ] as { id: "progress" | "writing" | "practice" | "settings"; label: string; icon: React.ElementType; badge: number | null }[]).map(({ id, label, icon: Icon, badge }) => (
+          ] as { id: "progress" | "writing" | "practice" | "speaking" | "settings"; label: string; icon: React.ElementType; badge: number | null }[]).map(({ id, label, icon: Icon, badge }) => (
             <button
               key={id}
               onClick={() => setActiveTab(id)}
@@ -1811,10 +2164,11 @@ export default function ProfilePage() {
           ))}
         </div>
 
-                {/* Tab Views */}
+        {/* Tab Views */}
         {activeTab === "progress" && renderProgressTab()}
         {activeTab === "writing" && renderWritingTab()}
         {activeTab === "practice" && renderPracticeTab()}
+        {activeTab === "speaking" && renderSpeakingTab()}
         {activeTab === "settings" && renderSettingsTab()}
       </div>
 

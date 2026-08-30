@@ -3,12 +3,18 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useAuth } from "@/lib/AuthContext";
 import { useRouter } from "next/navigation";
+import { normalizeMeetingUrl, isGoogleMeetRoomUrl } from "@/lib/utils";
 import { db, storage } from "@/lib/firebase";
+import { sendSpeakingEmail } from "@/lib/speakingEmail";
 import {
   collection,
   getDocs,
   doc,
+  getDoc,
+  setDoc,
+  addDoc,
   updateDoc,
+  deleteDoc,
   serverTimestamp,
 } from "firebase/firestore";
 import { ref, getDownloadURL } from "firebase/storage";
@@ -38,6 +44,11 @@ import {
   User,
   Mail,
   BookOpen,
+  Mic,
+  MessageCircle,
+  Phone,
+  Video,
+  Pencil,
 } from "lucide-react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
@@ -125,6 +136,7 @@ interface Student {
   country?: string;
   updatedAt?: string;
   photoURL?: string;
+  phoneNumber?: string;
 }
 
 interface Annotation {
@@ -175,7 +187,36 @@ interface Attempt {
   isGuest?: boolean;
 }
 
-type Tab = "submissions" | "students";
+export interface AdminSpeakingSlot {
+  id: string;
+  date: string;
+  time: string;
+  duration: number;
+  isAvailable: boolean;
+  bookedBy?: string | null;
+}
+
+export interface AdminSpeakingBooking {
+  id: string;
+  referenceId: string;
+  slotId: string;
+  slotDate: string;
+  slotTime: string;
+  name: string;
+  email: string;
+  phone: string;
+  targetBand: string;
+  currentLevel: string;
+  topicFocus?: string;
+  uid?: string | null;
+  status: "pending" | "confirmed" | "completed" | "cancelled";
+  meetingLink?: string;
+  feedback?: string;
+  estimatedBand?: string;
+  createdAt?: any;
+}
+
+type Tab = "submissions" | "students" | "speaking";
 
 type SortFieldStudents = "displayName" | "country" | "targetBand" | "updatedAt" | "targetDate";
 type SortFieldSubmissions = "candidateName" | "taskType" | "submittedAt" | "status";
@@ -214,6 +255,28 @@ export default function AdminPage() {
   const [submissions, setSubmissions] = useState<WritingSubmission[]>([]);
   const [students, setStudents] = useState<Student[]>([]);
   const [attempts, setAttempts] = useState<Attempt[]>([]);
+  const [speakingSlots, setSpeakingSlots] = useState<AdminSpeakingSlot[]>([]);
+  const [speakingBookings, setSpeakingBookings] = useState<AdminSpeakingBooking[]>([]);
+
+  // Speaking Admin state
+  const [speakingSubTab, setSpeakingSubTab] = useState<"slots" | "bookings">("bookings");
+  const [speakingFilter, setSpeakingFilter] = useState<"all" | "pending" | "confirmed" | "completed" | "cancelled">("all");
+  const [slotDateInput, setSlotDateInput] = useState("");
+  const [slotTimeInput, setSlotTimeInput] = useState("10:00");
+  const [creatingSlot, setCreatingSlot] = useState(false);
+  const [selectedBooking, setSelectedBooking] = useState<AdminSpeakingBooking | null>(null);
+  const [editMeetingLink, setEditMeetingLink] = useState("");
+  const [editStatus, setEditStatus] = useState<"pending" | "confirmed" | "completed" | "cancelled">("pending");
+  const [editFeedback, setEditFeedback] = useState("");
+  const [editEstimatedBand, setEditEstimatedBand] = useState("");
+  const [savingBooking, setSavingBooking] = useState(false);
+
+  // Global Permanent Google Meet link state
+  const [defaultMeetingLink, setDefaultMeetingLink] = useState("");
+  const [savingMeetingLink, setSavingMeetingLink] = useState(false);
+  const [linkSaveSuccess, setLinkSaveSuccess] = useState(false);
+  const [linkSaveError, setLinkSaveError] = useState("");
+  const [isEditingMeetLink, setIsEditingMeetLink] = useState(false);
 
   // Search, Filters & Sorting
   const [searchQuery, setSearchQuery] = useState("");
@@ -357,6 +420,49 @@ export default function AdminPage() {
       setStudents(studentsList);
       setSubmissions(subList);
       setAttempts(attemptsList);
+
+      // 4. Fetch Speaking Slots
+      try {
+        const slotsSnap = await getDocs(collection(db, "speakingSlots"));
+        const slotsList: AdminSpeakingSlot[] = slotsSnap.docs.map((d) => ({
+          id: d.id,
+          ...(d.data() as Omit<AdminSpeakingSlot, "id">),
+        }));
+        slotsList.sort((a, b) => `${a.date} ${a.time}`.localeCompare(`${b.date} ${b.time}`));
+        setSpeakingSlots(slotsList);
+      } catch (err) {
+        console.warn("Could not load speaking slots:", err);
+      }
+
+      // 5. Fetch Speaking Bookings
+      try {
+        const bookingsSnap = await getDocs(collection(db, "speakingBookings"));
+        const bookingsList: AdminSpeakingBooking[] = bookingsSnap.docs.map((d) => ({
+          id: d.id,
+          ...(d.data() as Omit<AdminSpeakingBooking, "id">),
+        }));
+        bookingsList.sort((a, b) => {
+          const tA = a.createdAt?.seconds || 0;
+          const tB = b.createdAt?.seconds || 0;
+          return tB - tA;
+        });
+        setSpeakingBookings(bookingsList);
+      } catch (err) {
+        console.warn("Could not load speaking bookings:", err);
+      }
+
+      // 6. Fetch System Speaking Settings
+      if (typeof window !== "undefined" && localStorage.getItem("ielts7_default_meet_link")) {
+        setDefaultMeetingLink(localStorage.getItem("ielts7_default_meet_link")!);
+      }
+      try {
+        const configSnap = await getDoc(doc(db, "systemConfig", "speakingSettings"));
+        if (configSnap.exists() && configSnap.data().defaultMeetingLink) {
+          setDefaultMeetingLink(configSnap.data().defaultMeetingLink);
+        }
+      } catch (err) {
+        console.warn("Could not load speaking settings:", err);
+      }
     } catch (err) {
       console.error("Failed to load admin dashboard statistics:", err);
     } finally {
@@ -364,9 +470,166 @@ export default function AdminPage() {
     }
   };
 
+  const handleSaveDefaultMeetingLink = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLinkSaveError("");
+    setLinkSaveSuccess(false);
+    if (!defaultMeetingLink.trim()) return;
+
+    const cleanLink = normalizeMeetingUrl(defaultMeetingLink);
+    if (!isGoogleMeetRoomUrl(cleanLink)) {
+      setLinkSaveError("Please include a room code (e.g. https://meet.google.com/abc-defg-hij). Generic links without a room code redirect users to Google's homepage.");
+      return;
+    }
+
+    setSavingMeetingLink(true);
+
+    try {
+      // 1. Save locally
+      if (typeof window !== "undefined") {
+        localStorage.setItem("ielts7_default_meet_link", cleanLink);
+      }
+      setDefaultMeetingLink(cleanLink);
+
+      // 2. Save to Firestore systemConfig
+      try {
+        await setDoc(
+          doc(db, "systemConfig", "speakingSettings"),
+          {
+            defaultMeetingLink: cleanLink,
+            updatedAt: serverTimestamp(),
+          },
+          { merge: true }
+        );
+
+        // 3. Batch update all non-cancelled bookings in Firestore
+        const bookingsSnap = await getDocs(collection(db, "speakingBookings"));
+        const updatePromises = bookingsSnap.docs
+          .filter((d) => d.data().status !== "cancelled")
+          .map((d) => updateDoc(doc(db, "speakingBookings", d.id), { meetingLink: cleanLink, updatedAt: serverTimestamp() }));
+        await Promise.all(updatePromises);
+      } catch (fsErr) {
+        console.warn("Firestore sync notice:", fsErr);
+      }
+
+      setSpeakingBookings((prev) =>
+        prev.map((b) => (b.status !== "cancelled" ? { ...b, meetingLink: cleanLink } : b))
+      );
+
+      setLinkSaveSuccess(true);
+      setIsEditingMeetLink(false);
+      setTimeout(() => setLinkSaveSuccess(false), 3500);
+      loadAdminData();
+    } catch (err: any) {
+      console.error("Save error:", err);
+      setLinkSaveError("Could not save meeting link: " + (err?.message || "Error"));
+    } finally {
+      setSavingMeetingLink(false);
+    }
+  };
+
   useEffect(() => {
     loadAdminData();
   }, [user, isAdmin]);
+
+  // Speaking Slot Handlers
+  const handleCreateSlot = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!slotDateInput || !slotTimeInput) return;
+    setCreatingSlot(true);
+    try {
+      await addDoc(collection(db, "speakingSlots"), {
+        date: slotDateInput,
+        time: slotTimeInput,
+        isAvailable: true,
+        createdBy: user?.uid || "admin",
+        createdAt: serverTimestamp(),
+        updatedAt: serverTimestamp(),
+      });
+      setSlotDateInput("");
+      setSlotTimeInput("10:00");
+      loadAdminData();
+    } catch (err) {
+      console.error("Failed to create slot:", err);
+    } finally {
+      setCreatingSlot(false);
+    }
+  };
+
+  const handleToggleSlotAvailability = async (slotId: string, currentStatus: boolean) => {
+    try {
+      await updateDoc(doc(db, "speakingSlots", slotId), {
+        isAvailable: !currentStatus,
+        updatedAt: serverTimestamp(),
+      });
+      await loadAdminData();
+    } catch (err) {
+      console.error("Failed to toggle slot:", err);
+    }
+  };
+
+  const handleDeleteSlot = async (slotId: string) => {
+    if (!confirm("Are you sure you want to delete this speaking slot?")) return;
+    try {
+      await deleteDoc(doc(db, "speakingSlots", slotId));
+      loadAdminData();
+    } catch (err) {
+      console.error("Failed to delete slot:", err);
+    }
+  };
+
+  // Speaking Booking Edit Handler
+  const handleSaveBookingEdit = async () => {
+    if (!selectedBooking) return;
+    setSavingBooking(true);
+    try {
+      const updatedStatus = editStatus;
+      const updatedMeetLink = normalizeMeetingUrl(editMeetingLink);
+      const updatedFeedback = editFeedback.trim();
+      const updatedBand = editEstimatedBand.trim();
+
+      await updateDoc(doc(db, "speakingBookings", selectedBooking.id), {
+        status: updatedStatus,
+        meetingLink: updatedMeetLink,
+        feedback: updatedFeedback,
+        estimatedBand: updatedBand,
+        updatedAt: serverTimestamp(),
+      });
+
+      // Send email alert based on status update
+      if (updatedStatus === "confirmed" && updatedMeetLink) {
+        sendSpeakingEmail({
+          type: "session_confirmed",
+          referenceId: selectedBooking.referenceId,
+          candidateName: selectedBooking.name,
+          candidateEmail: selectedBooking.email,
+          candidatePhone: selectedBooking.phone,
+          slotDate: selectedBooking.slotDate,
+          slotTime: selectedBooking.slotTime,
+          meetingLink: updatedMeetLink,
+        }).catch(() => {});
+      } else if (updatedStatus === "completed" && (updatedFeedback || updatedBand)) {
+        sendSpeakingEmail({
+          type: "feedback_ready",
+          referenceId: selectedBooking.referenceId,
+          candidateName: selectedBooking.name,
+          candidateEmail: selectedBooking.email,
+          candidatePhone: selectedBooking.phone,
+          slotDate: selectedBooking.slotDate,
+          slotTime: selectedBooking.slotTime,
+          estimatedBand: updatedBand,
+          feedbackText: updatedFeedback,
+        }).catch(() => {});
+      }
+
+      setSelectedBooking(null);
+      await loadAdminData();
+    } catch (err) {
+      console.error("Failed to update booking:", err);
+    } finally {
+      setSavingBooking(false);
+    }
+  };
 
   // Load active grading submission data when selected
   useEffect(() => {
@@ -914,6 +1177,21 @@ export default function AdminPage() {
                 activeTab === "submissions" ? "bg-white/20 text-white" : "bg-forest-ink/10 text-forest-ink/60"
               }`}>{submissions.length}</span>
             </button>
+
+            <button
+              onClick={() => { setActiveTab("speaking"); setSearchQuery(""); }}
+              className={`px-4 py-2 text-xs font-bold font-inter rounded-xl transition-all cursor-pointer flex items-center gap-1.5 ${
+                activeTab === "speaking"
+                  ? "bg-[#cb5521] text-white shadow-sm"
+                  : "text-forest-ink/75 hover:bg-forest-ink/5"
+              }`}
+            >
+              <MessageCircle size={13} />
+              <span>Speaking Sessions</span>
+              <span className={`text-[10px] font-bold px-1.5 py-0 rounded-full ${
+                activeTab === "speaking" ? "bg-white/20 text-white" : "bg-forest-ink/10 text-forest-ink/60"
+              }`}>{speakingBookings.length}</span>
+            </button>
           </div>
 
           {/* Search Inputs */}
@@ -1098,6 +1376,15 @@ export default function AdminPage() {
                             <span className="text-[11px] text-forest-ink/55 font-mono">
                               {highlightText(s.nativeLanguage || "N/A", searchQuery)}
                             </span>
+                            {s.phoneNumber && (
+                              <>
+                                <span className="text-[10px] text-forest-ink/40 font-mono">·</span>
+                                <span className="flex items-center gap-1 text-[11px] text-forest-ink/65 font-mono">
+                                  <Phone size={11} className="text-forest-ink/35" />
+                                  {s.phoneNumber}
+                                </span>
+                              </>
+                            )}
                           </div>
 
                           {/* IELTS Goal */}
@@ -1135,6 +1422,306 @@ export default function AdminPage() {
                     })}
                   </div>
                 )
+              )}
+
+              {/* Tab: Speaking Sessions & Slots */}
+              {activeTab === "speaking" && (
+                <div className="space-y-6">
+
+                  {/* ── Global Permanent Google Meet Configuration Card ── */}
+                  <div className="bg-white rounded-2xl border border-forest-ink/10 p-5 shadow-xs space-y-4">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                      <div>
+                        <h3 className="font-bold text-sm text-forest-ink font-bricolage flex items-center gap-2">
+                          <Video size={16} className="text-emerald-700" /> Permanent Google Meet Link
+                        </h3>
+                        <p className="text-xs text-forest-ink/60 mt-0.5">
+                          This Google Meet link will automatically be assigned to every new student booking and included in confirmation emails.
+                        </p>
+                      </div>
+                      {linkSaveSuccess && (
+                        <span className="text-xs font-bold text-emerald-800 bg-emerald-50 px-3 py-1 rounded-xl border border-emerald-200 flex items-center gap-1.5 shrink-0">
+                          <CheckCircle2 size={13} /> Link Updated!
+                        </span>
+                      )}
+                    </div>
+
+                    {!isEditingMeetLink && defaultMeetingLink ? (
+                      <div className="flex flex-col sm:flex-row items-center justify-between gap-3 bg-[#faf9f5] p-3.5 rounded-xl border border-emerald-200">
+                        <div className="flex items-center gap-3 overflow-hidden">
+                          <span className="px-2.5 py-1 bg-emerald-100 text-emerald-800 rounded-lg text-[10px] font-mono font-bold shrink-0 uppercase tracking-wider border border-emerald-200">
+                            Active Room
+                          </span>
+                          <a
+                            href={defaultMeetingLink}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-xs font-mono text-emerald-950 font-bold truncate hover:underline flex items-center gap-1.5"
+                          >
+                            {defaultMeetingLink}
+                            <ExternalLink size={13} className="shrink-0 text-emerald-700" />
+                          </a>
+                        </div>
+                        <Button
+                          type="button"
+                          onClick={() => setIsEditingMeetLink(true)}
+                          variant="outline"
+                          className="h-9 px-4 text-xs font-bold rounded-xl shrink-0 cursor-pointer border-forest-ink/20 hover:bg-forest-ink/5"
+                        >
+                          <Pencil size={13} className="mr-1.5 text-emerald-800" />
+                          Edit Link
+                        </Button>
+                      </div>
+                    ) : (
+                      <form onSubmit={handleSaveDefaultMeetingLink} className="flex flex-col sm:flex-row items-center gap-3">
+                        <div className="relative w-full">
+                          <Input
+                            type="url"
+                            value={defaultMeetingLink}
+                            onChange={(e) => setDefaultMeetingLink(e.target.value)}
+                            placeholder="https://meet.google.com/abc-defg-hij"
+                            className="h-10 pl-4 pr-10 text-xs font-mono bg-white border-forest-ink/20 focus:border-emerald-600 rounded-xl"
+                          />
+                          {defaultMeetingLink && (
+                            <a
+                              href={defaultMeetingLink}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="absolute right-3 top-1/2 -translate-y-1/2 text-forest-ink/40 hover:text-emerald-700 transition-colors"
+                              title="Test Google Meet link"
+                            >
+                              <ExternalLink size={14} />
+                            </a>
+                          )}
+                        </div>
+                        <div className="flex items-center gap-2 w-full sm:w-auto">
+                          <Button
+                            type="submit"
+                            disabled={savingMeetingLink || !defaultMeetingLink.trim()}
+                            variant="forest"
+                            className="h-10 px-5 text-xs font-bold rounded-xl shrink-0 cursor-pointer w-full sm:w-auto"
+                          >
+                            {savingMeetingLink ? <Loader2 size={14} className="animate-spin" /> : "Save Google Meet Link"}
+                          </Button>
+                          {defaultMeetingLink && (
+                            <Button
+                              type="button"
+                              onClick={() => setIsEditingMeetLink(false)}
+                              variant="ghost"
+                              className="h-10 px-3 text-xs font-semibold rounded-xl text-forest-ink/60 hover:bg-forest-ink/5"
+                            >
+                              Cancel
+                            </Button>
+                          )}
+                        </div>
+                      </form>
+                    )}
+                    {linkSaveError && (
+                      <p className="text-xs font-semibold text-amber-900 bg-amber-50 px-3.5 py-2 rounded-xl border border-amber-200/80 flex items-center gap-2 mt-3">
+                        <ShieldAlert size={15} className="shrink-0 text-amber-700" />
+                        {linkSaveError}
+                      </p>
+                    )}
+                  </div>
+
+                  {/* Sub-tab switcher */}
+                  <div className="flex items-center justify-between bg-white border border-forest-ink/10 rounded-2xl p-3 shadow-xs">
+                    <div className="flex gap-2">
+                      <button
+                        onClick={() => setSpeakingSubTab("bookings")}
+                        className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                          speakingSubTab === "bookings"
+                            ? "bg-forest-ink text-white"
+                            : "text-forest-ink/60 hover:bg-forest-ink/5"
+                        }`}
+                      >
+                        Student Bookings ({speakingBookings.length})
+                      </button>
+                      <button
+                        onClick={() => setSpeakingSubTab("slots")}
+                        className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                          speakingSubTab === "slots"
+                            ? "bg-forest-ink text-white"
+                            : "text-forest-ink/60 hover:bg-forest-ink/5"
+                        }`}
+                      >
+                        Manage Available Slots ({speakingSlots.length})
+                      </button>
+                    </div>
+
+                    {speakingSubTab === "bookings" && (
+                      <div className="flex items-center gap-1 text-xs">
+                        {["all", "pending", "confirmed", "completed", "cancelled"].map((st) => (
+                          <button
+                            key={st}
+                            onClick={() => setSpeakingFilter(st as any)}
+                            className={`px-2.5 py-1 rounded-lg text-[11px] font-semibold capitalize transition-all cursor-pointer ${
+                              speakingFilter === st
+                                ? "bg-[#cb5521] text-white"
+                                : "text-forest-ink/60 hover:bg-forest-ink/5"
+                            }`}
+                          >
+                            {st}
+                          </button>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Sub-tab 1: Bookings List */}
+                  {speakingSubTab === "bookings" && (
+                    <div className="space-y-3">
+                      {speakingBookings
+                        .filter((b) => speakingFilter === "all" || b.status === speakingFilter)
+                        .map((b) => {
+                          const statusColors: Record<string, string> = {
+                            pending: "bg-amber-50 text-amber-800 border-amber-200",
+                            confirmed: "bg-blue-50 text-blue-800 border-blue-200",
+                            completed: "bg-emerald-50 text-emerald-800 border-emerald-200",
+                            cancelled: "bg-rose-50 text-rose-800 border-rose-200",
+                          };
+                          const color = statusColors[b.status] || statusColors.pending;
+
+                          return (
+                            <motion.div
+                              key={b.id}
+                              whileHover={{ y: -1 }}
+                              className="bg-white rounded-2xl border border-forest-ink/10 p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-xs"
+                            >
+                              <div className="space-y-1">
+                                <div className="flex items-center gap-2 flex-wrap">
+                                  <span className="text-[10px] font-mono font-bold text-forest-ink/50 uppercase tracking-wider">{b.referenceId}</span>
+                                  <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold border ${color} capitalize`}>
+                                    {b.status}
+                                  </span>
+                                  <span className="text-[10px] font-mono text-forest-ink/40">Target: Band {b.targetBand}</span>
+                                </div>
+                                <div className="font-bold text-sm text-forest-ink font-bricolage">{b.name}</div>
+                                <div className="flex items-center gap-3 text-xs text-forest-ink/60 font-mono flex-wrap">
+                                  <span>{b.email}</span>
+                                  <span>·</span>
+                                  <span className="flex items-center gap-1 text-forest-ink"><Phone size={11} /> {b.phone}</span>
+                                </div>
+                                <div className="text-xs text-forest-ink/75 font-medium pt-1">
+                                  📅 {b.slotDate} at {b.slotTime}
+                                </div>
+                              </div>
+
+                              <div className="flex items-center gap-2 shrink-0 flex-wrap">
+                                {b.phone && (
+                                  <a
+                                    href={`https://wa.me/${b.phone.replace(/[^0-9]/g, "")}?text=${encodeURIComponent(
+                                      b.status === "confirmed" && b.meetingLink
+                                        ? `Hi ${b.name}! Your IELTS Speaking Practice session is confirmed for ${b.slotDate} at ${b.slotTime}.\n\nMeeting Link: ${b.meetingLink}`
+                                        : b.status === "completed" && b.feedback
+                                        ? `Hi ${b.name}! Your IELTS Speaking Practice feedback is ready.\n\nEstimated Band: ${b.estimatedBand || "N/A"}\nFeedback: ${b.feedback}`
+                                        : `Hi ${b.name}! Regarding your IELTS Speaking Practice booking (${b.referenceId}) scheduled for ${b.slotDate} at ${b.slotTime}.`
+                                    )}`}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="px-2.5 py-1.5 bg-emerald-50 border border-emerald-200 text-emerald-700 hover:bg-emerald-100 rounded-xl text-xs font-semibold flex items-center gap-1 transition-colors"
+                                    title="Open WhatsApp chat with pre-filled message"
+                                  >
+                                    <Phone size={12} />
+                                    <span>WhatsApp</span>
+                                  </a>
+                                )}
+
+                                <Button
+                                  size="sm"
+                                  variant="forest"
+                                  onClick={() => {
+                                    setSelectedBooking(b);
+                                    setEditStatus(b.status);
+                                    const initialLink = (b.meetingLink && isGoogleMeetRoomUrl(b.meetingLink)) ? b.meetingLink : (defaultMeetingLink || "");
+                                    setEditMeetingLink(initialLink);
+                                    setEditFeedback(b.feedback || "");
+                                    setEditEstimatedBand(b.estimatedBand || "");
+                                  }}
+                                  className="h-8 px-3 text-xs rounded-xl cursor-pointer"
+                                >
+                                  Manage Session
+                                </Button>
+                              </div>
+                            </motion.div>
+                          );
+                        })}
+                    </div>
+                  )}
+
+                  {/* Sub-tab 2: Slots Manager */}
+                  {speakingSubTab === "slots" && (
+                    <div className="space-y-6">
+                      {/* Create slot form */}
+                      <form onSubmit={handleCreateSlot} className="bg-white rounded-2xl border border-forest-ink/10 p-5 shadow-xs flex flex-wrap items-end gap-4">
+                        <div className="space-y-1 flex-1 min-w-[160px]">
+                          <Label className="text-xs font-bold text-forest-ink uppercase font-mono">Slot Date</Label>
+                          <Input
+                            type="date"
+                            value={slotDateInput}
+                            onChange={(e) => setSlotDateInput(e.target.value)}
+                            className="h-10 text-xs font-mono border-forest-ink/20 rounded-xl"
+                            required
+                          />
+                        </div>
+                        <div className="space-y-1 flex-1 min-w-[140px]">
+                          <Label className="text-xs font-bold text-forest-ink uppercase font-mono">Time (24h)</Label>
+                          <Input
+                            type="time"
+                            value={slotTimeInput}
+                            onChange={(e) => setSlotTimeInput(e.target.value)}
+                            className="h-10 text-xs font-mono border-forest-ink/20 rounded-xl"
+                            required
+                          />
+                        </div>
+                        <Button type="submit" disabled={creatingSlot} variant="forest" className="h-10 px-5 text-xs font-semibold rounded-xl cursor-pointer">
+                          {creatingSlot ? <Loader2 size={13} className="animate-spin" /> : <Plus size={14} />}
+                          <span className="ml-1.5">Publish Slot</span>
+                        </Button>
+                      </form>
+
+                      {/* List of slots */}
+                      <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-3">
+                        {speakingSlots.map((slot) => (
+                          <div
+                            key={slot.id}
+                            className={`p-4 rounded-2xl border flex items-center justify-between text-xs transition-all ${
+                              slot.isAvailable ? "bg-white border-forest-ink/10" : "bg-forest-ink/5 border-forest-ink/10 opacity-60"
+                            }`}
+                          >
+                            <div>
+                              <div className="font-bold text-forest-ink font-mono">{slot.date}</div>
+                              <div className="text-forest-ink/70 font-mono text-[11px]">{slot.time} ({slot.duration} min)</div>
+                              <div className="mt-1">
+                                <span className={`px-2 py-0.5 rounded-full text-[9px] font-bold ${
+                                  slot.isAvailable ? "bg-emerald-100 text-emerald-800" : "bg-rose-100 text-rose-800"
+                                }`}>
+                                  {slot.isAvailable ? "Open" : "Booked / Closed"}
+                                </span>
+                              </div>
+                            </div>
+                            <div className="flex items-center gap-1">
+                              <button
+                                onClick={() => handleToggleSlotAvailability(slot.id, slot.isAvailable)}
+                                className="p-1.5 rounded-lg hover:bg-forest-ink/10 text-forest-ink/60 cursor-pointer"
+                                title="Toggle availability"
+                              >
+                                <Clock size={14} />
+                              </button>
+                              <button
+                                onClick={() => handleDeleteSlot(slot.id)}
+                                className="p-1.5 rounded-lg hover:bg-rose-50 text-rose-600 cursor-pointer"
+                                title="Delete slot"
+                              >
+                                <Trash2 size={14} />
+                              </button>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
               )}
             </>
           )}
@@ -1865,6 +2452,113 @@ export default function AdminPage() {
           </>
         )}
       </AnimatePresence>
+
+      {/* Speaking Session Management Modal */}
+      {selectedBooking && (
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-xs z-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-3xl w-full max-w-lg overflow-hidden border border-forest-ink/10 shadow-2xl space-y-5 p-6 font-inter text-forest-ink">
+            <div className="flex items-center justify-between border-b border-forest-ink/10 pb-4">
+              <div>
+                <h3 className="font-extrabold text-base font-bricolage text-forest-ink">
+                  Manage Speaking Session
+                </h3>
+                <p className="text-xs text-forest-ink/60 font-mono">Ref: {selectedBooking.referenceId}</p>
+              </div>
+              <button
+                onClick={() => setSelectedBooking(null)}
+                className="p-1.5 rounded-full hover:bg-forest-ink/5 text-forest-ink/60 cursor-pointer"
+              >
+                <X size={18} />
+              </button>
+            </div>
+
+            <div className="space-y-4 text-xs">
+              <div className="bg-[#faf9f5] p-3.5 rounded-2xl border border-forest-ink/10 space-y-1">
+                <div className="font-bold text-forest-ink text-sm">{selectedBooking.name}</div>
+                <div className="text-forest-ink/60 font-mono">{selectedBooking.email} · {selectedBooking.phone}</div>
+                <div className="text-forest-ink/80 pt-1">
+                  📅 <strong>{selectedBooking.slotDate}</strong> at <strong>{selectedBooking.slotTime}</strong> (Target Band {selectedBooking.targetBand})
+                </div>
+                {selectedBooking.topicFocus && (
+                  <div className="text-forest-ink/60 italic pt-1 border-t border-forest-ink/5 mt-1">
+                    Notes: &quot;{selectedBooking.topicFocus}&quot;
+                  </div>
+                )}
+              </div>
+
+              <div className="space-y-1.5">
+                <Label className="font-bold text-forest-ink uppercase font-mono text-[10px]">Status</Label>
+                <select
+                  value={editStatus}
+                  onChange={(e) => setEditStatus(e.target.value as any)}
+                  className="w-full h-10 px-3 bg-white border border-forest-ink/20 rounded-xl text-xs font-inter text-forest-ink"
+                >
+                  <option value="pending">Pending</option>
+                  <option value="confirmed">Confirmed</option>
+                  <option value="completed">Completed</option>
+                  <option value="cancelled">Cancelled</option>
+                </select>
+              </div>
+
+              <div className="space-y-1.5">
+                <Label className="font-bold text-forest-ink uppercase font-mono text-[10px]">Meeting Link (Google Meet / Zoom)</Label>
+                <Input
+                  type="url"
+                  placeholder="https://meet.google.com/xyz-abc-def"
+                  value={editMeetingLink}
+                  onChange={(e) => setEditMeetingLink(e.target.value)}
+                  className="h-10 text-xs border-forest-ink/20 rounded-xl font-mono"
+                />
+              </div>
+
+              <div className="grid grid-cols-2 gap-3">
+                <div className="space-y-1.5">
+                  <Label className="font-bold text-forest-ink uppercase font-mono text-[10px]">Estimated Band Score</Label>
+                  <Input
+                    type="text"
+                    placeholder="e.g. 7.5"
+                    value={editEstimatedBand}
+                    onChange={(e) => setEditEstimatedBand(e.target.value)}
+                    className="h-10 text-xs border-forest-ink/20 rounded-xl font-mono font-bold"
+                  />
+                </div>
+              </div>
+
+              <div className="space-y-1.5">
+                <Label className="font-bold text-forest-ink uppercase font-mono text-[10px]">Examiner Feedback & Notes</Label>
+                <textarea
+                  rows={3}
+                  placeholder="Record fluency, vocabulary, grammar, and pronunciation feedback..."
+                  value={editFeedback}
+                  onChange={(e) => setEditFeedback(e.target.value)}
+                  className="w-full p-3 border border-forest-ink/20 rounded-xl text-xs font-inter placeholder:text-forest-ink/40 resize-none focus:outline-none focus:border-forest-ink"
+                />
+              </div>
+            </div>
+
+            <div className="flex items-center justify-end gap-2 pt-2 border-t border-forest-ink/10">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setSelectedBooking(null)}
+                className="h-9 px-4 text-xs font-semibold rounded-xl cursor-pointer"
+              >
+                Cancel
+              </Button>
+              <Button
+                variant="forest"
+                size="sm"
+                disabled={savingBooking}
+                onClick={handleSaveBookingEdit}
+                className="h-9 px-5 text-xs font-semibold rounded-xl cursor-pointer"
+              >
+                {savingBooking ? <Loader2 size={13} className="animate-spin mr-1.5" /> : null}
+                Save Session Details
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
 
     </div>
   );
