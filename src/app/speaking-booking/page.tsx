@@ -448,25 +448,22 @@ export default function SpeakingBookingPage() {
   });
 
   return (
-    <main className="bg-[#faf9f5] min-h-screen font-inter relative overflow-x-hidden" style={{ color: "#1a3300" }}>
-      <AmbientBackground variant="cream" />
-
+    <main className="bg-[#faf9f5] min-h-screen font-inter relative overflow-x-hidden">
       {/* ── HERO ── */}
-      <section className="relative pt-12 pb-20 overflow-hidden">
+      <section className="relative pt-12 pb-16 overflow-hidden">
         <div className="container mx-auto max-w-6xl px-4 sm:px-6 relative z-10">
           <div className="relative bg-[#1a3300] text-white rounded-3xl p-6 sm:p-10 md:p-14 shadow-xl overflow-hidden">
             {/* Grid watermark */}
             <div className="absolute inset-0 opacity-[0.06] bg-[linear-gradient(to_right,#ffffff_1px,transparent_1px),linear-gradient(to_bottom,#ffffff_1px,transparent_1px)] bg-[size:28px_28px] pointer-events-none" />
             {/* Glow blobs */}
             <div className="absolute -top-20 -right-20 w-72 h-72 bg-[#cb5521]/20 rounded-full blur-3xl pointer-events-none" />
-            <div className="absolute -bottom-10 -left-10 w-64 h-64 bg-highlighter-yellow/10 rounded-full blur-3xl pointer-events-none" />
 
             <div className="relative z-10 max-w-3xl">
               <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold font-bricolage text-white leading-tight mb-4">
                 Free Live 1-on-1<br />
                 <span className="text-highlighter-yellow">IELTS Speaking</span> Practice
               </h1>
-              <p className="text-white/75 text-base sm:text-lg font-inter leading-relaxed mb-8 max-w-2xl">
+              <p className="text-white/85 text-base sm:text-lg font-inter leading-relaxed mb-8 max-w-2xl">
                 Book a personalised speaking session with our expert IELTS examiner. Get real-time feedback, structured guidance, and the confidence to score Band 7+.
               </p>
 
@@ -477,7 +474,7 @@ export default function SpeakingBookingPage() {
                   { icon: Target, label: "Band 7+ Strategy" },
                   { icon: CheckCircle2, label: "No Payment Required" },
                 ].map(({ icon: Icon, label }) => (
-                  <div key={label} className="hero-stat flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white/10 border border-white/10 text-sm text-white/90">
+                  <div key={label} className="hero-stat flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white/10 border border-white/10 text-sm text-white">
                     <Icon className="w-4 h-4 text-highlighter-yellow" />
                     <span className="font-medium">{label}</span>
                   </div>
@@ -486,7 +483,7 @@ export default function SpeakingBookingPage() {
 
               <Button
                 onClick={() => bookingRef.current?.scrollIntoView({ behavior: "smooth" })}
-                className="bg-highlighter-yellow text-forest-ink font-bold hover:bg-highlighter-yellow/90 px-8 py-3 h-auto text-sm rounded-xl shadow-lg cursor-pointer"
+                className="bg-highlighter-yellow text-[#1a3300] font-bold hover:bg-highlighter-yellow/90 px-8 py-3 h-auto text-sm rounded-xl shadow-lg cursor-pointer"
               >
                 Book Your Free Session
                 <ChevronRight className="w-4 h-4 ml-1.5" />
@@ -499,14 +496,14 @@ export default function SpeakingBookingPage() {
       {/* ── 3-BOX PREPARATION HUB ── */}
       <section className="py-16 container mx-auto max-w-6xl px-4 sm:px-6">
         <div className="text-center mb-10">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#1a3300]/10 border border-[#1a3300]/20 text-[#1a3300] text-[11px] font-mono font-bold uppercase tracking-wider mb-3">
-            <BookOpen className="w-3.5 h-3.5 text-[#1a3300]" />
-            <span>Speaking Test Structure</span>
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-slate-200/80 border border-slate-300 text-slate-800 text-[11px] font-mono font-bold uppercase tracking-wider mb-3">
+            <BookOpen className="w-3.5 h-3.5 text-slate-800" />
+            <span style={{ color: "#1e293b" }}>Speaking Test Structure</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl font-extrabold font-bricolage text-[#1a3300] mb-3">
+          <h2 className="text-3xl sm:text-4xl font-extrabold font-bricolage mb-3" style={{ color: "#0f172a" }}>
             Master the IELTS Speaking Test
           </h2>
-          <p className="text-[#1a3300]/80 text-sm sm:text-base font-medium max-w-xl mx-auto">
+          <p className="text-sm sm:text-base font-semibold max-w-xl mx-auto" style={{ color: "#334155" }}>
             Everything you need to know before your speaking session — clear structure & Band 7+ strategies.
           </p>
         </div>
@@ -516,27 +513,27 @@ export default function SpeakingBookingPage() {
           {TEST_PARTS.map((part, i) => {
             const Icon = part.icon;
             return (
-              <div key={i} className={`bg-white rounded-3xl border-2 ${part.color} p-6 shadow-sm flex flex-col justify-between transition-all hover:shadow-md`}>
+              <div key={i} className={`bg-white rounded-3xl border-2 ${part.color} p-6 shadow-md flex flex-col justify-between transition-all hover:shadow-lg`}>
                 <div>
                   <div className="flex items-center justify-between mb-4">
-                    <div className="w-10 h-10 rounded-xl bg-[#1a3300]/5 flex items-center justify-center">
+                    <div className="w-10 h-10 rounded-xl bg-slate-100 flex items-center justify-center">
                       <Icon className={`w-5 h-5 ${part.iconColor}`} />
                     </div>
-                    <div className="inline-flex items-center gap-1 text-[11px] font-mono font-bold text-[#1a3300] bg-[#1a3300]/10 px-2.5 py-1 rounded-full">
-                      <Clock className="w-3 h-3 text-[#1a3300]" />
-                      {part.duration}
+                    <div className="inline-flex items-center gap-1 text-[11px] font-mono font-bold px-2.5 py-1 rounded-full bg-slate-100 text-slate-800 border border-slate-200">
+                      <Clock className="w-3 h-3 text-slate-700" />
+                      <span style={{ color: "#1e293b" }}>{part.duration}</span>
                     </div>
                   </div>
                   <div className="text-[11px] font-mono font-bold text-[#cb5521] uppercase tracking-wider mb-1">{part.part}</div>
-                  <h3 className="text-lg font-extrabold font-bricolage text-[#1a3300] mb-2">{part.title}</h3>
-                  <p className="text-xs text-[#1a3300]/85 font-medium leading-relaxed mb-5">{part.description}</p>
+                  <h3 className="text-xl font-extrabold font-bricolage mb-2" style={{ color: "#0f172a" }}>{part.title}</h3>
+                  <p className="text-xs font-semibold leading-relaxed mb-6" style={{ color: "#334155" }}>{part.description}</p>
                 </div>
 
-                <div className="border-t border-forest-ink/10 pt-4 space-y-2">
-                  <div className="text-[10px] font-mono font-bold text-[#1a3300]/60 uppercase tracking-wider mb-2">Key Tips for Band 7+</div>
+                <div className="border-t border-slate-200 pt-4 space-y-2.5">
+                  <div className="text-[10px] font-mono font-bold uppercase tracking-wider mb-2" style={{ color: "#475569" }}>Key Tips for Band 7+</div>
                   {part.tips.map((tip, j) => (
-                    <div key={j} className="flex items-center gap-2 text-xs font-semibold text-[#1a3300]">
-                      <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                    <div key={j} className="flex items-center gap-2 text-xs font-bold" style={{ color: "#0f172a" }}>
+                      <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
                       <span>{tip}</span>
                     </div>
                   ))}
@@ -550,19 +547,19 @@ export default function SpeakingBookingPage() {
       {/* ── BOOKING WIZARD ── */}
       <section
         ref={bookingRef as React.RefObject<HTMLElement>}
-        className="py-16 bg-forest-ink/[0.02] border-t border-forest-ink/10"
+        className="py-16 bg-slate-50/80 border-t border-slate-200"
         id="booking"
       >
         <div className="container mx-auto max-w-3xl px-4 sm:px-6">
           <div className="text-center mb-10">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#1a3300]/10 border border-[#1a3300]/20 text-[#1a3300] text-[11px] font-mono font-bold uppercase tracking-wider mb-4">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-slate-200/80 border border-slate-300 text-slate-800 text-[11px] font-mono font-bold uppercase tracking-wider mb-4">
               <Calendar className="w-3.5 h-3.5" />
-              <span>{step === 3 ? "Booking Confirmed" : "Book a Session"}</span>
+              <span style={{ color: "#1e293b" }}>{step === 3 ? "Booking Confirmed" : "Book a Session"}</span>
             </div>
-            <h2 className="text-2xl sm:text-3xl font-extrabold font-bricolage text-[#1a3300] mb-3">
+            <h2 className="text-2xl sm:text-3xl font-extrabold font-bricolage mb-3" style={{ color: "#0f172a" }}>
               {step === 3 ? "Your Speaking Session is Reserved!" : "Reserve Your Free Speaking Slot"}
             </h2>
-            <p className="text-[#1a3300]/80 text-sm font-medium">
+            <p className="text-sm font-semibold" style={{ color: "#334155" }}>
               {step === 3
                 ? "Your confirmation details and Google Meet link have been prepared below."
                 : "Select a date and time, fill in your details, and you're done — completely free."}
@@ -576,17 +573,17 @@ export default function SpeakingBookingPage() {
                 <div key={s} className="flex items-center gap-3">
                   <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold transition-all ${
                     step === s
-                      ? "bg-forest-ink text-white shadow-md"
+                      ? "bg-[#1a3300] text-white shadow-md"
                       : step > s
-                      ? "bg-emerald-500 text-white"
-                      : "bg-forest-ink/10 text-forest-ink/40"
+                      ? "bg-emerald-600 text-white"
+                      : "bg-slate-200 text-slate-600"
                   }`}>
                     {step > s ? <Check className="w-4 h-4" /> : s}
                   </div>
-                  <span className={`text-xs font-medium ${step === s ? "text-forest-ink" : "text-forest-ink/40"}`}>
+                  <span className={`text-xs font-bold ${step === s ? "text-slate-900" : "text-slate-500"}`}>
                     {s === 1 ? "Select Slot" : "Your Details"}
                   </span>
-                  {s < 2 && <ChevronRight className="w-4 h-4 text-forest-ink/20" />}
+                  {s < 2 && <ChevronRight className="w-4 h-4 text-slate-400" />}
                 </div>
               ))}
             </div>
@@ -601,23 +598,23 @@ export default function SpeakingBookingPage() {
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -20 }}
                 transition={{ duration: 0.25 }}
-                className="bg-white rounded-3xl border border-forest-ink/10 shadow-sm p-6 sm:p-8"
+                className="bg-white rounded-3xl border border-slate-200 shadow-sm p-6 sm:p-8"
               >
-                <h3 className="text-base font-bold font-bricolage text-forest-ink mb-6 flex items-center gap-2">
+                <h3 className="text-base font-extrabold font-bricolage mb-6 flex items-center gap-2" style={{ color: "#0f172a" }}>
                   <Calendar className="w-5 h-5 text-[#cb5521]" />
                   Choose a Date & Time
                 </h3>
 
                 {slotsLoading ? (
                   <div className="flex items-center justify-center py-16">
-                    <Loader2 className="w-7 h-7 animate-spin text-forest-ink/40" />
-                    <span className="ml-3 text-sm text-forest-ink/60">Loading available slots...</span>
+                    <Loader2 className="w-7 h-7 animate-spin text-slate-500" />
+                    <span className="ml-3 text-sm font-semibold text-slate-700">Loading available slots...</span>
                   </div>
                 ) : availableDates.length === 0 ? (
                   <div className="text-center py-16">
-                    <Calendar className="w-10 h-10 text-forest-ink/20 mx-auto mb-3" />
-                    <p className="text-sm text-forest-ink/60 mb-2">No slots available right now.</p>
-                    <p className="text-xs text-forest-ink/40">New slots are added regularly. Please check back soon or contact us on WhatsApp.</p>
+                    <Calendar className="w-10 h-10 text-slate-300 mx-auto mb-3" />
+                    <p className="text-sm font-bold text-slate-800 mb-2">No slots available right now.</p>
+                    <p className="text-xs font-medium text-slate-600">New slots are added regularly. Please check back soon or contact us on WhatsApp.</p>
                     <a
                       href={`https://wa.me/${INSTRUCTOR_WHATSAPP}?text=${encodeURIComponent("Hi! I'd like to book a free IELTS speaking practice session. Could you please share available dates?")}`}
                       target="_blank"
@@ -891,50 +888,52 @@ export default function SpeakingBookingPage() {
                 transition={{ duration: 0.4, ease: "easeOut" }}
                 className="text-center"
               >
-                <div className="bg-white rounded-3xl border border-forest-ink/10 shadow-xl p-8 sm:p-10 space-y-6">
+                <div className="bg-white rounded-3xl border border-slate-200 shadow-xl p-8 sm:p-10 space-y-6">
                   {/* Success icon */}
                   <div className="w-16 h-16 bg-emerald-100 rounded-2xl flex items-center justify-center mx-auto">
                     <CheckCircle2 className="w-9 h-9 text-emerald-600" />
                   </div>
 
                   <div>
-                    <h2 className="text-2xl font-extrabold font-bricolage text-forest-ink mb-1">
+                    <h2 className="text-2xl sm:text-3xl font-extrabold font-bricolage mb-1.5" style={{ color: "#0f172a" }}>
                       You&apos;re Booked! 🎉
                     </h2>
-                    <p className="text-sm text-forest-ink/60">Your free speaking session has been reserved. Our team will confirm it shortly.</p>
+                    <p className="text-sm font-semibold" style={{ color: "#334155" }}>
+                      Your free speaking session has been reserved. Our team will confirm it shortly.
+                    </p>
                   </div>
 
                   {/* Booking details card */}
-                  <div className="bg-[#1a3300] text-white rounded-2xl p-5 text-left space-y-3">
+                  <div className="bg-[#1a3300] text-white rounded-2xl p-5 text-left space-y-3 shadow-md">
                     <div className="flex items-center justify-between border-b border-white/10 pb-3">
-                      <span className="text-[10px] font-mono font-bold text-white/50 uppercase tracking-wider">Booking Reference</span>
+                      <span className="text-[10px] font-mono font-bold text-white/60 uppercase tracking-wider">Booking Reference</span>
                       <span className="text-highlighter-yellow font-mono font-bold text-lg">{bookingRefId}</span>
                     </div>
                     {selectedSlot && (
                       <>
                         <div className="flex items-center gap-2 text-sm">
-                          <Calendar className="w-4 h-4 text-white/50 shrink-0" />
-                          <span className="text-white/80">{fmtDate(selectedSlot.date)}</span>
+                          <Calendar className="w-4 h-4 text-white/60 shrink-0" />
+                          <span className="text-white font-medium">{fmtDate(selectedSlot.date)}</span>
                         </div>
                         <div className="flex items-center gap-2 text-sm">
-                          <Clock className="w-4 h-4 text-white/50 shrink-0" />
-                          <span className="text-white/80">{fmt12h(selectedSlot.time)} — {selectedSlot.duration} minutes</span>
+                          <Clock className="w-4 h-4 text-white/60 shrink-0" />
+                          <span className="text-white font-medium">{fmt12h(selectedSlot.time)} — {selectedSlot.duration} minutes</span>
                         </div>
                       </>
                     )}
                     <div className="flex items-center gap-2 text-sm">
-                      <User className="w-4 h-4 text-white/50 shrink-0" />
-                      <span className="text-white/80">{name}</span>
+                      <User className="w-4 h-4 text-white/60 shrink-0" />
+                      <span className="text-white font-medium">{name}</span>
                     </div>
                     <div className="flex items-center gap-2 text-sm">
-                      <Phone className="w-4 h-4 text-white/50 shrink-0" />
-                      <span className="text-white/80">{phone}</span>
+                      <Phone className="w-4 h-4 text-white/60 shrink-0" />
+                      <span className="text-white font-medium">{phone}</span>
                     </div>
                   </div>
 
                   {/* Next steps */}
                   <div className="text-left bg-amber-50 border border-amber-200 rounded-2xl p-4 space-y-2">
-                    <div className="text-xs font-bold text-amber-800 flex items-center gap-1.5 mb-2">
+                    <div className="text-xs font-bold text-amber-900 flex items-center gap-1.5 mb-2">
                       <CheckCircle2 className="w-3.5 h-3.5 text-amber-700" />
                       What happens next?
                     </div>
@@ -943,8 +942,8 @@ export default function SpeakingBookingPage() {
                       "A Google Meet link will be shared before your session.",
                       "You'll get a detailed feedback report after the session.",
                     ].map((s, i) => (
-                      <div key={i} className="flex items-start gap-2 text-xs text-amber-900">
-                        <span className="w-4 h-4 bg-amber-200 text-amber-800 rounded-full text-[10px] font-bold flex items-center justify-center shrink-0 mt-0.5">{i + 1}</span>
+                      <div key={i} className="flex items-start gap-2 text-xs text-amber-950 font-medium">
+                        <span className="w-4 h-4 bg-amber-200 text-amber-900 rounded-full text-[10px] font-bold flex items-center justify-center shrink-0 mt-0.5">{i + 1}</span>
                         {s}
                       </div>
                     ))}
@@ -955,20 +954,20 @@ export default function SpeakingBookingPage() {
                     href={`https://wa.me/918178055015?text=${whatsappMessage}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center justify-center gap-2 w-full py-3.5 bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-sm rounded-xl transition-colors"
+                    className="flex items-center justify-center gap-2 w-full py-3.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm rounded-xl transition-colors shadow-sm"
                   >
                     <Phone className="w-4 h-4" />
                     Send WhatsApp Confirmation
-                    <ExternalLink className="w-3.5 h-3.5 opacity-70" />
+                    <ExternalLink className="w-3.5 h-3.5 opacity-80" />
                   </a>
 
                   {/* Prompt to sign up if guest */}
                   {!user && (
-                    <div className="text-center text-xs text-forest-ink/60 bg-forest-ink/5 rounded-xl p-4">
-                      <p className="mb-2">Create a free account to track your session status and meeting link.</p>
+                    <div className="text-center text-xs bg-slate-100 border border-slate-200 rounded-xl p-4 space-y-2">
+                      <p style={{ color: "#334155" }} className="font-medium">Create a free account to track your session status and meeting link.</p>
                       <Link
                         href={`/signup?redirect=/profile`}
-                        className="inline-flex items-center gap-1.5 px-4 py-2 bg-forest-ink text-white text-xs font-bold rounded-xl hover:bg-forest-ink/90 transition-colors"
+                        className="inline-flex items-center gap-1.5 px-4 py-2 bg-[#1a3300] text-white text-xs font-bold rounded-xl hover:bg-[#1a3300]/90 transition-colors"
                       >
                         Create Free Account
                         <ArrowRight className="w-3 h-3" />
@@ -979,7 +978,7 @@ export default function SpeakingBookingPage() {
                   {user && (
                     <Link
                       href="/profile"
-                      className="flex items-center justify-center gap-2 w-full py-3 bg-forest-ink/5 hover:bg-forest-ink/10 text-forest-ink text-sm font-semibold rounded-xl transition-colors"
+                      className="flex items-center justify-center gap-2 w-full py-3 bg-slate-100 hover:bg-slate-200 text-slate-900 text-sm font-bold rounded-xl transition-colors"
                     >
                       View in My Profile
                       <ArrowRight className="w-4 h-4" />
