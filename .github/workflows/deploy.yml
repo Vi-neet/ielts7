@@ -3,13 +3,13 @@ name: Deploy to Cloudflare Workers
 on:
   push:
     branches:
-      - stage
+      - main
   pull_request:
     branches:
-      - stage
+      - main
 
 jobs:
-  # 1. PR Check: Verifies compilation & type safety when a PR is raised against 'stage'
+  # 1. PR Check: Verifies compilation & type safety when a PR is raised against 'main'
   pr-check:
     if: github.event_name == 'pull_request'
     name: PR Build & Type Check
@@ -30,9 +30,9 @@ jobs:
       - name: Run Type Check
         run: npx tsc --noEmit
 
-  # 2. Production Deployment: Deploys to Cloudflare Workers ONLY when code lands on 'stage' (via PR merge or commit)
+  # 2. Production Deployment: Deploys to Cloudflare Workers ONLY when code lands on 'main' (via PR merge or commit)
   deploy-cloudflare:
-    if: github.event_name == 'push' && github.ref == 'refs/heads/stage'
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     name: Build & Deploy Cloudflare Worker
     runs-on: ubuntu-latest
     steps:
