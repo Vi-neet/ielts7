@@ -169,6 +169,11 @@ const Header = () => {
     }),
   };
 
+  const isExamPage = /^\/tests\/[^\/]+\/[^\/]+/.test(pathname) && !pathname.includes("/results/");
+  if (pathname === "/login" || pathname === "/signup" || isExamPage) {
+    return null;
+  }
+
   return (
     <>
       <div className={isHomePage ? "w-full shrink-0 h-[80px]" : "w-full shrink-0 h-[72px]"} aria-hidden="true" />

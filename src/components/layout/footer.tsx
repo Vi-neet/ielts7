@@ -17,7 +17,9 @@ export const Footer = () => {
   const pathname = usePathname();
   const currentYear = new Date().getFullYear();
 
-  if (pathname === "/login" || pathname === "/signup") {
+  // Hide footer on login, signup, and when taking an exam
+  const isExamPage = /^\/tests\/[^\/]+\/[^\/]+/.test(pathname) && !pathname.includes("/results/");
+  if (pathname === "/login" || pathname === "/signup" || isExamPage) {
     return null;
   }
 
