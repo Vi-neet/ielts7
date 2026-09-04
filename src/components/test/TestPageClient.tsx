@@ -138,13 +138,18 @@ function ExamReadyScreen({
   );
 }
 
-// ─── Main Client Wrapper ──────────────────────────────────────────────────────
-export default function TestPageClient({
+import SimpleExamRunner from "@/components/test/SimpleExamRunner";
+import { useSearchParams } from "next/navigation";
+
+function TestPageClientInner({
   testId,
   testType,
   testName,
   testData,
 }: TestPageClientProps) {
+  const searchParams = useSearchParams();
+  const isArchivedEngine = searchParams.get("mode") === "engine";
+
   const [viewState, setViewState] = useState<ViewState>("selecting");
   const [mode, setMode] = useState<"practice" | "exam">("practice");
 
@@ -154,67 +159,95 @@ export default function TestPageClient({
     : READING_EXAM_DURATION_MINUTES;
   const examDurationSeconds = getExamDurationSeconds(testType);
 
-  const handleSelectMode = (selectedMode: "practice" | "exam") => {
-    setMode(selectedMode);
-    if (selectedMode === "practice") {
-      setViewState("running");
-    } else {
-      setViewState("exam-ready");
-    }
-  };
+  // If archived engine mode is requested via ?mode=engine, preserve the original flow
+  if (isArchivedEngine) {
+    const handleSelectMode = (selectedMode: "practice" | "exam") => {
+      setMode(selectedMode);
+      if (selectedMode === "practice") {
+        setViewState("running");
+      } else {
+        setViewState("exam-ready");
+      }
+    };
 
-  // ── Mode selection screen ──
-  if (viewState === "selecting") {
-    return (
-      <div className="container mx-auto max-w-4xl pt-10 pb-16 px-4 bg-cream-paper min-h-[calc(100vh-72px)]">
-        {/* Back to test directory */}
-        <div className="mb-8">
-          <Link
-            href={`/tests/${testType}`}
-            className="inline-flex items-center gap-1.5 text-xs font-inter text-forest-ink/50 hover:text-forest-ink transition-colors"
-          >
-            <ArrowLeft size={14} />
-            All {testType.replace(/_/g, " ")} tests
-          </Link>
+    if (viewState === "selecting") {
+      return (
+        <div className="container mx-auto max-w-4xl pt-10 pb-16 px-4 bg-cream-paper min-h-[calc(100vh-72px)]">
+          <div className="mb-8">
+            <Link
+              href={`/tests/${testType}`}
+              className="inline-flex items-center gap-1.5 text-xs font-inter text-forest-ink/50 hover:text-forest-ink transition-colors"
+            >
+              <ArrowLeft size={14} />
+              All {testType.replace(/_/g, " ")} tests
+            </Link>
+          </div>
+          <ModeSelector
+            testName={testName}
+            testType={testType}
+            examDurationMinutes={examDurationMinutes}
+            onSelectMode={handleSelectMode}
+          />
         </div>
-        <ModeSelector
-          testName={testName}
-          testType={testType}
-          examDurationMinutes={examDurationMinutes}
-          onSelectMode={handleSelectMode}
-        />
-      </div>
-    );
-  }
+      );
+    }
 
-  // ── Exam ready / instructions screen ──
-  if (viewState === "exam-ready") {
+    if (viewState === "exam-ready") {
+      return (
+        <div className="bg-cream-paper min-h-[calc(100vh-72px)] flex items-center justify-center px-4 py-12">
+          <ExamReadyScreen
+            testName={testName}
+            testType={testType}
+            durationMinutes={examDurationMinutes}
+            onStart={() => setViewState("running")}
+            onBack={() => setViewState("selecting")}
+          />
+        </div>
+      );
+    }
+
     return (
-      <div className="bg-cream-paper min-h-[calc(100vh-72px)] flex items-center justify-center px-4 py-12">
-        <ExamReadyScreen
-          testName={testName}
+      <div className="bg-cream-paper min-h-[calc(100vh-72px)]">
+        <TestEngineRunner
+          testId={testId}
           testType={testType}
-          durationMinutes={examDurationMinutes}
-          onStart={() => setViewState("running")}
-          onBack={() => setViewState("selecting")}
+          testName={testName}
+          passages={testData.passages}
+          questions={testData.questions}
+          answerKey={testData.answers || {}}
+          mode={mode}
+          examDurationSeconds={examDurationSeconds}
         />
       </div>
     );
   }
 
-  // ── Active test ──
+  // ── Default Student Experience: Simple Traditional Exam Interface ──
   return (
-    <div className="bg-cream-paper min-h-[calc(100vh-72px)]">
-      <TestEngineRunner
-        testId={testId}
-        testType={testType}
-        testName={testName}
-        passages={testData.passages}
-        questions={testData.questions}
-        answerKey={testData.answers || {}}
-        mode={mode}
-        examDurationSeconds={examDurationSeconds}
-      />
-    </div>
+    <SimpleExamRunner
+      testId={testId}
+      testType={testType}
+      testName={testName}
+      passages={testData.passages}
+      questions={testData.questions}
+      answerKey={testData.answers || {}}
+      examDurationSeconds={examDurationSeconds}
+    />
   );
 }
+
+// ─── Main Client Wrapper with Suspense Boundary for useSearchParams ──────────
+export default function TestPageClient(props: TestPageClientProps) {
+  return (
+    <React.Suspense
+      fallback={
+        <div className="min-h-screen bg-[#F8F9FA] flex items-center justify-center p-8 text-slate-500 font-inter text-sm">
+          Loading test environment...
+        </div>
+      }
+    >
+      <TestPageClientInner {...props} />
+    </React.Suspense>
+  );
+}
+

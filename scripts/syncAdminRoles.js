@@ -12,6 +12,8 @@ const db = getFirestore();
 const ADMIN_EMAILS = [
   "meenunarula1104@gmail.com",
   "varunsaxena5elc@gmail.com",
+  "hnarula55@gmail.com",
+  "gobounce252@gmail.com",
   ...(process.env.ADMIN_EMAILS || "").split(",").map((e) => e.trim().toLowerCase()),
 ].filter(Boolean);
 

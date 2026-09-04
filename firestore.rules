@@ -5,7 +5,7 @@ service cloud.firestore {
       return request.auth != null && (
         (exists(/databases/$(database)/documents/users/$(request.auth.uid)) &&
          get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin') ||
-        request.auth.token.email in ['meenunarula1104@gmail.com', 'varunsaxena5elc@gmail.com']
+        request.auth.token.email in ['meenunarula1104@gmail.com', 'varunsaxena5elc@gmail.com', 'hnarula55@gmail.com', 'gobounce252@gmail.com']
       );
     }
 
