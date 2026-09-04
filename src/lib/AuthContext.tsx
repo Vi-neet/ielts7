@@ -34,13 +34,23 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           const userDocRef = doc(db, "users", currentUser.uid);
           let userSnap = await getDoc(userDocRef);
 
+          const DEFAULT_ADMIN_EMAILS = [
+            "meenunarula1104@gmail.com",
+            "varunsaxena5elc@gmail.com",
+            "hnarula55@gmail.com",
+            "gobounce252@gmail.com",
+          ];
+          const envAdminEmails = (process.env.NEXT_PUBLIC_ADMIN_EMAILS || "")
+            .split(",")
+            .map((e) => e.trim().toLowerCase())
+            .filter(Boolean);
+          const authorizedAdminEmails = Array.from(
+            new Set([...DEFAULT_ADMIN_EMAILS, ...envAdminEmails])
+          );
+
           const isEmailAdmin = Boolean(
             currentUser.email &&
-            (process.env.NEXT_PUBLIC_ADMIN_EMAILS || "")
-              .split(",")
-              .map((e) => e.trim().toLowerCase())
-              .filter(Boolean)
-              .includes(currentUser.email.toLowerCase())
+            authorizedAdminEmails.includes(currentUser.email.toLowerCase().trim())
           );
 
           // Auto-create document if it doesn't exist yet

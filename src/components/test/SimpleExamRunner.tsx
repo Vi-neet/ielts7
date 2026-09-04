@@ -19,6 +19,8 @@ import {
   ChevronRight,
   ChevronLeft,
   LayoutGrid,
+  Highlighter,
+  X,
 } from "lucide-react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
@@ -236,6 +238,8 @@ export default function SimpleExamRunner({
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [showSubmitModal, setShowSubmitModal] = useState<boolean>(false);
   const [passageFontSize, setPassageFontSize] = useState<"sm" | "base" | "lg">("base");
+  const [hasSelection, setHasSelection] = useState<boolean>(false);
+  const [highlightCount, setHighlightCount] = useState<number>(0);
 
   const autoSubmitCalledRef = useRef<boolean>(false);
   const sessionKey = `ielts7_simple_session_${testId}`;
@@ -618,6 +622,200 @@ export default function SimpleExamRunner({
     }
   };
 
+  // Text Selection Highlighting Logic
+  useEffect(() => {
+    const handleSelectionCheck = () => {
+      const sel = window.getSelection();
+      if (
+        sel &&
+        !sel.isCollapsed &&
+        sel.toString().trim().length > 0 &&
+        (passageContainerRef.current?.contains(sel.anchorNode) ||
+          passageContainerRef.current?.contains(sel.focusNode) ||
+          questionsContainerRef.current?.contains(sel.anchorNode) ||
+          questionsContainerRef.current?.contains(sel.focusNode))
+      ) {
+        setHasSelection(true);
+      } else {
+        setHasSelection(false);
+      }
+    };
+
+    document.addEventListener("mouseup", handleSelectionCheck);
+    document.addEventListener("selectionchange", handleSelectionCheck);
+
+    return () => {
+      document.removeEventListener("mouseup", handleSelectionCheck);
+      document.removeEventListener("selectionchange", handleSelectionCheck);
+    };
+  }, []);
+
+  const applyHighlight = () => {
+    const sel = window.getSelection();
+    if (!sel || sel.rangeCount === 0 || sel.isCollapsed) return;
+
+    try {
+      const range = sel.getRangeAt(0);
+      const pContainer = passageContainerRef.current;
+      const qContainer = questionsContainerRef.current;
+
+      const container =
+        pContainer && (pContainer.contains(range.startContainer) || pContainer.contains(range.endContainer))
+          ? pContainer
+          : qContainer && (qContainer.contains(range.startContainer) || qContainer.contains(range.endContainer))
+          ? qContainer
+          : null;
+
+      if (!container) return;
+
+      const startNode = range.startContainer;
+      const endNode = range.endContainer;
+
+      // Single text node selection
+      if (startNode === endNode && startNode.nodeType === Node.TEXT_NODE) {
+        const textNode = startNode as Text;
+        const text = textNode.nodeValue || "";
+        const startOffset = range.startOffset;
+        const endOffset = range.endOffset;
+
+        if (startOffset < endOffset) {
+          const before = text.slice(0, startOffset);
+          const selected = text.slice(startOffset, endOffset);
+          const after = text.slice(endOffset);
+
+          const parent = textNode.parentNode;
+          if (parent) {
+            const frag = document.createDocumentFragment();
+            if (before) frag.appendChild(document.createTextNode(before));
+
+            const mark = document.createElement("mark");
+            mark.className =
+              "bg-amber-300 text-amber-950 font-semibold rounded-xs px-0.5 shadow-2xs user-highlight cursor-pointer";
+            mark.title = "Click to remove highlight";
+            mark.onclick = (e) => {
+              e.stopPropagation();
+              const p = mark.parentNode;
+              if (p) {
+                while (mark.firstChild) p.insertBefore(mark.firstChild, mark);
+                p.removeChild(mark);
+                p.normalize();
+                setHighlightCount((c) => Math.max(0, c - 1));
+              }
+            };
+            mark.appendChild(document.createTextNode(selected));
+            frag.appendChild(mark);
+
+            if (after) frag.appendChild(document.createTextNode(after));
+
+            parent.replaceChild(frag, textNode);
+            setHighlightCount((prev) => prev + 1);
+          }
+        }
+      } else {
+        // Multi-node selection
+        const ancestor = range.commonAncestorContainer;
+        const walker = document.createTreeWalker(
+          ancestor.nodeType === Node.TEXT_NODE ? ancestor.parentNode || container : ancestor,
+          NodeFilter.SHOW_TEXT,
+          {
+            acceptNode: (node) => {
+              if (!range.intersectsNode(node)) return NodeFilter.FILTER_REJECT;
+              const parent = node.parentNode as HTMLElement;
+              if (parent && (parent.tagName === "MARK" || parent.classList.contains("user-highlight"))) {
+                return NodeFilter.FILTER_REJECT;
+              }
+              return NodeFilter.FILTER_ACCEPT;
+            },
+          }
+        );
+
+        const nodesToProcess: { node: Text; start: number; end: number }[] = [];
+        let currentNode: Node | null = walker.currentNode;
+
+        while (currentNode) {
+          if (currentNode.nodeType === Node.TEXT_NODE) {
+            const textNode = currentNode as Text;
+            let start = 0;
+            let end = textNode.nodeValue?.length || 0;
+
+            if (textNode === startNode) start = range.startOffset;
+            if (textNode === endNode) end = range.endOffset;
+
+            if (start < end) {
+              nodesToProcess.push({ node: textNode, start, end });
+            }
+          }
+          currentNode = walker.nextNode();
+        }
+
+        let highlightedAny = false;
+        nodesToProcess.forEach(({ node, start, end }) => {
+          const text = node.nodeValue || "";
+          const before = text.slice(0, start);
+          const selected = text.slice(start, end);
+          const after = text.slice(end);
+          const parent = node.parentNode;
+
+          if (parent && selected.trim().length > 0) {
+            const frag = document.createDocumentFragment();
+            if (before) frag.appendChild(document.createTextNode(before));
+
+            const mark = document.createElement("mark");
+            mark.className =
+              "bg-amber-300 text-amber-950 font-semibold rounded-xs px-0.5 shadow-2xs user-highlight cursor-pointer";
+            mark.title = "Click to remove highlight";
+            mark.onclick = (e) => {
+              e.stopPropagation();
+              const p = mark.parentNode;
+              if (p) {
+                while (mark.firstChild) p.insertBefore(mark.firstChild, mark);
+                p.removeChild(mark);
+                p.normalize();
+                setHighlightCount((c) => Math.max(0, c - 1));
+              }
+            };
+            mark.appendChild(document.createTextNode(selected));
+            frag.appendChild(mark);
+
+            if (after) frag.appendChild(document.createTextNode(after));
+
+            parent.replaceChild(frag, node);
+            highlightedAny = true;
+          }
+        });
+
+        if (highlightedAny) {
+          setHighlightCount((prev) => prev + 1);
+        }
+      }
+
+      sel.removeAllRanges();
+      setHasSelection(false);
+    } catch (err) {
+      console.warn("Could not highlight selection:", err);
+      setHasSelection(false);
+    }
+  };
+
+  const clearHighlights = () => {
+    const containers = [passageContainerRef.current, questionsContainerRef.current].filter(Boolean);
+    containers.forEach((c) => {
+      if (!c) return;
+      const marks = c.querySelectorAll("mark.user-highlight");
+      marks.forEach((mark) => {
+        const parent = mark.parentNode;
+        if (parent) {
+          while (mark.firstChild) {
+            parent.insertBefore(mark.firstChild, mark);
+          }
+          parent.removeChild(mark);
+          parent.normalize();
+        }
+      });
+    });
+    setHighlightCount(0);
+  };
+
   // Submit test
   const handleConfirmSubmit = async () => {
     if (isSubmitting || isSubmitted) return;
@@ -835,40 +1033,69 @@ export default function SimpleExamRunner({
               })}
             </div>
 
-            {/* Reading font zoom controls */}
+            {/* Reading font zoom controls & Highlighting */}
             {!isListening && (
-              <div className="hidden sm:flex items-center gap-1 text-slate-400">
-                <span className="text-[11px] mr-1">Passage Text:</span>
-                <button
-                  onClick={() => setPassageFontSize("sm")}
-                  className={cn(
-                    "w-6 h-6 rounded text-xs font-bold transition-colors cursor-pointer",
-                    passageFontSize === "sm" ? "bg-slate-200 text-slate-900" : "hover:bg-slate-100 text-slate-600"
-                  )}
-                  title="Smaller font"
-                >
-                  A-
-                </button>
-                <button
-                  onClick={() => setPassageFontSize("base")}
-                  className={cn(
-                    "w-6 h-6 rounded text-xs font-bold transition-colors cursor-pointer",
-                    passageFontSize === "base" ? "bg-slate-200 text-slate-900" : "hover:bg-slate-100 text-slate-600"
-                  )}
-                  title="Normal font"
-                >
-                  A
-                </button>
-                <button
-                  onClick={() => setPassageFontSize("lg")}
-                  className={cn(
-                    "w-6 h-6 rounded text-xs font-bold transition-colors cursor-pointer",
-                    passageFontSize === "lg" ? "bg-slate-200 text-slate-900" : "hover:bg-slate-100 text-slate-600"
-                  )}
-                  title="Larger font"
-                >
-                  A+
-                </button>
+              <div className="hidden sm:flex items-center gap-2">
+                <div className="flex items-center gap-1 text-slate-400">
+                  <span className="text-[11px] mr-1">Passage Text:</span>
+                  <button
+                    onClick={() => setPassageFontSize("sm")}
+                    className={cn(
+                      "w-6 h-6 rounded text-xs font-bold transition-colors cursor-pointer",
+                      passageFontSize === "sm" ? "bg-slate-200 text-slate-900" : "hover:bg-slate-100 text-slate-600"
+                    )}
+                    title="Smaller font"
+                  >
+                    A-
+                  </button>
+                  <button
+                    onClick={() => setPassageFontSize("base")}
+                    className={cn(
+                      "w-6 h-6 rounded text-xs font-bold transition-colors cursor-pointer",
+                      passageFontSize === "base" ? "bg-slate-200 text-slate-900" : "hover:bg-slate-100 text-slate-600"
+                    )}
+                    title="Normal font"
+                  >
+                    A
+                  </button>
+                  <button
+                    onClick={() => setPassageFontSize("lg")}
+                    className={cn(
+                      "w-6 h-6 rounded text-xs font-bold transition-colors cursor-pointer",
+                      passageFontSize === "lg" ? "bg-slate-200 text-slate-900" : "hover:bg-slate-100 text-slate-600"
+                    )}
+                    title="Larger font"
+                  >
+                    A+
+                  </button>
+                </div>
+
+                {(hasSelection || highlightCount > 0) && (
+                  <div className="flex items-center gap-1.5 pl-2 border-l border-slate-200">
+                    {hasSelection && (
+                      <button
+                        type="button"
+                        onMouseDown={(e) => e.preventDefault()}
+                        onClick={applyHighlight}
+                        className="px-2.5 py-1 rounded-full bg-amber-300 text-amber-950 hover:bg-amber-400 font-bold text-xs flex items-center gap-1 transition-all cursor-pointer shadow-xs"
+                      >
+                        <Highlighter size={12} />
+                        Highlight
+                      </button>
+                    )}
+                    {highlightCount > 0 && (
+                      <button
+                        type="button"
+                        onMouseDown={(e) => e.preventDefault()}
+                        onClick={clearHighlights}
+                        className="px-2 py-1 rounded-full bg-rose-50 text-rose-700 hover:bg-rose-100 border border-rose-200 font-medium text-xs flex items-center gap-1 transition-all cursor-pointer"
+                        title="Clear all highlights"
+                      >
+                        <X size={11} /> Clear ({highlightCount})
+                      </button>
+                    )}
+                  </div>
+                )}
               </div>
             )}
           </div>
@@ -899,9 +1126,22 @@ export default function SimpleExamRunner({
                 className="lg:col-span-6 bg-white rounded-2xl border border-slate-200 p-6 md:p-8 shadow-sm lg:sticky lg:top-[120px] lg:max-h-[calc(100vh-140px)] overflow-y-auto select-text"
               >
                 <div className="border-b border-slate-100 pb-3 mb-6 flex items-center justify-between">
-                  <span className="text-xs font-mono font-bold uppercase tracking-wider text-slate-400">
-                    Reading Passage
-                  </span>
+                  <div className="flex items-center gap-2">
+                    <span className="text-xs font-mono font-bold uppercase tracking-wider text-slate-400">
+                      Reading Passage
+                    </span>
+                    {highlightCount > 0 && (
+                      <button
+                        type="button"
+                        onMouseDown={(e) => e.preventDefault()}
+                        onClick={clearHighlights}
+                        className="px-2 py-0.5 rounded-full bg-rose-50 text-rose-700 border border-rose-200 text-xs font-mono font-semibold flex items-center gap-1 hover:bg-rose-100 transition-colors cursor-pointer"
+                        title="Clear all text highlights"
+                      >
+                        <X size={11} /> Clear ({highlightCount})
+                      </button>
+                    )}
+                  </div>
                   <span className="text-xs text-slate-500">
                     Scroll down to read complete text
                   </span>
@@ -1115,6 +1355,21 @@ export default function SimpleExamRunner({
               Palette ({answeredCount}/40)
             </span>
           </button>
+        )}
+
+        {/* ── Floating Text Highlighter Action Pill ── */}
+        {hasSelection && (
+          <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 animate-in fade-in zoom-in-95 duration-150">
+            <button
+              type="button"
+              onMouseDown={(e) => e.preventDefault()}
+              onClick={applyHighlight}
+              className="px-4 py-2.5 rounded-full bg-slate-900 text-amber-300 shadow-2xl text-xs font-mono font-bold border border-amber-300/40 flex items-center gap-2 hover:bg-slate-800 active:scale-95 transition-all cursor-pointer"
+            >
+              <Highlighter size={15} className="text-amber-300" />
+              Highlight Selected Text
+            </button>
+          </div>
         )}
 
         {/* ── Submit Confirmation Modal ── */}
