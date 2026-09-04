@@ -33,8 +33,8 @@ export const Footer = () => {
     {
       icon: MapPin,
       label: "Canada Office",
-      text: "334 King St N, Waterloo, ON N2J 2Z2",
-      href: "https://maps.google.com/?q=334 King St N, Waterloo, ON N2J 2Z2",
+      text: "514 - 251 Hemlock Street, Waterloo, ON N2L 0H2",
+      href: "https://maps.google.com/?q=514 - 251 Hemlock Street, Waterloo, ON N2L 0H2",
     },
     {
       icon: MapPin,
