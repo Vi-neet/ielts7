@@ -269,26 +269,36 @@ export default function SimpleExamRunner({
         const data = JSON.parse(cached);
         if (data && Date.now() - (data.updatedAt || 0) < 24 * 60 * 60 * 1000) {
           if (data.answers) setAnswers(data.answers);
-          if (typeof data.timeRemaining === "number" && data.timeRemaining > 0) {
+          // If the cached duration matches the current exam duration, restore it.
+          // If the exam duration was changed in config (e.g. from 30m to 55m),
+          // reset to the current examDurationSeconds so students get the full configured time.
+          if (
+            typeof data.timeRemaining === "number" &&
+            data.timeRemaining > 0 &&
+            data.totalDuration === examDurationSeconds
+          ) {
             setTimeRemaining(data.timeRemaining);
+          } else {
+            setTimeRemaining(examDurationSeconds);
           }
         }
       }
     } catch {
       // Ignore read error
     }
-  }, [sessionKey]);
+  }, [sessionKey, examDurationSeconds]);
 
   // Cache progress
   useEffect(() => {
     if (isSubmitted) return;
     try {
-      if (Object.keys(answers).length > 0) {
+      if (Object.keys(answers).length > 0 || timeRemaining !== examDurationSeconds) {
         localStorage.setItem(
           sessionKey,
           JSON.stringify({
             answers,
             timeRemaining,
+            totalDuration: examDurationSeconds,
             updatedAt: Date.now(),
           })
         );
@@ -296,7 +306,7 @@ export default function SimpleExamRunner({
     } catch {
       // Ignore write error
     }
-  }, [answers, timeRemaining, isSubmitted, sessionKey]);
+  }, [answers, timeRemaining, isSubmitted, sessionKey, examDurationSeconds]);
 
   // Timer countdown
   useEffect(() => {
