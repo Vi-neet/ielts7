@@ -189,7 +189,7 @@ const Header = () => {
         }}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 backdrop-blur-sm flex items-center ${
           isHomePage
-            ? `mt-4 mx-4 md:mx-auto max-w-5xl rounded-[16px] border border-pencil-gray/20 h-[64px] ${isScrolled ? "bg-cream-paper/90 shadow-sm" : "bg-cream-paper/70"}`
+            ? `mt-4 mx-4 md:mx-auto max-w-6xl rounded-[16px] border border-pencil-gray/20 h-[64px] ${isScrolled ? "bg-cream-paper/90 shadow-sm" : "bg-cream-paper/70"}`
             : `h-[72px] ${isScrolled ? "bg-cream-paper/90 shadow-sm border-b border-pencil-gray/20" : "bg-transparent"}`
         }`}
       >
@@ -199,7 +199,7 @@ const Header = () => {
         />
 
         <div className="container mx-auto px-4 max-w-6xl">
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between gap-2">
             {/* Logo */}
             <motion.div
               variants={logoVariants}
@@ -207,18 +207,18 @@ const Header = () => {
               animate="animate"
               whileHover="hover"
               whileTap="tap"
-              className="relative"
+              className="relative shrink-0"
             >
-              <Link href="/" className="flex items-center gap-3">
+              <Link href="/" className="flex items-center gap-2.5">
                 <Image
                   src="/icon.webp"
                   alt="IELTS 7+ House"
-                  width={36}
-                  height={36}
+                  width={34}
+                  height={34}
                   className="rounded-sm brightness-105"
                   priority
                 />
-                <span className="text-xl font-extrabold text-forest-ink tracking-tight font-bricolage">
+                <span className="text-lg lg:text-xl font-extrabold text-forest-ink tracking-tight font-bricolage whitespace-nowrap">
                   IELTS 7+ House
                 </span>
               </Link>
@@ -226,7 +226,7 @@ const Header = () => {
 
             {/* Desktop Navigation */}
             <NavigationMenu className="hidden md:flex">
-              <NavigationMenuList className="gap-2">
+              <NavigationMenuList className="gap-1 lg:gap-1.5 xl:gap-2">
                 {navItems.map((item, index) => (
                   <NavigationMenuItem key={item.name}>
                     <motion.div
@@ -240,13 +240,13 @@ const Header = () => {
                         href={item.path}
                         onMouseEnter={() => setHoveredItem(item.path)}
                         onMouseLeave={() => setHoveredItem(null)}
-                        className={`relative px-4 py-2 text-sm font-semibold font-inter transition-colors duration-200 block ${
+                        className={`relative px-2.5 py-1.5 lg:px-3.5 lg:py-2 text-xs lg:text-sm font-semibold font-inter transition-colors duration-200 block whitespace-nowrap ${
                           activeItem === item.path
                             ? "text-forest-ink font-bold"
                             : "text-forest-ink/75 hover:text-forest-ink"
                         }`}
                       >
-                        <span className="relative z-10">{item.name}</span>
+                        <span className="relative z-10 whitespace-nowrap">{item.name}</span>
 
                         {activeItem === item.path && (
                           <motion.div
@@ -281,7 +281,7 @@ const Header = () => {
             </NavigationMenu>
 
             {/* Auth Integration */}
-            <div className="flex items-center border-l border-pencil-gray/20 pl-6 gap-4">
+            <div className="flex items-center border-l border-pencil-gray/20 pl-3 lg:pl-5 gap-2 lg:gap-3 shrink-0">
               {loading ? (
                 <div className="w-[80px] h-[36px] flex items-center justify-center">
                   <Loader2 size={16} className="animate-spin text-forest-ink/40" />
@@ -319,14 +319,14 @@ const Header = () => {
                   </DropdownMenuContent>
                 </DropdownMenu>
               ) : (
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
                   <Link href={`/login?redirect=${encodeURIComponent(activeItem)}`}>
-                    <Button variant="ghost" size="sm" className="font-semibold text-forest-ink hover:text-forest-ink hover:bg-forest-ink/5">
+                    <Button variant="ghost" size="sm" className="font-semibold text-xs lg:text-sm px-2.5 sm:px-3.5 h-8 lg:h-9 text-forest-ink hover:text-forest-ink hover:bg-forest-ink/5 whitespace-nowrap shrink-0">
                       Log In
                     </Button>
                   </Link>
                   <Link href={`/signup?redirect=${encodeURIComponent(activeItem)}`}>
-                    <Button variant="forest" size="sm" className="font-bold shadow-xs">
+                    <Button variant="forest" size="sm" className="font-bold text-xs lg:text-sm px-3 sm:px-4 h-8 lg:h-9 shadow-xs whitespace-nowrap shrink-0">
                       Sign Up
                     </Button>
                   </Link>

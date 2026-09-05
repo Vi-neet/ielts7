@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useAuth } from "@/lib/AuthContext";
 import { db } from "@/lib/firebase";
 import { normalizeMeetingUrl, isGoogleMeetRoomUrl } from "@/lib/utils";
@@ -43,6 +44,7 @@ import {
   Loader2,
   Check,
   ExternalLink,
+  Lock,
 } from "lucide-react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -146,9 +148,8 @@ const INSTRUCTOR_WHATSAPP = "918178055015";
 
 export default function SpeakingBookingPage() {
   const { user } = useAuth();
+  const router = useRouter();
   const bookingRef = useRef<HTMLElement>(null);
-
-
 
   // Booking wizard
   const [step, setStep] = useState(1);
@@ -170,7 +171,28 @@ export default function SpeakingBookingPage() {
   const [submitError, setSubmitError] = useState("");
   const [bookingRefId, setBookingRefId] = useState("");
 
-  // Auto-fill logged-in user fields
+  // Restore pending slot if returning from login & auto-fill logged-in user fields
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      try {
+        const savedSlot = sessionStorage.getItem("ielts7_pending_speaking_slot");
+        if (savedSlot) {
+          const parsed = JSON.parse(savedSlot);
+          if (parsed && parsed.id && parsed.date) {
+            setSelectedSlot(parsed);
+            setSelectedDate(parsed.date);
+            if (user) {
+              setStep(2);
+              sessionStorage.removeItem("ielts7_pending_speaking_slot");
+            }
+          }
+        }
+      } catch (e) {
+        console.warn("Error restoring pending slot:", e);
+      }
+    }
+  }, [user]);
+
   useEffect(() => {
     if (user) {
       setName(user.displayName || "");
@@ -244,6 +266,11 @@ export default function SpeakingBookingPage() {
   const availableDates = Object.keys(slotsByDate).sort();
 
   const handleSubmitBooking = async () => {
+    if (!user) {
+      setSubmitError("Please sign in to book your session.");
+      router.push("/login?redirect=/speaking-booking");
+      return;
+    }
     if (!selectedSlot) return;
     if (!name.trim() || !email.trim() || !phone.trim()) {
       setSubmitError("Please fill in your name, email, and phone number.");
@@ -376,7 +403,13 @@ export default function SpeakingBookingPage() {
               </div>
 
               <Button
-                onClick={() => bookingRef.current?.scrollIntoView({ behavior: "smooth" })}
+                onClick={() => {
+                  if (!user) {
+                    router.push("/login?redirect=/speaking-booking");
+                  } else {
+                    bookingRef.current?.scrollIntoView({ behavior: "smooth" });
+                  }
+                }}
                 className="bg-highlighter-yellow text-[#1a3300] font-bold hover:bg-highlighter-yellow/90 px-8 py-3 h-auto text-sm rounded-xl shadow-lg cursor-pointer"
               >
                 Book Your Free Session
@@ -583,10 +616,19 @@ export default function SpeakingBookingPage() {
                           </div>
                         </div>
                         <Button
-                          onClick={() => setStep(2)}
+                          onClick={() => {
+                            if (!user) {
+                              if (selectedSlot) {
+                                sessionStorage.setItem("ielts7_pending_speaking_slot", JSON.stringify(selectedSlot));
+                              }
+                              router.push("/login?redirect=/speaking-booking");
+                            } else {
+                              setStep(2);
+                            }
+                          }}
                           className="bg-forest-ink text-white text-xs font-bold h-9 px-4 rounded-xl cursor-pointer"
                         >
-                          Continue
+                          {user ? "Continue" : "Sign In to Book This Slot"}
                           <ArrowRight className="w-3.5 h-3.5 ml-1.5" />
                         </Button>
                       </motion.div>
@@ -606,170 +648,218 @@ export default function SpeakingBookingPage() {
                 transition={{ duration: 0.25 }}
                 className="bg-white rounded-3xl border border-forest-ink/10 shadow-sm p-6 sm:p-8 space-y-5"
               >
-                <div className="flex items-center justify-between">
-                  <h3 className="text-base font-bold font-bricolage text-forest-ink flex items-center gap-2">
-                    <User className="w-5 h-5 text-[#cb5521]" />
-                    Your Details
-                  </h3>
-                  <button
-                    onClick={() => setStep(1)}
-                    className="text-xs text-forest-ink/50 hover:text-forest-ink cursor-pointer underline"
-                  >
-                    Change slot
-                  </button>
-                </div>
-
-                {/* Selected slot summary */}
-                {selectedSlot && (
-                  <div className="flex items-center gap-3 p-3 bg-forest-ink/5 rounded-xl border border-forest-ink/10 text-xs">
-                    <Calendar className="w-4 h-4 text-forest-ink/50 shrink-0" />
-                    <span className="font-semibold text-forest-ink">{fmtDate(selectedSlot.date)}, {fmt12h(selectedSlot.time)}</span>
-                    <span className="text-forest-ink/50">— {selectedSlot.duration} min</span>
-                  </div>
-                )}
-
-                {submitError && (
-                  <div className="flex items-center gap-2 text-xs text-rose-700 bg-rose-50 p-3 rounded-xl border border-rose-200">
-                    <span>{submitError}</span>
-                  </div>
-                )}
-
-                <div className="grid sm:grid-cols-2 gap-4">
-                  <div className="space-y-1.5">
-                    <Label htmlFor="booking-name" className="text-xs font-bold text-forest-ink uppercase font-mono tracking-wider">
-                      Full Name <span className="text-[#cb5521]">*</span>
-                    </Label>
-                    <div className="relative">
-                      <User className="w-4 h-4 text-forest-ink/40 absolute left-3.5 top-1/2 -translate-y-1/2" />
-                      <Input
-                        id="booking-name"
-                        type="text"
-                        placeholder="Your full name"
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
-                        className="pl-10 h-11 border-forest-ink/20 focus-visible:border-forest-ink text-sm rounded-xl"
-                        required
-                      />
+                {!user ? (
+                  <div className="text-center py-8 space-y-5">
+                    <div className="w-16 h-16 bg-amber-100/80 border border-amber-200 rounded-2xl flex items-center justify-center mx-auto text-amber-700 shadow-xs">
+                      <Lock className="w-8 h-8" />
+                    </div>
+                    <div className="space-y-1.5">
+                      <h3 className="text-2xl font-extrabold font-bricolage text-forest-ink">
+                        Sign In to Book Your Session
+                      </h3>
+                      <p className="text-xs sm:text-sm text-forest-ink/70 max-w-md mx-auto leading-relaxed">
+                        You need to be logged in to reserve a 1-on-1 IELTS speaking practice slot. Your session details and Google Meet link will be linked directly to your account dashboard.
+                      </p>
+                    </div>
+                    {selectedSlot && (
+                      <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-forest-ink/5 border border-forest-ink/10 text-xs font-medium text-forest-ink">
+                        <Calendar className="w-3.5 h-3.5 text-forest-ink/60" />
+                        Selected: {fmtDate(selectedSlot.date)}, {fmt12h(selectedSlot.time)}
+                      </div>
+                    )}
+                    <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
+                      <Link
+                        href="/login?redirect=/speaking-booking"
+                        onClick={() => {
+                          if (selectedSlot) {
+                            sessionStorage.setItem("ielts7_pending_speaking_slot", JSON.stringify(selectedSlot));
+                          }
+                        }}
+                        className="w-full sm:w-auto px-6 py-3 bg-forest-ink text-white font-bold text-xs rounded-xl hover:bg-forest-ink/90 transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer"
+                      >
+                        Sign In to Continue
+                        <ArrowRight className="w-4 h-4" />
+                      </Link>
+                      <Link
+                        href="/signup?redirect=/speaking-booking"
+                        onClick={() => {
+                          if (selectedSlot) {
+                            sessionStorage.setItem("ielts7_pending_speaking_slot", JSON.stringify(selectedSlot));
+                          }
+                        }}
+                        className="w-full sm:w-auto px-6 py-3 bg-white border border-forest-ink/20 text-forest-ink font-bold text-xs rounded-xl hover:bg-forest-ink/5 transition-all flex items-center justify-center cursor-pointer"
+                      >
+                        Create Free Account
+                      </Link>
+                    </div>
+                    <div>
+                      <button
+                        onClick={() => setStep(1)}
+                        className="text-xs text-forest-ink/50 hover:text-forest-ink cursor-pointer underline"
+                      >
+                        ← Choose a different time slot
+                      </button>
                     </div>
                   </div>
-
-                  <div className="space-y-1.5">
-                    <Label htmlFor="booking-email" className="text-xs font-bold text-forest-ink uppercase font-mono tracking-wider">
-                      Email <span className="text-[#cb5521]">*</span>
-                    </Label>
-                    <div className="relative">
-                      <Mail className="w-4 h-4 text-forest-ink/40 absolute left-3.5 top-1/2 -translate-y-1/2" />
-                      <Input
-                        id="booking-email"
-                        type="email"
-                        placeholder="your@email.com"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        className="pl-10 h-11 border-forest-ink/20 focus-visible:border-forest-ink text-sm rounded-xl"
-                        required
-                      />
+                ) : (
+                  <>
+                    <div className="flex items-center justify-between">
+                      <h3 className="text-base font-bold font-bricolage text-forest-ink flex items-center gap-2">
+                        <User className="w-5 h-5 text-[#cb5521]" />
+                        Your Details
+                      </h3>
+                      <button
+                        onClick={() => setStep(1)}
+                        className="text-xs text-forest-ink/50 hover:text-forest-ink cursor-pointer underline"
+                      >
+                        Change slot
+                      </button>
                     </div>
-                  </div>
-                </div>
 
-                <div className="space-y-1.5">
-                  <Label htmlFor="booking-phone" className="text-xs font-bold text-forest-ink uppercase font-mono tracking-wider">
-                    WhatsApp Number <span className="text-[#cb5521]">*</span>
-                  </Label>
-                  <div className="relative">
-                    <Phone className="w-4 h-4 text-forest-ink/40 absolute left-3.5 top-1/2 -translate-y-1/2" />
-                    <Input
-                      id="booking-phone"
-                      type="tel"
-                      placeholder="+91 XXXXX XXXXX"
-                      value={phone}
-                      onChange={(e) => setPhone(e.target.value)}
-                      className="pl-10 h-11 border-forest-ink/20 focus-visible:border-forest-ink text-sm rounded-xl"
-                      required
-                    />
-                  </div>
-                  <p className="text-[11px] text-forest-ink/50">Your meeting link will be shared on this number before the session.</p>
-                </div>
+                    {/* Selected slot summary */}
+                    {selectedSlot && (
+                      <div className="flex items-center gap-3 p-3 bg-forest-ink/5 rounded-xl border border-forest-ink/10 text-xs">
+                        <Calendar className="w-4 h-4 text-forest-ink/50 shrink-0" />
+                        <span className="font-semibold text-forest-ink">{fmtDate(selectedSlot.date)}, {fmt12h(selectedSlot.time)}</span>
+                        <span className="text-forest-ink/50">— {selectedSlot.duration} min</span>
+                      </div>
+                    )}
 
-                <div className="grid sm:grid-cols-2 gap-4">
-                  <div className="space-y-1.5">
-                    <Label htmlFor="booking-band" className="text-xs font-bold text-forest-ink uppercase font-mono tracking-wider">
-                      Target Band Score
-                    </Label>
-                    <select
-                      id="booking-band"
-                      value={targetBand}
-                      onChange={(e) => setTargetBand(e.target.value)}
-                      className="w-full h-11 px-3 bg-white border border-forest-ink/20 focus:border-forest-ink text-sm rounded-xl font-inter text-forest-ink"
-                    >
-                      {["6.0", "6.5", "7.0", "7.5", "8.0", "8.5+"].map((b) => (
-                        <option key={b} value={b}>Band {b}</option>
-                      ))}
-                    </select>
-                  </div>
+                    {submitError && (
+                      <div className="flex items-center gap-2 text-xs text-rose-700 bg-rose-50 p-3 rounded-xl border border-rose-200">
+                        <span>{submitError}</span>
+                      </div>
+                    )}
 
-                  <div className="space-y-1.5">
-                    <Label className="text-xs font-bold text-forest-ink uppercase font-mono tracking-wider">
-                      Current Level
-                    </Label>
-                    <div className="flex gap-2">
-                      {["beginner", "intermediate", "advanced"].map((l) => (
-                        <button
-                          key={l}
-                          type="button"
-                          onClick={() => setCurrentLevel(l)}
-                          className={`flex-1 py-2.5 rounded-xl border text-xs font-semibold transition-all cursor-pointer capitalize ${
-                            currentLevel === l
-                              ? "bg-forest-ink text-white border-forest-ink"
-                              : "bg-white text-forest-ink/70 border-forest-ink/15 hover:border-forest-ink/40"
-                          }`}
+                    <div className="grid sm:grid-cols-2 gap-4">
+                      <div className="space-y-1.5">
+                        <Label htmlFor="booking-name" className="text-xs font-bold text-forest-ink uppercase font-mono tracking-wider">
+                          Full Name <span className="text-[#cb5521]">*</span>
+                        </Label>
+                        <div className="relative">
+                          <User className="w-4 h-4 text-forest-ink/40 absolute left-3.5 top-1/2 -translate-y-1/2" />
+                          <Input
+                            id="booking-name"
+                            type="text"
+                            placeholder="Your full name"
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
+                            className="pl-10 h-11 border-forest-ink/20 focus-visible:border-forest-ink text-sm rounded-xl"
+                            required
+                          />
+                        </div>
+                      </div>
+
+                      <div className="space-y-1.5">
+                        <Label htmlFor="booking-email" className="text-xs font-bold text-forest-ink uppercase font-mono tracking-wider">
+                          Email <span className="text-[#cb5521]">*</span>
+                        </Label>
+                        <div className="relative">
+                          <Mail className="w-4 h-4 text-forest-ink/40 absolute left-3.5 top-1/2 -translate-y-1/2" />
+                          <Input
+                            id="booking-email"
+                            type="email"
+                            placeholder="your@email.com"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            className="pl-10 h-11 border-forest-ink/20 focus-visible:border-forest-ink text-sm rounded-xl"
+                            required
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="space-y-1.5">
+                      <Label htmlFor="booking-phone" className="text-xs font-bold text-forest-ink uppercase font-mono tracking-wider">
+                        WhatsApp Number <span className="text-[#cb5521]">*</span>
+                      </Label>
+                      <div className="relative">
+                        <Phone className="w-4 h-4 text-forest-ink/40 absolute left-3.5 top-1/2 -translate-y-1/2" />
+                        <Input
+                          id="booking-phone"
+                          type="tel"
+                          placeholder="+91 XXXXX XXXXX"
+                          value={phone}
+                          onChange={(e) => setPhone(e.target.value)}
+                          className="pl-10 h-11 border-forest-ink/20 focus-visible:border-forest-ink text-sm rounded-xl"
+                          required
+                        />
+                      </div>
+                      <p className="text-[11px] text-forest-ink/50">Your meeting link will be shared on this number before the session.</p>
+                    </div>
+
+                    <div className="grid sm:grid-cols-2 gap-4">
+                      <div className="space-y-1.5">
+                        <Label htmlFor="booking-band" className="text-xs font-bold text-forest-ink uppercase font-mono tracking-wider">
+                          Target Band Score
+                        </Label>
+                        <select
+                          id="booking-band"
+                          value={targetBand}
+                          onChange={(e) => setTargetBand(e.target.value)}
+                          className="w-full h-11 px-3 bg-white border border-forest-ink/20 focus:border-forest-ink text-sm rounded-xl font-inter text-forest-ink"
                         >
-                          {l}
-                        </button>
-                      ))}
+                          {["6.0", "6.5", "7.0", "7.5", "8.0", "8.5+"].map((b) => (
+                            <option key={b} value={b}>Band {b}</option>
+                          ))}
+                        </select>
+                      </div>
+
+                      <div className="space-y-1.5">
+                        <Label className="text-xs font-bold text-forest-ink uppercase font-mono tracking-wider">
+                          Current Level
+                        </Label>
+                        <div className="flex gap-2">
+                          {["beginner", "intermediate", "advanced"].map((l) => (
+                            <button
+                              key={l}
+                              type="button"
+                              onClick={() => setCurrentLevel(l)}
+                              className={`flex-1 py-2.5 rounded-xl border text-xs font-semibold transition-all cursor-pointer capitalize ${
+                                currentLevel === l
+                                  ? "bg-forest-ink text-white border-forest-ink"
+                                  : "bg-white text-forest-ink/70 border-forest-ink/15 hover:border-forest-ink/40"
+                              }`}
+                            >
+                              {l}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                </div>
 
-                <div className="space-y-1.5">
-                  <Label htmlFor="booking-focus" className="text-xs font-bold text-forest-ink uppercase font-mono tracking-wider">
-                    Focus Areas / Notes <span className="text-forest-ink/40 font-normal normal-case">(optional)</span>
-                  </Label>
-                  <textarea
-                    id="booking-focus"
-                    value={topicFocus}
-                    onChange={(e) => setTopicFocus(e.target.value)}
-                    placeholder="e.g. Part 2 cue cards, improving fluency, pronunciation, specific topics you want to practice..."
-                    rows={3}
-                    className="w-full px-4 py-3 border border-forest-ink/20 focus:border-forest-ink rounded-xl text-sm font-inter text-forest-ink placeholder:text-forest-ink/40 focus:outline-none resize-none"
-                  />
-                </div>
+                    <div className="space-y-1.5">
+                      <Label htmlFor="booking-focus" className="text-xs font-bold text-forest-ink uppercase font-mono tracking-wider">
+                        Focus Areas / Notes <span className="text-forest-ink/40 font-normal normal-case">(optional)</span>
+                      </Label>
+                      <textarea
+                        id="booking-focus"
+                        value={topicFocus}
+                        onChange={(e) => setTopicFocus(e.target.value)}
+                        placeholder="e.g. Part 2 cue cards, improving fluency, pronunciation, specific topics you want to practice..."
+                        rows={3}
+                        className="w-full px-4 py-3 border border-forest-ink/20 focus:border-forest-ink rounded-xl text-sm font-inter text-forest-ink placeholder:text-forest-ink/40 focus:outline-none resize-none"
+                      />
+                    </div>
 
-                <Button
-                  onClick={handleSubmitBooking}
-                  disabled={submitting}
-                  className="w-full h-12 bg-forest-ink text-white font-bold text-sm rounded-xl cursor-pointer"
-                >
-                  {submitting ? (
-                    <>
-                      <Loader2 className="w-4 h-4 animate-spin mr-2" />
-                      Booking Session...
-                    </>
-                  ) : (
-                    <>
-                      Confirm Free Booking
-                      <CheckCircle2 className="w-4 h-4 ml-2" />
-                    </>
-                  )}
-                </Button>
-
-                {!user && (
-                  <p className="text-center text-xs text-forest-ink/50">
-                    <Link href="/login?redirect=/speaking-booking" className="text-forest-ink font-semibold underline">
-                      Sign in
-                    </Link>
-                    {" "}to save your booking to your profile dashboard.
-                  </p>
+                    <Button
+                      onClick={handleSubmitBooking}
+                      disabled={submitting}
+                      className="w-full h-12 bg-forest-ink text-white font-bold text-sm rounded-xl cursor-pointer"
+                    >
+                      {submitting ? (
+                        <>
+                          <Loader2 className="w-4 h-4 animate-spin mr-2" />
+                          Booking Session...
+                        </>
+                      ) : (
+                        <>
+                          Confirm Free Booking
+                          <CheckCircle2 className="w-4 h-4 ml-2" />
+                        </>
+                      )}
+                    </Button>
+                  </>
                 )}
               </motion.div>
             )}

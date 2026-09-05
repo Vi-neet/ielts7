@@ -18410,8 +18410,8 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "questionType": "notes_completion",
       "groupId": "g_1_8",
       "extractionStatus": "extracted",
-      "promptText": "StonehengeConstructionStage 1:the ditch and henge were dug, possibly using tools made from ______",
-      "sentenceBefore": "StonehengeConstructionStage 1:the ditch and henge were dug, possibly using tools made from",
+      "promptText": "the ditch and henge were dug, possibly using tools made from ______",
+      "sentenceBefore": "the ditch and henge were dug, possibly using tools made from",
       "groupPrompt": "Complete the notes below.",
       "notesContext": {
         "bulletPrefix": "•"
@@ -18421,8 +18421,8 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "questionType": "notes_completion",
       "groupId": "g_1_8",
       "extractionStatus": "extracted",
-      "promptText": "______ may have been arranged in deep pits inside the circle Stage 2:bluestones from the Preseli Hills were placed in standing position theories about the transportation of the bluestones: archaeological: builders used",
-      "sentenceAfter": "may have been arranged in deep pits inside the circle Stage 2:bluestones from the Preseli Hills were placed in standing position theories about the transportation of the bluestones: archaeological: builders used",
+      "promptText": "______ may have been arranged in deep pits inside the circle",
+      "sentenceAfter": "may have been arranged in deep pits inside the circle",
       "groupPrompt": "Complete the notes below.",
       "notesContext": {
         "bulletPrefix": "•"
@@ -18432,8 +18432,8 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "questionType": "notes_completion",
       "groupId": "g_1_8",
       "extractionStatus": "extracted",
-      "promptText": "may have been arranged in deep pits inside the circle Stage 2:bluestones from the Preseli Hills were placed in standing position theories about the transportation of the bluestones: archaeological: builders used ______ to make sledges and rollers",
-      "sentenceBefore": "may have been arranged in deep pits inside the circle Stage 2:bluestones from the Preseli Hills were placed in standing position theories about the transportation of the bluestones: archaeological: builders used",
+      "promptText": "builders used ______ to make sledges and rollers",
+      "sentenceBefore": "builders used",
       "sentenceAfter": "to make sledges and rollers",
       "groupPrompt": "Complete the notes below.",
       "notesContext": {
@@ -18444,9 +18444,8 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "questionType": "notes_completion",
       "groupId": "g_1_8",
       "extractionStatus": "extracted",
-      "promptText": "to make sledges and rollers ______ pulled them on giant baskets geological: they were brought from Wales by",
-      "sentenceBefore": "to make sledges and rollers",
-      "sentenceAfter": "pulled them on giant baskets geological: they were brought from Wales by",
+      "promptText": "______ pulled them on giant baskets",
+      "sentenceAfter": "pulled them on giant baskets",
       "groupPrompt": "Complete the notes below.",
       "notesContext": {
         "bulletPrefix": "•"
@@ -18456,9 +18455,8 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "questionType": "notes_completion",
       "groupId": "g_1_8",
       "extractionStatus": "extracted",
-      "promptText": "pulled them on giant baskets geological: they were brought from Wales by ______ Stage 3:sandstone slabs were arranged into an outer crescent or ring Buildersa theory arose in the 17th century that its builders were Celtic",
-      "sentenceBefore": "pulled them on giant baskets geological: they were brought from Wales by",
-      "sentenceAfter": "Stage 3:sandstone slabs were arranged into an outer crescent or ring Buildersa theory arose in the 17th century that its builders were Celtic",
+      "promptText": "they were brought from Wales by ______",
+      "sentenceBefore": "they were brought from Wales by",
       "groupPrompt": "Complete the notes below.",
       "notesContext": {
         "bulletPrefix": "•"
@@ -18468,9 +18466,8 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "questionType": "notes_completion",
       "groupId": "g_1_8",
       "extractionStatus": "extracted",
-      "promptText": "Stage 3:sandstone slabs were arranged into an outer crescent or ring Buildersa theory arose in the 17th century that its builders were Celtic ______ Purposemany experts agree it has been used as a",
-      "sentenceBefore": "Stage 3:sandstone slabs were arranged into an outer crescent or ring Buildersa theory arose in the 17th century that its builders were Celtic",
-      "sentenceAfter": "Purposemany experts agree it has been used as a",
+      "promptText": "a theory arose in the 17th century that its builders were Celtic ______",
+      "sentenceBefore": "a theory arose in the 17th century that its builders were Celtic",
       "groupPrompt": "Complete the notes below.",
       "notesContext": {
         "bulletPrefix": "•"
@@ -18480,9 +18477,9 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "questionType": "notes_completion",
       "groupId": "g_1_8",
       "extractionStatus": "extracted",
-      "promptText": "Purposemany experts agree it has been used as a ______ site in the 1960s, it was suggested that it worked as a kind of",
-      "sentenceBefore": "Purposemany experts agree it has been used as a",
-      "sentenceAfter": "site in the 1960s, it was suggested that it worked as a kind of",
+      "promptText": "many experts agree it has been used as a ______ site",
+      "sentenceBefore": "many experts agree it has been used as a",
+      "sentenceAfter": "site",
       "groupPrompt": "Complete the notes below.",
       "notesContext": {
         "bulletPrefix": "•"
@@ -18492,8 +18489,8 @@ export const questionContentRegistry: Record<string, Record<number, VirtualQuest
       "questionType": "notes_completion",
       "groupId": "g_1_8",
       "extractionStatus": "extracted",
-      "promptText": "site in the 1960s, it was suggested that it worked as a kind of ______",
-      "sentenceBefore": "site in the 1960s, it was suggested that it worked as a kind of",
+      "promptText": "in the 1960s, it was suggested that it worked as a kind of ______",
+      "sentenceBefore": "in the 1960s, it was suggested that it worked as a kind of",
       "groupPrompt": "Complete the notes below.",
       "notesContext": {
         "bulletPrefix": "•"

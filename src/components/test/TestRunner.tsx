@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { useAuth } from "@/lib/AuthContext";
 import { ALLOW_GUEST_TESTS } from "@/lib/featureFlags";
-import { gradeAttempt, GradeResult, formatAnswer, getAcceptableAnswers } from "@/lib/scoring";
+import { gradeAttempt, GradeResult, formatAnswer, getAcceptableAnswers, isAnswerCorrect } from "@/lib/scoring";
 import { db, auth } from "@/lib/firebase";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import { Button } from "@/components/ui/button";
@@ -562,10 +562,8 @@ export default function TestRunner({
   const checkAnswer = useCallback(
     (num: number) => {
       if (checkedQuestions[num] !== undefined) return;
-      const studentAns = (answers[num] || "").trim().toLowerCase();
-      const acceptable = getAcceptableAnswers(answerKey[num]);
-      const isCorrect =
-        studentAns !== "" && acceptable.some((opt) => opt === studentAns);
+      const studentAns = answers[num] || "";
+      const isCorrect = isAnswerCorrect(studentAns, answerKey[num]);
       setCheckedQuestions((prev) => ({ ...prev, [num]: isCorrect }));
     },
     [answers, answerKey, checkedQuestions]
