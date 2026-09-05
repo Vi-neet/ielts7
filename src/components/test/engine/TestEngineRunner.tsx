@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { useAuth } from "@/lib/AuthContext";
 import { ALLOW_GUEST_TESTS } from "@/lib/featureFlags";
-import { gradeAttempt, GradeResult, formatAnswer, getAcceptableAnswers } from "@/lib/scoring";
+import { gradeAttempt, GradeResult, formatAnswer, getAcceptableAnswers, isAnswerCorrect } from "@/lib/scoring";
 import { db, auth } from "@/lib/firebase";
 import { useRouter } from "next/navigation";
 import { doc, collection, setDoc, serverTimestamp } from "firebase/firestore";
@@ -290,19 +290,17 @@ export default function TestEngineRunner({
       : [qNum];
 
     const allQuestionsInGroupCorrect = qNumsToCheck.every((n) => {
-      const studentAns = (answers[n] || "").trim().toLowerCase();
-      const acceptable = getAcceptableAnswers(answerKey[n]);
-      return studentAns !== "" && acceptable.includes(studentAns);
+      const studentAns = answers[n] || "";
+      return isAnswerCorrect(studentAns, answerKey[n]);
     });
 
     const updates: Record<number, { isCorrect: boolean; correctAnswer: string }> = {};
     for (const n of qNumsToCheck) {
-      const studentAns = (answers[n] || "").trim().toLowerCase();
+      const studentAns = answers[n] || "";
       const correctVal = answerKey[n];
-      const acceptable = getAcceptableAnswers(correctVal);
       const isCorrect = isMulti
         ? allQuestionsInGroupCorrect
-        : studentAns !== "" && acceptable.includes(studentAns);
+        : isAnswerCorrect(studentAns, correctVal);
 
       updates[n] = {
         isCorrect,
@@ -455,17 +453,15 @@ export default function TestEngineRunner({
         : [qNum];
 
       const allQuestionsInMultiCorrect = qNumsToCheck.every((n) => {
-        const studentAns = (answers[n] || "").trim().toLowerCase();
-        const acceptable = getAcceptableAnswers(answerKey[n]);
-        return studentAns !== "" && acceptable.includes(studentAns);
+        const studentAns = answers[n] || "";
+        return isAnswerCorrect(studentAns, answerKey[n]);
       });
 
-      const studentAns = (answers[qNum] || "").trim().toLowerCase();
+      const studentAns = answers[qNum] || "";
       const correctVal = answerKey[qNum];
-      const acceptable = getAcceptableAnswers(correctVal);
       const isCorrect = isMulti
         ? allQuestionsInMultiCorrect
-        : studentAns !== "" && acceptable.includes(studentAns);
+        : isAnswerCorrect(studentAns, correctVal);
 
       updates[qNum] = {
         isCorrect,
