@@ -58,10 +58,18 @@ function findQuestionNumberForInput(
     if (num >= 1 && num <= 40) return num;
   }
 
-  const isQuestionNumberText = (text: string) => {
-    const clean = text.trim();
-    // Matches patterns like "1", "1.", "1)", "(1)", "Question 1", "Q1"
-    const match = clean.match(/^(?:question\s*|q\s*)?[\(]?\s*(\d+)\s*[\.\:\)]?$/i);
+  const isRangeHeader = (text: string) => {
+    if (!text) return false;
+    const clean = text.replace(/[\u00A0\s]+/g, " ").trim();
+    return /\b\d+\s*[\u2013\u2014\-–—]\s*\d+\b/i.test(clean);
+  };
+
+  const extractTrailingNumber = (text: string) => {
+    if (!text || isRangeHeader(text)) return null;
+    const clean = text.replace(/[\u00A0\s]+/g, " ").trim();
+    const match = clean.match(
+      /(?:^|[^\d])(?:(?:question|q)\s*)?\[?\(?(\d+)\)?\]?[\.\:\)]?\s*(?:£|\$|€)?\s*$/i
+    );
     if (match) {
       const num = parseInt(match[1], 10);
       if (num >= 1 && num <= 40) return num;
@@ -69,7 +77,86 @@ function findQuestionNumberForInput(
     return null;
   };
 
-  // 2. Backward search for closest label or strong text indicating question number
+  const extractLeadingNumber = (text: string) => {
+    if (!text || isRangeHeader(text)) return null;
+    const clean = text.replace(/[\u00A0\s]+/g, " ").trim();
+    const match = clean.match(
+      /^(?:(?:question|q)\s*)?\[?\(?\s*(\d+)\s*\)?\]?[\.\:\)\s]/i
+    );
+    if (match) {
+      const num = parseInt(match[1], 10);
+      if (num >= 1 && num <= 40) return num;
+    }
+    return null;
+  };
+
+  const isExactQuestionNumberText = (text: string) => {
+    if (!text || isRangeHeader(text)) return null;
+    const clean = text.replace(/[\u00A0\s]+/g, " ").trim();
+    const match = clean.match(
+      /^(?:question|q)\s*\[?\(?\s*(\d+)\s*\)?\]?[\.\:\)]?$/i
+    ) || clean.match(/^\[?\(?\s*(\d+)\s*\)?\]?[\.\:\)]?$/);
+    if (match) {
+      const num = parseInt(match[1], 10);
+      if (num >= 1 && num <= 40) return num;
+    }
+    return null;
+  };
+
+  // 1. Immediate backward check (adjacent sibling or within immediate parent)
+  let prev = inputEl.previousSibling;
+  if (prev) {
+    if (prev.nodeType === Node.TEXT_NODE) {
+      const num = extractTrailingNumber(prev.nodeValue || "") || isExactQuestionNumberText(prev.nodeValue || "");
+      if (num !== null) return num;
+    } else if (prev.nodeType === Node.ELEMENT_NODE) {
+      const num =
+        isExactQuestionNumberText(prev.textContent || "") ||
+        extractTrailingNumber(prev.textContent || "");
+      if (num !== null) return num;
+    }
+  }
+
+  // 2. Check enclosing question section wrapper (for radios / checkboxes in QSM)
+  let section: HTMLElement | null = inputEl.parentElement;
+  while (section && section !== container) {
+    if (
+      section.classList.contains("quiz_section") ||
+      section.classList.contains("qsm-question-wrapper")
+    ) {
+      const qDiv = section.querySelector<HTMLElement>(".mlw_qmn_question");
+      if (qDiv) {
+        const paragraphs = qDiv.querySelectorAll<HTMLElement>("p, strong, b, h3, h4");
+        for (let i = paragraphs.length - 1; i >= 0; i--) {
+          const p = paragraphs[i];
+          const num = extractLeadingNumber(p.textContent || "") || isExactQuestionNumberText(p.textContent || "");
+          if (num !== null) return num;
+        }
+        const num = extractLeadingNumber(qDiv.textContent || "") || isExactQuestionNumberText(qDiv.textContent || "");
+        if (num !== null) return num;
+      }
+      const newQDiv = section.querySelector<HTMLElement>(".mlw_qmn_new_question");
+      if (newQDiv) {
+        const num = extractLeadingNumber(newQDiv.textContent || "") || isExactQuestionNumberText(newQDiv.textContent || "");
+        if (num !== null) return num;
+      }
+      break;
+    }
+    if (section.tagName === "FIELDSET") {
+      let fPrev = section.previousElementSibling;
+      while (fPrev) {
+        const num =
+          extractLeadingNumber(fPrev.textContent || "") ||
+          extractTrailingNumber(fPrev.textContent || "") ||
+          isExactQuestionNumberText(fPrev.textContent || "");
+        if (num !== null) return num;
+        fPrev = fPrev.previousElementSibling;
+      }
+    }
+    section = section.parentElement;
+  }
+
+  // 3. Backward traversal (within container, stop at table/form boundaries)
   let current: Node | null = inputEl;
   let prevSteps = 0;
   while (current && prevSteps < 35) {
@@ -78,46 +165,53 @@ function findQuestionNumberForInput(
       while (current.lastChild) current = current.lastChild;
     } else {
       current = current.parentNode;
-      if (!current || current === container) break;
+      if (
+        !current ||
+        current === container ||
+        (current as HTMLElement).tagName === "TABLE" ||
+        (current as HTMLElement).tagName === "FORM"
+      )
+        break;
       continue;
     }
     prevSteps++;
 
     let num: number | null = null;
     if (current.nodeType === Node.TEXT_NODE) {
-      num = isQuestionNumberText(current.nodeValue || "");
+      num =
+        extractTrailingNumber(current.nodeValue || "") ||
+        isExactQuestionNumberText(current.nodeValue || "");
     } else if (current.nodeType === Node.ELEMENT_NODE) {
       const el = current as HTMLElement;
-      if (el.tagName === "STRONG" || el.tagName === "B" || el.classList.contains("q-num")) {
-        num = isQuestionNumberText(el.textContent || "");
+      if (
+        el.tagName === "STRONG" ||
+        el.tagName === "B" ||
+        el.classList.contains("q-num")
+      ) {
+        num =
+          isExactQuestionNumberText(el.textContent || "") ||
+          extractTrailingNumber(el.textContent || "") ||
+          extractLeadingNumber(el.textContent || "");
       } else {
-        num = isQuestionNumberText(el.textContent || "");
+        num = isExactQuestionNumberText(el.textContent || "");
       }
     }
     if (num !== null) return num;
   }
 
-  // 3. Forward search if backward did not find anything
-  current = inputEl;
-  let nextSteps = 0;
-  while (current && nextSteps < 30) {
-    if (current.nextSibling) {
-      current = current.nextSibling;
-      while (current.firstChild) current = current.firstChild;
-    } else {
-      current = current.parentNode;
-      if (!current || current === container) break;
-      continue;
+  // 4. Immediate forward check (e.g. [1] or (1) following the input)
+  let next = inputEl.nextSibling;
+  if (next) {
+    const text =
+      next.nodeType === Node.TEXT_NODE
+        ? next.nodeValue || ""
+        : next.textContent || "";
+    const clean = text.replace(/[\u00A0\s]+/g, " ").trim();
+    const leadingMatch = clean.match(/^\[?\(?\s*(\d+)\s*\)?\]?[\.\:\)]?/i);
+    if (leadingMatch) {
+      const num = parseInt(leadingMatch[1], 10);
+      if (num >= 1 && num <= 40) return num;
     }
-    nextSteps++;
-
-    let num: number | null = null;
-    if (current.nodeType === Node.TEXT_NODE) {
-      num = isQuestionNumberText(current.nodeValue || "");
-    } else if (current.nodeType === Node.ELEMENT_NODE) {
-      num = isQuestionNumberText((current as HTMLElement).textContent || "");
-    }
-    if (num !== null) return num;
   }
 
   return null;
@@ -205,6 +299,23 @@ function parseCheckboxId(
   return { startNum, endNum, optionLetter, questionNums };
 }
 
+/** Memoized HTML container to prevent React 19 from resetting inner DOM on parent state updates */
+const HtmlQuestionContent = React.memo(function HtmlQuestionContent({
+  html,
+}: {
+  html: string;
+}) {
+  return (
+    <div
+      dangerouslySetInnerHTML={{ __html: html }}
+      onSubmit={(e) => {
+        e.preventDefault();
+        e.stopPropagation();
+      }}
+    />
+  );
+});
+
 export default function SimpleExamRunner({
   testId,
   testType,
@@ -223,6 +334,7 @@ export default function SimpleExamRunner({
   const questionsContainerRef = useRef<HTMLDivElement>(null);
   const passageContainerRef = useRef<HTMLDivElement>(null);
   const inputToQuestionMap = useRef<Map<HTMLElement, number>>(new Map());
+  const checkboxToQuestionsMap = useRef<Map<HTMLElement, number[]>>(new Map());
   const questionToElementMap = useRef<Map<number, HTMLElement>>(new Map());
 
   // State
@@ -347,6 +459,7 @@ export default function SimpleExamRunner({
     if (!container) return;
 
     inputToQuestionMap.current.clear();
+    checkboxToQuestionsMap.current.clear();
     questionToElementMap.current.clear();
 
     // 1. Scan text inputs
@@ -368,6 +481,9 @@ export default function SimpleExamRunner({
     // 2. Scan native radios
     const nativeRadios = container.querySelectorAll<HTMLInputElement>('input[type="radio"]');
     nativeRadios.forEach((radio) => {
+      if (radio.id && radio.id.endsWith("_none")) return;
+      if (radio.style.display === "none") return;
+
       const num = findQuestionNumberForInput(radio, container);
       if (num) {
         inputToQuestionMap.current.set(radio, num);
@@ -375,10 +491,12 @@ export default function SimpleExamRunner({
           questionToElementMap.current.set(num, radio);
         }
         let answerValue = radio.value;
-        const label = container.querySelector<HTMLElement>(`label[for="${CSS.escape(radio.id)}"]`);
+        const label =
+          (radio.id ? container.querySelector<HTMLElement>(`label[for="${CSS.escape(radio.id)}"]`) : null) ||
+          radio.closest("label");
         if (label) {
           const text = label.textContent?.trim() || "";
-          const match = text.match(/^([A-D])\b/i);
+          const match = text.match(/^([A-Z])\b/i);
           answerValue = match ? match[1].toUpperCase() : text;
         }
         (radio as any)._mappedValue = answerValue;
@@ -387,7 +505,31 @@ export default function SimpleExamRunner({
       }
     });
 
-    // 3. Scan Radix radio buttons
+    // 3. Scan native checkboxes
+    const nativeCheckboxes = container.querySelectorAll<HTMLInputElement>('input[type="checkbox"]');
+    nativeCheckboxes.forEach((cb) => {
+      const num = findQuestionNumberForInput(cb, container);
+      if (num) {
+        checkboxToQuestionsMap.current.set(cb, [num]);
+        if (!questionToElementMap.current.has(num)) {
+          questionToElementMap.current.set(num, cb);
+        }
+        let answerValue = cb.value;
+        const label =
+          (cb.id ? container.querySelector<HTMLElement>(`label[for="${CSS.escape(cb.id)}"]`) : null) ||
+          cb.closest("label");
+        if (label) {
+          const text = label.textContent?.trim() || "";
+          const match = text.match(/^([A-Z])\b/i);
+          answerValue = match ? match[1].toUpperCase() : text;
+        }
+        (cb as any)._mappedValue = answerValue;
+        cb.checked = answersRef.current[num] === answerValue;
+        cb.disabled = isSubmitted;
+      }
+    });
+
+    // 4. Scan Radix radio buttons
     const radixRadios = container.querySelectorAll<HTMLButtonElement>('button[role="radio"]');
     radixRadios.forEach((btn) => {
       const num = getRadioQuestionNumber(btn, container);
@@ -404,7 +546,7 @@ export default function SimpleExamRunner({
       }
     });
 
-    // 4. Scan Radix checkboxes
+    // 5. Scan Radix checkboxes
     const radixCheckboxes = container.querySelectorAll<HTMLButtonElement>('button[role="checkbox"]');
     radixCheckboxes.forEach((btn) => {
       const parsed = parseCheckboxId(btn.id);
@@ -427,8 +569,25 @@ export default function SimpleExamRunner({
     const handleInputEvent = (e: Event) => {
       if (isSubmitted) return;
       const target = e.target as HTMLInputElement & { _mappedValue?: string };
+
+      // Native checkbox
+      if (target.type === "checkbox") {
+        const range = checkboxToQuestionsMap.current.get(target);
+        if (range && range.length > 0) {
+          const qNum = range[0];
+          const val = target._mappedValue || target.value;
+          setAnswers((prev) => ({
+            ...prev,
+            [qNum]: target.checked ? val : "",
+          }));
+        }
+        return;
+      }
+
+      // Native radio or text input
       const num = inputToQuestionMap.current.get(target);
       if (num) {
+        if (target.type === "radio" && !target.checked) return;
         const val =
           target.type === "radio"
             ? target._mappedValue || target.value
@@ -452,8 +611,7 @@ export default function SimpleExamRunner({
           if (label.htmlFor) {
             const escapedId = CSS.escape(label.htmlFor);
             return (
-              container.querySelector<HTMLButtonElement>(`button#${escapedId}[role="radio"]`) ||
-              container.querySelector<HTMLButtonElement>(`#${escapedId}`)
+              container.querySelector<HTMLButtonElement>(`button#${escapedId}[role="radio"]`)
             );
           }
           return label.querySelector<HTMLButtonElement>('button[role="radio"]');
@@ -506,16 +664,31 @@ export default function SimpleExamRunner({
       }
     };
 
+    const handleSubmit = (e: Event) => {
+      e.preventDefault();
+      e.stopPropagation();
+    };
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Enter" && (e.target as HTMLElement)?.tagName === "INPUT") {
+        e.preventDefault();
+      }
+    };
+
     container.addEventListener("input", handleInputEvent);
     container.addEventListener("change", handleInputEvent);
     container.addEventListener("click", handleClick);
+    container.addEventListener("submit", handleSubmit);
+    container.addEventListener("keydown", handleKeyDown);
 
     return () => {
       container.removeEventListener("input", handleInputEvent);
       container.removeEventListener("change", handleInputEvent);
       container.removeEventListener("click", handleClick);
+      container.removeEventListener("submit", handleSubmit);
+      container.removeEventListener("keydown", handleKeyDown);
     };
-  }, [isSubmitted]);
+  }, [questions, isSubmitted]);
 
   // Sync state back to DOM inputs when answers change
   useEffect(() => {
@@ -528,7 +701,7 @@ export default function SimpleExamRunner({
     );
     textInputs.forEach((input) => {
       const num = inputToQuestionMap.current.get(input);
-      if (num && input.value !== (answers[num] || "")) {
+      if (num && input !== document.activeElement && input.value !== (answers[num] || "")) {
         input.value = answers[num] || "";
       }
     });
@@ -540,6 +713,17 @@ export default function SimpleExamRunner({
       if (num) {
         const val = (radio as any)._mappedValue || radio.value;
         radio.checked = answers[num] === val;
+      }
+    });
+
+    // Sync native checkboxes
+    const nativeCheckboxes = container.querySelectorAll<HTMLInputElement>('input[type="checkbox"]');
+    nativeCheckboxes.forEach((cb) => {
+      const range = checkboxToQuestionsMap.current.get(cb);
+      if (range && range.length > 0) {
+        const qNum = range[0];
+        const val = (cb as any)._mappedValue || cb.value;
+        cb.checked = answers[qNum] === val;
       }
     });
 
@@ -1188,7 +1372,7 @@ export default function SimpleExamRunner({
 
                 <div className="questions-sheet-content">
                   {typeof questions === "string" ? (
-                    <div dangerouslySetInnerHTML={{ __html: questions }} />
+                    <HtmlQuestionContent html={questions} />
                   ) : (
                     questions
                   )}
@@ -1231,7 +1415,7 @@ export default function SimpleExamRunner({
 
               <div className="questions-sheet-content">
                 {typeof questions === "string" ? (
-                  <div dangerouslySetInnerHTML={{ __html: questions }} />
+                  <HtmlQuestionContent html={questions} />
                 ) : (
                   questions
                 )}
